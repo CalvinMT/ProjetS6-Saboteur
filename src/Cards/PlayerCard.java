@@ -1,8 +1,6 @@
 package Cards;
 
 
-import com.sun.javafx.PlatformUtil;
-
 public class PlayerCard extends Card {
 
         String role;
