@@ -10,8 +10,8 @@ class CardTest {
         Card cAction = new Card(action, 3, 3);
         Card cPlayer = new Card(player, 3, 3);
         Card cGallery = new Card(gallery, 3, 3);
-        Assertions.assertTrue(cAction.getCardt() = action);
-        Assertions.assertTrue(cPlayer.getCardt() = player);
-        Assertions.assertTrue(cGallery.getCardt() = gallery);
+        Assertions.assertTrue(cAction.getCardt() == action);
+        Assertions.assertTrue(cPlayer.getCardt() == player);
+        Assertions.assertTrue(cGallery.getCardt() == gallery);
     }
 }
