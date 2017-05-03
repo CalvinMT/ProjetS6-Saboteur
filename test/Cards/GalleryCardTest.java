@@ -28,6 +28,8 @@ class GalleryCardTest {
         Assertions.assertTrue(c.getGalleryType() == start);
         c = new GalleryCard(tunnel, 2, 2);
         Assertions.assertTrue(c.getGalleryType() == tunnel);
+        c = new GalleryCard(but, 2, 2);
+        Assertions.assertTrue(c.getGalleryType() == but);
     }
 
 }
