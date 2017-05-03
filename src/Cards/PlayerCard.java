@@ -26,4 +26,8 @@ public class PlayerCard extends Card {
         public boolean isSaboteur(){
             return (this.role == "Saboteur");
         }
+
+        public String toString(){
+            return "Role: "+this.role;
+        }
 }
