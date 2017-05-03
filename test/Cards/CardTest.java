@@ -7,11 +7,11 @@ import static Cards.Card.Card_t.*;
 class CardTest {
     @Test
     void getType() {
-        Card cAction = new Card(action, 3, 3);
-        Card cPlayer = new Card(player, 3, 3);
-        Card cGallery = new Card(gallery, 3, 3);
-        Assertions.assertTrue(cAction.getCardt() == action);
-        Assertions.assertTrue(cPlayer.getCardt() == player);
-        Assertions.assertTrue(cGallery.getCardt() == gallery);
+        Card cAction = new Card(action);
+        Card cPlayer = new Card(player);
+        Card cGallery = new Card(gallery);
+        Assertions.assertTrue(cAction.getType() == action);
+        Assertions.assertTrue(cPlayer.getType() == player);
+        Assertions.assertTrue(cGallery.getType() == gallery);
     }
 }
