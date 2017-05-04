@@ -1,8 +1,6 @@
 package Cards;
 
 
-import com.sun.javafx.PlatformUtil;
-
 public class PlayerCard extends Card {
 
         String role;
@@ -25,5 +23,9 @@ public class PlayerCard extends Card {
 
         public boolean isSaboteur(){
             return (this.role == "Saboteur");
+        }
+
+        public String toString(){
+            return "Role: "+this.role;
         }
 }

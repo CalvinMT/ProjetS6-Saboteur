@@ -1,17 +1,20 @@
 package Cards;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 import static Cards.Card.Card_t.*;
 
-class CardTest {
+public class CardTest {
+
     @Test
-    void getType() {
-        Card cAction = new Card(action, 3, 3);
-        Card cPlayer = new Card(player, 3, 3);
-        Card cGallery = new Card(gallery, 3, 3);
-        Assertions.assertTrue(cAction.getCardt() = action);
-        Assertions.assertTrue(cPlayer.getCardt() = player);
-        Assertions.assertTrue(cGallery.getCardt() = gallery);
+    public void getType() {
+        Card cAction = new Card(action);
+        Card cPlayer = new Card(player);
+        Card cGallery = new Card(gallery);
+
+        assertTrue(cAction.getType() == action);
+        assertTrue(cPlayer.getType() == player);
+        assertTrue(cGallery.getType() == gallery);
     }
+
 }
