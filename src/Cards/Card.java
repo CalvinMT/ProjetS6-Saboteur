@@ -14,4 +14,8 @@ public class Card {
     public Card_t getType() {
         return type;
     }
+
+    public boolean equals(Card c) {
+        return this.getType() == c.getType();
+    }
 }
