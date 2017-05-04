@@ -10,14 +10,29 @@ public class GalleryCard extends Card {
                     south = false,
                     east = false,
                     west = false;
-    private boolean gold;
+    private boolean gold = false;
 
     public GalleryCard() { // Init start card
         this.type = Gallery_t.start;
     }
 
-    public GalleryCard(Gallery_t t){
+    public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
         this.type = t;
+        this.center = c;
+        this.north = n;
+        this.south = s;
+        this.east = e;
+        this.west = w;
+    }
+
+    public GalleryCard(Gallery_t t, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w){
+        this.type = t;
+        this.gold = g;
+        this.center = c;
+        this.north = n;
+        this.south = s;
+        this.east = e;
+        this.west = w;
     }
 
     // Pour debug
