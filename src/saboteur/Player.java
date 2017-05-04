@@ -18,18 +18,22 @@ public class Player {
     Card [] pauseCards; // les cartes de pause devant le joueur (maximum de 3)
     Card [] treasureCardsChecked; // les cartes "trésor(s)" vues par ce joueur 
 
-    public Player(String playerName, Card role, Card[] startCards) {
+    public Player(String playerName) {
         this.playerName = playerName;
-        this.role = role;
-        this.goldPoints = 0;
-        
-        int numberOfStartCards = startCards.length;
+        this.goldPoints = 0;      
+        pauseCards = new Card [3];
+        treasureCardsChecked = new Card [3];
+    }
+    
+    public void assignRole(Card c){
+    	this.role = c;
+    }
+    
+    public void assignPlayingCards(Card[] startCards) {
+    	int numberOfStartCards = startCards.length;
         this.playableCards = new Card [numberOfStartCards];
         for (int i=0; i<numberOfStartCards; i++) 
             this.playableCards[i] = startCards[i];
-        
-        pauseCards = new Card [3];
-        treasureCardsChecked = new Card [3];
     }
 
     public String getPlayerName() {
