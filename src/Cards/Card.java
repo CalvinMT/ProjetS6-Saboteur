@@ -7,7 +7,7 @@ public class Card {
     Card() {
         this.type = Card_t.player;
     }
-    Card(Card_t t) {
+    public Card(Card_t t) {
         this.type = t;
     }
 
