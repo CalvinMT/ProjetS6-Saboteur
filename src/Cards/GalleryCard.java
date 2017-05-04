@@ -5,12 +5,12 @@ public class GalleryCard extends Card {
     private Gallery_t type;
     private int x = 0,
                 y = 0;
-    private boolean center = false,
-                    north = false,
-                    south = false,
-                    east = false,
-                    west = false;
-    private boolean gold;
+    private boolean center = true,
+                    north = true,
+                    south = true,
+                    east = true,
+                    west = true;
+    private boolean gold = false;
 
     public GalleryCard() { // Init start card
         this.type = Gallery_t.start;
