@@ -1,15 +1,15 @@
 package Cards;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 import static Cards.GalleryCard.Gallery_t.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GalleryCardTest {
 
     @Test
-    public void getX() {
+    public void getX() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.getX() == 0);
         c = new GalleryCard(tunnel, 2, 2);
@@ -17,7 +17,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void getY() {
+    public void getY() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.getY() == 0);
         c = new GalleryCard(tunnel, 2, 2);
@@ -25,7 +25,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void getGalleryType() {
+    public void getGalleryType() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.getGalleryType() == start);
         c = new GalleryCard(tunnel, 2, 2);
@@ -35,7 +35,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void hasNorth() {
+    public void hasNorth() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.hasNorth());
         c = new GalleryCard(tunnel, 0, 0, true, false, true, true, true);
@@ -43,7 +43,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void hasSouth() {
+    public void hasSouth() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.hasSouth());
         c = new GalleryCard(tunnel, 0, 0, true, true, false, true, true);
@@ -51,7 +51,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void hasEast() {
+    public void hasEast() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.hasEast());
         c = new GalleryCard(tunnel, 0, 0, true, true, true, false, true);
@@ -59,7 +59,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void hasWest() {
+    public void hasWest() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.hasWest());
         c = new GalleryCard(tunnel, 0, 0, true, true, true, true, false);
@@ -67,7 +67,7 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void hasCenter() {
+    public void hasCenter() throws Exception {
         GalleryCard c = new GalleryCard();
         assertTrue(c.hasCenter());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, true, true);
@@ -75,7 +75,15 @@ public class GalleryCardTest {
     }
 
     @Test
-    public void rotate() {
+    public void isGold() throws Exception {
+        GalleryCard c = new GalleryCard();
+        assertFalse(c.isGold());
+        c = new GalleryCard(tunnel, 0, 0, true, false, true, true, true, true);
+        assertTrue(c.isGold());
+    }
+
+    @Test
+    public void rotate() throws Exception {
         GalleryCard c = new GalleryCard(tunnel, 0, 0, true, false, true, false, true);
         assertFalse(c.hasNorth());
         assertFalse(c.hasEast());
