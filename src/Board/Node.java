@@ -1,47 +1,64 @@
 package Board;
+
 import Cards.GalleryCard;
 
 public class Node {
-    private Node north, south, east, west;
-    public GalleryCard card;
+    final int NONE = -1;
 
-    Node() {
-        card = new GalleryCard();
+    private GalleryCard card;
+    private int north = NONE;
+    private int south = NONE;
+    private int east = NONE;
+    private int west = NONE;
+
+    Node(){
+        this.card = new GalleryCard();
     }
 
-    Node(GalleryCard card) {
-        this.card = card;
+    Node(GalleryCard c){
+        this.card = c;
     }
 
-    public void setNorth(Node north) {
+/*    Node(GalleryCard.Gallery_t t, int n, int s, int e, int w){
+        this.card = new GalleryCard(t);
+        this.idx.add(n);
+        this.idx.add(s);
+        this.idx.add(e);
+        this.idx.add(w);
+    }
+*/
+
+    public void setNorth(int north) {
         this.north = north;
     }
 
-    public void setSouth(Node south) {
+    public void setSouth(int south) {
         this.south = south;
     }
 
-    public void setEast(Node east) {
+    public void setEast(int east) {
         this.east = east;
     }
 
-    public void setWest(Node west) {
+    public void setWest(int west) {
         this.west = west;
     }
 
-    public Node getNorth() {
+    public int getNorth() {
         return north;
     }
 
-    public Node getSouth() {
+    public int getSouth() {
         return south;
     }
 
-    public Node getEast() {
+    public int getEast() {
         return east;
     }
 
-    public Node getWest() {
+    public int getWest() {
         return west;
     }
 }
+
+

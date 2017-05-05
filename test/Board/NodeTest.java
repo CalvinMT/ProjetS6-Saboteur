@@ -1,7 +1,7 @@
 package Board;
 
-import Cards.GalleryCard;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 
@@ -9,39 +9,35 @@ public class NodeTest {
     Node n = new Node();
     @Test
     public void setNorth() throws Exception {
-        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel);
-        assertNull(n.getNorth());
-        n.setNorth(new Node(c));
-        assertNotNull(n.getNorth());
-        assertTrue(n.getNorth().card.equals(c));
+        assertTrue(n.getNorth() == -1);
+        n.setNorth(4);
+        assertFalse(n.getNorth() == -1);
+        assertTrue(n.getNorth() == 4);
 
     }
 
     @Test
     public void setSouth() throws Exception {
-        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel);
-        assertNull(n.getSouth());
-        n.setSouth(new Node(c));
-        assertNotNull(n.getSouth());
-        assertTrue(n.getSouth().card.equals(c));
+        assertTrue(n.getSouth() == -1);
+        n.setSouth(4);
+        assertFalse(n.getSouth() == -1);
+        assertTrue(n.getSouth() == 4);
     }
 
     @Test
     public void setEast() throws Exception {
-        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel);
-        assertNull(n.getEast());
-        n.setEast(new Node(c));
-        assertNotNull(n.getEast());
-        assertTrue(n.getEast().card.equals(c));
+        assertTrue(n.getEast() == -1);
+        n.setEast(4);
+        assertFalse(n.getEast() == -1);
+        assertTrue(n.getEast() == 4);
     }
 
     @Test
     public void setWest() throws Exception {
-        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel);
-        assertNull(n.getWest());
-        n.setWest(new Node(c));
-        assertNotNull(n.getWest());
-        assertTrue(n.getWest().card.equals(c));
+        assertTrue(n.getWest() == -1);
+        n.setWest(4);
+        assertFalse(n.getWest() == -1);
+        assertTrue(n.getWest() == 4);
     }
 
     //TODO
