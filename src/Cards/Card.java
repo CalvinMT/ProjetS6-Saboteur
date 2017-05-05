@@ -2,7 +2,7 @@ package Cards;
 
 public class Card {
     public enum Card_t {action, player, gallery};
-    private final Card_t type;
+    protected Card_t type;
 
     Card() {
         this.type = Card_t.player;

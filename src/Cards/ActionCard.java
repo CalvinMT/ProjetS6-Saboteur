@@ -1,6 +1,11 @@
 package Cards;
 
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import java.util.List;
+
 import static Cards.ActionCard.Action.*;
 
 public class ActionCard extends Card {
@@ -14,13 +19,23 @@ public class ActionCard extends Card {
         Map,
         Crumbing;
 
+        private static final List<Action> val = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int size = val.size();
+
+
+        static public Action random_Action(){
+            Random rand = new Random();
+            return val.get(rand.nextInt(size));
+        }
     }
 
     ActionCard(){
-        this.action = Rescue;
+        this.action = Action.random_Action();
+        this.type = Card.Card_t.action;
     }
 
     ActionCard(String a){
+        this.type = Card.Card_t.action;
         switch(a){
             case "Sabotage":
                 this.action = Sabotage;
