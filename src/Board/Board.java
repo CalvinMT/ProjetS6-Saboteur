@@ -3,33 +3,58 @@ package Board;
 
 import Cards.GalleryCard;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
-    Mine mine; // Les cartes possées + start
-    Cards.GalleryCard []goals; // Les trois buts dont 1 avec minerai
+    ArrayList<Node> mine;
 
-    Board() {
+
+
+    public Board() {
         Random r = new Random();
-        int gold = r.nextInt(3) - 1; // Décide du but avec minerai
+        int gold = r.nextInt(3) -1;
         int x;
+
+        mine.add(new Node());
 
         for (int i = -1; i < 2; i++) {
             x = 2*i;
             if (i == gold) {
-                goals[i] = new GalleryCard(but, x, 8, true, true, true, true ,true, true); // Minerai
+                mine.add(new GalleryCard(but, x, 8, true, true, true, true ,true, true)); // Minerai
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    goals[i] = new GalleryCard(but, x, 8, false, true, false, true, true, false); // Sans minerai droit
+                    mine.add(new GalleryCard(but, x, 8, false, true, false, true, true, false)); // Sans minerai droit
                 }
                 else {
-                    goals[i] = new GalleryCard(but, x, 8, false, true, false, true, false, true); // Sans minerai gauche
+                    mine.add(new GalleryCard(but, x, 8, false, true, false, true, false, true)); // Sans minerai gauche
                 }
             }
         }
-        mine = new Mine(); // Initialise une nouvelle mine (uniquement carte start)
+    }
+
+    // Debug
+    public Board(GalleryCard start, GalleryCard but1, GalleryCard but2, GalleryCard but3) {
+        mine.add(new Node(start));
+        mine.add(new Node(but1));
+        mine.add(new Node(but2));
+        mine.add(new Node(but3));
+    }
+
+    // TODO
+    // ajoute la carte card à la suite de mine
+    public void addCard(GalleryCard card) {
+
+    }
+
+    // TODO
+    // Parcours des nodes si indices liens l:
+    //      l = idx -> l = -1
+    //      l > idx -> l = l - 1
+    public void removeCard(int idx) {
+
     }
 }
