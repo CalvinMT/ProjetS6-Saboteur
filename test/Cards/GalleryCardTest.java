@@ -37,41 +37,41 @@ public class GalleryCardTest {
     @Test
     public void hasNorth() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasNorth());
+        assertTrue(c.canHasNorth());
         c = new GalleryCard(tunnel, 0, 0, false, true, false, true, true, true);
-        assertFalse(c.hasNorth());
+        assertFalse(c.canHasNorth());
     }
 
     @Test
     public void hasSouth() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasSouth());
+        assertTrue(c.canHasSouth());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, false, true, true);
-        assertFalse(c.hasSouth());
+        assertFalse(c.canHasSouth());
     }
 
     @Test
     public void hasEast() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasEast());
+        assertTrue(c.canHasEast());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, true, false, true);
-        assertFalse(c.hasEast());
+        assertFalse(c.canHasEast());
     }
 
     @Test
     public void hasWest() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasWest());
+        assertTrue(c.canHasWest());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, true, true, false);
-        assertFalse(c.hasWest());
+        assertFalse(c.canHasWest());
     }
 
     @Test
     public void hasCenter() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasCenter());
+        assertTrue(c.canHasCenter());
         c = new GalleryCard(tunnel, 0, 0, false, false, true, true, true, true);
-        assertFalse(c.hasCenter());
+        assertFalse(c.canHasCenter());
     }
 
     @Test
@@ -95,15 +95,15 @@ public class GalleryCardTest {
     @Test
     public void rotate() throws Exception {
         GalleryCard c = new GalleryCard(tunnel, 0, 0, false, true, false, true, false, true);
-        assertFalse(c.hasNorth());
-        assertFalse(c.hasEast());
-        assertTrue(c.hasSouth());
-        assertTrue(c.hasWest());
+        assertFalse(c.canHasNorth());
+        assertFalse(c.canHasEast());
+        assertTrue(c.canHasSouth());
+        assertTrue(c.canHasWest());
         c.rotate();
-        assertTrue(c.hasNorth());
-        assertTrue(c.hasEast());
-        assertFalse(c.hasSouth());
-        assertFalse(c.hasWest());
+        assertTrue(c.canHasNorth());
+        assertTrue(c.canHasEast());
+        assertFalse(c.canHasSouth());
+        assertFalse(c.canHasWest());
     }
 
     @Test

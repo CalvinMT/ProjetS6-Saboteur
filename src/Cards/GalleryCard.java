@@ -53,23 +53,24 @@ public class GalleryCard extends Card {
         return type;
     }
 
-    public boolean hasNorth() {
+
+    public boolean canHasNorth() {
         return this.north;
     }
 
-    public boolean hasSouth() {
+    public boolean canHasSouth() {
         return this.south;
     }
 
-    public boolean hasEast() {
+    public boolean canHasEast() {
         return this.east;
     }
 
-    public boolean hasWest() {
+    public boolean canHasWest() {
         return this.west;
     }
 
-    public boolean hasCenter() {
+    public boolean canHasCenter() {
         return this.center;
     }
 
@@ -82,11 +83,11 @@ public class GalleryCard extends Card {
                 this.getX() == c.getY() &&
                 this.getY() == c.getY() &&
 
-                this.hasCenter() == c.hasCenter() &&
-                this.hasNorth() == c.hasNorth() &&
-                this.hasSouth() == c.hasSouth() &&
-                this.hasEast() == c.hasEast() &&
-                this.hasWest() == c.hasWest() &&
+                this.canHasCenter() == c.canHasCenter() &&
+                this.canHasNorth() == c.canHasNorth() &&
+                this.canHasSouth() == c.canHasSouth() &&
+                this.canHasEast() == c.canHasEast() &&
+                this.canHasWest() == c.canHasWest() &&
                 this.isGold() == c.isGold();
     }
 
