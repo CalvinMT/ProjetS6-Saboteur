@@ -7,23 +7,27 @@ import java.util.Random;
 public class DeckGalleryAction extends Deck {
 
 
-    /*DeckGalleryAction(int n){
-        int nbCard = n;
-        /// a changer selon les cartes que l'on met
-        if(nbCard <= 0){
-            nbCard = 44;
-        }
-        this.arrayCard = new ArrayList<Card>();
-        for(int i=0; i<nbCard; i++){
-            this.arrayCard.add(new ActionCard());
-        }
-    }*/
+    private final int nbCardAction = 27;
+
+    private final int nbNegativPickaxe = 3;
+    private final int nbNegativLantern = 3;
+    private final int nbNegativWagon = 3;
+    private final int nbPositivWagon = 2;
+    private final int nbPositivPickaxe = 2;
+    private final int nbPositivLantern = 2;
+    private final int nbMap = 6;
+    private final int nbCrash = 3;
+    private final int nbWagonPickaxe = 1;
+    private final int nbPickaxeLantern = 1;
+    private final int nbWagonLantern = 1;
+
+
+    private final int nbCardGallery = 40;
+    private final int nbCardGallery_centered = 9;
+    final int nbCardGallery_no_centered = nbCardGallery - nbCardGallery_centered;
+
 
     public DeckGalleryAction(){
-        final int nbCardGallery = 40;
-        final int nbCardAction = 27;
-        final int nbCardGallery_centered = 8;
-        final int nbCardGallery_no_centered = nbCardGallery - nbCardGallery_centered;
 
         GalleryCard.Gallery_t type = GalleryCard.Gallery_t.tunnel;
 
@@ -49,7 +53,11 @@ public class DeckGalleryAction extends Deck {
 
     }
 
+    public boolean getValidity(){
+        return nbCardAction == (nbNegativPickaxe + nbNegativLantern + nbNegativWagon + nbPositivWagon + nbPositivPickaxe + nbPositivLantern +
+         nbMap + nbCrash + nbWagonPickaxe + nbPickaxeLantern + nbWagonLantern);
 
+    }
 
 
 

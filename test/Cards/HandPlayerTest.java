@@ -59,5 +59,21 @@ public class HandPlayerTest {
         Assert.assertTrue(h.nbCard() == size-1);
     }
 
-    // MORE TEST
+    @Test
+    public void Testchoose2(){
+        HandPlayer h = new HandPlayer(4);
+        Assert.assertTrue(h.nbCard() > 0);
+        int size = h.nbCard();
+        h.chooseOne_with_remove(5);
+        Assert.assertTrue(h.nbCard() == size-1);
+    }
+
+    @Test
+    public void Testchoose3(){
+        HandPlayer h = new HandPlayer(4);
+        Assert.assertTrue(h.nbCard() > 0);
+        int size = h.nbCard();
+        h.chooseOne_without_remove(5);
+        Assert.assertTrue(h.nbCard() == size);
+    }
 }
