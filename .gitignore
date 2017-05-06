@@ -23,8 +23,14 @@ hs_err_pid*
 
 # IDE
 .idea/
+ProjetS6-Saboteur.iml
+out/
 
 # Eclispe
 /bin/
 .classpath
 .project
+
+# macOS
+.DS_Store
+
