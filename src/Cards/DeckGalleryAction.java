@@ -44,9 +44,52 @@ public class DeckGalleryAction extends Deck {
             this.arrayCard.add(new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean()));
         }
 
-        for(int i=0; i<nbCardAction; i++){
-            this.arrayCard.add(new ActionCard());
+        // Ajout des cartes actions
+        for(int i=0; i<nbNegativLantern; i++){
+            this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
         }
+
+        for(int i=0; i<nbNegativPickaxe; i++){
+            this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe));
+        }
+
+        for(int i=0; i<nbNegativWagon; i++){
+            this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+        }
+
+        for(int i=0; i<nbPositivLantern; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern));
+        }
+
+        for(int i=0; i<nbPositivPickaxe; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe));
+        }
+
+        for(int i=0; i<nbPositivWagon; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon));
+        }
+
+        for(int i=0; i<nbPickaxeLantern; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Lantern));
+        }
+
+        for(int i=0; i<nbWagonLantern; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern, RepareSabotageCard.Tools.Wagon));
+        }
+
+        for(int i=0; i<nbWagonPickaxe; i++){
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Wagon));
+        }
+
+
+        for(int i=0; i<nbMap; i++){
+            this.arrayCard.add(new ActionCard("Map"));
+        }
+
+        for(int i=0; i<nbCrash; i++){
+            this.arrayCard.add(new ActionCard("Crumbing"));
+        }
+
 
         this.shuffle();
         this.shuffle();
