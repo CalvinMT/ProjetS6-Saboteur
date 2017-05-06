@@ -3,8 +3,6 @@ package Cards;
 
 /// Carte que le joueur a dans la main
 
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Hand extends Deck {
 

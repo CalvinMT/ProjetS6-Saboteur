@@ -33,7 +33,7 @@ public class DeckGalleryAction extends Deck {
 
         Random rand = new Random();
 
-        this.arrayCard = new ArrayList<Card>();
+        this.arrayCard = new ArrayList<>();
 
         for(int i=0; i<nbCardGallery_centered; i++){
 
