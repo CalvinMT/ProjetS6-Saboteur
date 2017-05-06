@@ -144,4 +144,21 @@ public class GalleryCard extends Card {
         }
         return res;
     }
+
+    public String toString(){
+
+        String renvoi = "Gallery: ";
+
+        renvoi += "{";
+        if(this.north){renvoi += "N";}
+        if(this.east){renvoi += "E";}
+        if(this.west){renvoi += "W";}
+        if(this.south){renvoi += "S";}
+
+        renvoi += "} ";
+        if(this.center){
+            renvoi += "bloqued";
+        }
+        return renvoi;
+    }
 }
