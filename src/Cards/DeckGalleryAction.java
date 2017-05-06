@@ -7,6 +7,8 @@ import java.util.Random;
 public class DeckGalleryAction extends Deck {
 
 
+    //Dépendant du jeu
+
     private final int nbCardAction = 27;
 
     private final int nbNegativPickaxe = 3;
@@ -45,47 +47,57 @@ public class DeckGalleryAction extends Deck {
         }
 
         // Ajout des cartes actions
+        // Carte Sabotage : Lantern
         for(int i=0; i<nbNegativLantern; i++){
             this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
         }
 
+        // Carte Sabotage : Pickaxe
         for(int i=0; i<nbNegativPickaxe; i++){
             this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe));
         }
 
+        // Carte Sabotage : Wagon
         for(int i=0; i<nbNegativWagon; i++){
             this.arrayCard.add(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
         }
 
+        // Carte Repare : Lantern
         for(int i=0; i<nbPositivLantern; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern));
         }
 
+        // Carte Repare : Pickaxe
         for(int i=0; i<nbPositivPickaxe; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe));
         }
 
+        // Carte Repare : Wagon
         for(int i=0; i<nbPositivWagon; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon));
         }
 
+        // Carte Repare : Lantern + Pickaxe
         for(int i=0; i<nbPickaxeLantern; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Lantern));
         }
 
+        // Carte Repare : Lantern + Wagon
         for(int i=0; i<nbWagonLantern; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern, RepareSabotageCard.Tools.Wagon));
         }
 
+        // Carte Repare : Wagon + Pickaxe
         for(int i=0; i<nbWagonPickaxe; i++){
             this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Wagon));
         }
 
-
+        // Carte Map
         for(int i=0; i<nbMap; i++){
             this.arrayCard.add(new ActionCard("Map"));
         }
 
+        // Carte effondrement
         for(int i=0; i<nbCrash; i++){
             this.arrayCard.add(new ActionCard("Crumbing"));
         }

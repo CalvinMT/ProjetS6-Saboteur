@@ -57,6 +57,7 @@ public class RepareSabotageCard extends ActionCard{
         }
     }
 
+    // la carte courante (this) peut être réparé par celle donnée en argument
     public boolean canBeRepareBy(RepareSabotageCard c){
         if(c.action == Action.Repare && this.action == Action.Sabotage){
             if(this.arrayTools.size() > 0){
