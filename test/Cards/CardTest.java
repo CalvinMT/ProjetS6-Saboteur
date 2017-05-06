@@ -11,18 +11,18 @@ public class CardTest {
     @Test
     public void getType() throws Exception {
         Card cAction = new Card(action);
-        Card cPlayer = new Card(player);
+        Card cPlayer = new Card(role);
         Card cGallery = new Card(gallery);
 
         assertTrue(cAction.getType() == action);
-        assertTrue(cPlayer.getType() == player);
+        assertTrue(cPlayer.getType() == role);
         assertTrue(cGallery.getType() == gallery);
     }
 
     @Test
     public void equals() throws Exception {
-        Card c1 = new Card(player);
-        Card c2 = new Card(player);
+        Card c1 = new Card(role);
+        Card c2 = new Card(role);
 
         assertTrue(c1.equals(c2));
         c2 = new Card(action);

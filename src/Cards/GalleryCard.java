@@ -14,12 +14,12 @@ public class GalleryCard extends Card {
     private boolean gold = false;
 
     public GalleryCard() { // Init start card
-        this.type = Card_t.player;
+        this.type = Card_t.role;
         this.type_g = Gallery_t.start;
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        this.type = Card_t.player;
+        this.type = Card_t.role;
         this.type_g = t;
         this.center = c;
         this.north = n;
@@ -29,7 +29,7 @@ public class GalleryCard extends Card {
     }
 
     public GalleryCard(Gallery_t t, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w){
-        this.type = Card_t.player;
+        this.type = Card_t.role;
         this.type_g = t;
         this.gold = g;
         this.center = c;
@@ -41,7 +41,7 @@ public class GalleryCard extends Card {
 
     // Pour debug
     public GalleryCard(Gallery_t t, int x, int y, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        this.type = Card_t.player;
+        this.type = Card_t.role;
         this.type_g = t;
         this.x = x;
         this.y = y;

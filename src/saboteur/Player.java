@@ -11,29 +11,58 @@ import Cards.*;
  * @author uwalakae
  */
 public class Player {
-    String playerName;
-    Card role;
-    int goldPoints;
-    Card [] playableCards; // les cartes données au debut du jeu
+
+    private String playerName;
+    private Card role;
+    private int goldPoints;
+    private HandPlayer playableCards; // les cartes données au debut du jeu
     Card [] pauseCards; // les cartes de pause devant le joueur (maximum de 3)
-    Card [] treasureCardsChecked; // les cartes "trésor(s)" vues par ce joueur 
 
     public Player(String playerName) {
         this.playerName = playerName;
         this.goldPoints = 0;      
         pauseCards = new Card [3];
-        treasureCardsChecked = new Card [3];
+        this.playableCards = new HandPlayer();
     }
-    
+
+    public Player() {
+        this.playerName = "Joueur";
+        this.goldPoints = 0;
+        pauseCards = new Card [3];
+        this.playableCards = new HandPlayer();
+    }
+
+    // assignation des rôles
     public void assignRole(Card c){
-    	this.role = c;
+        if(c.getType() == Card.Card_t.role){
+            this.role = c;
+        } else {
+            System.err.println("Fail to assign Role");
+        }
     }
-    
-    public void assignPlayingCards(Card[] startCards) {
-    	int numberOfStartCards = startCards.length;
-        this.playableCards = new Card [numberOfStartCards];
-        for (int i=0; i<numberOfStartCards; i++) 
-            this.playableCards[i] = startCards[i];
+
+    // le joueur pioche
+    public void drawCard(Deck d) {
+        if(playableCards.nbCard() < 6){
+            playableCards.addCard(d.getTopDeck());
+        }
+    }
+
+    // le joueur se défausse
+    public void discard(int i){
+        if(i >= 0 && i < playableCards.nbCard() && playableCards.nbCard() > 0){
+            playableCards.discard(i);
+        }
+    }
+
+    // regarder une carte de son jeu
+    public Card lookAtCard(int i){
+        if(i >= 0 && i < playableCards.nbCard() && playableCards.nbCard() > 0){
+            return playableCards.chooseOne_without_remove(i);
+        } else {
+            System.out.println("This card doesn't exist");
+            return null;
+        }
     }
 
     public String getPlayerName() {
@@ -48,7 +77,7 @@ public class Player {
         return goldPoints;
     }
 
-    public Card[] getPlayableCards() {
+    public Hand getPlayableCards() {
         return playableCards;
     }
 
@@ -56,14 +85,10 @@ public class Player {
         return pauseCards;
     }
 
-    public Card[] getTreasureCardsChecked() {
-        return treasureCardsChecked;
+    public int nbCardHand(){
+        return this.playableCards.nbCard();
     }
-   
-    public void changeACard(Card newCard, int indexToChange) {
-        playableCards[indexToChange] = newCard;
-        return;
-    }
+
     
     
     

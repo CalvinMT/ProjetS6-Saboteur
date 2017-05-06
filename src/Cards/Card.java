@@ -1,11 +1,11 @@
 package Cards;
 
 public class Card {
-    public enum Card_t {action, player, gallery};
+    public enum Card_t {action, role, gallery};
     protected Card_t type;
 
     Card() {
-        this.type = Card_t.player;
+        this.type = Card_t.role;
     }
     public Card(Card_t t) {
         this.type = t;

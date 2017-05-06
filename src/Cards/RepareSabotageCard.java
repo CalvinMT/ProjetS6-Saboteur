@@ -20,12 +20,15 @@ public class RepareSabotageCard extends ActionCard{
     public RepareSabotageCard(String type, Tools t){
         switch(type){
             case "Repare":
+                this.type = Card.Card_t.action;
                 this.action = Action.Repare;
                 break;
             case "Sabotage":
+                this.type = Card.Card_t.action;
                 this.action = Action.Sabotage;
                 break;
             default:
+                this.type = Card.Card_t.action;
                 this.action = Action.Map;
                 break;
         }

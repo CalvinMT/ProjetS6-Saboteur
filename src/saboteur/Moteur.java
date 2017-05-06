@@ -23,7 +23,7 @@ public class Moteur {
 		return false;   
     }
 	
-	// player.playableCards sera modifié du coup; la gallerie aussi
+	// role.playableCards sera modifié du coup; la gallerie aussi
     public void appendToGallery(Player player, Card cardToPlay, Card cardToAppendTo) {
         // à implementer
     	if (isGameOver()) {
@@ -39,7 +39,7 @@ public class Moteur {
     }
     
     // enleve une carte de type cul de sac, modifie la gallerie, et 
-    // modifie le tableau player.playableCards 
+    // modifie le tableau role.playableCards
     public void destroyCulDeSac(Player player, Card cardToPlay, int x, int y) {
         
     }
@@ -51,7 +51,7 @@ public class Moteur {
     
     // enleve une carte de pause correspondant au type de Carte c devant le Player j
     // pourrait l'utiliser pour lui meme
-    // modifie le tableau player.playableCards et pausedPlayer.pauseCards
+    // modifie le tableau role.playableCards et pausedPlayer.pauseCards
     public void unpausePlayer(Player player, Card cardToPlay, Player pausedPlayer) {
         
     }
@@ -65,9 +65,9 @@ public class Moteur {
         
     }
     
-    // verifie que player possede une carte de type Map,
+    // verifie que role possede une carte de type Map,
     // verifie (x,y), puis lui renvoie le type de la carte sur la case (x,y). 
-    // player.playableCards sera modifié et aussi player.treasureCardsChecked 
+    // role.playableCards sera modifié et aussi role.treasureCardsChecked
     public boolean verifyPeep(Player player, Card cardToPlay, Card possibleTreasure) {
     	return false;
     }
