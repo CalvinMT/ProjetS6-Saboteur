@@ -51,9 +51,6 @@ public class ActionCard extends Card {
     public String toString(){
         String renvoi = "Action: ";
         switch(this.action){
-            case Sabotage:
-                renvoi += "Sabotage";
-                break;
             case Map:
                 renvoi += "Map";
                 break;
