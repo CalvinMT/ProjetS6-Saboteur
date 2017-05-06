@@ -1,11 +1,12 @@
 package Cards;
 
 
-public class PlayerCard extends Card {
+public class RoleCard extends Card {
 
         String role;
 
-        PlayerCard(String r){
+        RoleCard(String r){
+            this.type = Card_t.player;
             if(r == "Mineur" || r == "Saboteur"){
                 this.role = r;
             } else {
@@ -13,8 +14,9 @@ public class PlayerCard extends Card {
             }
         }
 
-        PlayerCard(){
+        RoleCard(){
             this.role = "Mineur";
+            this.type = Card_t.player;
         }
 
         public boolean isMinor(){
