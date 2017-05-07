@@ -7,7 +7,7 @@ public class PlayerAttribute extends Hand {
 
     private final int nbAttribute = 3;
 
-    PlayerAttribute(){
+    public PlayerAttribute(){
         arrayCard = new ArrayList<Card>();
     }
 

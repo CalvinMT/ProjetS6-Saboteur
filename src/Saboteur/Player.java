@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package saboteur;
+package Saboteur;
 import Cards.*;
 
 /**
@@ -16,19 +16,19 @@ public class Player {
     private Card role;
     private int goldPoints;
     private HandPlayer playableCards; // les cartes données au debut du jeu
-    Card [] pauseCards; // les cartes de pause devant le joueur (maximum de 3)
+    private PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
 
     public Player(String playerName) {
         this.playerName = playerName;
         this.goldPoints = 0;      
-        pauseCards = new Card [3];
+        attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
     public Player() {
         this.playerName = "Joueur";
         this.goldPoints = 0;
-        pauseCards = new Card [3];
+        attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
@@ -65,6 +65,18 @@ public class Player {
         }
     }
 
+    // ajout d'une carte attribut
+    public void setAttributeCards(Card c){
+        attributeCards.addAttribute(c);
+    }
+
+    // met une carte malus a au joueur p
+    public void putAttribute(Card c, Player p){
+        if(!p.equals(this)){
+            p.setAttributeCards(c);
+        }
+    }
+
     public String getPlayerName() {
         return playerName;
     }
@@ -81,8 +93,8 @@ public class Player {
         return playableCards;
     }
 
-    public Card[] getPauseCards() {
-        return pauseCards;
+    public PlayerAttribute getPauseCards() {
+        return attributeCards;
     }
 
     public int nbCardHand(){

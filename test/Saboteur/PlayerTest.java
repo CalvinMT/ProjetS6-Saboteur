@@ -1,7 +1,7 @@
 /**
  * 
  */
-package saboteur;
+package Saboteur;
 
 import static org.junit.Assert.*;
 import static Cards.Card.Card_t.*;
@@ -19,7 +19,7 @@ import Cards.Card;
 public class PlayerTest {
 
 	/**
-	 * Test method for {@link saboteur.Player#(java.lang.String, Cards.Card, Cards.Card[])}.
+	 * Test method for {@link Saboteur.Player#(java.lang.String, Cards.Card, Cards.Card[])}.
 	 */
 	@Test
 	public void testPlayer() {
@@ -29,7 +29,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#getPlayerName()}.
+	 * Test method for {@link Saboteur.Player#getPlayerName()}.
 	 */
 	@Test
 	public void testGetPlayerName() {
@@ -39,7 +39,7 @@ public class PlayerTest {
 	}
 	
 	/**
-	 * Test method for {@link saboteur.Player#()}.
+	 * Test method for {@link Saboteur.Player#()}.
 	 */
 	@Test
 	public void testAssignRole() {
@@ -51,7 +51,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#getRole()}.
+	 * Test method for {@link Saboteur.Player#getRole()}.
 	 */
 	@Test
 	public void testGetRole() {
@@ -65,7 +65,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#getGoldPoints()}.
+	 * Test method for {@link Saboteur.Player#getGoldPoints()}.
 	 */
 	@Test
 	public void testGetGoldPoints() {
@@ -75,7 +75,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#getPlayableCards()}.
+	 * Test method for {@link Saboteur.Player#getPlayableCards()}.
 	 */
 	@Test
 	public void testGetPlayableCards() {
@@ -85,7 +85,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#getPauseCards()}.
+	 * Test method for {@link Saboteur.Player#getPauseCards()}.
 	 */
 	@Test
 	public void testGetPauseCards() {
@@ -95,7 +95,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Test method for {@link saboteur.Player#()}.
+	 * Test method for {@link Saboteur.Player#()}.
 	 */
 	/*@Test
 	public void testGetTreasureCardsChecked() {
@@ -105,7 +105,7 @@ public class PlayerTest {
 	}*/
 
 	/**
-	 * Test method for {@link saboteur.Player#(Cards.Card, int)}.
+	 * Test method for {@link Saboteur.Player#(Cards.Card, int)}.
 	 */
 	/*@Test
 	public void testChangeACard() {
@@ -127,7 +127,7 @@ public class PlayerTest {
 	}*/
 	
 	/**
-	 * Test method for {@link saboteur.Player#assignPlayingCards(Card[] c)}.
+	 * Test method for {@link Saboteur.Player#assignPlayingCards(Card[] c)}.
 	 */
 	/*@Test
 	public void testAssignPlayingCards() {
