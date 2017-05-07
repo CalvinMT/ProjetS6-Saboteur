@@ -5,7 +5,7 @@ public class RoleCard extends Card {
 
         String role;
 
-        RoleCard(String r){
+        public RoleCard(String r){
             this.type = Card_t.role;
             if(r == "Mineur" || r == "Saboteur"){
                 this.role = r;
@@ -14,7 +14,7 @@ public class RoleCard extends Card {
             }
         }
 
-        RoleCard(){
+        public RoleCard(){
             this.role = "Mineur";
             this.type = Card_t.role;
         }

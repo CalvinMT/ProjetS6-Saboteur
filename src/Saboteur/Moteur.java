@@ -6,17 +6,58 @@
 package Saboteur;
 import Cards.*;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author uwalakae
  */
 public class Moteur {
     // attributs (autres à ajouter par la suite)
-	Player [] players;
+    ArrayList<Player> arrayPlayer;
     
     // constructeur
-    
-    
+    Moteur(int n){
+        arrayPlayer = new ArrayList<Player>();
+        initArrayPlayer(n);
+    }
+
+
+    // thespygeek
+    private void initArrayPlayer(int n){
+        int nbPlayer;
+
+        if(n < 3 && n > 10){
+            nbPlayer = 3;
+        } else {
+            nbPlayer = n;
+        }
+
+        for(int i=0; i<nbPlayer; i++){
+            arrayPlayer.add(new Player(i+1));
+        }
+    }
+
+    public int nbPlayer(){
+        return arrayPlayer.size();
+    }
+
+    public void promptPlayers(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i));
+            System.out.println();
+        }
+    }
+
+    // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
+    public int maxHandCard(){
+        return 6;
+    }
+
+
+    /// EMEZ
+
+
 	// verifie que cardToPlay peut prolonger la gallerie en respectant les regles si mis adjacent 
 	// à cardToAppendTo
 	public boolean verifyAppendToGallery(Player player, Card cardToPlay, Card cardToAppendTo) {
@@ -89,6 +130,8 @@ public class Moteur {
     public void shareGoldAmongSaboteurs(Player [] players){
         
     }
+
+
     
 
 }

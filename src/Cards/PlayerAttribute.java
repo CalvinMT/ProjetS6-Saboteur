@@ -9,6 +9,7 @@ public class PlayerAttribute extends Hand {
 
     public PlayerAttribute(){
         arrayCard = new ArrayList<Card>();
+        this.visible = true;
     }
 
     // se défausser
