@@ -14,11 +14,16 @@ import java.util.ArrayList;
  */
 public class Moteur {
     // attributs (autres à ajouter par la suite)
-    ArrayList<Player> arrayPlayer;
+    private ArrayList<Player> arrayPlayer;
+    private Deck d;
+
+    // ligne nbJoueur colonne Nb carte
+    final int [][] ruleNbCard = {{3, 6}, {4, 6}, {5, 6}, {6, 5}, {7, 5}, {8, 4}, {9, 4}, {10, 4}};
     
     // constructeur
     Moteur(int n){
         arrayPlayer = new ArrayList<Player>();
+        d = new DeckGalleryAction();
         initArrayPlayer(n);
     }
 
@@ -52,6 +57,26 @@ public class Moteur {
     // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
     public int maxHandCard(){
         return 6;
+    }
+
+    public void initHand(){
+
+        int nbCard = ruleNbCard[this.nbPlayer()][0];
+
+        for(int i=0; i<nbPlayer(); i++){
+            for(int j=0; j<nbCard; j++){
+                arrayPlayer.get(i).drawCard(d);
+            }
+        }
+
+    }
+
+    public Player getPlayer(int i){
+        if(i >= 0 && i < nbPlayer()){
+            return arrayPlayer.get(i);
+        } else {
+            return null;
+        }
     }
 
 
