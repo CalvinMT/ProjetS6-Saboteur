@@ -10,11 +10,12 @@ public class Saboteur {
         Moteur m = new Moteur(nbPlayer);
 
         try {
+            System.out.println(m);
             m.chooseRole(0, 2);
 
             m.initHand();
             m.promptPlayers();
-//            System.out.println(m);
+            System.out.println(m);
         } catch(Exception e){
             System.err.println("Erreur choix du role");
         }

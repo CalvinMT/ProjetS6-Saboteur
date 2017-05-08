@@ -13,19 +13,23 @@ import java.util.ArrayList;
  * @author uwalakae
  */
 public class Moteur {
-    // attributs (autres à ajouter par la suite)
     private ArrayList<Player> arrayPlayer;
-    private Deck d;
+    private Deck pile;
     private int currentPlayer;
     private HandRole roleCards;
 
-    // ligne nbJoueur colonne Nb carte de 0 à 7
+    //ajout du board
+    //Board board;
+
+
+
+    // ligne nbJoueur colonne Nb carte de 0 à 7 contenant le nombre de cartes en début de partie
     final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
     
     // constructeur
     public Moteur(int nbPlayer){
         arrayPlayer = new ArrayList<Player>();
-        d = new DeckGalleryAction();
+        this.pile = new DeckGalleryAction();
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
@@ -47,13 +51,14 @@ public class Moteur {
         }
     }
 
+    // fait piocher le bon nombre de carte a tous les joueurs
     public void initHand(){
 
         int nbCard = ruleNbCard[this.nbPlayer()-3];
 
         for(int i=0; i<nbPlayer(); i++){
             for(int j=0; j<nbCard; j++){
-                arrayPlayer.get(i).drawCard(d);
+                arrayPlayer.get(i).drawCard(this.pile);
             }
         }
 
@@ -100,35 +105,39 @@ public class Moteur {
         }
     }
 
+    // renvoie le numero du joueur courant
     public int currentNumPlayer(){
         return this.currentPlayer;
     }
 
+    // renvoie l'objet Player du joueur courant
     public Player getCurrentPlayer(){
         return arrayPlayer.get(this.currentPlayer);
     }
 
+    // renvoie une arrayList de tous les joueurs dans la partie
     public ArrayList<Player> getAllPlayers(){
         return this.arrayPlayer;
     }
 
     public String toString(){
-        String renvoi = "";
+        String renvoi = "Moteur: \n";
 
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
-        renvoi += "Deck: "+this.d.nbCard() +" cartes \n";
+        renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
-        renvoi += "Joueurs { ";
+        renvoi += "Joueurs [ ";
         for(int i=0; i<nbPlayer(); i++){
             renvoi += this.getPlayer(i).getPlayerName() + " ; ";
         }
-        renvoi += "}\n";
+        renvoi += "]\n";
 
         return renvoi;
     }
 
 
     /// EMEZ
+    /// A voir avec lui pour comprendre ce qu'il voulait faire
 
 
 	// verifie que cardToPlay peut prolonger la gallerie en respectant les regles si mis adjacent 

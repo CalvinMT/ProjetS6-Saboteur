@@ -18,15 +18,18 @@ public class Player {
     private HandPlayer playableCards; // les cartes données au debut du jeu
     private PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
 
-    public Player(String playerName) {
-        this.playerName = playerName;
-        this.goldPoints = 0;      
+    // Constructeur
+
+    public Player() {
+        this.playerName = "Joueur";
+        this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
-    public Player() {
-        this.playerName = "Joueur";
+
+    public Player(String playerName) {
+        this.playerName = playerName;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
@@ -38,6 +41,7 @@ public class Player {
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
+
 
     // assignation des rôles
     public void assignRole(Card c){
