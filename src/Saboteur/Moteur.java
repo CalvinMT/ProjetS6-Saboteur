@@ -16,23 +16,27 @@ public class Moteur {
     // attributs (autres à ajouter par la suite)
     private ArrayList<Player> arrayPlayer;
     private Deck d;
+    private int currentPlayer;
+    private HandRole roleCards;
 
-    // ligne nbJoueur colonne Nb carte
-    final int [][] ruleNbCard = {{3, 6}, {4, 6}, {5, 6}, {6, 5}, {7, 5}, {8, 4}, {9, 4}, {10, 4}};
+    // ligne nbJoueur colonne Nb carte de 0 à 7
+    final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
     
     // constructeur
-    Moteur(int n){
+    public Moteur(int nbPlayer){
         arrayPlayer = new ArrayList<Player>();
         d = new DeckGalleryAction();
-        initArrayPlayer(n);
+        initArrayPlayer(nbPlayer);
+        currentPlayer = 0;
+        roleCards = new HandRole(nbPlayer());
     }
 
 
-    // thespygeek
+    // initialise le tableau contenant les joueurs
     private void initArrayPlayer(int n){
         int nbPlayer;
 
-        if(n < 3 && n > 10){
+        if(n < 3 || n > 10){
             nbPlayer = 3;
         } else {
             nbPlayer = n;
@@ -43,25 +47,9 @@ public class Moteur {
         }
     }
 
-    public int nbPlayer(){
-        return arrayPlayer.size();
-    }
-
-    public void promptPlayers(){
-        for(int i=0; i<nbPlayer(); i++){
-            System.out.println(arrayPlayer.get(i));
-            System.out.println();
-        }
-    }
-
-    // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
-    public int maxHandCard(){
-        return 6;
-    }
-
     public void initHand(){
 
-        int nbCard = ruleNbCard[this.nbPlayer()][0];
+        int nbCard = ruleNbCard[this.nbPlayer()-3];
 
         for(int i=0; i<nbPlayer(); i++){
             for(int j=0; j<nbCard; j++){
@@ -71,12 +59,72 @@ public class Moteur {
 
     }
 
+    // choix des roles en début de manche
+    public void chooseRole(int numPlayer, int numCard) throws Exception{
+
+        if(!this.roleCards.isEmpty()){
+            if(numCard >= 0 && numCard < this.roleCards.nbCard() && numPlayer >= 0 && numPlayer < nbPlayer()){
+                Card c = this.roleCards.chooseOne_with_remove(numCard);
+                this.arrayPlayer.get(numPlayer).assignRole(c);
+            } else {
+                throw new Exception();
+            }
+        } else {
+            throw new Exception();
+        }
+    }
+
+    // affiche les infos joueurs en version texte
+    public void promptPlayers(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i));
+            System.out.println();
+        }
+    }
+
+    // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
+    public int maxHandCard(){
+        return ruleNbCard[nbPlayer()-3];
+    }
+
+    // renvoie le nombre de joueur
+    public int nbPlayer(){
+        return arrayPlayer.size();
+    }
+
     public Player getPlayer(int i){
         if(i >= 0 && i < nbPlayer()){
             return arrayPlayer.get(i);
         } else {
             return null;
         }
+    }
+
+    public int currentNumPlayer(){
+        return this.currentPlayer;
+    }
+
+    public Player getCurrentPlayer(){
+        return arrayPlayer.get(this.currentPlayer);
+    }
+
+    public ArrayList<Player> getAllPlayers(){
+        return this.arrayPlayer;
+    }
+
+    public String toString(){
+        String renvoi = "";
+
+        renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
+        renvoi += "Deck: "+this.d.nbCard() +" cartes \n";
+        renvoi += this.roleCards.print_without_visibility() + "\n";
+        renvoi += "Joueurs { ";
+        for(int i=0; i<nbPlayer(); i++){
+            renvoi += this.getPlayer(i).getPlayerName() + " ; ";
+        }
+        renvoi += "}\n";
+
+        return renvoi;
     }
 
 

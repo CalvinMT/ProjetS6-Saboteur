@@ -9,9 +9,17 @@ public class Saboteur {
         int nbPlayer = 5;
         Moteur m = new Moteur(nbPlayer);
 
-        m.initHand();
+        try {
+            m.chooseRole(0, 2);
 
-        m.promptPlayers();
+            m.initHand();
+            m.promptPlayers();
+//            System.out.println(m);
+        } catch(Exception e){
+            System.err.println("Erreur choix du role");
+        }
+
+
 
 
     }

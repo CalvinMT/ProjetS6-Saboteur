@@ -119,7 +119,11 @@ public class Player {
         String renvoi = "";
 
         renvoi += "Player: "+this.playerName + "\n";
-        renvoi += this.role + "\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += this.role + "\n";
+        }
         renvoi += "Nombre d'or: "+this.goldPoints + "\n";
         renvoi += this.attributeCards + "\n";
         renvoi += this.playableCards + "\n";

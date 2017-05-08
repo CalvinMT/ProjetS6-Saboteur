@@ -73,7 +73,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void testChangeACard() {
+	public void testHandCard() {
 		String playerName = "Ada";
 		Player p = new Player(playerName);
 
