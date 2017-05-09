@@ -1,3 +1,5 @@
+package IHM;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -25,7 +26,6 @@ public class OptionsMenu {
 	@FXML
 	private Text textApplied;
 	
-	@FXML
 	private Boolean checkBoxFullscreen;
 
 	
@@ -38,7 +38,8 @@ public class OptionsMenu {
 
 	@FXML
     public void handleCheckBoxFullscreen () throws IOException {
-		checkBoxFullscreen // TODO
+		if (checkBoxFullscreen == false) checkBoxFullscreen = true;
+		else if (checkBoxFullscreen == true) checkBoxFullscreen = false;
     }
 	
 	@FXML
@@ -81,11 +82,11 @@ public class OptionsMenu {
 					// TODO
 				}
 				else if (scanner.next().equals("Fullscreen")) {
-					if (scanner.next().equals(true)) {
-						checkBoxFullscreen.fire();
-					}
+					if (scanner.next().equals(true)) checkBoxFullscreen = true;
+					else if (scanner.next().equals(false)) checkBoxFullscreen = false;
 				}
 			}
+			scanner.close();
 		} catch (Exception e) {
 		}
 	}

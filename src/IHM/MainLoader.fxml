@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="borderPaneMainMenu" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenu">
+<BorderPane fx:id="borderPaneMainMenu" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainMenu">
    <top>
       <ImageView fitHeight="154.0" fitWidth="592.0" BorderPane.alignment="CENTER">
          <image>
