@@ -4,14 +4,16 @@ package Board;
 import Cards.GalleryCard;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Random;
 
 import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
-    ArrayList<Node> mine;
-
-
+    private ArrayList<Node> mine = new ArrayList<Node>();
+    private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
+    private ArrayList<Couple> possiblePositions = new ArrayList<Couple>();
 
     public Board() {
         Random r = new Random();
@@ -23,14 +25,14 @@ public class Board {
         for (int i = -1; i < 2; i++) {
             x = 2*i;
             if (i == gold) {
-                mine.add(new GalleryCard(but, x, 8, true, true, true, true ,true, true)); // Minerai
+                mine.add(new Node(new GalleryCard(but, x, 8, true, true, true, true ,true, true))); // Minerai
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    mine.add(new GalleryCard(but, x, 8, false, true, false, true, true, false)); // Sans minerai droit
+                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, true, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new GalleryCard(but, x, 8, false, true, false, true, false, true)); // Sans minerai gauche
+                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, false, true))); // Sans minerai gauche
                 }
             }
         }
@@ -44,17 +46,180 @@ public class Board {
         mine.add(new Node(but3));
     }
 
-    // TODO
+
+    // TODO : Tests
     // ajoute la carte card à la suite de mine
     public void addCard(GalleryCard card) {
+        Node n = new Node(card);
 
+        for (int i = 0; i < mine.size(); i++) {
+            if ((mine.get(i).card.getX() == (card.getX() - 1)) && (mine.get(i).card.getY() == card.getY())) {
+                n.setNorth(i);
+                mine.get(i).setSouth(mine.size());
+            }
+            else if ((mine.get(i).card.getX() == (card.getX() + 1)) && (mine.get(i).card.getY() == card.getY())) {
+                n.setSouth(i);
+                mine.get(i).setNorth(mine.size());
+            }
+            else if ((mine.get(i).card.getX() == card.getX()) && (mine.get(i).card.getY() == (card.getY() + 1))) {
+                n.setEast(i);
+                mine.get(i).setWest(mine.size());
+            }
+            else if ((mine.get(i).card.getX() == (card.getX())) && (mine.get(i).card.getY() == (card.getY() - 1))) {
+                n.setWest(i);
+                mine.get(i).setEast(mine.size());
+            }
+        }
+
+        mine.add(n);
     }
 
-    // TODO
+    // TODO : Tests
     // Parcours des nodes si indices liens l:
     //      l = idx -> l = -1
     //      l > idx -> l = l - 1
-    public void removeCard(int idx) {
+    public void removeCard(Couple coord) {
+        int idx = 0;
+        for (int i = 0; i < mine.size(); i++) {
+            if (mine.get(i).card.getX() == coord.getX() && mine.get(i).card.getY() == coord.getY()) {
+                idx = i;
+                mine.remove(i);
+            }
+        }
 
+        for (int i = 0; i < mine.size(); i++) {
+            if(mine.get(i).getNorth() == idx) {
+                mine.get(i).setNorth(-1);
+            }
+            else if(mine.get(i).getNorth() > idx) {
+                mine.get(i).setNorth(mine.get(i).getNorth() - 1);
+            }
+
+            if(mine.get(i).getSouth() == idx) {
+                mine.get(i).setSouth(-1);
+            }
+            else if(mine.get(i).getNorth() > idx) {
+                mine.get(i).setSouth(mine.get(i).getSouth() - 1);
+            }
+
+            if(mine.get(i).getEast() == idx) {
+                mine.get(i).setEast(-1);
+            }
+            else if(mine.get(i).getEast() > idx) {
+                mine.get(i).setEast(mine.get(i).getEast() - 1);
+            }
+
+            if(mine.get(i).getWest() == idx) {
+                mine.get(i).setWest(-1);
+            }
+            else if(mine.get(i).getWest() > idx) {
+                mine.get(i).setWest(mine.get(i).getWest() - 1);
+            }
+        }
+    }
+
+    // TODO : Tests
+    public void getAccessibleCards() {
+        LinkedList<Node> queue = new LinkedList<Node>();
+        Node currentNode, newNode;
+
+        try {
+            queue.add(mine.get(0));
+            while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
+                currentNode = queue.remove(); // On défile
+                if (currentNode.card.canHasNorth()) {
+                    if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
+                        newNode = mine.get(currentNode.getNorth());
+                        queue.add(newNode);
+                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
+                    } else {
+                        possiblePositions.add(new Couple(currentNode.card.getX() -1 , currentNode.card.getY()));
+                    }
+                }
+                if (currentNode.card.canHasSouth()) {
+                    if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
+                        newNode = mine.get(currentNode.getSouth());
+                        queue.add(newNode);
+                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
+                    } else {
+                        possiblePositions.add(new Couple(currentNode.card.getX() + 1, currentNode.card.getY()));
+                    }
+                }
+                if (currentNode.card.canHasEast()) {
+                    if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
+                        newNode = mine.get(currentNode.getEast());
+                        queue.add(newNode);
+                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
+                    } else {
+                        possiblePositions.add(new Couple(currentNode.card.getX(), currentNode.card.getY() + 1));
+                    }
+                }
+                if (currentNode.card.canHasWest()) {
+                    if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
+                        newNode = mine.get(currentNode.getWest());
+                        queue.add(newNode);
+                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
+                    } else {
+                        // Si card.west == true -> Ajout dans possiblePosition
+                        possiblePositions.add(new Couple(currentNode.card.getX(), currentNode.card.getY() - 1));
+                    }
+                }
+            }
+        }
+        catch (IllegalStateException e) {
+            System.err.println("No more place in queue");
+            System.err.println(e.getMessage() + " due to " + e.getCause());
+        }
+    }
+
+    // TODO : Tests
+    public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
+        Node currNode;
+
+        currNode = accessCard.get(new Couple(currPos.getX() - 1, currPos.getY()));
+        if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
+            return false;
+        }
+
+        currNode = accessCard.get(new Couple(currPos.getX() + 1, currPos.getY()));
+        if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
+            return false;
+        }
+
+        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() + 1));
+        if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
+            return false;
+        }
+
+        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() - 1));
+        if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    //TODO : Tests
+    public void getPossiblePositions(GalleryCard c) {
+        GalleryCard cRotated = c;
+        cRotated.rotate();
+
+        getAccessibleCards();
+        for (int i = 0; i < possiblePositions.size(); i++) {
+            if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(cRotated, possiblePositions.get(i))) {
+                possiblePositions.remove(i);
+                i--;
+            }
+        }
+    }
+
+    // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
+
+    public Node getElement(int i) {
+        return mine.get(i);
+    }
+
+    public int getMineSize() {
+        return mine.size();
     }
 }

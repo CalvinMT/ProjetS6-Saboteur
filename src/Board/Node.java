@@ -5,7 +5,7 @@ import Cards.GalleryCard;
 public class Node {
     final int NONE = -1;
 
-    private GalleryCard card;
+    public GalleryCard card;
     private int north = NONE;
     private int south = NONE;
     private int east = NONE;
@@ -58,6 +58,13 @@ public class Node {
 
     public int getWest() {
         return west;
+    }
+
+    @Override
+    public String toString() {
+        return "Card :\n" + this.card + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
+
+
     }
 }
 
