@@ -95,6 +95,10 @@ public class Player {
         }
     }
 
+    public void removeAttribute(RepareSabotageCard c){
+        // TODO enlever l'attribute correspondant a la carte passé en argument
+    }
+
     public String getPlayerName() {
         return playerName;
     }
