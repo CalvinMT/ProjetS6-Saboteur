@@ -88,7 +88,7 @@ public class GalleryCardTest {
         GalleryCard c2 = new GalleryCard(tunnel, 1, 2, true, false, false, true, false, true);
 
         assertFalse(c1.equals(c2));
-        c2 = new GalleryCard();
+        c1 = new GalleryCard(tunnel, 1, 2, true, false, false, true, false, true);
         assertTrue(c1.equals(c2));
     }
 
