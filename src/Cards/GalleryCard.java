@@ -109,7 +109,7 @@ public class GalleryCard extends Card {
 
     public boolean equals(GalleryCard c) {
         return  this.getGalleryType() == c.getGalleryType() &&
-                this.getX() == c.getY() &&
+                this.getX() == c.getX() &&
                 this.getY() == c.getY() &&
 
                 this.hasCenter() == c.hasCenter() &&
