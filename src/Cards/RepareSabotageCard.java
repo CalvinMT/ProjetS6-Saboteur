@@ -61,6 +61,7 @@ public class RepareSabotageCard extends ActionCard{
     }
 
     // la carte courante (this) peut être réparé par celle donnée en argument
+    @Override
     public boolean canBeRepareBy(RepareSabotageCard c){
         if(c.action == Action.Repare && this.action == Action.Sabotage){
             if(this.arrayTools.size() > 0){
@@ -73,12 +74,17 @@ public class RepareSabotageCard extends ActionCard{
         }
     }
 
-    private boolean containsTools(Tools t){
+    @Override
+    public boolean containsTools(Tools t){
         return arrayTools.contains(t);
     }
 
     public int nbTools(){
         return arrayTools.size();
+    }
+
+    public Tools getTool(){
+        return this.arrayTools.get(0);
     }
 
     @Override

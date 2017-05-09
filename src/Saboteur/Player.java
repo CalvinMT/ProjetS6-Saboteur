@@ -84,19 +84,23 @@ public class Player {
     }
 
     // ajout d'une carte attribut
-    public void setAttributeCards(Card c){
+    public void setAttributeCards(RepareSabotageCard c){
         attributeCards.addAttribute(c);
     }
 
     // met une carte malus a au joueur p
-    public void putAttribute(Card c, Player p){
-        if(!p.equals(this)){
-            p.setAttributeCards(c);
-        }
+    public void putAttribute(RepareSabotageCard c, Player p){
+
+        p.setAttributeCards(c);
+
     }
 
-    public void removeAttribute(RepareSabotageCard c){
+    public void removeAttribute(Card c){
         // TODO enlever l'attribute correspondant a la carte passé en argument
+    }
+
+    public void removeAttribute(int n){
+
     }
 
     public String getPlayerName() {

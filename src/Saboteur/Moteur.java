@@ -79,6 +79,22 @@ public class Moteur {
         }
     }
 
+    // choix des roles en début de manche
+    public void chooseRole(int numCard) throws Exception{
+
+        if(!this.roleCards.isEmpty()){
+            if(numCard >= 0 && numCard < this.roleCards.nbCard() && this.currentPlayer >= 0 && this.currentPlayer < nbPlayer()){
+                Card c = this.roleCards.chooseOne_with_remove(numCard);
+                this.arrayPlayer.get(this.currentPlayer).assignRole(c);
+                currentPlayer = (currentPlayer+1)%nbPlayer();
+            } else {
+                throw new Exception();
+            }
+        } else {
+            throw new Exception();
+        }
+    }
+
     // affiche les infos joueurs en version texte
     public void promptPlayers(){
         for(int i=0; i<nbPlayer(); i++){

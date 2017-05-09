@@ -18,4 +18,11 @@ public class Card {
     public boolean equals(Card c) {
         return this.getType() == c.getType();
     }
+
+    public boolean canBeRepareBy(RepareSabotageCard c){
+        return false;
+    }
+    public boolean containsTools(RepareSabotageCard.Tools t){
+        return false;
+    }
 }
