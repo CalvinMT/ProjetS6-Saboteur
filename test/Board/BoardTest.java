@@ -4,6 +4,8 @@ import Cards.GalleryCard;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Hashtable;
+
 import static Cards.GalleryCard.Gallery_t.*;
 
 public class BoardTest {
@@ -11,13 +13,13 @@ public class BoardTest {
 
     @Test
     public void testConstructor() throws Exception {
-        Assert.assertTrue(b.getElement(0).card.getGalleryType() == start);
-        Assert.assertTrue(b.getElement(1).card.getGalleryType() == but);
-        Assert.assertTrue(b.getElement(2).card.getGalleryType() == but);
-        Assert.assertTrue(b.getElement(3).card.getGalleryType() == but);
-        Assert.assertTrue((b.getElement(1).card.isGold() && !b.getElement(2).card.isGold() && !b.getElement(3).card.isGold()) ||
-                (!b.getElement(1).card.isGold() && b.getElement(2).card.isGold() && !b.getElement(3).card.isGold()) ||
-                (!b.getElement(1).card.isGold() && !b.getElement(2).card.isGold() && b.getElement(3).card.isGold()));
+        Assert.assertTrue(b.getMineElement(0).card.getGalleryType() == start);
+        Assert.assertTrue(b.getMineElement(1).card.getGalleryType() == but);
+        Assert.assertTrue(b.getMineElement(2).card.getGalleryType() == but);
+        Assert.assertTrue(b.getMineElement(3).card.getGalleryType() == but);
+        Assert.assertTrue((b.getMineElement(1).card.isGold() && !b.getMineElement(2).card.isGold() && !b.getMineElement(3).card.isGold()) ||
+                (!b.getMineElement(1).card.isGold() && b.getMineElement(2).card.isGold() && !b.getMineElement(3).card.isGold()) ||
+                (!b.getMineElement(1).card.isGold() && !b.getMineElement(2).card.isGold() && b.getMineElement(3).card.isGold()));
     }
     @Test
     public void addCard() throws Exception {
@@ -27,11 +29,11 @@ public class BoardTest {
         b.addCard(c);
 
         Assert.assertTrue(b.getMineSize() == (size + 1));
-        Assert.assertTrue(b.getElement(b.getMineSize() - 1).card.equals(c));
-        Assert.assertTrue(b.getElement(size).getNorth() == 0);
-        Assert.assertTrue(b.getElement(size).getSouth() == -1);
-        Assert.assertTrue(b.getElement(size).getEast() == -1);
-        Assert.assertTrue(b.getElement(size).getWest() == -1);
+        Assert.assertTrue(b.getMineElement(b.getMineSize() - 1).card.equals(c));
+        Assert.assertTrue(b.getMineElement(size).getNorth() == 0);
+        Assert.assertTrue(b.getMineElement(size).getSouth() == -1);
+        Assert.assertTrue(b.getMineElement(size).getEast() == -1);
+        Assert.assertTrue(b.getMineElement(size).getWest() == -1);
 
     }
 
@@ -44,31 +46,66 @@ public class BoardTest {
         b.removeCard(new Couple(c.getX(), c.getY()));
 
         Assert.assertTrue(b.getMineSize() == size - 1);
-        Assert.assertFalse(b.getElement(b.getMineSize() - 1).card.equals(c));
+        Assert.assertFalse(b.getMineElement(b.getMineSize() - 1).card.equals(c));
     }
 
     // TODO
+
     @Test
-    public void getAccessibleCards() throws Exception {
-        System.err.println("============================================");
+    public void hashtableTest() throws Exception {
+        Hashtable<Couple, Node> h = new Hashtable<Couple, Node>();
+
+        GalleryCard c = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false);
+
+
+        h.put(new Couple(c.getX(), c.getY()), new Node(c));
+
+        System.out.println(h.get(new Couple(c.getX(), c.getY())));
+
+    }
+
+    @Test
+    public void accessibleCards() throws Exception {
+        Hashtable<Couple, Node> h;
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false),
+                    card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
+                    card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, false, false),
+                    card4 = new GalleryCard(tunnel, 1, 1, false, true, false, false, true, true);
+        Couple  cpl1 = new Couple(-1, 0),
+                cpl2 = new Couple(-1, 1),
+                cpl3 = new Couple(-2, 1),
+                cpl4 = new Couple(1, 1);
+
+        b.addCard(card1);
+        b.addCard(card2);
+        b.addCard(card3);
+        b.addCard(card4);
+
+        b.computeAccessCards();
+        h = b.getAccessCard();
+        System.out.println("===============================\n" + h);
+        System.out.println("===============================\n" + b.getAccessCardElement(cpl1));
+        Assert.assertTrue(h.containsKey(cpl1));
+        Assert.assertTrue(h.containsKey(cpl2));
+        Assert.assertTrue(h.containsKey(cpl3));
+        Assert.assertFalse(h.containsKey(cpl4));
+        Assert.assertTrue(h.get(cpl1).card.equals(card1));
+        Assert.assertTrue(h.get(cpl2).card.equals(card2));
+        Assert.assertTrue(h.get(cpl3).card.equals(card3));
+
         System.err.println("TODO : BoardTest.getAccessibleCards()");
-        System.err.println("============================================");
     }
 
     // TODO
     @Test
     public void isCompatibleWithNeighbors() throws Exception {
-        System.err.println("============================================");
         System.err.println("TODO : BoardTest.isCompatibleWithNeighbors()");
-        System.err.println("============================================");
     }
 
     // TODO
     @Test
     public void getPossiblePositions() throws Exception {
-        System.err.println("============================================");
         System.err.println("TODO : BoardTest.getPossiblePositions()");
-        System.err.println("============================================");
     }
 
 }
