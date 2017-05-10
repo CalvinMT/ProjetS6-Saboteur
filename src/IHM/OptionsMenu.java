@@ -55,7 +55,7 @@ public class OptionsMenu {
     public void handleApply () throws IOException {
 		try {
 		    PrintWriter writer = new PrintWriter(fileOptions);
-		    writer.println(":Music:" + 50 + ":"); // TODO
+		    writer.println(":Music:" + sliderMusic.getValue() + ":"); // TODO
 		    writer.println(":Effects:" + 50 + ":"); // TODO
 		    writer.println(":Resolution:" + choiceBox.getValue() + ":");
 		    if (checkBoxFullscreen.isSelected()) {
@@ -87,7 +87,7 @@ public class OptionsMenu {
 				string = scanner.next();
 				if (string.equals("Music")) {
 					string = scanner.next();
-					sliderMusic.setValue(Double.parseDouble(string));
+					// TODO
 				}
 				else if (string.equals("Effects")) {
 					string = scanner.next();
