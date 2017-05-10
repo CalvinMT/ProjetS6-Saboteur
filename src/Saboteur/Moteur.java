@@ -5,6 +5,7 @@
  */
 package Saboteur;
 import Cards.*;
+import Player.Player;
 
 import java.util.ArrayList;
 

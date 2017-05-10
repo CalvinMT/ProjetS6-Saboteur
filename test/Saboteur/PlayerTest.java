@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import static Cards.Card.Card_t.*;
 
 import Cards.*;
+import Player.Player;
 import org.junit.Assert;
 import org.junit.Test;
 

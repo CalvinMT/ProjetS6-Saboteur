@@ -1,47 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Saboteur;
+package Player;
+
+
 import Cards.*;
+import com.sun.org.apache.regexp.internal.RE;
 
-/**
- *
- * @author uwalakae
- */
-public class Player {
+public abstract class Player {
 
-    private String playerName;
-    private Card role;
-    private int goldPoints;
-    private HandPlayer playableCards; // les cartes données au debut du jeu
-    private PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
-
-    // Constructeur
-
-    public Player() {
-        this.playerName = "Joueur";
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-    }
-
-
-    public Player(String playerName) {
-        this.playerName = playerName;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-    }
-
-    public Player(int i) {
-        this.playerName = "Joueur " + i;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-    }
-
+    protected String playerName;
+    protected Card role;
+    protected int goldPoints;
+    protected HandPlayer playableCards; // les cartes données au debut du jeu
+    protected PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
 
     // assignation des rôles
     public void assignRole(Card c){
@@ -73,6 +42,7 @@ public class Player {
         }
     }
 
+
     // regarder une carte de son jeu
     public Card lookAtCard(int i){
         if(i >= 0 && i < playableCards.nbCard() && playableCards.nbCard() > 0){
@@ -84,25 +54,29 @@ public class Player {
     }
 
     // ajout d'une carte attribut
-    public void setAttributeCards(RepareSabotageCard c){
-        attributeCards.addAttribute(c);
+    public void setAttributeCards(RepareSabotageCard c, RepareSabotageCard.Tools t){
+        this.attributeCards.doActionCard(c, t);
     }
 
     // met une carte malus a au joueur p
-    public void putAttribute(RepareSabotageCard c, Player p){
-
-        p.setAttributeCards(c);
-
+    public void putAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t, Player p){
+        p.setAttributeCards(c, t);
     }
 
-    public void removeAttribute(Card c){
+    public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
         // TODO enlever l'attribute correspondant a la carte passé en argument
+        if(c.containsTools(t)){
+            this.attributeCards.removeAttribute(c, t);
+        }
     }
 
+    // uniquement pour les tests
     public void removeAttribute(int n){
-
+        this.attributeCards.removeAttribute(n);
     }
 
+
+    //// GETTEUR
     public String getPlayerName() {
         return playerName;
     }
@@ -127,22 +101,6 @@ public class Player {
         return this.playableCards.nbCard();
     }
 
-    public String toString(){
-        String renvoi = "";
+    public abstract String toString();
 
-        renvoi += "Player: "+this.playerName + "\n";
-        if(this.role == null){
-            renvoi += "Aucun role pour l'instant\n";
-        } else {
-            renvoi += this.role + "\n";
-        }
-        renvoi += "Nombre d'or: "+this.goldPoints + "\n";
-        renvoi += this.attributeCards + "\n";
-        renvoi += this.playableCards + "\n";
-
-        return renvoi;
-    }
-    
-    
-    
 }
