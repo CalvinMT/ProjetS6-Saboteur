@@ -49,24 +49,23 @@ public class BoardTest {
         Assert.assertFalse(b.getMineElement(b.getMineSize() - 1).card.equals(c));
     }
 
-    // TODO
 
     @Test
     public void hashtableTest() throws Exception {
-        Hashtable<Couple, Node> h = new Hashtable<Couple, Node>();
+        Hashtable<String, Node> h = new Hashtable<String, Node>();
 
         GalleryCard c = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false);
 
 
-        h.put(new Couple(c.getX(), c.getY()), new Node(c));
+        h.put(new Couple(c.getX(), c.getY()).toString(), new Node(c));
 
-        System.out.println(h.get(new Couple(c.getX(), c.getY())));
+        Assert.assertTrue(h.get(new Couple(c.getX(), c.getY()).toString()).equals(new Node(c)));
 
     }
 
     @Test
     public void accessibleCards() throws Exception {
-        Hashtable<Couple, Node> h;
+        Hashtable<String, Node> h;
         GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false),
                     card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
                     card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, false, false),
@@ -83,17 +82,13 @@ public class BoardTest {
 
         b.computeAccessCards();
         h = b.getAccessCard();
-        System.out.println("===============================\n" + h);
-        System.out.println("===============================\n" + b.getAccessCardElement(cpl1));
-        Assert.assertTrue(h.containsKey(cpl1));
-        Assert.assertTrue(h.containsKey(cpl2));
-        Assert.assertTrue(h.containsKey(cpl3));
-        Assert.assertFalse(h.containsKey(cpl4));
-        Assert.assertTrue(h.get(cpl1).card.equals(card1));
-        Assert.assertTrue(h.get(cpl2).card.equals(card2));
-        Assert.assertTrue(h.get(cpl3).card.equals(card3));
-
-        System.err.println("TODO : BoardTest.getAccessibleCards()");
+        Assert.assertTrue(h.containsKey(cpl1.toString()));
+        Assert.assertTrue(h.containsKey(cpl2.toString()));
+        Assert.assertTrue(h.containsKey(cpl3.toString()));
+        Assert.assertFalse(h.containsKey(cpl4.toString()));
+        Assert.assertTrue(h.get(cpl1.toString()).card.equals(card1));
+        Assert.assertTrue(h.get(cpl2.toString()).card.equals(card2));
+        Assert.assertTrue(h.get(cpl3.toString()).card.equals(card3));
     }
 
     // TODO
