@@ -41,9 +41,10 @@
             <ChoiceBox fx:id="choiceBox" prefWidth="1000.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Plein Ecran :" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <CheckBox fx:id="checkBoxFullscreen" mnemonicParsing="false" onAction="#handleCheckBoxFullscreen" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Text fx:id="textApplied" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Changements appliqués." GridPane.columnIndex="4" GridPane.rowIndex="6" />
-            <Slider GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Slider GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Text fx:id="textApplied" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Changements appliqués." GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+            <Slider fx:id="sliderMusic" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Slider fx:id="sliderEffects" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Text fx:id="textRestart" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez redémarrer l'application." GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>
