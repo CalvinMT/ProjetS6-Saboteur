@@ -66,6 +66,15 @@ public class Node {
 
 
     }
+
+    public boolean equals(Node n) {
+        return this.card.equals(n.card) &&
+        this.north == n.getNorth() &&
+        this.south == n.getSouth() &&
+        this.east == n.getEast() &&
+        this.west == n.getWest();
+    }
 }
+
 
 
