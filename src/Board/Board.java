@@ -113,7 +113,6 @@ public class Board {
         }
     }
 
-    // TODO : Tests
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
                          visited = new LinkedList<Node>();
@@ -194,34 +193,57 @@ public class Board {
         }
     }
 
-    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
+        boolean isNullNorth = false,
+                isNullSouth = false,
+                isNullEast = false,
+                isNullWest = false,
         Node currNode;
 
-        currNode = accessCard.get(new Couple(currPos.getX() - 1, currPos.getY()));
-        if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
-            return false;
+        currNode = accessCard.get(new Couple(currPos.getX() - 1, currPos.getY()).toString());
+        if (currNode != null) {
+            if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
+                return false;
+            }
+        }
+        else {
+            isNullNorth = true;
+        }
+        currNode = accessCard.get(new Couple(currPos.getX() + 1, currPos.getY()).toString());
+        if (currNode != null) {
+            if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
+                return false;
+            }
+        }
+        else {
+            isNullSouth = true;
         }
 
-        currNode = accessCard.get(new Couple(currPos.getX() + 1, currPos.getY()));
-        if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
-            return false;
+        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() + 1).toString());
+        if (currNode != null) {
+            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
+                return false;
+            }
+        }
+        else {
+            isNullEast = true;
         }
 
-        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() + 1));
-        if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
-            return false;
+        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() - 1).toString());
+        if (currNode != null) {
+            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
+                return false;
+            }
+        }
+        else {
+            isNullWest = true
         }
 
-        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() - 1));
-        if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
-            return false;
-        }
 
-        return true;
+        return !(isNullNorth && isNullSouth && isNullEast && isNullWest) && true;
     }
 
-    //TODO : Tests
+
     public void computePossiblePositions(GalleryCard c) {
         GalleryCard cRotated = c;
         cRotated.rotate();

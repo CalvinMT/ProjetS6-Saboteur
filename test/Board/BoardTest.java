@@ -91,13 +91,35 @@ public class BoardTest {
         Assert.assertTrue(h.get(cpl3.toString()).card.equals(card3));
     }
 
-    // TODO
     @Test
     public void isCompatibleWithNeighbors() throws Exception {
-        System.err.println("TODO : BoardTest.isCompatibleWithNeighbors()");
-    }
+        Hashtable<String, Node> h;
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false),
+                card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
+                card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, false, false),
+                card4 = new GalleryCard(tunnel, 1, 1, false, true, false, false, true, true),
+                cardTest = new GalleryCard(tunnel, 0, 1, false, true, true, true, false, false);
 
-    // TODO
+        Couple  cpl1 = new Couple(-1, 0),
+                cpl2 = new Couple(-1, 1),
+                cpl3 = new Couple(-2, 1),
+                cpl4 = new Couple(1, 1);
+
+        b.addCard(card1);
+        b.addCard(card2);
+        b.addCard(card3);
+        b.addCard(card4);
+
+        b.computeAccessCards();
+
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(cardTest.getX(), cardTest.getY())));
+        cardTest = new GalleryCard(tunnel, 0, 1, false, true, false, false, true, true);
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(cardTest.getX(), cardTest.getY())));
+        cardTest = new GalleryCard(tunnel, 0, 1, false, true, true, false, false, true);
+        Assert.assertTrue(b.isCompatibleWithNeighbors(cardTest, new Couple(cardTest.getX(), cardTest.getY())));
+
+    }
+    
     @Test
     public void getPossiblePositions() throws Exception {
         System.err.println("TODO : BoardTest.getPossiblePositions()");
