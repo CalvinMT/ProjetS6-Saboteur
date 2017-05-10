@@ -119,49 +119,82 @@ public class Board {
     }
 
     // TODO : Tests
-    public void getAccessibleCards() {
-        LinkedList<Node> queue = new LinkedList<Node>();
+    public void computeAccessCards() {
+        LinkedList<Node> queue = new LinkedList<Node>(),
+                         visited = new LinkedList<Node>();
+
         Node currentNode, newNode;
+        Couple cpl;
 
         try {
+            System.out.println("Started computeAccessCards");
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
+                // System.out.println(mine);
                 currentNode = queue.remove(); // On défile
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
-                        queue.add(newNode);
-                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
-                    } else {
-                        possiblePositions.add(new Couple(currentNode.card.getX() -1 , currentNode.card.getY()));
+                        if (!visited.contains(newNode)) {
+                            visited.add(newNode);
+                            queue.add(newNode);
+                            accessCard.put(new Couple(currentNode.card.getX() - 1, currentNode.card.getY()), newNode);
+                        }
+                    }
+                    else {
+                        possiblePositions.add(new Couple(currentNode.card.getX() - 1 , currentNode.card.getY()));
+                        cpl = new Couple(currentNode.card.getX() - 1, currentNode.card.getY());
+                        if (!possiblePositions.contains(cpl)) {
+                            possiblePositions.add(cpl);
+                        }
                     }
                 }
                 if (currentNode.card.canHasSouth()) {
                     if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
                         newNode = mine.get(currentNode.getSouth());
-                        queue.add(newNode);
-                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
-                    } else {
-                        possiblePositions.add(new Couple(currentNode.card.getX() + 1, currentNode.card.getY()));
+                        if (!visited.contains(newNode)) {
+                            visited.add(newNode);
+                            queue.add(newNode);
+                            accessCard.put(new Couple(currentNode.card.getX() + 1, currentNode.card.getY()), newNode);
+                        }
+                    }
+                    else {
+                        cpl = new Couple(currentNode.card.getX() + 1, currentNode.card.getY());
+                        if (!possiblePositions.contains(cpl)) {
+                            possiblePositions.add(cpl);
+                        }
                     }
                 }
                 if (currentNode.card.canHasEast()) {
                     if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
                         newNode = mine.get(currentNode.getEast());
-                        queue.add(newNode);
-                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
-                    } else {
-                        possiblePositions.add(new Couple(currentNode.card.getX(), currentNode.card.getY() + 1));
+                        if (!visited.contains(newNode)) {
+                            visited.add(newNode);
+                            queue.add(newNode);
+                            accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY() + 1), newNode);
+                        }
+                    }
+                    else {
+                        cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() + 1);
+                        if (!possiblePositions.contains(cpl)) {
+                            possiblePositions.add(cpl);
+                        }
                     }
                 }
                 if (currentNode.card.canHasWest()) {
                     if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
                         newNode = mine.get(currentNode.getWest());
-                        queue.add(newNode);
-                        accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), newNode);
-                    } else {
-                        // Si card.west == true -> Ajout dans possiblePosition
-                        possiblePositions.add(new Couple(currentNode.card.getX(), currentNode.card.getY() - 1));
+                        if (!visited.contains(newNode)) {
+                            visited.add(newNode);
+                            queue.add(newNode);
+                            accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY() - 1), newNode);
+                        }
+                    }
+                    else {
+                        cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() - 1);
+                        if (!possiblePositions.contains(cpl)) {
+                            possiblePositions.add(cpl);
+                        }
                     }
                 }
             }
@@ -170,6 +203,10 @@ public class Board {
             System.err.println("No more place in queue");
             System.err.println(e.getMessage() + " due to " + e.getCause());
         }
+
+        System.out.println("AccessCard :\n"+ accessCard);
+        System.out.println("===============================");
+        System.out.println("Mine :\n" + mine);
     }
 
     // TODO : Tests
@@ -200,11 +237,11 @@ public class Board {
     }
 
     //TODO : Tests
-    public void getPossiblePositions(GalleryCard c) {
+    public void computePossiblePositions(GalleryCard c) {
         GalleryCard cRotated = c;
         cRotated.rotate();
 
-        getAccessibleCards();
+        computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
             if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(cRotated, possiblePositions.get(i))) {
                 possiblePositions.remove(i);
@@ -213,10 +250,26 @@ public class Board {
         }
     }
 
+    public ArrayList<Couple> getPossiblePositions() {
+        return possiblePositions;
+    }
+
+    public ArrayList<Node> getMine() {
+        return mine;
+    }
+
+    public Hashtable<Couple, Node> getAccessCard() {
+        return accessCard;
+    }
+
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
 
-    public Node getElement(int i) {
+    public Node getMineElement(int i) {
         return mine.get(i);
+    }
+
+    public Node getAccessCardElement(Couple k) {
+        return accessCard.get(k);
     }
 
     public int getMineSize() {
