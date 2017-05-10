@@ -12,7 +12,7 @@ import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
-    private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
+    private Hashtable<String, Node> accessCard = new Hashtable<String, Node>();
     private ArrayList<Couple> possiblePositions = new ArrayList<Couple>();
 
     public Board() {
@@ -47,7 +47,6 @@ public class Board {
     }
 
 
-    // TODO : Tests
     // ajoute la carte card à la suite de mine
     public void addCard(GalleryCard card) {
         Node n = new Node(card);
@@ -74,10 +73,6 @@ public class Board {
         mine.add(n);
     }
 
-    // TODO : Tests
-    // Parcours des nodes si indices liens l:
-    //      l = idx -> l = -1
-    //      l > idx -> l = l - 1
     public void removeCard(Couple coord) {
         int idx = 0;
         for (int i = 0; i < mine.size(); i++) {
@@ -127,51 +122,47 @@ public class Board {
         Couple cpl;
 
         try {
-            System.out.println("Started computeAccessCards");
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
                 // System.out.println(mine);
+
                 currentNode = queue.remove(); // On défile
+                visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
+                accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()).toString(), currentNode); // Et aux cartes accessibles
+
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
-                        if (!visited.contains(newNode)) {
-                            visited.add(newNode);
-                            queue.add(newNode);
-                            accessCard.put(new Couple(currentNode.card.getX() - 1, currentNode.card.getY()), newNode);
+                        if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
+                            queue.add(newNode); // On l'ajoute dans la queue
                         }
                     }
-                    else {
-                        possiblePositions.add(new Couple(currentNode.card.getX() - 1 , currentNode.card.getY()));
+                    else { // Si il n'y a pas de carte au nord (case vide)
                         cpl = new Couple(currentNode.card.getX() - 1, currentNode.card.getY());
-                        if (!possiblePositions.contains(cpl)) {
-                            possiblePositions.add(cpl);
+                        if (!possiblePositions.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                            possiblePositions.add(cpl); // On l'ajoute aux possibilités
                         }
                     }
                 }
                 if (currentNode.card.canHasSouth()) {
                     if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
                         newNode = mine.get(currentNode.getSouth());
-                        if (!visited.contains(newNode)) {
-                            visited.add(newNode);
-                            queue.add(newNode);
-                            accessCard.put(new Couple(currentNode.card.getX() + 1, currentNode.card.getY()), newNode);
+                        if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
+                            queue.add(newNode); // On l'ajoute dans la queue
                         }
                     }
-                    else {
+                    else { // Si il n'y a pas de carte au sud (case vide)
                         cpl = new Couple(currentNode.card.getX() + 1, currentNode.card.getY());
-                        if (!possiblePositions.contains(cpl)) {
-                            possiblePositions.add(cpl);
+                        if (!possiblePositions.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                            possiblePositions.add(cpl); // On l'ajoute aux possibilités
                         }
                     }
                 }
                 if (currentNode.card.canHasEast()) {
                     if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
                         newNode = mine.get(currentNode.getEast());
-                        if (!visited.contains(newNode)) {
-                            visited.add(newNode);
+                        if (!visited.contains(newNode)) { // Si la à l'est carte n'a pas été visitée
                             queue.add(newNode);
-                            accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY() + 1), newNode);
                         }
                     }
                     else {
@@ -184,10 +175,8 @@ public class Board {
                 if (currentNode.card.canHasWest()) {
                     if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
                         newNode = mine.get(currentNode.getWest());
-                        if (!visited.contains(newNode)) {
-                            visited.add(newNode);
+                        if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
                             queue.add(newNode);
-                            accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY() - 1), newNode);
                         }
                     }
                     else {
@@ -203,10 +192,6 @@ public class Board {
             System.err.println("No more place in queue");
             System.err.println(e.getMessage() + " due to " + e.getCause());
         }
-
-        System.out.println("AccessCard :\n"+ accessCard);
-        System.out.println("===============================");
-        System.out.println("Mine :\n" + mine);
     }
 
     // TODO : Tests
@@ -258,7 +243,7 @@ public class Board {
         return mine;
     }
 
-    public Hashtable<Couple, Node> getAccessCard() {
+    public Hashtable<String, Node> getAccessCard() {
         return accessCard;
     }
 
@@ -268,7 +253,7 @@ public class Board {
         return mine.get(i);
     }
 
-    public Node getAccessCardElement(Couple k) {
+    public Node getAccessCardElement(String k) {
         return accessCard.get(k);
     }
 
