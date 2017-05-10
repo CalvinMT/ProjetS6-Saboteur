@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.collections.FXCollections?>
+<?import ihm.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="720.0" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+            <bottom>
+            <fx:include source="Bottom.fxml" />
+            </bottom>
+            <top>
+                <Button contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Button">
+                    <graphic>
+                        <ImageView id="carte" pickOnBounds="true">
+                            <image>
+                                <Image url="@carte.jpg" preserveRatio="true" smooth="true" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip id="tooltip" text="%une.mine?"/>
+                    </tooltip>
+                </Button> 
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>

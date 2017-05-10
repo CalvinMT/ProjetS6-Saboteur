@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane id="AnchorPane" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <GridPane style="-fx-hgap: 6; -fx-vgap:6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" gridLinesVisible="true" >
+      <children>     
+        <ImageView id="avatar" pickOnBounds="true" GridPane.columnIndex="0" GridPane.rowSpan="4" GridPane.rowIndex="0">
+            <image>
+                <Image url="@tetenain2.png" preserveRatio="true" smooth="true" />
+            </image>
+        </ImageView>
+        <VBox id="infos" prefHeight="60.0" maxHeight="60.0" prefWidth="100.0" spacing="6.0"  GridPane.columnIndex="1"  GridPane.rowIndex="3" >
+           <children>                 
+                <TextArea id="Or"   text="3 pépites" editable="false" centerShape="true" />
+                <TextArea id="Role" text="Saboteur" editable="false" centerShape="true"  />
+                <TextArea id="pseudo" text="Bastien" editable="false" centerShape="true" />
+           </children>
+        </VBox>
+        <HBox id="main" prefHeight="60.0" maxHeight="60.0" prefWidth="200.0" spacing="6.0"  GridPane.columnIndex="2"  GridPane.rowIndex="3" >
+            <children>
+                <ImageView id="main1" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+                <ImageView id="main2" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+                <ImageView id="main3" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+                <ImageView id="main4" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+                <ImageView id="main5" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+                <ImageView id="main6" pickOnBounds="true">
+                    <image>
+                        <Image url="@cartemain.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox> 
+        <HBox id="pioche_defausse" minHeight="180.0" prefWidth="180.0" spacing="6.0"  GridPane.columnIndex="3"  GridPane.rowIndex="3" > 
+            <children>
+                <ImageView id="pioche" pickOnBounds="true" HBox.hgrow="ALWAYS" >
+                    <image>
+                        <Image url="@carte.jpg" preserveRatio="true" smooth="true"  />
+                    </image>
+                </ImageView>
+                <ImageView id="defausse" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                    <image>
+                        <Image url="@defausse.jpg" preserveRatio="true" smooth="true" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox>      
+      </children>      
+    </GridPane>
+  </children>
+</AnchorPane>
