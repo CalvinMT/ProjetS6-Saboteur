@@ -5,7 +5,7 @@
  */
 package Saboteur;
 import Cards.*;
-import Player.Player;
+import Player.*;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class Moteur {
         }
 
         for(int i=0; i<nbPlayer; i++){
-            arrayPlayer.add(new Player(i+1));
+            arrayPlayer.add(new PlayerHuman(i+1));
         }
     }
 
@@ -94,6 +94,16 @@ public class Moteur {
         } else {
             throw new Exception();
         }
+    }
+
+    // si tous les roles sont attribués
+    public boolean allRoleAreSet(){
+        boolean roleSet = true;
+        for(int i=0; i<nbPlayer(); i++){
+            roleSet = roleSet && (this.arrayPlayer.get(i).getRole() == null);
+        }
+
+        return roleSet;
     }
 
     // affiche les infos joueurs en version texte

@@ -51,7 +51,7 @@ public class PlayerAttribute extends Hand {
                 if (this.arrayCard.size() < this.nbAttribute) {
                     this.arrayCard.add(c);
                 }
-            } else if(c.getAction() == ActionCard.Action.Repare && t != null){
+            } else if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
                 removeAttribute(c, t);
             }
         } else {

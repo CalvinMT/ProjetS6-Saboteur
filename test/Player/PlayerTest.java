@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Saboteur;
+package Player;
 
 import static org.junit.Assert.*;
 import static Cards.Card.Card_t.*;
