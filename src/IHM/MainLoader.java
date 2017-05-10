@@ -1,5 +1,8 @@
 package IHM;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -17,13 +20,32 @@ public class MainLoader extends Application {
 	private static double SCREEN_WIDTH = 1080;
 	private static double SCREEN_HEIGHT = 720;
 	
+	private File fileOptions = new File("saboteur.cfg");
+	
 	private static String musicFile = "../ressources/pull-up-a-chair.mp3";
 
+	
+	private void initGameConfig () {
+		try {
+		    PrintWriter writer = new PrintWriter(fileOptions);
+		    writer.println(":Music:" + "100" + ":");
+		    writer.println(":Effects:" + "100" + ":");
+		    writer.println(":Resolution:" + "1080*720" + ":");
+	    	writer.println(":Fullscreen:" + "true" + ":");
+		    writer.close();
+		} catch (IOException e) {
+			System.out.println("ERROR --> Couldn't initialize 'saboteur.cfg'.");
+		}
+	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent parentMainMenu = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
 
+		// Initialize saboteur.cfg
+		initGameConfig();
+		
 		// Music played in background
 		try {
 			Media sound = new Media(getClass().getResource(musicFile).toURI().toString());
