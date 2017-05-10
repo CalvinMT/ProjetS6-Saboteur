@@ -28,8 +28,8 @@ public class MainLoader extends Application {
 	private void initGameConfig () {
 		try {
 		    PrintWriter writer = new PrintWriter(fileOptions);
-		    writer.println(":Music:" + "100" + ":");
-		    writer.println(":Effects:" + "100" + ":");
+		    writer.println(":Music:" + "1" + ":");
+		    writer.println(":Effects:" + "1" + ":");
 		    writer.println(":Resolution:" + "1080*720" + ":");
 	    	writer.println(":Fullscreen:" + "true" + ":");
 		    writer.close();
