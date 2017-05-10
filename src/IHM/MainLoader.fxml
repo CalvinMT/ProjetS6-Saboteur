@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane fx:id="borderPaneMainMenu" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainMenu">
@@ -82,6 +81,13 @@
       </AnchorPane>
    </left>
    <right>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ImageView fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../ressources/nain_mineurs.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets right="50.0" />
+         </BorderPane.margin>
+      </ImageView>
    </right>
 </BorderPane>
