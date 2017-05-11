@@ -7,7 +7,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GalleryCardTest {
-
     @Test
     public void getterSetterX() throws Exception {
         GalleryCard c = new GalleryCard();

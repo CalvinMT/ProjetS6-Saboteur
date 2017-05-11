@@ -60,6 +60,10 @@ public class Node {
         return west;
     }
 
+    public GalleryCard getCard(){
+        return this.card;
+    }
+
     @Override
     public String toString() {
         return "Card :\n" + this.card + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";

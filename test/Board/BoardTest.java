@@ -27,7 +27,6 @@ public class BoardTest {
         int size = b.getMineSize();;
         GalleryCard c = new GalleryCard(tunnel, 1, 0, false, true, false, true, true, false);;
         b.addCard(c);
-
         Assert.assertTrue(b.getMineSize() == (size + 1));
         Assert.assertTrue(b.getMineElement(b.getMineSize() - 1).card.equals(c));
         Assert.assertTrue(b.getMineElement(size).getNorth() == 0);

@@ -1,10 +1,14 @@
 package Cards;
 
+import static Cards.GalleryCard.Gallery_t.but;
+import static Cards.GalleryCard.Gallery_t.start;
+
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
-    private Gallery_t type;
+    private Gallery_t type_g;
     private int x = 0,
                 y = 0;
+
     private boolean center = true,
                     north = true,
                     south = true,
@@ -13,16 +17,45 @@ public class GalleryCard extends Card {
     private boolean gold = false;
 
     public GalleryCard() { // Init start card
-        this.type = Gallery_t.start;
+        this.type = Card_t.gallery;
+        this.type_g = start;
     }
 
-    public GalleryCard(Gallery_t t){
-        this.type = t;
+    public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
+        this.type = Card_t.gallery;
+        this.type_g = t;
+        this.center = c;
+        this.north = n;
+        this.south = s;
+        this.east = e;
+        this.west = w;
+    }
+
+    public GalleryCard(Gallery_t t, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w){
+        this.type = Card_t.gallery;
+        this.type_g = t;
+        this.gold = g;
+        this.center = c;
+        this.north = n;
+        this.south = s;
+        this.east = e;
+        this.west = w;
+    }
+
+    public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
+        this.type = Card_t.gallery;
+        this.type_g = Gallery_t.tunnel;
+        this.center = c;
+        this.north = n;
+        this.south = s;
+        this.east = e;
+        this.west = w;
     }
 
     // Pour debug
     public GalleryCard(Gallery_t t, int x, int y, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        this.type = t;
+        this.type = Card_t.gallery;
+        this.type_g = t;
         this.x = x;
         this.y = y;
         this.gold = g;
@@ -50,7 +83,7 @@ public class GalleryCard extends Card {
     }
 
     public Gallery_t getGalleryType() {
-        return type;
+        return type_g;
     }
 
 
@@ -77,6 +110,7 @@ public class GalleryCard extends Card {
     public boolean isGold() {
         return gold;
     }
+
 
 
     public boolean equals(GalleryCard c) {
@@ -152,6 +186,9 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
+        if (type_g == but && this.gold) return "GOLD!!";
+        if (type_g == but && !this.gold) return "Stone";
+        if (type_g == start) return "Start";
         return "GalleryCard{" +
                 "type=" + type +
                 ", x=" + x +
@@ -164,4 +201,9 @@ public class GalleryCard extends Card {
                 ", west=" + west +
                 '}';
     }
+    
+    @Override
+	public int getGold(){
+		return 0;
+	}
 }

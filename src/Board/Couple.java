@@ -4,12 +4,12 @@ public class Couple {
     private int x, y;
 
 
-    Couple() {
+    public Couple() {
         this.x = 0;
         this.y = 0;
     }
 
-    Couple(int x, int y) {
+    public Couple(int x, int y) {
         this.x = x;
         this.y = y;
     }
