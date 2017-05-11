@@ -14,8 +14,9 @@ public class MainMenu {
 	
 	// --------------- Controllers ---------------
 	@FXML
-    public void handleLocalGame() {
-        System.out.println("pressed local game");
+    public void handleLocalGame() throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuCreationPartie.fxml"));
+        anchorPaneMainMenu.getChildren().setAll(anchorPane);
     }
 	
 	@FXML
