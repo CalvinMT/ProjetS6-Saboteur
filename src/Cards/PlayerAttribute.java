@@ -44,6 +44,26 @@ public class PlayerAttribute extends Hand {
         }
     }
 
+    /// ajoute le sabotage au joueur
+    public void putSabotage(RepareSabotageCard c){
+        if (c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Sabotage && !this.containsTools(c.getTool())) {
+                if (this.arrayCard.size() < this.nbAttribute) {
+                    this.arrayCard.add(c);
+                }
+            }
+        }
+    }
+
+    // repare un outil cassé
+    public void putRepare(RepareSabotageCard c, RepareSabotageCard.Tools t){
+        if (c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
+                removeAttribute(c, t);
+            }
+        }
+    }
+
     // ajoute un attribut
     public void doActionCard(RepareSabotageCard c, RepareSabotageCard.Tools t){
         if (c.getType() == Card.Card_t.action){

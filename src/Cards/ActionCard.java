@@ -12,7 +12,7 @@ public class ActionCard extends Card {
 
     protected Action action;
 
-    enum Action {
+    public enum Action {
         Sabotage,
         Repare,
         Map,
