@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPaneMainMenu" prefHeight="291.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainMenu">
+<AnchorPane fx:id="anchorPaneMainMenu" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainMenu">
    <children>
-      <GridPane alignment="CENTER" prefHeight="291.0" prefWidth="605.0">
+      <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,7 +48,10 @@
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleLocalGame" prefWidth="1000.0" text="Partie Locale" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#handleLocalGame" prefHeight="1000.0" prefWidth="1000.0" text="Partie Locale" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </GridPane.margin></Button>
          </children>
       </GridPane>
    </children>
