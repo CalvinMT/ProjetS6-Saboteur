@@ -225,24 +225,11 @@ public class Board {
     }
 
     public void computePossiblePositions(GalleryCard c) {
-        GalleryCard cRotated = c;
-        cRotated.rotate();
-
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
-            //System.out.println(possiblePositions);
-            if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(cRotated, possiblePositions.get(i))) {
-                //System.out.println("Not Compatible with : " + possiblePositions.get(i));
+            if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(c.rotate(), possiblePositions.get(i))) {
                 possiblePositions.remove(i);
                 i--;
-            }
-            else {
-                /*if (isCompatibleWithNeighbors(c, possiblePositions.get(i))) {*/
-                    //System.out.println("Compatible with : " + possiblePositions.get(i));
-/*                }
-                if (isCompatibleWithNeighbors(cRotated, possiblePositions.get(i))) {
-                    System.out.println("Compatible with : " + possiblePositions.get(i));
-                }*/
             }
         }
     }
