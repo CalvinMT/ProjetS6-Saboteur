@@ -78,6 +78,32 @@ public class Node {
         this.east == n.getEast() &&
         this.west == n.getWest();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Node)) return false;
+
+        Node node = (Node) o;
+
+        if (NONE != node.NONE) return false;
+        if (getNorth() != node.getNorth()) return false;
+        if (getSouth() != node.getSouth()) return false;
+        if (getEast() != node.getEast()) return false;
+        if (getWest() != node.getWest()) return false;
+        return card != null ? card.equals(node.card) : node.card == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = NONE;
+        result = 31 * result + (card != null ? card.hashCode() : 0);
+        result = 31 * result + getNorth();
+        result = 31 * result + getSouth();
+        result = 31 * result + getEast();
+        result = 31 * result + getWest();
+        return result;
+    }
 }
 
 

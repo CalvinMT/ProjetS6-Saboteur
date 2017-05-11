@@ -4,6 +4,7 @@ import Cards.GalleryCard;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import static Cards.GalleryCard.Gallery_t.*;
@@ -25,16 +26,13 @@ public class BoardTest {
     public void addCard() throws Exception {
         int size = b.getMineSize();;
         GalleryCard c = new GalleryCard(tunnel, 1, 0, false, true, false, true, true, false);;
-
         b.addCard(c);
-
         Assert.assertTrue(b.getMineSize() == (size + 1));
         Assert.assertTrue(b.getMineElement(b.getMineSize() - 1).card.equals(c));
         Assert.assertTrue(b.getMineElement(size).getNorth() == 0);
         Assert.assertTrue(b.getMineElement(size).getSouth() == -1);
         Assert.assertTrue(b.getMineElement(size).getEast() == -1);
         Assert.assertTrue(b.getMineElement(size).getWest() == -1);
-
     }
 
     @Test
@@ -49,23 +47,19 @@ public class BoardTest {
         Assert.assertFalse(b.getMineElement(b.getMineSize() - 1).card.equals(c));
     }
 
-
     @Test
     public void hashtableTest() throws Exception {
-        Hashtable<String, Node> h = new Hashtable<String, Node>();
-
+        Hashtable<Couple , Node> h = new Hashtable<Couple , Node>();
         GalleryCard c = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false);
 
+        h.put(new Couple(c.getX(), c.getY()), new Node(c));
 
-        h.put(new Couple(c.getX(), c.getY()).toString(), new Node(c));
-
-        Assert.assertTrue(h.get(new Couple(c.getX(), c.getY()).toString()).equals(new Node(c)));
-
+        Assert.assertTrue(h.get(new Couple(c.getX(), c.getY())).equals(new Node(c)));
     }
 
     @Test
     public void accessibleCards() throws Exception {
-        Hashtable<String, Node> h;
+        Hashtable<Couple, Node> h;
         GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false),
                     card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
                     card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, false, false),
@@ -82,25 +76,89 @@ public class BoardTest {
 
         b.computeAccessCards();
         h = b.getAccessCard();
-        Assert.assertTrue(h.containsKey(cpl1.toString()));
-        Assert.assertTrue(h.containsKey(cpl2.toString()));
-        Assert.assertTrue(h.containsKey(cpl3.toString()));
-        Assert.assertFalse(h.containsKey(cpl4.toString()));
-        Assert.assertTrue(h.get(cpl1.toString()).card.equals(card1));
-        Assert.assertTrue(h.get(cpl2.toString()).card.equals(card2));
-        Assert.assertTrue(h.get(cpl3.toString()).card.equals(card3));
+        Assert.assertTrue(h.containsKey(cpl1));
+        Assert.assertTrue(h.containsKey(cpl2));
+        Assert.assertTrue(h.containsKey(cpl3));
+        Assert.assertFalse(h.containsKey(cpl4));
+        Assert.assertTrue(h.get(cpl1).card.equals(card1));
+        Assert.assertTrue(h.get(cpl2).card.equals(card2));
+        Assert.assertTrue(h.get(cpl3).card.equals(card3));
     }
 
-    // TODO
     @Test
     public void isCompatibleWithNeighbors() throws Exception {
-        System.err.println("TODO : BoardTest.isCompatibleWithNeighbors()");
+        Hashtable<String, Node> h;
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, false, true, true, false),
+                card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
+                card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, false, false),
+                card4 = new GalleryCard(tunnel, 1, 1, false, true, false, false, true, true),
+                cardTest = new GalleryCard(tunnel, 1, 1, false, true, true, true, false, false);
+
+        Couple  cpl1 = new Couple(-1, 0),
+                cpl2 = new Couple(-1, 1),
+                cpl3 = new Couple(-2, 1),
+                cpl4 = new Couple(1, 1);
+
+        b.addCard(card1);
+        b.addCard(card2);
+        b.addCard(card3);
+        b.addCard(card4);
+
+        Assert.assertTrue(b.isCompatibleWithNeighbors(cardTest, new Couple(-3, 1)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(0, 1)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(1, 0)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(0, -1)));
+
+        cardTest = new GalleryCard(tunnel, 2, 2, false, true, false, false, true, true);
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(-3, 1)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(0, 1)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(1, 0)));
+        Assert.assertTrue(b.isCompatibleWithNeighbors(cardTest, new Couple(0, -1)));
+
+        cardTest = new GalleryCard(tunnel, 3, 3, false, true, true, false, false, true);
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(-3, 1)));
+        Assert.assertTrue(b.isCompatibleWithNeighbors(cardTest, new Couple(0, 1)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(1, 0)));
+        Assert.assertFalse(b.isCompatibleWithNeighbors(cardTest, new Couple(0, -1)));
     }
 
-    // TODO
     @Test
     public void getPossiblePositions() throws Exception {
-        System.err.println("TODO : BoardTest.getPossiblePositions()");
-    }
+        ArrayList<Couple> p;
 
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, false, true, true, true, true, false),
+                card2 = new GalleryCard(tunnel, -1, 1, false, true, true, true, false, true),
+                card3 = new GalleryCard(tunnel, -2, 1, false, true, true, true, true, false),
+                card4 = new GalleryCard(tunnel, 1, 1, false, true, false, false, true, true),
+                card5 = new GalleryCard(tunnel, 0, -1, false, true, false, true, true, false),
+                cardTest = new GalleryCard(tunnel, 1, 1, false, true, true, true, false, false);
+
+        b.addCard(card1);
+        b.addCard(card2);
+        b.addCard(card3);
+        b.addCard(card4);
+        b.addCard(card5);
+
+        b.computePossiblePositions(cardTest);
+        p = b.getPossiblePositions();
+
+        Assert.assertTrue(p.contains(new Couple(1, -1)));
+        Assert.assertFalse(p.contains(new Couple(1, 0)));
+        Assert.assertFalse(p.contains(new Couple(0, 1)));
+        Assert.assertTrue(p.contains(new Couple(-2, 0)));
+        Assert.assertFalse(p.contains(new Couple(-2, 2)));
+        Assert.assertTrue(p.contains(new Couple(-3, 1)));
+
+        cardTest = new GalleryCard(tunnel, 2, 2, false, true, true, false, false, true);
+
+        b.computePossiblePositions(cardTest);
+        p = b.getPossiblePositions();
+
+        Assert.assertTrue(p.contains(new Couple(1, -1)));// ??????????????????????????????????????????????????????????????????????????????????????????????
+        Assert.assertFalse(p.contains(new Couple(1, 0)));
+        Assert.assertTrue(p.contains(new Couple(0, 1)));
+        Assert.assertFalse(p.contains(new Couple(-2, 0)));
+        Assert.assertTrue(p.contains(new Couple(-2, 2)));
+        Assert.assertTrue(p.contains(new Couple(-3, 1)));
+    }
 }
