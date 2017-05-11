@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
    <children>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -24,7 +24,6 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
         </columnConstraints>
         <rowConstraints>
@@ -57,9 +56,9 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <ComboBox fx:id="comboBoxType" onAction="#handleComboBoxType" prefWidth="100.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <ComboBox fx:id="comboBoxType" onAction="#handleComboBoxType" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets />
                </GridPane.margin>
             </ComboBox>
             <Button fx:id="buttonAjouter" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouter" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -67,19 +66,14 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Button>
-            <ScrollPane fx:id="scrollPaneListeJoueur" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.rowSpan="3">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
-            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="145.0" text="Retour Menu" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Button mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="178.0" text="Retour Menu" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="7">
                <font>
-                  <Font size="15.0" />
+                  <Font size="20.0" />
                </font>
             </Button>
             <TextField fx:id="textFieldPseudo" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -87,6 +81,7 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </TextField>
+            <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.rowSpan="3" />
          </children>
       </GridPane>
    </children>
