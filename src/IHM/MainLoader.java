@@ -24,6 +24,9 @@ public class MainLoader extends Application {
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
 	
+	private double volumeMusic;
+	private double volumeEffects;
+	
 	private File fileOptions = new File("saboteur.cfg");
 	
 	private static String musicFile = "../ressources/pull-up-a-chair.mp3";
@@ -39,6 +42,19 @@ public class MainLoader extends Application {
 		    writer.close();
 		} catch (IOException e) {
 			System.out.println("ERROR --> Couldn't initialize 'saboteur.cfg'.");
+		}
+	}
+
+	
+	private void setToFullscreen (Stage stage) {
+		try {
+			Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
+			stage.setX(primaryScreenBounds.getMinX());
+			stage.setY(primaryScreenBounds.getMinY());
+			stage.setWidth(primaryScreenBounds.getWidth());
+			stage.setHeight(primaryScreenBounds.getHeight());
+		} catch (Exception e) {
+			System.out.println("ERROR --> Couldn't set to fullscreen.");
 		}
 	}
 	
@@ -59,7 +75,15 @@ public class MainLoader extends Application {
 			Scanner scanner = new Scanner(fileOptions).useDelimiter(":");
 			while (scanner.hasNext()) {
 				string = scanner.next();
-				if (string.equals("Resolution")) {
+				if (string.equals("Music")) {
+					string = scanner.next();
+					volumeMusic = Double.parseDouble(string);
+				}
+				else if (string.equals("Effects")) {
+					string = scanner.next();
+					volumeEffects = Double.parseDouble(string);
+				}
+				else if (string.equals("Resolution")) {
 					string = scanner.next();
 					String[] stringList = string.split("\\*");
 					SCREEN_WIDTH = Double.parseDouble(stringList[0]);
@@ -68,12 +92,7 @@ public class MainLoader extends Application {
 				else if (string.equals("Fullscreen")) {
 					string = scanner.next();
 					if (string.equals("true")) {
-						Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
-						System.out.println(Screen.getPrimary().getBounds());
-						primaryStage.setX(primaryScreenBounds.getMinX());
-						primaryStage.setY(primaryScreenBounds.getMinY());
-						primaryStage.setWidth(primaryScreenBounds.getWidth());
-						primaryStage.setHeight(primaryScreenBounds.getHeight());
+						setToFullscreen(primaryStage);
 						primaryStage.setFullScreen(true);
 					}
 				}
@@ -83,7 +102,7 @@ public class MainLoader extends Application {
 				System.out.println("ERROR --> Couldn't retrieve resolution from file 'saboteur.cfg'.");
 		}
 			
-		// Music played in background
+		// Music & Effects played in background
 		try {
 			Media sound = new Media(getClass().getResource(musicFile).toURI().toString());
 			MediaPlayer mediaPlayer = new MediaPlayer(sound);
@@ -97,7 +116,7 @@ public class MainLoader extends Application {
 					mediaPlayer.stop();
 					timeline.stop();
 					mediaPlayer.setStartTime(new Duration(14600));
-					mediaPlayer.setVolume(100);
+					mediaPlayer.setVolume(volumeMusic/100);
 					mediaPlayer.play();
 					timeline.play();
 				}
