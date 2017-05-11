@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -102,6 +103,10 @@ public class MainLoader extends Application {
 		primaryStage.setScene(new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT));
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		
+		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        anchorPaneMainLoader.getChildren().setAll(anchorPane);
 	}
 
     public static void main (String[] args) {
