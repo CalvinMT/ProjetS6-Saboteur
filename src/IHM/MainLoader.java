@@ -31,7 +31,7 @@ public class MainLoader extends Application {
 		    PrintWriter writer = new PrintWriter(fileOptions);
 		    writer.println(":Music:" + "100.0" + ":");
 		    writer.println(":Effects:" + "100.0" + ":");
-		    writer.println(":Resolution:" + "1080*720" + ":");
+		    writer.println(":Resolution:" + "1280*720" + ":");
 	    	writer.println(":Fullscreen:" + "false" + ":");
 		    writer.close();
 		} catch (IOException e) {
@@ -62,7 +62,7 @@ public class MainLoader extends Application {
 					SCREEN_WIDTH = Double.parseDouble(stringList[0]);
 					SCREEN_HEIGHT = Double.parseDouble(stringList[1]);
 				}
-				if (string.equals("Fullscreen")) {
+				else if (string.equals("Fullscreen")) {
 					string = scanner.next();
 					if (string.equals("true")) {
 						primaryStage.setFullScreen(true);

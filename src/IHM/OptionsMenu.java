@@ -19,7 +19,7 @@ import javafx.util.Duration;
 public class OptionsMenu {
 	
 	private File fileOptions = new File("saboteur.cfg");
-	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1080*720","1440*900");
+	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1600*900");
 	
 	@FXML
 	private AnchorPane anchorPaneOptions;
@@ -84,7 +84,6 @@ public class OptionsMenu {
 		} catch (IOException e) {
 			System.out.println("ERROR --> Couldn't apply changes.");
 		}
-		System.out.println("pressed apply");
     }
 	
 	
