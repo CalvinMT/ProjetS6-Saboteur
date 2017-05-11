@@ -1,5 +1,7 @@
 package IHM;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,23 +9,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 public class MenuCreationPartie {
 
+    private ObservableList<String> typeList = FXCollections.observableArrayList("Ordinateur", "Joueur");
+
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
 
     @FXML
-    private ComboBox<?> comboBoxAvatar;
+    private ComboBox<ImageView> comboBoxAvatar;
 
     @FXML
     private TextField textFieldPseudo;
 
     @FXML
-    private ComboBox<?> comboBoxType;
+    private ComboBox<String> comboBoxType;
 
     @FXML
     private Button buttonAjouter;
@@ -58,6 +63,12 @@ public class MenuCreationPartie {
     @FXML
     void handleComboBoxType(ActionEvent event) {
         System.out.println("Combo Box type used");
+    }
+
+    @FXML
+    public void initialize(){
+        buttonPlay.setDisable(true);
+        comboBoxType.setItems(typeList);
     }
 
 }
