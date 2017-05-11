@@ -64,22 +64,22 @@ public class OptionsMenu {
 		    writer.println(":Resolution:" + choiceBox.getValue() + ":");
 		    if (checkBoxFullscreen.isSelected()) {
 		    	writer.println(":Fullscreen:" + true + ":");
-				textRestart.setVisible(true);
-			    FadeTransition fadeTextRestart = new FadeTransition(Duration.millis(3000), textRestart);
-			    fadeTextRestart.setFromValue(1.0);
-			    fadeTextRestart.setToValue(0.0);
-			    fadeTextRestart.setCycleCount(1);
-			    fadeTextRestart.play();
 		    }
 		    else {
 		    	writer.println(":Fullscreen:" + false + ":");
 		    }
 		    writer.close();
+			textRestart.setVisible(true);
+		    FadeTransition fadeTextRestart = new FadeTransition(Duration.millis(5000), textRestart);
+		    fadeTextRestart.setFromValue(1.0);
+		    fadeTextRestart.setToValue(0.0);
+		    fadeTextRestart.setCycleCount(1);
 			textApplied.setVisible(true);
-		    FadeTransition fadeTextApplied = new FadeTransition(Duration.millis(3000), textApplied);
+		    FadeTransition fadeTextApplied = new FadeTransition(Duration.millis(5000), textApplied);
 		    fadeTextApplied.setFromValue(1.0);
 		    fadeTextApplied.setToValue(0.0);
 		    fadeTextApplied.setCycleCount(1);
+		    fadeTextRestart.play();
 		    fadeTextApplied.play();
 		} catch (IOException e) {
 			System.out.println("ERROR --> Couldn't apply changes.");

@@ -68,8 +68,8 @@ public class MainLoader extends Application {
 				else if (string.equals("Fullscreen")) {
 					string = scanner.next();
 					if (string.equals("true")) {
-						Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-						System.out.println(Screen.getPrimary().getVisualBounds());
+						Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
+						System.out.println(Screen.getPrimary().getBounds());
 						primaryStage.setX(primaryScreenBounds.getMinX());
 						primaryStage.setY(primaryScreenBounds.getMinY());
 						primaryStage.setWidth(primaryScreenBounds.getWidth());
