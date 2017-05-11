@@ -31,7 +31,7 @@ public class MenuCreationPartie {
     private Button buttonAjouter;
 
     @FXML
-    private ListView listViewListeJoueur;
+    private ListView<BandeauPlayer> listViewListeJoueur;
 
     @FXML
     private Button buttonPlay;
@@ -66,6 +66,7 @@ public class MenuCreationPartie {
     public void initialize(){
         buttonPlay.setDisable(true);
         comboBoxType.setItems(typeList);
+
     }
 
 }
