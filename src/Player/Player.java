@@ -10,6 +10,12 @@ import javax.tools.Tool;
 
 public abstract class Player {
 
+    public enum Difficulty {
+        Easy,
+        Medium,
+        Hard
+    }
+
     protected String playerName;
     protected Card role;
     protected int goldPoints;
@@ -60,6 +66,10 @@ public abstract class Player {
         }
     }
 
+    public void setBoard(Board b){
+        this.board = b;
+    }
+
     // ajout d'une carte Repare
     public void setRepare(RepareSabotageCard c, RepareSabotageCard.Tools t){
         this.attributeCards.putRepare(c, t);
@@ -81,7 +91,6 @@ public abstract class Player {
     }
 
     public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
-        // TODO enlever l'attribute correspondant a la carte passé en argument
         if(c.containsTools(t)){
             this.attributeCards.removeAttribute(c, t);
         }
@@ -119,5 +128,6 @@ public abstract class Player {
     }
 
     public abstract String toString();
+    public abstract void changeDiffulty(Difficulty d);
 
 }

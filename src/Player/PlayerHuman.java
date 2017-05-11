@@ -15,6 +15,12 @@ public class PlayerHuman extends Player{
 
 
     // Constructeur
+    public PlayerHuman() {
+        this.playerName = "Joueur";
+        this.goldPoints = 0;
+        attributeCards = new PlayerAttribute();
+        this.playableCards = new HandPlayer();
+    }
 
     public PlayerHuman(Board b) {
         this.playerName = "Joueur";
@@ -22,6 +28,13 @@ public class PlayerHuman extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.board = b;
+    }
+
+    public PlayerHuman(String playerName) {
+        this.playerName = playerName;
+        this.goldPoints = 0;
+        attributeCards = new PlayerAttribute();
+        this.playableCards = new HandPlayer();
     }
 
 
