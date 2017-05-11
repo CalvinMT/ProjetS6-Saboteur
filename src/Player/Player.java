@@ -3,6 +3,10 @@ package Player;
 
 import Cards.*;
 import com.sun.org.apache.regexp.internal.RE;
+import Board.Board;
+import Board.Couple;
+
+import javax.tools.Tool;
 
 public abstract class Player {
 
@@ -11,6 +15,7 @@ public abstract class Player {
     protected int goldPoints;
     protected HandPlayer playableCards; // les cartes données au debut du jeu
     protected PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
+    protected Board board; // plateau de jeu
 
     // assignation des rôles
     public void assignRole(Card c){
@@ -43,6 +48,8 @@ public abstract class Player {
     }
 
 
+
+
     // regarder une carte de son jeu
     public Card lookAtCard(int i){
         if(i >= 0 && i < playableCards.nbCard() && playableCards.nbCard() > 0){
@@ -53,14 +60,24 @@ public abstract class Player {
         }
     }
 
-    // ajout d'une carte attribut
-    public void setAttributeCards(RepareSabotageCard c, RepareSabotageCard.Tools t){
-        this.attributeCards.doActionCard(c, t);
+    // ajout d'une carte Repare
+    public void setRepare(RepareSabotageCard c, RepareSabotageCard.Tools t){
+        this.attributeCards.putRepare(c, t);
+    }
+
+    // ajout d'une carte Sabotage
+    public void setSabotage(RepareSabotageCard c){
+        this.attributeCards.putSabotage(c);
     }
 
     // met une carte malus a au joueur p
-    public void putAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t, Player p){
-        p.setAttributeCards(c, t);
+    public void putRepare(RepareSabotageCard c, RepareSabotageCard.Tools t, Player p){
+        p.setRepare(c, t);
+    }
+
+    // met une carte malus a au joueur p
+    public void putSabotage(RepareSabotageCard c, Player p){
+        p.setSabotage(c);
     }
 
     public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){

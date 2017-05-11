@@ -1,5 +1,8 @@
 package Cards;
 
+import static Cards.GalleryCard.Gallery_t.but;
+import static Cards.GalleryCard.Gallery_t.start;
+
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
     private Gallery_t type_g;
@@ -15,7 +18,7 @@ public class GalleryCard extends Card {
 
     public GalleryCard() { // Init start card
         this.type = Card_t.gallery;
-        this.type_g = Gallery_t.start;
+        this.type_g = start;
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
@@ -162,24 +165,34 @@ public class GalleryCard extends Card {
 
         String renvoi = "Gallery: ";
 
-        renvoi += "{";
-        if (this.north) {
-            renvoi += "N";
-        }
-        if (this.east) {
-            renvoi += "E";
-        }
-        if (this.west) {
-            renvoi += "W";
-        }
-        if (this.south) {
-            renvoi += "S";
+        if(type_g == but && this.gold){
+            renvoi += "GOLD!!!";
+        } else if(type_g == but && !this.gold){
+            renvoi += "Stone";
+        } else if(type_g == start){
+            renvoi += "Départ";
+        } else {
+
+            renvoi += "{";
+            if (this.north) {
+                renvoi += "N";
+            }
+            if (this.east) {
+                renvoi += "E";
+            }
+            if (this.west) {
+                renvoi += "W";
+            }
+            if (this.south) {
+                renvoi += "S";
+            }
+
+            renvoi += "} ";
+            if (this.center) {
+                renvoi += "bloqued";
+            }
         }
 
-        renvoi += "} ";
-        if (this.center) {
-            renvoi += "bloqued";
-        }
 
         return renvoi;
     }

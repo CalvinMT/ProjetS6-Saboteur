@@ -5,7 +5,7 @@
  */
 package Player;
 import Cards.*;
-
+import Board.Board;
 /**
  *
  * @author uwalakae
@@ -16,26 +16,29 @@ public class PlayerHuman extends Player{
 
     // Constructeur
 
-    public PlayerHuman() {
+    public PlayerHuman(Board b) {
         this.playerName = "Joueur";
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.board = b;
     }
 
 
-    public PlayerHuman(String playerName) {
+    public PlayerHuman(String playerName, Board b) {
         this.playerName = playerName;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.board = b;
     }
 
-    public PlayerHuman(int i) {
+    public PlayerHuman(int i, Board b) {
         this.playerName = "Joueur " + i;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.board = b;
     }
 
     @Override

@@ -19,29 +19,29 @@ public class PlayerAttributeTest {
     @Test
     public void addAttribute() throws Exception {
         PlayerAttribute p = new PlayerAttribute();
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern), null);
         Assert.assertTrue(p.nbCard() == 1);
     }
 
     @Test
     public void test1(){
         PlayerAttribute p = new PlayerAttribute();
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern), null);
         Assert.assertTrue(p.nbCard() == 1);
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon), null);
         Assert.assertTrue(p.nbCard() == 2);
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe), null);
         Assert.assertTrue(p.nbCard() == 3);
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Pickaxe), null);
         Assert.assertTrue(p.nbCard() == 3);
     }
 
     @Test
     public void test2(){
         PlayerAttribute p = new PlayerAttribute();
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern), null);
         Assert.assertTrue(p.nbCard() == 1);
-        p.addAttribute(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+        p.doActionCard(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon), RepareSabotageCard.Tools.Wagon);
         Assert.assertTrue(p.nbCard() == 2);
         p.removeAttribute(0);
         Assert.assertTrue(p.nbCard() == 1);
