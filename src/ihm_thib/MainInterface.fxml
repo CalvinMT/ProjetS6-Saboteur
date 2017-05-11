@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="720.0" xmlns:fx="http://javafx.com/fxml">
     <children>
-        <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+        <BorderPane prefHeight="200.0" prefWidth="200.0"   AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
             <bottom>               
                 <fx:include source="Bottom.fxml" />
             </bottom>

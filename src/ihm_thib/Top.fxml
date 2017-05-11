@@ -29,9 +29,9 @@
          <children>
               <HBox maxHeight="80.0" maxWidth="80.0" prefHeight="80.0" prefWidth="80.0" spacing="5.0" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                   <children>
-                      <Button fx:id="Menu" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" maxHeight="25.0" maxWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                      <Button fx:id="buttonMenu" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" maxHeight="25.0" maxWidth="25.0" mnemonicParsing="false" onAction="#handlerButtonMenu" prefHeight="25.0" prefWidth="25.0">
                           <graphic>
-                              <ImageView id="menu" fitHeight="57.0" fitWidth="57.0" pickOnBounds="true">
+                              <ImageView id="menu" fx:id="buttonMenu" fitHeight="57.0" fitWidth="57.0" pickOnBounds="true">
                                   <image>
                                       <Image preserveRatio="true" smooth="true" url="@menu.png" />
                                   </image>
@@ -41,7 +41,7 @@
                         <Font name="System Italic" size="1.0" />
                      </font>
                       </Button>
-                      <Button fx:id="Aide" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" mnemonicParsing="false">
+                      <Button fx:id="buttonAide" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlerButtonAide">
                           <graphic>
                               <ImageView id="carte" fitHeight="57.0" fitWidth="57.0" pickOnBounds="true">
                                   <image>
