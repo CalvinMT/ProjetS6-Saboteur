@@ -196,4 +196,9 @@ public class GalleryCard extends Card {
 
         return renvoi;
     }
+    
+    @Override
+	public int getGold(){
+		return 0;
+	}
 }

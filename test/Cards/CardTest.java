@@ -10,9 +10,9 @@ public class CardTest {
 
     @Test
     public void getType() throws Exception {
-        Card cAction = new Card(action);
-        Card cPlayer = new Card(role);
-        Card cGallery = new Card(gallery);
+        Card cAction = new ActionCard("Map");
+        Card cPlayer = new RoleCard("Mineur");
+        Card cGallery = new GalleryCard();
 
         assertTrue(cAction.getType() == action);
         assertTrue(cPlayer.getType() == role);
@@ -21,13 +21,14 @@ public class CardTest {
 
     @Test
     public void equals() throws Exception {
-        Card c1 = new Card(role);
-        Card c2 = new Card(role);
+        Card c1 = new RoleCard("Mineur");
+        Card c2 = new RoleCard("Mineur");
+        Card c3 = new RoleCard("Saboteur");
 
         assertTrue(c1.equals(c2));
-        c2 = new Card(action);
-        assertFalse(c1.equals(c2));
-        c2 = new Card(gallery);
+        assertTrue(c1.equals(c3));
+        assertTrue(c2.equals(c3));
+        c2 = new GalleryCard();
         assertFalse(c1.equals(c2));
     }
 

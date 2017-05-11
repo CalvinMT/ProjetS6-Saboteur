@@ -1,6 +1,6 @@
 package Cards;
 
-public class Card {
+public abstract class Card {
     public enum Card_t {action, role, gallery};
     protected Card_t type;
 
@@ -25,4 +25,6 @@ public class Card {
     public boolean containsTools(RepareSabotageCard.Tools t){
         return false;
     }
+    
+    public abstract int getGold();
 }
