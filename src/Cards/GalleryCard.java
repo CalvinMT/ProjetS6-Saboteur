@@ -91,16 +91,8 @@ public class GalleryCard extends Card {
                 (this.isGold() == c.isGold()));
     }
 
-    public void rotate() {
-        boolean tmp;
-
-        tmp = this.north;
-        this.north = this.south;
-        this.south = tmp;
-
-        tmp = this.east;
-        this.east = this.west;
-        this.west = tmp;
+    public GalleryCard rotate() {
+        return new GalleryCard(this.getGalleryType(), this.getX(), this.getY(), this.isGold(), this.canHasCenter(), this.canHasSouth(), this.canHasNorth(), this.canHasWest(), this.canHasEast());
     }
 
     public int getConfig() {
@@ -160,6 +152,16 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
-        return "GalleryCard_t : " + this.getGalleryType() + "\nCoord : (" + this.getX() + "," + this.getY() + ")\nGold : "+ this.isGold() +"\nCenter : " + this.canHasCenter() +"\nNorth : "+ this.canHasNorth() +"\nSouth : "+ this.canHasSouth() +"\nEast : "+ this.canHasEast() +"\nWest : "+ this.canHasWest() +"\n";
+        return "GalleryCard{" +
+                "type=" + type +
+                ", x=" + x +
+                ", y=" + y +
+                ", gold=" + gold +
+                ", center=" + center +
+                ", north=" + north +
+                ", south=" + south +
+                ", east=" + east +
+                ", west=" + west +
+                '}';
     }
 }

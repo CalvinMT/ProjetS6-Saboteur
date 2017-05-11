@@ -94,16 +94,31 @@ public class GalleryCardTest {
 
     @Test
     public void rotate() throws Exception {
-        GalleryCard c = new GalleryCard(tunnel, 0, 0, false, true, false, true, false, true);
+        GalleryCard c2, c = new GalleryCard(tunnel, 0, 0, false, true, false, true, false, true);
+
         assertFalse(c.canHasNorth());
         assertFalse(c.canHasEast());
         assertTrue(c.canHasSouth());
         assertTrue(c.canHasWest());
-        c.rotate();
+        c2 = c.rotate();
+        assertTrue(c2.canHasNorth());
+        assertTrue(c2.canHasEast());
+        assertFalse(c2.canHasSouth());
+        assertFalse(c2.canHasWest());
+        assertTrue(c.equals(c2.rotate()));
+
+        c = new GalleryCard(tunnel, 0, 0, false, true, true, true, false, true);
+
         assertTrue(c.canHasNorth());
-        assertTrue(c.canHasEast());
-        assertFalse(c.canHasSouth());
-        assertFalse(c.canHasWest());
+        assertFalse(c.canHasEast());
+        assertTrue(c.canHasSouth());
+        assertTrue(c.canHasWest());
+        c2 = c.rotate();
+        assertTrue(c2.canHasNorth());
+        assertTrue(c2.canHasEast());
+        assertTrue(c2.canHasSouth());
+        assertFalse(c2.canHasWest());
+        assertTrue(c.equals(c2.rotate()));
     }
 
     @Test
