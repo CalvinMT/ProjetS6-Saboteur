@@ -5,7 +5,11 @@
  */
 package Saboteur;
 import Cards.*;
+import Player.*;
+import Board.Board;
+import Board.Couple;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +23,7 @@ public class Moteur {
     private HandRole roleCards;
 
     //ajout du board
-    //Board board;
+    Board board;
 
 
 
@@ -33,6 +37,7 @@ public class Moteur {
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
+        this.board = new Board();
     }
 
 
@@ -47,7 +52,7 @@ public class Moteur {
         }
 
         for(int i=0; i<nbPlayer; i++){
-            arrayPlayer.add(new Player(i+1));
+            arrayPlayer.add(new PlayerHuman(i+1, this.board));
         }
     }
 
@@ -85,8 +90,9 @@ public class Moteur {
         if(!this.roleCards.isEmpty()){
             if(numCard >= 0 && numCard < this.roleCards.nbCard() && this.currentPlayer >= 0 && this.currentPlayer < nbPlayer()){
                 Card c = this.roleCards.chooseOne_with_remove(numCard);
+
                 this.arrayPlayer.get(this.currentPlayer).assignRole(c);
-                currentPlayer = (currentPlayer+1)%nbPlayer();
+                nextPlayer();
             } else {
                 throw new Exception();
             }
@@ -95,12 +101,27 @@ public class Moteur {
         }
     }
 
+    // si tous les roles sont attribués
+    public boolean allRoleAreSet(){
+        for(int i=0; i<nbPlayer(); i++){
+            if(this.arrayPlayer.get(i).getRole() == null){
+                return false;
+            }
+        }
+        return true;
+    }
+
     // affiche les infos joueurs en version texte
     public void promptPlayers(){
         for(int i=0; i<nbPlayer(); i++){
             System.out.println(arrayPlayer.get(i));
             System.out.println();
         }
+    }
+
+    // passe au joueur suivant
+    public void nextPlayer(){
+        currentPlayer = (currentPlayer+1)%nbPlayer();
     }
 
     // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
@@ -120,6 +141,70 @@ public class Moteur {
             return null;
         }
     }
+
+    // le joueur courant joue une carte sur le board
+    public void play(GalleryCard c){
+        if(c.getType() == Card.Card_t.gallery){
+            // ajout dans sur le board
+            nextPlayer();
+        }
+    }
+
+    // le joueur courant joue une carte revele goal ou effondrement
+    public void play(ActionCard c, Couple cou){
+        if(c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Map){
+                Card goal = this.lookGoal(cou);
+                System.out.println("Carte goal: "+goal);
+                nextPlayer();
+            } else if(c.getAction() == ActionCard.Action.Crumbing){
+
+                // TODO methode crumbing
+                nextPlayer();
+            }
+        }
+    }
+
+    // le joueur courant joue une carte Sabotage
+    public void play(RepareSabotageCard c, Player p){
+        if(c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Sabotage){
+                this.getCurrentPlayer().putSabotage(c, p);
+                nextPlayer();
+            }
+        }
+    }
+
+    // le joueur courant joue une carte Repare sur un joueur
+    public void play(RepareSabotageCard c, RepareSabotageCard.Tools t, Player p){
+        if(c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Repare){
+                this.getCurrentPlayer().putRepare(c, t, p);
+                nextPlayer();
+            }
+        }
+
+    }
+
+    // regarde la carte but choisi par le joueur
+    public Card lookGoal(Couple c){
+        if(c.getY() == 8 && (c.getX() == 0 || c.getX() == 2 || c.getX() == -2)){
+            System.out.println("Taille mine: "+this.board.getMineSize());
+            if(c.getX() == 2){ // B3
+                return this.board.getMineElement(3).getCard();
+            } else if(c.getX() == 0){ // B2
+                return this.board.getMineElement(2).getCard();
+            } else if(c.getX() == -2){ // B1
+                return this.board.getMineElement(1).getCard();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+
 
     // renvoie le numero du joueur courant
     public int currentNumPlayer(){
@@ -152,84 +237,6 @@ public class Moteur {
     }
 
 
-    /// EMEZ
-    /// A voir avec lui pour comprendre ce qu'il voulait faire
 
-
-	// verifie que cardToPlay peut prolonger la gallerie en respectant les regles si mis adjacent 
-	// à cardToAppendTo
-	public boolean verifyAppendToGallery(Player player, Card cardToPlay, Card cardToAppendTo) {
-		return false;   
-    }
-	
-	// role.playableCards sera modifié du coup; la gallerie aussi
-    public void appendToGallery(Player player, Card cardToPlay, Card cardToAppendTo) {
-        // à implementer
-    	if (isGameOver()) {
-    		
-    	}
-    }
-    
-    
-    // verification que cardToPlay peut detruire un cul de sac, puis que x & y sont des indices 
-    // valides de la gallerie et que (x,y) contient une carte de type cul de sac
-    public boolean verifyDestroyCulDeSac(Player player, Card cardToPlay, int x, int y) {
-    	return false;
-    }
-    
-    // enleve une carte de type cul de sac, modifie la gallerie, et 
-    // modifie le tableau role.playableCards
-    public void destroyCulDeSac(Player player, Card cardToPlay, int x, int y) {
-        
-    }
-    
-    //verifie le type de cardToPlay et que ça pourrait "soigner" pausedPlayer (si pausedPlayer a besoin)
-    public boolean verifyUnpausePlayer(Player player, Card cardToPlay, Player pausedPlayer) {
-    	return false;
-    }
-    
-    // enleve une carte de pause correspondant au type de Carte c devant le Player j
-    // pourrait l'utiliser pour lui meme
-    // modifie le tableau role.playableCards et pausedPlayer.pauseCards
-    public void unpausePlayer(Player player, Card cardToPlay, Player pausedPlayer) {
-        
-    }
-    
-    
-    public boolean verifyPausePlayer(Player player, Card cardToPlay, Player targetedPlayer) {
-    	return false;
-    }
-    
-    public void pausePlayer(Player player, Card cardToPlay, Player targetedPlayer) {
-        
-    }
-    
-    // verifie que role possede une carte de type Map,
-    // verifie (x,y), puis lui renvoie le type de la carte sur la case (x,y). 
-    // role.playableCards sera modifié et aussi role.treasureCardsChecked
-    public boolean verifyPeep(Player player, Card cardToPlay, Card possibleTreasure) {
-    	return false;
-    }
-    
-    public void peepCard(Player player, Card cardToPlay) {
-        
-    }
-       
-    public boolean isGameOver() {
-    	return false;
-    }
-    
-    // si les mineurs gagnent : 
-    public void shareGoldAmongMiners(Player [] players){
-        
-    }
-    
- // si les saboteurs gagnent : 
-    public void shareGoldAmongSaboteurs(Player [] players){
-        
-    }
-
-
-    
 
 }

@@ -1,5 +1,8 @@
 package Cards;
 
+import static Cards.GalleryCard.Gallery_t.but;
+import static Cards.GalleryCard.Gallery_t.start;
+
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
     private Gallery_t type_g;
@@ -15,7 +18,7 @@ public class GalleryCard extends Card {
 
     public GalleryCard() { // Init start card
         this.type = Card_t.gallery;
-        this.type_g = Gallery_t.start;
+        this.type_g = start;
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
@@ -83,23 +86,24 @@ public class GalleryCard extends Card {
         return type_g;
     }
 
-    public boolean hasNorth() {
+
+    public boolean canHasNorth() {
         return this.north;
     }
 
-    public boolean hasSouth() {
+    public boolean canHasSouth() {
         return this.south;
     }
 
-    public boolean hasEast() {
+    public boolean canHasEast() {
         return this.east;
     }
 
-    public boolean hasWest() {
+    public boolean canHasWest() {
         return this.west;
     }
 
-    public boolean hasCenter() {
+    public boolean canHasCenter() {
         return this.center;
     }
 
@@ -107,17 +111,18 @@ public class GalleryCard extends Card {
         return gold;
     }
 
-    public boolean equals(GalleryCard c) {
-        return  this.getGalleryType() == c.getGalleryType() &&
-                this.getX() == c.getX() &&
-                this.getY() == c.getY() &&
 
-                this.hasCenter() == c.hasCenter() &&
-                this.hasNorth() == c.hasNorth() &&
-                this.hasSouth() == c.hasSouth() &&
-                this.hasEast() == c.hasEast() &&
-                this.hasWest() == c.hasWest() &&
-                this.isGold() == c.isGold();
+
+    public boolean equals(GalleryCard c) {
+        return  ((this.getGalleryType() == c.getGalleryType()) &&
+                (this.getX() == c.getX()) &&
+                (this.getY() == c.getY()) &&
+                (this.canHasCenter() == c.canHasCenter()) &&
+                (this.canHasNorth() == c.canHasNorth()) &&
+                (this.canHasSouth() == c.canHasSouth()) &&
+                (this.canHasEast() == c.canHasEast()) &&
+                (this.canHasWest() == c.canHasWest()) &&
+                (this.isGold() == c.isGold()));
     }
 
     public void rotate() {
@@ -155,20 +160,45 @@ public class GalleryCard extends Card {
         return res;
     }
 
-    public String toString(){
+
+    public String toString() {
 
         String renvoi = "Gallery: ";
 
-        renvoi += "{";
-        if(this.north){renvoi += "N";}
-        if(this.east){renvoi += "E";}
-        if(this.west){renvoi += "W";}
-        if(this.south){renvoi += "S";}
+        if(type_g == but && this.gold){
+            renvoi += "GOLD!!!";
+        } else if(type_g == but && !this.gold){
+            renvoi += "Stone";
+        } else if(type_g == start){
+            renvoi += "Départ";
+        } else {
 
-        renvoi += "} ";
-        if(this.center){
-            renvoi += "bloqued";
+            renvoi += "{";
+            if (this.north) {
+                renvoi += "N";
+            }
+            if (this.east) {
+                renvoi += "E";
+            }
+            if (this.west) {
+                renvoi += "W";
+            }
+            if (this.south) {
+                renvoi += "S";
+            }
+
+            renvoi += "} ";
+            if (this.center) {
+                renvoi += "bloqued";
+            }
         }
+
+
         return renvoi;
     }
+    
+    @Override
+	public int getGold(){
+		return 0;
+	}
 }

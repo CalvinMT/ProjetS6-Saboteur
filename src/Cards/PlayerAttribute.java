@@ -12,19 +12,6 @@ public class PlayerAttribute extends Hand {
         this.visible = true;
     }
 
-    // enlever un attribut avec une carte repare
-    public void removeAttribute(RepareSabotageCard c){
-
-        if(c.getType() == Card.Card_t.action && c.getAction() == ActionCard.Action.Repare && c.nbTools() == 1){
-            int nbRepare = 1;
-            for(int i=0; i<getNbAttribute() && nbRepare > 0; i++){
-                if(arrayCard.get(i).canBeRepareBy(c)){
-                    nbRepare--;
-                    arrayCard.remove(i);
-                }
-            }
-        }
-    }
 
     // enlever un attribut avec une carte repare
     public void removeAttribute(int i){
@@ -42,9 +29,10 @@ public class PlayerAttribute extends Hand {
         return false;
     }
 
+    // enleve un carte de sabotage
     public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
 
-        if(c.getType() == Card.Card_t.action && c.getAction() == ActionCard.Action.Repare && c.nbTools() == 2){
+        if(c.getType() == Card.Card_t.action && c.getAction() == ActionCard.Action.Repare && c.nbTools() <= 2 && c.nbTools() > 0){
             RepareSabotageCard card = new RepareSabotageCard("Repare", t);
             int nbRepare = 1;
             for(int i=0; i<getNbAttribute() && nbRepare > 0; i++){
@@ -56,14 +44,35 @@ public class PlayerAttribute extends Hand {
         }
     }
 
-    public void addAttribute(RepareSabotageCard c){
+    /// ajoute le sabotage au joueur
+    public void putSabotage(RepareSabotageCard c){
         if (c.getType() == Card.Card_t.action){
             if(c.getAction() == ActionCard.Action.Sabotage && !this.containsTools(c.getTool())) {
                 if (this.arrayCard.size() < this.nbAttribute) {
                     this.arrayCard.add(c);
                 }
-            } else if(c.getAction() == ActionCard.Action.Repare){
-                removeAttribute(c);
+            }
+        }
+    }
+
+    // repare un outil cassé
+    public void putRepare(RepareSabotageCard c, RepareSabotageCard.Tools t){
+        if (c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
+                removeAttribute(c, t);
+            }
+        }
+    }
+
+    // ajoute un attribut
+    public void doActionCard(RepareSabotageCard c, RepareSabotageCard.Tools t){
+        if (c.getType() == Card.Card_t.action){
+            if(c.getAction() == ActionCard.Action.Sabotage && !this.containsTools(c.getTool())) {
+                if (this.arrayCard.size() < this.nbAttribute) {
+                    this.arrayCard.add(c);
+                }
+            } else if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
+                removeAttribute(c, t);
             }
         } else {
             System.err.println("Erreur mauvaise carte");

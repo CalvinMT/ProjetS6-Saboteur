@@ -12,7 +12,7 @@ public class ActionCard extends Card {
 
     protected Action action;
 
-    enum Action {
+    public enum Action {
         Sabotage,
         Repare,
         Map,
@@ -67,6 +67,11 @@ public class ActionCard extends Card {
     public Action getAction(){
         return this.action;
     }
+    
+    @Override
+	public int getGold(){
+		return 0;
+	}
 
 
 }
