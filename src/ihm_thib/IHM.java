@@ -27,7 +27,7 @@ public class IHM extends Application {
   public void start(final Stage primaryStage) {
     try {
         // Localisation du fichier FXML.
-        final URL url = getClass().getResource("Bottom.fxml");
+        final URL url = getClass().getResource("MainInterface.fxml");
         // Chargement du bundle:
         ResourceBundle bundle = ResourceBundle.getBundle("ihm/strings");
         // Creation du loader.

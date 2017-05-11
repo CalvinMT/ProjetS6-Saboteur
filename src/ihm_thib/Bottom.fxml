@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,82 +13,139 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.91">
+<AnchorPane id="AnchorPane" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <GridPane gridLinesVisible="true" style="-fx-hgap: 6; -fx-vgap:6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane gridLinesVisible="false" style="-fx-hgap: 45; -fx-vgap: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>     
-              <ImageView id="avatar" pickOnBounds="true">
-                  <image>
-                      <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                  </image>
-              </ImageView>
-              <VBox id="infos" spacing="6.0">
-                 <children>                 
-                      <TextArea id="Or" centerShape="true" editable="false" text="3 pépites" />
-                      <TextArea id="Role" centerShape="true" editable="false" text="Saboteur" />
-                      <TextArea id="pseudo" centerShape="true" editable="false" prefWidth="71.0" text="Bastien" />
-                 </children>
-              </VBox>
-              <HBox id="main" maxHeight="60.0" prefHeight="60.0" prefWidth="200.0" spacing="6.0">
-                  <children>
-                      <ImageView id="main1" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="main2" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="main3" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="main4" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="main5" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="main6" pickOnBounds="true">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
-                          </image>
-                      </ImageView>
-                  </children>
-              </HBox> 
-              <HBox id="pioche_defausse" minHeight="180.0" minWidth="-Infinity" prefWidth="180.0" spacing="6.0"> 
-                  <children>
-                      <ImageView id="pioche" pickOnBounds="true" HBox.hgrow="ALWAYS">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@carte.jpg" />
-                          </image>
-                      </ImageView>
-                      <ImageView id="defausse" pickOnBounds="true" HBox.hgrow="ALWAYS">
-                          <image>
-                              <Image preserveRatio="true" smooth="true" url="@defausse.jpg" />
-                          </image>
-                      </ImageView>
-                  </children>
-              </HBox>
-               </children>
-            </HBox>      
+          <!-- Infos private -->
+          <HBox id="Private" alignment="BOTTOM_LEFT" maxHeight="316.0" maxWidth="400.0" prefHeight="316.0" prefWidth="404.0" spacing="1.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+              <children>
+                    <VBox>
+                        <children>
+                            <HBox maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="0">
+                                <children>
+                                   <ImageView fitHeight="83.0" fitWidth="108.0">
+                                      <image>
+                                         <Image url="@lanterne.png" />
+                                      </image>
+                                   </ImageView>
+                                   <ImageView fitHeight="83.0" fitWidth="89.0">
+                                      <image>
+                                         <Image url="@pickaxe.png" />
+                                      </image>
+                                   </ImageView>
+                                   <ImageView fitHeight="83.0" fitWidth="103.0">
+                                      <image>
+                                         <Image url="@wagon.png" />
+                                      </image>
+                                   </ImageView>
+                                </children>
+                             </HBox>      
+                            <ImageView id="avatar" fitHeight="233.0" fitWidth="303.0" pickOnBounds="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="4" HBox.hgrow="ALWAYS">
+                                <image>
+                                    <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
+                                </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                            </ImageView>
+                        </children>
+                    </VBox>
+                <VBox id="infos" alignment="BOTTOM_LEFT" maxHeight="60.0" maxWidth="80.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="100.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS">
+                   <children>                
+                        <TextArea id="Or" centerShape="false" editable="false" scaleShape="true" text="3 pépites" />
+                        <TextArea id="Role" centerShape="flase" editable="false" maxHeight="120.0" maxWidth="90.0" scaleShape="true" text="Saboteur" />
+                        <TextArea id="pseudo" centerShape="flase" editable="false" scaleShape="true" text="Bastien" />
+                   </children>
+                </VBox>
+              </children>
+          </HBox>
+        
+        <!-- La main du joueur -->  
+        <HBox id="main" maxHeight="80.0" maxWidth="600.0" spacing="6.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <children>
+                <ImageView id="main1" fitHeight="206.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="main2" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="main3" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="main4" fitHeight="209.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="main5" fitHeight="206.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="main6" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+            </children>
+        </HBox> 
+        
+        <!-- La pioche et la defausse -->
+        <HBox id="pioche_defausse" maxHeight="60.0" maxWidth="120.0" spacing="9.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS"> 
+            <children>
+                <ImageView id="pioche" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@pioche.png" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="defausse" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@defausse.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+        </HBox>    
+                     
       </children>
          <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
+            <ColumnConstraints maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
+            <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
             <ColumnConstraints />
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
