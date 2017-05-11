@@ -127,6 +127,38 @@ public class GalleryCard extends Card {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GalleryCard)) return false;
+
+        GalleryCard card = (GalleryCard) o;
+
+        if (getX() != card.getX()) return false;
+        if (getY() != card.getY()) return false;
+        if (center != card.center) return false;
+        if (north != card.north) return false;
+        if (south != card.south) return false;
+        if (east != card.east) return false;
+        if (west != card.west) return false;
+        if (isGold() != card.isGold()) return false;
+        return getType() == card.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getType().hashCode();
+        result = 31 * result + getX();
+        result = 31 * result + getY();
+        result = 31 * result + (center ? 1 : 0);
+        result = 31 * result + (north ? 1 : 0);
+        result = 31 * result + (south ? 1 : 0);
+        result = 31 * result + (east ? 1 : 0);
+        result = 31 * result + (west ? 1 : 0);
+        result = 31 * result + (isGold() ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "GalleryCard_t : " + this.getGalleryType() + "\nCoord : (" + this.getX() + "," + this.getY() + ")\nGold : "+ this.isGold() +"\nCenter : " + this.canHasCenter() +"\nNorth : "+ this.canHasNorth() +"\nSouth : "+ this.canHasSouth() +"\nEast : "+ this.canHasEast() +"\nWest : "+ this.canHasWest() +"\n";
     }
