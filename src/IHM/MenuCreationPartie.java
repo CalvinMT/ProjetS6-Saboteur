@@ -1,5 +1,6 @@
 package IHM;
 
+import Saboteur.Lobby;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,8 @@ import java.io.IOException;
 public class MenuCreationPartie {
 
     private ObservableList<String> typeList = FXCollections.observableArrayList("Ordinateur", "Joueur");
+
+    private Lobby lobby = new Lobby();
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
@@ -41,7 +44,23 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonAjouter(ActionEvent event) {
-        System.out.println("Ajouter pressed");
+        String name = textFieldPseudo.getText();
+        String type = comboBoxType.getValue();
+
+        if(name == null || name.equals("")){
+            if(type.equals("Ordinateur")){
+                name = "Ordinateur";
+            } else if(type.equals("Joueur")){
+                name = "Joueur";
+            }
+        }
+
+        System.out.println("Pseudo: "+name);
+
+        lobby.addPlayer(name, type);
+
+        System.out.println(lobby);
+
     }
 
     @FXML

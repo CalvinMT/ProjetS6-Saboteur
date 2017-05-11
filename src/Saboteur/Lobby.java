@@ -8,7 +8,7 @@ public class Lobby {
 
     ArrayList<Player> arrayPlayer;
 
-    Lobby(){
+    public Lobby(){
         arrayPlayer = new ArrayList<>();
     }
 
@@ -50,4 +50,17 @@ public class Lobby {
     }
 
 
+    public String toString(){
+        String renvoi = "";
+
+        renvoi += "Nombre joueur: "+nbPlayer()+"\n";
+        renvoi += "{ ";
+        for(int i=0; i<nbPlayer(); i++){
+            renvoi += arrayPlayer.get(i).getPlayerName() + " ; ";
+        }
+
+        renvoi += "}\n";
+
+        return renvoi;
+    }
 }
