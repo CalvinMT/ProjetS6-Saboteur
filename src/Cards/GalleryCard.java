@@ -1,6 +1,5 @@
 package Cards;
 
-import static Cards.GalleryCard.Gallery_t.but;
 import static Cards.GalleryCard.Gallery_t.start;
 
 public class GalleryCard extends Card {
@@ -14,7 +13,6 @@ public class GalleryCard extends Card {
                     south = true,
                     east = true,
                     west = true;
-    private boolean gold = false;
 
     public GalleryCard() { // Init start card
         this.type = Card_t.gallery;
@@ -24,17 +22,6 @@ public class GalleryCard extends Card {
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
         this.type = Card_t.gallery;
         this.type_g = t;
-        this.center = c;
-        this.north = n;
-        this.south = s;
-        this.east = e;
-        this.west = w;
-    }
-
-    public GalleryCard(Gallery_t t, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w){
-        this.type = Card_t.gallery;
-        this.type_g = t;
-        this.gold = g;
         this.center = c;
         this.north = n;
         this.south = s;
@@ -53,12 +40,11 @@ public class GalleryCard extends Card {
     }
 
     // Pour debug
-    public GalleryCard(Gallery_t t, int x, int y, boolean g, boolean c, boolean n, boolean s, boolean e, boolean w) {
+    public GalleryCard(Gallery_t t, int x, int y, boolean c, boolean n, boolean s, boolean e, boolean w) {
         this.type = Card_t.gallery;
         this.type_g = t;
         this.x = x;
         this.y = y;
-        this.gold = g;
         this.center = c;
         this.north = n;
         this.south = s;
@@ -107,11 +93,29 @@ public class GalleryCard extends Card {
         return this.center;
     }
 
-    public boolean isGold() {
-        return gold;
+    public void setCenter(boolean center) {
+        this.center = center;
     }
 
+    public void setNorth(boolean north) {
+        this.north = north;
+    }
 
+    public void setSouth(boolean south) {
+        this.south = south;
+    }
+
+    public void setEast(boolean east) {
+        this.east = east;
+    }
+
+    public void setWest(boolean west) {
+        this.west = west;
+    }
+
+    public void setType_g(Gallery_t type_g) {
+        this.type_g = type_g;
+    }
 
     public boolean equals(GalleryCard c) {
         return  ((this.getGalleryType() == c.getGalleryType()) &&
@@ -121,19 +125,16 @@ public class GalleryCard extends Card {
                 (this.canHasNorth() == c.canHasNorth()) &&
                 (this.canHasSouth() == c.canHasSouth()) &&
                 (this.canHasEast() == c.canHasEast()) &&
-                (this.canHasWest() == c.canHasWest()) &&
-                (this.isGold() == c.isGold()));
+                (this.canHasWest() == c.canHasWest()));
     }
 
     public GalleryCard rotate() {
-        return new GalleryCard(this.getGalleryType(), this.getX(), this.getY(), this.isGold(), this.canHasCenter(), this.canHasSouth(), this.canHasNorth(), this.canHasWest(), this.canHasEast());
+        return new GalleryCard(this.getGalleryType(), this.getX(), this.getY(), this.canHasCenter(), this.canHasSouth(), this.canHasNorth(), this.canHasWest(), this.canHasEast());
     }
 
     public int getConfig() {
         int res = 0;
-        if (this.gold) {
-            res += 100000;
-        }
+
         if (this.center) {
             res += 10000;
         }
@@ -152,6 +153,10 @@ public class GalleryCard extends Card {
         return res;
     }
 
+    public boolean isGold() {
+        GoalCard card = (GoalCard) this;
+        return card.isGold();
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,7 +171,6 @@ public class GalleryCard extends Card {
         if (south != card.south) return false;
         if (east != card.east) return false;
         if (west != card.west) return false;
-        if (isGold() != card.isGold()) return false;
         return getType() == card.getType();
     }
 
@@ -180,20 +184,16 @@ public class GalleryCard extends Card {
         result = 31 * result + (south ? 1 : 0);
         result = 31 * result + (east ? 1 : 0);
         result = 31 * result + (west ? 1 : 0);
-        result = 31 * result + (isGold() ? 1 : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        if (type_g == but && this.gold) return "GOLD!!";
-        if (type_g == but && !this.gold) return "Stone";
         if (type_g == start) return "Start";
         return "GalleryCard{" +
                 "type=" + type +
                 ", x=" + x +
                 ", y=" + y +
-                ", gold=" + gold +
                 ", center=" + center +
                 ", north=" + north +
                 ", south=" + south +
