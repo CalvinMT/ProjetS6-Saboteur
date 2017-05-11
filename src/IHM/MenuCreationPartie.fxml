@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
+<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0">
         <columnConstraints>
@@ -39,7 +39,7 @@
             <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ComboBox fx:id="comboBoxAvatar" onAction="#handleComboBoxAvatar" prefHeight="70.0" prefWidth="104.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <ComboBox fx:id="comboBoxAvatar" prefHeight="70.0" prefWidth="104.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -57,14 +57,14 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <ComboBox fx:id="comboBoxType" onAction="#handleComboBoxType" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <ComboBox fx:id="comboBoxType" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </ComboBox>
-            <Button fx:id="buttonAjouter" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouter" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Button fx:id="buttonAjouter" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouter" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="7" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7">
@@ -77,17 +77,17 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </TextField>
             <TableView fx:id="tableViewListeJoueur" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.rowSpan="3">
               <columns>
-                <TableColumn fx:id="columnAvatar" prefWidth="120.0" text="Avatar" />
-                <TableColumn fx:id="columnPseudo" prefWidth="225.0" text="Pseudo" />
-                <TableColumn fx:id="columnType" prefWidth="175.0" text="Type" />
-                <TableColumn fx:id="columnDelete" prefWidth="70.0" text="Suppr." />
+                <TableColumn fx:id="columnAvatar" prefWidth="120.0" resizable="false" text="Avatar" />
+                <TableColumn fx:id="columnPseudo" prefWidth="225.0" resizable="false" text="Pseudo" />
+                <TableColumn fx:id="columnType" prefWidth="175.0" resizable="false" text="Type" />
+                <TableColumn fx:id="columnDelete" prefWidth="70.0" resizable="false" text="Suppr." />
               </columns>
             </TableView>
          </children>

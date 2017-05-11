@@ -106,6 +106,7 @@ public class MainLoader extends Application {
 		try {
 			Media sound = new Media(getClass().getResource(musicFile).toURI().toString());
 			MediaPlayer mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.setVolume(volumeMusic/100);
 			mediaPlayer.setStartTime(new Duration(14600));
 			//mediaPlayer.setStopTime(new Duration(135700));
 			mediaPlayer.play();
@@ -116,7 +117,6 @@ public class MainLoader extends Application {
 					mediaPlayer.stop();
 					timeline.stop();
 					mediaPlayer.setStartTime(new Duration(14600));
-					mediaPlayer.setVolume(volumeMusic/100); // TODO
 					mediaPlayer.play();
 					timeline.play();
 				}

@@ -10,12 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+
 import java.io.IOException;
 
 
 public class MenuCreationPartie {
 	
-    private ObservableList<ImageView> avatarList = FXCollections.observableArrayList(new ImageView(new Image("ressources/avatar_anonyme.jpg")), new ImageView(new Image("ressources/avatar_test.jpg")));
+    private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar_anonyme", "avatar_test");
 
     private ObservableList<String> typeList = FXCollections.observableArrayList("Joueur", "Ordinateur");
 
@@ -25,7 +26,7 @@ public class MenuCreationPartie {
     private AnchorPane anchorPaneMenuCreationPartie;
 
     @FXML
-    private ComboBox<ImageView> comboBoxAvatar;
+    private ComboBox<String> comboBoxAvatar;
 
     @FXML
     private TextField textFieldPseudo;
@@ -53,8 +54,8 @@ public class MenuCreationPartie {
     @FXML
     void handleButtonAjouter(ActionEvent event) {
 		String pseudo = textFieldPseudo.getText();
-		ImageView avatar = comboBoxAvatar.getValue();
-		playerList.add(new BandeauPlayer(avatar, pseudo));
+		String avatar = comboBoxAvatar.getValue();
+		playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo));
 		
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
@@ -73,27 +74,64 @@ public class MenuCreationPartie {
     }
 
     @FXML
-    void handleComboBoxAvatar(ActionEvent event) {
-    }
-
-    @FXML
-    void handleComboBoxType(ActionEvent event) {
-    }
-
-    @FXML
     public void initialize(){
         buttonPlay.setDisable(true);
-        for (int index = 0; index<avatarList.size(); index++) {
-            avatarList.get(index).setFitWidth(70);
-            avatarList.get(index).setFitHeight(70);
-        }
         comboBoxAvatar.setValue(avatarList.get(0));
         comboBoxAvatar.setItems(avatarList);
+        comboBoxAvatar.setCellFactory(listview -> new ImageCell());
+        comboBoxAvatar.setButtonCell(new ImageCell());
         comboBoxType.setValue(typeList.get(0));
         comboBoxType.setItems(typeList);
         tableViewListeJoueur.setItems(playerList);
+        columnAvatar.setStyle( "-fx-alignment: CENTER;");
+        columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
+        columnDelete.setStyle( "-fx-alignment: CENTER;");
         columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ImageView>("Avatar"));
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Pseudo"));
+        columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
     }
+    
+    
+    
+    
+    
+    
+	// A custom ListCell that displays an ImageView
+	static class ImageCell extends ListCell<String> {
+		Label label;
+		@Override
+		protected void updateItem (String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setItem(null);
+				setGraphic(null);
+			}
+			else {
+				ImageView image = getImageView(item);
+				label = new Label("",image);
+				setGraphic(label);
+			}
+		}
 
+		private ImageView getImageView(String imageName) {
+			ImageView imageView = null;
+			switch (imageName) {
+				case "avatar_anonyme":
+					imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+					break;
+				case "avatar_test":
+					imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+					break;
+				default:
+					imageName = null;
+			}
+			if (!imageView.equals(null)) {
+			imageView.setFitWidth(70);
+			imageView.setFitHeight(70);
+			}
+			return imageView;
+		}
+	
+	}
+    
 }

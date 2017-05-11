@@ -44,6 +44,11 @@ public class OptionsMenu {
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
+	
+	@FXML
+	public void handleSliderMusic () {
+		//mediaPlayer.setVolume(sliderMusic.getValue()/100);
+	}
 
 	@FXML
     public void handleCheckBoxFullscreen () throws IOException {
