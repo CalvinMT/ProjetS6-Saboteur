@@ -163,7 +163,10 @@ public class Moteur {
     // le joueur courant joue une carte sur le board
     public void play(GalleryCard c){
         if(c.getType() == Card.Card_t.gallery){
+
+            // TODO a test
             // ajout dans sur le board
+            this.board.addCard(c);
             nextPlayer();
         }
     }
@@ -177,7 +180,8 @@ public class Moteur {
                 nextPlayer();
             } else if(c.getAction() == ActionCard.Action.Crumbing){
 
-                // TODO methode crumbing
+                // TODO a test
+                this.board.removeCard(cou);
                 nextPlayer();
             }
         }
