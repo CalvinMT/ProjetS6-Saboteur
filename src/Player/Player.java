@@ -23,6 +23,7 @@ public abstract class Player {
     protected PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
     protected Board board; // plateau de jeu
 
+
     // assignation des rôles
     public void assignRole(Card c){
         if(c.getType() == Card.Card_t.role){
