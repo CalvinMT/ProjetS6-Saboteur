@@ -10,8 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -24,8 +23,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="imageViewAvatar" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Text fx:id="textPseudo" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo" wrappingWidth="187.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo" wrappingWidth="187.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -41,7 +40,7 @@
                   <Font size="15.0" />
                </font>
             </Text>
-            <Button fx:id="buttonSupprimer" mnemonicParsing="false" onAction="#handleButtonSupprimer" text="Supprimer" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#handleButtonSupprimer" text="Supprimer" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
