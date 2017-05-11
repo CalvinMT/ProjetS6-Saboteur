@@ -12,6 +12,7 @@ public abstract class Player {
     protected HandPlayer playableCards; // les cartes données au debut du jeu
     protected PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
 
+
     // assignation des rôles
     public void assignRole(Card c){
         if(c.getType() == Card.Card_t.role){
