@@ -25,7 +25,7 @@ public class MainLoader extends Application {
 	private double SCREEN_HEIGHT;
 	
 	private double volumeMusic;
-	private double volumeEffects;
+	// TOTO - private double volumeEffects;
 	
 	private File fileOptions = new File("saboteur.cfg");
 	
@@ -81,7 +81,7 @@ public class MainLoader extends Application {
 				}
 				else if (string.equals("Effects")) {
 					string = scanner.next();
-					volumeEffects = Double.parseDouble(string);
+					// TODO - volumeEffects = Double.parseDouble(string);
 				}
 				else if (string.equals("Resolution")) {
 					string = scanner.next();
@@ -116,7 +116,7 @@ public class MainLoader extends Application {
 					mediaPlayer.stop();
 					timeline.stop();
 					mediaPlayer.setStartTime(new Duration(14600));
-					mediaPlayer.setVolume(volumeMusic/100);
+					mediaPlayer.setVolume(volumeMusic/100); // TODO
 					mediaPlayer.play();
 					timeline.play();
 				}
