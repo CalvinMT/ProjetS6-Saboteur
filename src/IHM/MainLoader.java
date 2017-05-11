@@ -9,11 +9,13 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -66,6 +68,12 @@ public class MainLoader extends Application {
 				else if (string.equals("Fullscreen")) {
 					string = scanner.next();
 					if (string.equals("true")) {
+						Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+						System.out.println(Screen.getPrimary().getVisualBounds());
+						primaryStage.setX(primaryScreenBounds.getMinX());
+						primaryStage.setY(primaryScreenBounds.getMinY());
+						primaryStage.setWidth(primaryScreenBounds.getWidth());
+						primaryStage.setHeight(primaryScreenBounds.getHeight());
 						primaryStage.setFullScreen(true);
 					}
 				}
