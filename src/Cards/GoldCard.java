@@ -15,7 +15,7 @@ public class GoldCard extends Card {
 			System.err.println("Valeur donné incorrecte!");
 	}
 
-	public int getType(){
+	public int getGold(){
 		return this.type;
 	}
 }

@@ -18,17 +18,17 @@ public class HandGold extends Hand {
         this.arrayCard = new ArrayList<Card>();
 
         for(int i=0; i<threeGold; i++){
-            this.arrayCard.add(new GoldCard(3);
+            this.arrayCard.add(new GoldCard(3));
             //TODO
         }
 
         for(int i=0; i<twoGold; i++){
-            this.arrayCard.add(new GoldCard(2);
+            this.arrayCard.add(new GoldCard(2));
             //TODO
         }
 
         for(int i=0; i<oneGold; i++){
-            this.arrayCard.add(new GoldCard(1);
+            this.arrayCard.add(new GoldCard(1));
             //TODO
         }
     }
@@ -46,9 +46,9 @@ public class HandGold extends Hand {
         if (val > 0 && val < 4) {
             if (!this.arrayCard.isEmpty()){
                 for (int i = 0; i < this.arrayCard.size(); i++) {
-                    GoldCard goldcard = this.arrayCard.get(i);
-                    if (goldcard.getType() == val) {
-                        int returnVal = goldcard.getType();
+                    Card goldcard = this.arrayCard.get(i);
+                    if (goldcard.getGold() == val) {
+                        int returnVal = goldcard.getGold();
                         this.arrayCard.remove(i);
                         return returnVal;
                     }
@@ -57,7 +57,8 @@ public class HandGold extends Hand {
                 return 0;
             }
             else {
-                System.err.println("Il n'y a plus de GoldCard!");
+                System.out.println("Il n'y a plus de GoldCard!");
+            	return 0;
             }
         }
         else {
@@ -66,7 +67,5 @@ public class HandGold extends Hand {
         }        
 
     }
-
-
     // TODO
 }
