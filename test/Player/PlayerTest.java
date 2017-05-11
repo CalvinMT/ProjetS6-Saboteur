@@ -12,10 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import Board.Board;
 
-/**
- * @author uwalakae
- *
- */
+
 public class PlayerTest {
 
 
@@ -39,7 +36,7 @@ public class PlayerTest {
 	public void testAssignRole() {
 		Board b = new Board();
 		String playerName = "Ada";
-		Card c = new Card(role);
+		Card c = new RoleCard("Mineur");
 		Player p = new PlayerHuman(playerName, b);
 		p.assignRole(c);
 		assertTrue(p.getRole().getType() == role);
