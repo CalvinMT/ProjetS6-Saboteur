@@ -54,7 +54,7 @@
             <Text fx:id="textApplied" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Changements appliqués." GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
             <Slider fx:id="sliderMusic" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <Slider fx:id="sliderEffects" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Text fx:id="textRestart" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez redémarrer l'application." GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Text fx:id="textRestart" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez redémarrer l'application." GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
