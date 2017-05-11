@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -34,7 +31,7 @@ public class MenuCreationPartie {
     private Button buttonAjouter;
 
     @FXML
-    private ScrollPane scrollPaneListeJoueur;
+    private ListView listViewListeJoueur;
 
     @FXML
     private Button buttonPlay;
