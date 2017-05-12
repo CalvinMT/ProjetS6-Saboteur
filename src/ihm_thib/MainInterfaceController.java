@@ -20,9 +20,7 @@ import javafx.scene.image.ImageView;
  */
 public class MainInterfaceController implements Initializable {
     
-    @FXML
-    private Label label;
-        
+           
     @FXML
     private ImageView buttonMenu;
 
