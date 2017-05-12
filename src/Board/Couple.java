@@ -22,7 +22,15 @@ public class Couple {
         return y;
     }
 
-/*    public boolean equals(Couple c) {
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /*    public boolean equals(Couple c) {
         return this.x == c.getX() && this.y == c.getY();
     }*/
 
