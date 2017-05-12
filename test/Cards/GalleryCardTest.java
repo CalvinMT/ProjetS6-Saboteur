@@ -7,7 +7,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GalleryCardTest {
-
     @Test
     public void getterSetterX() throws Exception {
         GalleryCard c = new GalleryCard();
@@ -37,41 +36,41 @@ public class GalleryCardTest {
     @Test
     public void hasNorth() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasNorth());
+        assertTrue(c.canHasNorth());
         c = new GalleryCard(tunnel, 0, 0, false, true, false, true, true, true);
-        assertFalse(c.hasNorth());
+        assertFalse(c.canHasNorth());
     }
 
     @Test
     public void hasSouth() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasSouth());
+        assertTrue(c.canHasSouth());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, false, true, true);
-        assertFalse(c.hasSouth());
+        assertFalse(c.canHasSouth());
     }
 
     @Test
     public void hasEast() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasEast());
+        assertTrue(c.canHasEast());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, true, false, true);
-        assertFalse(c.hasEast());
+        assertFalse(c.canHasEast());
     }
 
     @Test
     public void hasWest() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasWest());
+        assertTrue(c.canHasWest());
         c = new GalleryCard(tunnel, 0, 0, false, true, true, true, true, false);
-        assertFalse(c.hasWest());
+        assertFalse(c.canHasWest());
     }
 
     @Test
     public void hasCenter() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.hasCenter());
+        assertTrue(c.canHasCenter());
         c = new GalleryCard(tunnel, 0, 0, false, false, true, true, true, true);
-        assertFalse(c.hasCenter());
+        assertFalse(c.canHasCenter());
     }
 
     @Test
@@ -88,22 +87,37 @@ public class GalleryCardTest {
         GalleryCard c2 = new GalleryCard(tunnel, 1, 2, true, false, false, true, false, true);
 
         assertFalse(c1.equals(c2));
-        c2 = new GalleryCard();
+        c1 = new GalleryCard(tunnel, 1, 2, true, false, false, true, false, true);
         assertTrue(c1.equals(c2));
     }
 
     @Test
     public void rotate() throws Exception {
-        GalleryCard c = new GalleryCard(tunnel, 0, 0, false, true, false, true, false, true);
-        assertFalse(c.hasNorth());
-        assertFalse(c.hasEast());
-        assertTrue(c.hasSouth());
-        assertTrue(c.hasWest());
-        c.rotate();
-        assertTrue(c.hasNorth());
-        assertTrue(c.hasEast());
-        assertFalse(c.hasSouth());
-        assertFalse(c.hasWest());
+        GalleryCard c2, c = new GalleryCard(tunnel, 0, 0, false, true, false, true, false, true);
+
+        assertFalse(c.canHasNorth());
+        assertFalse(c.canHasEast());
+        assertTrue(c.canHasSouth());
+        assertTrue(c.canHasWest());
+        c2 = c.rotate();
+        assertTrue(c2.canHasNorth());
+        assertTrue(c2.canHasEast());
+        assertFalse(c2.canHasSouth());
+        assertFalse(c2.canHasWest());
+        assertTrue(c.equals(c2.rotate()));
+
+        c = new GalleryCard(tunnel, 0, 0, false, true, true, true, false, true);
+
+        assertTrue(c.canHasNorth());
+        assertFalse(c.canHasEast());
+        assertTrue(c.canHasSouth());
+        assertTrue(c.canHasWest());
+        c2 = c.rotate();
+        assertTrue(c2.canHasNorth());
+        assertTrue(c2.canHasEast());
+        assertTrue(c2.canHasSouth());
+        assertFalse(c2.canHasWest());
+        assertTrue(c.equals(c2.rotate()));
     }
 
     @Test
