@@ -31,7 +31,7 @@ public class Board {
                     mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, true))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
                 }
             }
         }

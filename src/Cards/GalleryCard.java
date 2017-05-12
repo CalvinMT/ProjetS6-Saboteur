@@ -1,12 +1,13 @@
 package Cards;
 
+import Board.Couple;
+
 import static Cards.GalleryCard.Gallery_t.start;
 
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
     private Gallery_t type_g;
-    private int x = 0,
-                y = 0;
+    private Couple coord = new Couple();
 
     private boolean center = true,
                     north = true,
@@ -43,8 +44,8 @@ public class GalleryCard extends Card {
     public GalleryCard(Gallery_t t, int x, int y, boolean c, boolean n, boolean s, boolean e, boolean w) {
         this.type = Card_t.gallery;
         this.type_g = t;
-        this.x = x;
-        this.y = y;
+        this.coord.setX(x);
+        this.coord.setY(y);
         this.center = c;
         this.north = n;
         this.south = s;
@@ -53,19 +54,19 @@ public class GalleryCard extends Card {
     }
 
     public int getX() {
-        return x;
+        return coord.getX();
     }
 
     public int getY() {
-        return y;
+        return coord.getY();
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.coord.setX(x);
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.coord.setY(y);
     }
 
     public Gallery_t getGalleryType() {
@@ -192,8 +193,8 @@ public class GalleryCard extends Card {
         if (type_g == start) return "Start";
         return "GalleryCard{" +
                 "type=" + type +
-                ", x=" + x +
-                ", y=" + y +
+                ", x=" + coord.getX() +
+                ", y=" + coord.getY() +
                 ", center=" + center +
                 ", north=" + north +
                 ", south=" + south +
