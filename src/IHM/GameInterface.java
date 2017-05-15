@@ -42,7 +42,7 @@ public class GameInterface extends Application {
         // Création de la scène.
         primaryStage.setTitle("Saboteur");
         primaryStage.setScene(new Scene(parentMainGame, SCREEN_WIDTH, SCREEN_HEIGHT));
-	primaryStage.setResizable(false);
+	primaryStage.setResizable(true);
 	primaryStage.show();
       
       AnchorPane anchorPaneMainTop = (AnchorPane) parentMainGame.lookup("#anchorPaneTop");

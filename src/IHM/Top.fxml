@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="250.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Top">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Top">
     <children>
       <GridPane alignment="TOP_CENTER" layoutX="1.0" prefHeight="403.0" prefWidth="600.0" style="-fx-hgap: 45; -fx-vgap: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -56,7 +56,7 @@
                       </Button>  
                   </children>
               </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                <children>
                   <Label alignment="TOP_CENTER" prefHeight="44.0" prefWidth="93.0" text="Manche" textAlignment="CENTER" textFill="#b22323">
                      <font>

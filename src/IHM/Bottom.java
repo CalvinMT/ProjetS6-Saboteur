@@ -1,6 +1,7 @@
 package IHM;
 
-import Player.Player;
+import Cards.*;
+import Player.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -9,7 +10,21 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 public class Bottom {
-    Player player;
+    //Joueur test
+    
+    Player joueur = new PlayerHuman("Test");
+    RoleCard rc = new RoleCard("Mineur");
+    Deck deck = new DeckGalleryAction();
+    
+    public Bottom(){
+        joueur.assignRole(rc);
+        joueur.drawCard(deck);
+        
+    }
+    
+    
+    
+   
 
     @FXML
     private ImageView imageViewplayerPick;
@@ -64,6 +79,13 @@ public class Bottom {
     @FXML
     void handleDropCard(DragEvent event) {
 
+    }
+    
+     @FXML
+    public void initialize(){
+        textFieldPlayerGold.setText("Or : " + Integer.toString(joueur.getGoldPoints()));
+        textFieldPlayerRole.setText(joueur.toString());
+        textFieldPlayerPseudo.setText(joueur.getPlayerName());
     }
     
         
