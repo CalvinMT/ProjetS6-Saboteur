@@ -5,11 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
@@ -63,13 +65,16 @@ public class MenuCreationPartie {
     }
 
     @FXML
-    void handleButtonPlay(ActionEvent event) {
-        System.out.println("Boutton Jouer pressed");
+    void handleButtonPlay(ActionEvent event) throws IOException {
+    	Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+		BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+		BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
     }
 
     @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
         anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);
     }
 

@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class OptionsMenu {
+public class MenuOptions implements InterfaceMusic {
 	
 	private File fileOptions = new File("saboteur.cfg");
 	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1366*768","1600*900","1920*1080");
@@ -41,13 +41,13 @@ public class OptionsMenu {
 	// --------------- Controllers ---------------
 	@FXML
     public void handleReturnMenu () throws IOException {
-		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
 	
 	@FXML
 	public void handleSliderMusic () {
-		//mediaPlayer.setVolume(sliderMusic.getValue()/100);
+		mediaPlayerMusic.setVolume(sliderMusic.getValue()/100);
 	}
 
 	@FXML
