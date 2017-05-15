@@ -1,5 +1,6 @@
 package IHM;
 
+import Saboteur.Lobby;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +22,8 @@ public class MenuCreationPartie {
     private ObservableList<String> typeList = FXCollections.observableArrayList("Joueur", "Ordinateur");
 
     private ObservableList<BandeauPlayer> playerList = FXCollections.observableArrayList();
+
+    private Lobby lobby = new Lobby();
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
@@ -53,6 +56,7 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonAjouter(ActionEvent event) {
+
 		String pseudo = textFieldPseudo.getText();
 		String avatar = comboBoxAvatar.getValue();
 		playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo));

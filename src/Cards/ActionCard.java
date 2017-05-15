@@ -12,7 +12,7 @@ public class ActionCard extends Card {
 
     protected Action action;
 
-    enum Action {
+    public enum Action {
         Sabotage,
         Repare,
         Map,
@@ -28,12 +28,12 @@ public class ActionCard extends Card {
         }
     }
 
-    ActionCard(){
+    public ActionCard(){
         this.action = Action.random_Action();
         this.type = Card.Card_t.action;
     }
 
-    ActionCard(String a){
+    public ActionCard(String a){
         this.type = Card.Card_t.action;
         switch(a){
             case "Map":
@@ -67,6 +67,11 @@ public class ActionCard extends Card {
     public Action getAction(){
         return this.action;
     }
+    
+    @Override
+	public int getGold(){
+		return 0;
+	}
 
 
 }
