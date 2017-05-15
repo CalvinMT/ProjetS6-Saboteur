@@ -23,7 +23,7 @@ public class MenuCreationPartie {
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
-    
+
     @FXML
     private ComboBox<String> comboBoxAvatar;
     @FXML
