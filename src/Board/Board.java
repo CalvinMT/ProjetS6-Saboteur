@@ -13,7 +13,8 @@ import static Cards.GalleryCard.Gallery_t.but;
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
     private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
-    private ArrayList<Couple> possiblePositions = new ArrayList<Couple>();
+    private ArrayList<Couple> positionCandidates
+            = new ArrayList<Couple>();
 
     public Board() {
         Random r = new Random();
@@ -118,7 +119,7 @@ public class Board {
     // Computations
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
-                         visited = new LinkedList<Node>();
+                visited = new LinkedList<Node>();
 
         Node currentNode, newNode;
         Couple cpl;
@@ -141,8 +142,8 @@ public class Board {
                     }
                     else { // Si il n'y a pas de carte au nord (case vide)
                         cpl = new Couple(currentNode.card.getX() - 1, currentNode.card.getY());
-                        if (!possiblePositions.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            possiblePositions.add(cpl); // On l'ajoute aux possibilités
+                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
                         }
                     }
                 }
@@ -155,8 +156,8 @@ public class Board {
                     }
                     else { // Si il n'y a pas de carte au sud (case vide)
                         cpl = new Couple(currentNode.card.getX() + 1, currentNode.card.getY());
-                        if (!possiblePositions.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            possiblePositions.add(cpl); // On l'ajoute aux possibilités
+                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
                         }
                     }
                 }
@@ -169,8 +170,8 @@ public class Board {
                     }
                     else {
                         cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() + 1);
-                        if (!possiblePositions.contains(cpl)) {
-                            possiblePositions.add(cpl);
+                        if (!positionCandidates.contains(cpl)) {
+                            positionCandidates.add(cpl);
                         }
                     }
                 }
@@ -183,8 +184,8 @@ public class Board {
                     }
                     else {
                         cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() - 1);
-                        if (!possiblePositions.contains(cpl)) {
-                            possiblePositions.add(cpl);
+                        if (!positionCandidates.contains(cpl)) {
+                            positionCandidates.add(cpl);
                         }
                     }
                 }
@@ -225,7 +226,7 @@ public class Board {
         return true;
     }
 
-    public void computePossiblePositions(GalleryCard c) {
+    public void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
             if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(c.rotate(), possiblePositions.get(i))) {
@@ -237,7 +238,9 @@ public class Board {
 
 
     // Getters
-    public ArrayList<Couple> getPossiblePositions() {
+    public ArrayList<Couple> getPossiblePositions(GalleryCard c) {
+        ArrayList<Couple> possiblePositions = positionCandidates;
+        computePossiblePositions(c, possiblePositions);
         return possiblePositions;
     }
 
