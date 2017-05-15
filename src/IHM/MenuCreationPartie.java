@@ -1,5 +1,6 @@
 package IHM;
 
+import Saboteur.Lobby;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,8 @@ public class MenuCreationPartie {
     private ObservableList<String> difficulteList = FXCollections.observableArrayList("Facile", "Moyen", "Difficile");
 
     private ObservableList<BandeauPlayer> playerList = FXCollections.observableArrayList();
+
+    private Lobby lobby = new Lobby();
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;

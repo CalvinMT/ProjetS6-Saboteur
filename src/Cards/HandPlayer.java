@@ -37,4 +37,8 @@ public class HandPlayer extends Hand {
         }
     }
 
+    public int nbCard(){
+        return arrayCard.size();
+    }
+
 }
