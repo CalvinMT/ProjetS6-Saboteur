@@ -19,15 +19,6 @@ public class Node {
         this.card = c;
     }
 
-/*    Node(GalleryCard.Gallery_t t, int n, int s, int e, int w){
-        this.card = new GalleryCard(t);
-        this.idx.add(n);
-        this.idx.add(s);
-        this.idx.add(e);
-        this.idx.add(w);
-    }
-*/
-
     public void setNorth(int north) {
         this.north = north;
     }
@@ -105,6 +96,3 @@ public class Node {
         return result;
     }
 }
-
-
-
