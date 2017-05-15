@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
 
@@ -18,24 +17,25 @@ public class MenuCreationPartie {
 	
     private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar_anonyme", "avatar_test");
 
-    private ObservableList<String> typeList = FXCollections.observableArrayList("Joueur", "Ordinateur");
+    private ObservableList<String> difficulteList = FXCollections.observableArrayList("Facile", "Moyen", "Difficile");
 
     private ObservableList<BandeauPlayer> playerList = FXCollections.observableArrayList();
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
-
+    
     @FXML
     private ComboBox<String> comboBoxAvatar;
-
+    @FXML
+    private ComboBox<String> comboBoxDifficulteIA;
     @FXML
     private TextField textFieldPseudo;
-
     @FXML
-    private ComboBox<String> comboBoxType;
-
+    private Button buttonAjouterPlayer;
     @FXML
-    private Button buttonAjouter;
+    private Button buttonAjouterIA;
+    @FXML
+    private Button buttonPlay;
 
     @FXML
     private TableView<BandeauPlayer> tableViewListeJoueur;
@@ -44,22 +44,47 @@ public class MenuCreationPartie {
     @FXML
     private TableColumn<BandeauPlayer, String> columnPseudo;
     @FXML
-    private TableColumn<BandeauPlayer, ?> columnType;
+    private TableColumn<BandeauPlayer, String> columnType;
     @FXML
     private TableColumn<BandeauPlayer, Button> columnDelete;
 
-    @FXML
-    private Button buttonPlay;
 
     @FXML
-    void handleButtonAjouter(ActionEvent event) {
+    void handleButtonAjouterIA(ActionEvent event){
+        String pseudo = "IA " + comboBoxDifficulteIA.getValue();
+        String type = "Ordinateur";
+        String avatar = "robot_miner";
+
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+
+        if (playerList.size() >= 3) {
+            buttonPlay.setDisable(false);
+        }
+        if(playerList.size()==10){
+            buttonAjouterPlayer.setDisable(true);
+            buttonAjouterIA.setDisable(true);
+        }
+    }
+
+    @FXML
+    void handleComboBoxDifficulteIA(ActionEvent event){
+        System.out.println("Difficulté de l'ia");
+    }
+
+    @FXML
+    void handleButtonAjouterPlayer(ActionEvent event) {
 		String pseudo = textFieldPseudo.getText();
+		String type = "Joueur";
 		String avatar = comboBoxAvatar.getValue();
-		playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo));
+		playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
 		
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
 		}
+		if(playerList.size()==10){
+		    buttonAjouterPlayer.setDisable(true);
+		    buttonAjouterIA.setDisable(true);
+        }
     }
 
     @FXML
@@ -76,26 +101,23 @@ public class MenuCreationPartie {
     @FXML
     public void initialize(){
         buttonPlay.setDisable(true);
+        comboBoxDifficulteIA.setValue(difficulteList.get(0));
+        comboBoxDifficulteIA.setItems(difficulteList);
         comboBoxAvatar.setValue(avatarList.get(0));
         comboBoxAvatar.setItems(avatarList);
         comboBoxAvatar.setCellFactory(listview -> new ImageCell());
         comboBoxAvatar.setButtonCell(new ImageCell());
-        comboBoxType.setValue(typeList.get(0));
-        comboBoxType.setItems(typeList);
         tableViewListeJoueur.setItems(playerList);
         columnAvatar.setStyle( "-fx-alignment: CENTER;");
         columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
+        columnType.setStyle( "-fx-alignment: CENTER-LEFT");
         columnDelete.setStyle( "-fx-alignment: CENTER;");
         columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ImageView>("Avatar"));
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Pseudo"));
+        columnType.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Type"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
     }
-    
-    
-    
-    
-    
-    
+
 	// A custom ListCell that displays an ImageView
 	static class ImageCell extends ListCell<String> {
 		Label label;
@@ -115,19 +137,10 @@ public class MenuCreationPartie {
 
 		private ImageView getImageView(String imageName) {
 			ImageView imageView = null;
-			switch (imageName) {
-				case "avatar_anonyme":
-					imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
-					break;
-				case "avatar_test":
-					imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
-					break;
-				default:
-					imageName = null;
-			}
+            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
 			if (!imageView.equals(null)) {
-			imageView.setFitWidth(70);
-			imageView.setFitHeight(70);
+			    imageView.setFitWidth(70);
+			    imageView.setFitHeight(70);
 			}
 			return imageView;
 		}
