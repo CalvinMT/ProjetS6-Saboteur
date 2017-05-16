@@ -5,6 +5,7 @@
  */
 package Saboteur;
 import Cards.*;
+import Cards.GalleryCard.Gallery_t;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,24 +57,98 @@ public class Moteur {
     		BufferedReader br = new BufferedReader(filereader);
     		String playerName, playerType, playerRole, tempGoldPoints, temp; // playerType = Humain | IA
     		int goldPoints;
+    		String[] tempSplit;
     		int nbPlayers = Integer.parseInt(br.readLine());
     		for (int i=0; i<nbPlayers; i++){
     			playerName = br.readLine();
-    			
+    			Player player;    			
     			playerType = br.readLine();
-    			if (playerType != "Humain" || playerType != "Saboteur") return false;
+    			if (playerType != "Humain" || playerType != "IA") 
+    				return false;
+    			if (playerType == "Humain") {
+    				player = new PlayerHuman(playerName, this.board);
+    			}
+    			else {
+    				// construct a player object of type IA 
+    			}
     			
     			playerRole = br.readLine();
-    			if (playerRole != "Mineur" || playerRole != "Saboteur") return false;
-    			
+    			if (playerRole != "Mineur" || playerRole != "Saboteur") 
+    				return false;
+    			Card rolecard = new RoleCard(playerRole);
+    			player.assignRole(rolecard);
     			tempGoldPoints = br.readLine();
-    			if (tempGoldPoints.matches("[0-9]+")) goldPoints = Integer.parseInt(tempGoldPoints);
-    			else return false;
-    			// write code for the Attributes property
-    			temp = br.readLine();
-								
-				String [] handCards = temp.split("[;]");
-				if (handCards.length != 6) return false;
+    			if (tempGoldPoints.matches("[0-9]+")) {
+    				goldPoints = Integer.parseInt(tempGoldPoints);
+    				player.setGoldPoints(goldPoints);
+    			}
+    			else 
+    				return false;
+    			
+    			// TO DO : write code for the Attributes property
+    			
+    			temp = br.readLine();		
+				String [] handCards;
+				// TO DO: write the appropriate regex
+				if (temp.matches("")) 
+					handCards = temp.split("[;]");
+				else 
+					return false;
+				if (handCards.length != 6) 
+					return false;
+				
+				boolean north, south, east, west, center;
+				int x,y;
+				for (int j=0; j<handCards.length; j++){
+					String[] eachCard = handCards[j].split("[:]");
+					switch (eachCard[0]) {
+						case "GalleryCard":
+							tempSplit = eachCard[1].split("[,]");
+							if (tempSplit.length != 8) 
+								return false;
+							
+							if (tempSplit[1].matches("[0-9]+") && tempSplit[2].matches("[0-9]+") ) {
+								x = Integer.parseInt(tempSplit[1]);
+								y = Integer.parseInt(tempSplit[2]);
+							}
+							else 
+								return false;
+							if (tempSplit[3] != "true" || tempSplit[3] != "false")   //c n s e w
+								return false;
+							else
+								center = Boolean.getBoolean(tempSplit[3]);
+							if (tempSplit[4] != "true" || tempSplit[4] != "false")   
+								return false;
+							else
+								north = Boolean.getBoolean(tempSplit[4]);
+							if (tempSplit[5] != "true" || tempSplit[5] != "false")   
+								return false;
+							else
+								south = Boolean.getBoolean(tempSplit[5]);
+							if (tempSplit[6] != "true" || tempSplit[6] != "false")   
+								return false;
+							else
+								east = Boolean.getBoolean(tempSplit[6]);
+							String tmp = tempSplit[7].substring(0, tempSplit[7].length()-1);
+							if ( tmp != "true" || tmp != "false")
+								return false;
+							else 
+								west = Boolean.getBoolean(tmp);
+							
+							GalleryCard gallerycard = new GalleryCard(Gallery_t.tunnel,x,y,center,north,south,east,west);
+							player.drawCard(gallerycard);
+							break;
+							
+						case "Action": // go through here again.. just to be sure ur starting on the right path
+							tempSplit = eachCard[1].split("[{]");
+							if (tempSplit.length != 2)
+								return false;
+							if (tempSplit[0] == "Sabotage")
+							break;
+						default:
+							return false;
+					}
+				}
 				
 				
     		}

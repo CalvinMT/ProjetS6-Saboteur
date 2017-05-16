@@ -187,7 +187,22 @@ public class GalleryCard extends Card {
         result = 31 * result + (west ? 1 : 0);
         return result;
     }
+    
+    @Override
+    public String toString() {
+        if (type_g == start) return "Start";
+        return "GalleryCard:{" + type + ","
+        						 + coord.getX() + "," 
+                			     + coord.getY() + "," 
+        			     		 + center + "," 
+        			     		 + north + "," 
+        			     		 + south + "," 
+        			     		 + east + "," 
+        			     		 + west 
+        			     		 + '}';
+    }
 
+    /*
     @Override
     public String toString() {
         if (type_g == start) return "Start";
@@ -202,6 +217,7 @@ public class GalleryCard extends Card {
                 ", west=" + west +
                 '}';
     }
+    */
     
     @Override
 	public int getGold(){

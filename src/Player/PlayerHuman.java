@@ -55,6 +55,11 @@ public class PlayerHuman extends Player{
     }
     
     @Override
+    public void setGoldPoints(int gp) {
+    	this.goldPoints += gp;
+    }
+    
+    @Override
     public String toString(){
         String renvoi = "";
 

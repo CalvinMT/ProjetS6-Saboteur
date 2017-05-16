@@ -17,6 +17,8 @@ public class Saboteur {
         int nbPlayer = 4;
 
         try {
+        	// construct moteur
+        	m = new Moteur(nbPlayer);
             System.out.println(m);
             while(!m.allRoleAreSet()){
                 m.chooseRole(0);
@@ -41,6 +43,7 @@ public class Saboteur {
         m.promptPlayers();
         
         m.save("testfile");
+        
 
     }
 
