@@ -1,7 +1,10 @@
 package Player;
 
 import Board.Couple;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,13 +25,37 @@ public class IATest {
     }
 
     @Test
-    public void ignoreGoal() throws Exception {
-        System.out.println("TODO : test ignoreGoal()");
-    }
+    public void goalsAction() throws Exception {
+        ArrayList<Couple> goals = ia.getGoalsToTest();
 
-    @Test
-    public void addGoldGoal() throws Exception {
-        System.out.println("TODO : test addGoldGoal()");
+        Assert.assertTrue(goals.size() == 3);
+
+        ia.ignoreGoal(new Couple(0, 8));
+        goals = ia.getGoalsToTest();
+        Assert.assertTrue(goals.size() == 2);
+        Assert.assertFalse(goals.contains(new Couple(0, 8)));
+
+        ia.ignoreGoal(new Couple(0, 8));
+        goals = ia.getGoalsToTest();
+        Assert.assertTrue(goals.size() == 2);
+        Assert.assertFalse(goals.contains(new Couple(0, 8)));
+        Assert.assertTrue(goals.contains(new Couple(-2, 8)));
+        Assert.assertTrue(goals.contains(new Couple(2, 8)));
+
+        ia = new IA();
+        goals = ia.getGoalsToTest();
+        Assert.assertTrue(goals.size() == 3);
+        Assert.assertTrue(goals.contains(new Couple(0, 8)));
+        Assert.assertTrue(goals.contains(new Couple(2, 8)));
+        Assert.assertTrue(goals.contains(new Couple(-2, 8)));
+
+        ia.addGoldGoal(new Couple(-2, 8));
+        goals = ia.getGoalsToTest();
+
+        Assert.assertTrue(goals.size() == 1);
+        Assert.assertTrue(goals.contains(new Couple(-2, 8)));
+        Assert.assertFalse(goals.contains(new Couple(2, 8)));
+        Assert.assertFalse(goals.contains(new Couple(0, 8)));
     }
 
     @Test
