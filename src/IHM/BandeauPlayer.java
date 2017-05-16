@@ -1,10 +1,12 @@
 package IHM;
 
+import Player.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import Saboteur.Lobby;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
@@ -20,11 +22,13 @@ public class BandeauPlayer {
     private Text textType;
     private ComboBox<String> comboBoxDifficulte;
     private Button buttonDelete;
+    private Lobby lobby;
     
-	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA) {
+	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
 		this.imageViewAvatar = avatar;
 		this.textPseudo = new Text(pseudo);
 		this.textType = new Text(type);
+		this.lobby = lobby;
 		
 		ImageView imageViewCross = new ImageView(new Image("ressources/cross.png"));
 		imageViewCross.setFitWidth(20);
@@ -33,6 +37,13 @@ public class BandeauPlayer {
 		this.buttonDelete.setOnAction(new EventHandler <ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+
+				int num = tableView.getItems().indexOf(BandeauPlayer.this);
+
+				lobby.deletePlayer(num);
+
+				System.out.println(lobby);
+
 				tableView.getItems().remove(BandeauPlayer.this);
 				if(tableView.getItems().size()<=3)
 					buttonJouer.setDisable(true);
@@ -44,11 +55,12 @@ public class BandeauPlayer {
 		});
 	}
 
-	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, String difficulte, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA) {
+	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, String difficulte, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
 		this.imageViewAvatar = avatar;
 		this.textPseudo = new Text(pseudo);
 		this.textType = new Text(type);
 		this.comboBoxDifficulte = new ComboBox<String>(difficulteList);
+		this.lobby = lobby;
 
 		switch(difficulte){
 			case "Facile":
@@ -67,7 +79,14 @@ public class BandeauPlayer {
 		this.comboBoxDifficulte.setOnAction(new EventHandler <ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Mise à jour de la difficulté (Dans BandeauPlayer)");
+
+				// update dans le lobby
+				int num = tableView.getItems().indexOf(BandeauPlayer.this);
+				String diff = comboBoxDifficulte.getValue();
+				System.out.println("Difficulté: "+Player.Difficulty.stringToDiff(diff));
+				lobby.updateDifficulty(num, Player.Difficulty.stringToDiff(diff));
+
+				System.out.println(lobby);
 			}
 		});
 
@@ -78,6 +97,14 @@ public class BandeauPlayer {
 		this.buttonDelete.setOnAction(new EventHandler <ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+
+				int num = tableView.getItems().indexOf(BandeauPlayer.this);
+
+				lobby.deletePlayer(num);
+
+				System.out.println(lobby);
+
+
 				tableView.getItems().remove(BandeauPlayer.this);
 				if(tableView.getItems().size()<=3)
 					buttonJouer.setDisable(true);

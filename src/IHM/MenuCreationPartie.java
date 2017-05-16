@@ -1,5 +1,9 @@
 package IHM;
 
+import Player.Player.Difficulty;
+import Player.Player;
+import Saboteur.Lobby;
+import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +24,8 @@ public class MenuCreationPartie {
     private ObservableList<String> difficulteList = FXCollections.observableArrayList("Facile", "Moyen", "Difficile");
 
     private ObservableList<BandeauPlayer> playerList = FXCollections.observableArrayList();
+
+    private Lobby lobby = new Lobby();
 
     @FXML
     private AnchorPane anchorPaneMenuCreationPartie;
@@ -53,12 +59,14 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonAjouterIA(ActionEvent event){
-        String pseudo = "IA";
+        String difficulty = comboBoxDifficulteIA.getValue();
+        String pseudo = "IA " + (playerList.size()+1);
         String type = "Ordinateur";
         String avatar = "robot_miner";
-        String difficulte = comboBoxDifficulteIA.getValue();
 
-        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulte, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+        lobby.addPlayer(playerList.size(), pseudo, Difficulty.stringToDiff(difficulty));
+
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulty, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
@@ -67,6 +75,8 @@ public class MenuCreationPartie {
             buttonAjouterPlayer.setDisable(true);
             buttonAjouterIA.setDisable(true);
         }
+
+        System.out.println(lobby);
     }
 
     @FXML
@@ -75,24 +85,41 @@ public class MenuCreationPartie {
     }
 
     @FXML
+
+
     void handleButtonAjouterPlayer(ActionEvent event) {
 		String pseudo = textFieldPseudo.getText();
 		String type = "Joueur";
 		String avatar = comboBoxAvatar.getValue();
-		playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
-		
+
+		if(pseudo == null || pseudo.equals("")){
+		    pseudo = "Joueur "+(playerList.size()+1);
+        }
+
+
+        lobby.addPlayer(playerList.size(), pseudo, avatar);
+
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
+
+
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
 		}
-		if(playerList.size()==10){
+		if(playerList.size()>10){
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
+
+        System.out.println(lobby);
+
     }
 
     @FXML
     void handleButtonPlay(ActionEvent event) {
-        System.out.println("Boutton Jouer pressed");
+
+        if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
+            Saboteur.initMoteur(this.lobby.getArrayPlayer());
+        }
     }
 
     @FXML

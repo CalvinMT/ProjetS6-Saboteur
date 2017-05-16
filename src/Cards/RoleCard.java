@@ -5,8 +5,8 @@ public class RoleCard extends Card {
 
         String role;
 
-        RoleCard(String r){
-            this.type = Card_t.player;
+        public RoleCard(String r){
+            this.type = Card_t.role;
             if(r == "Mineur" || r == "Saboteur"){
                 this.role = r;
             } else {
@@ -14,9 +14,9 @@ public class RoleCard extends Card {
             }
         }
 
-        RoleCard(){
+        public RoleCard(){
             this.role = "Mineur";
-            this.type = Card_t.player;
+            this.type = Card_t.role;
         }
 
         public boolean isMinor(){
@@ -30,4 +30,9 @@ public class RoleCard extends Card {
         public String toString(){
             return "Role: "+this.role;
         }
+        
+        @Override
+    	public int getGold(){
+    		return 0;
+    	}
 }
