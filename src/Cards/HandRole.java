@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class HandRole extends Hand {
 
-    //indexé en ligne de 3 a 10 : Nombre saboteur en premier puis le nombre
+    //indexé en ligne de 3 a 10 : Nombre Saboteur en premier puis le nombre
     //  de chercheur d'or / mineur
     private final int [][] rulePLayer = {{1, 3}, {1, 4}, {2, 4}, {2, 5}, {3, 5}, {3, 6}, {3, 7}, {4, 7}};
 
