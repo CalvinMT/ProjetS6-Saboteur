@@ -104,7 +104,7 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <ComboBox fx:id="comboBoxDifficulteIA" onAction="#handleComboBoxDifficulteIA" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <ComboBox fx:id="comboBoxDifficulteIA" onAction="#handleComboBoxDifficulteIA" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
