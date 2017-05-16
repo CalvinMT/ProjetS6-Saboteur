@@ -63,5 +63,4 @@ public class IATest {
     public void changeDiffulty() throws Exception {
         System.out.println("TODO : test changeDiffulty()");
     }
-
 }

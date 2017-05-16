@@ -56,18 +56,11 @@ public class IA extends Player{
         this.goalsToTest.add(new Couple(2, 8));
     }
 
-    // Calcule de l'heuristique
+    // Calcul de l'heuristique
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| / |(but.y - p.y)|
     public float getHeuristic(Couple goal, Couple cpl) {
-/*        System.out.println(goal);
-        System.out.println(cpl);
-
-        System.out.println("X : " + abs(goal.getX() - cpl.getX()));
-        System.out.println("Y : " + abs(goal.getY() - cpl.getY()));
-
-        System.out.println("X+Y : " + (abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY())));*/
         return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
     }
 
@@ -103,11 +96,15 @@ public class IA extends Player{
         this.cardToPlay = bestCard;
     }
 
-    // TODO : Test
+    // Supprime un but des buts à tester
+    // cpl : couple de coordonnée du but
     public void ignoreGoal(Couple cpl) {
         if (goalsToTest.contains(cpl)) this.goalsToTest.remove(cpl);
     }
 
+    // Definit un but comme portant de l'or
+    // cpl : couple de coordonnées du but
+    // Effet : Supprime les autres buts de goalsToTest
     public void addGoldGoal(Couple cpl) {
         if (goalsToTest.contains(cpl)) {
             for (int i = 0; i < goalsToTest.size(); i++) {
@@ -119,6 +116,7 @@ public class IA extends Player{
         }
     }
 
+    // Retourne la liste des buts à tester
     public ArrayList<Couple> getGoalsToTest() {
         return goalsToTest;
     }
