@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1">
+    <children>      
+        <BorderPane AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+         <top>
+            <AnchorPane fx:id="anchorPaneTop" minHeight="-Infinity" minWidth="-Infinity" prefHeight="82.0" prefWidth="1068.0" />
+         </top>
+         <center>
+            <AnchorPane fx:id="anchorPaneCenter" prefHeight="473.0" prefWidth="868.0" />
+         </center>
+         <right>
+            <AnchorPane fx:id="anchorPaneRight" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="113.0" />
+         </right>
+         <bottom>
+            <AnchorPane fx:id="anchorPaneBottom" minHeight="-Infinity" minWidth="-Infinity" prefHeight="116.0" prefWidth="1068.0" />
+         </bottom>
+         <left>
+            <AnchorPane fx:id="anchorPaneLeft" prefHeight="472.0" prefWidth="129.0" />
+         </left>
+        </BorderPane>
+    </children>
+</AnchorPane>
