@@ -109,16 +109,53 @@ public class Bottom {
         switch(c.getType()){
             case action:
                 switch(((ActionCard)c).getAction()){
-                    case Sabotage:
-                        switch(((RepareSabotageCard)c).nbTools()){
-                            case Sabotage:
-                        break;
+                    case Sabotage:                        
+                        switch(((RepareSabotageCard)c).getTool()){
+                            case Pickaxe:
+                                imageView = new ImageView(new Image("ressources/carte_brise_pioche.jpg"));
+                                break;
+                            case Lantern:
+                                imageView = new ImageView(new Image("ressources/carte_brise_lantern.jpg"));
+                                break;
+                            case Wagon:
+                                imageView = new ImageView(new Image("ressources/carte_brise_chariot.jpg"));
+                                break;
+                        }
+                        break;                        
                     case Map:
                         imageView = new ImageView(new Image("ressources/carte_plan_secret.jpg"));
                         break;
                     case Repare:
-                        break;
-                        
+                        switch(((RepareSabotageCard)c).nbTools()){
+                            case 1 :
+                                switch(((RepareSabotageCard)c).getTool()){
+                                    case Pickaxe:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_pioche.jpg"));
+                                        break;
+                                    case Lantern:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_lantern.jpg"));
+                                        break;
+                                    case Wagon:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_chariot.jpg"));
+                                        break;                           
+                                break;
+                                }
+                            break;
+                            case 2 :
+                                switch(((RepareSabotageCard)c).getTool()){
+                                    case Pickaxe:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_pioche_lanterne.jpg"));
+                                        break;
+                                    case Lantern:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_lanterne_chariot.jpg"));
+                                        break;
+                                    case Wagon:
+                                        imageView = new ImageView(new Image("ressources/carte_repare_chariot_pioche.jpg"));
+                                        break;                           
+                                break;
+                                }
+                            break;
+                        }
                     case Crumbing:
                         imageView = new ImageView(new Image("ressources/carte_eboulement.jpgg"));
                         break;
@@ -127,7 +164,8 @@ public class Bottom {
                 }
                 break;
             case gallery:
-                imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+                //TODO
+                imageView = new ImageView(new Image("ressources/carte.png"));
                 break;
             default:
                 imageView = null;
