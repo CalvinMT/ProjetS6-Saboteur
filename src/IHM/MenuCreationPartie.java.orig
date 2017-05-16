@@ -59,14 +59,23 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonAjouterIA(ActionEvent event){
+<<<<<<< HEAD
+        String difficulty = comboBoxDifficulteIA.getValue();
+        String pseudo = "IA " + difficulty;
+=======
         String pseudo = "IA";
+>>>>>>> 34b58383debc3aa361ae25e64fbe8b63683e869b
         String type = "Ordinateur";
         String avatar = "robot_miner";
         String difficulte = comboBoxDifficulteIA.getValue();
 
-        lobby.addPlayer(playerList.size(), pseudo, Difficulty.stringToDiff(difficulte));
-        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulte, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+<<<<<<< HEAD
+        lobby.addPlayer(playerList.size(), pseudo, Difficulty.stringToDiff(difficulty));
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
+=======
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulte, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+>>>>>>> 34b58383debc3aa361ae25e64fbe8b63683e869b
 
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
@@ -99,7 +108,7 @@ public class MenuCreationPartie {
 
         lobby.addPlayer(playerList.size(), pseudo, avatar);
 
-        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
 
 		if (playerList.size() >= 3) {
