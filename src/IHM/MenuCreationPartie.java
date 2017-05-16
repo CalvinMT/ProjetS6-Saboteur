@@ -46,16 +46,19 @@ public class MenuCreationPartie {
     @FXML
     private TableColumn<BandeauPlayer, String> columnType;
     @FXML
+    private TableColumn<BandeauPlayer, ComboBox<String>> columnDifficulte;
+    @FXML
     private TableColumn<BandeauPlayer, Button> columnDelete;
 
 
     @FXML
     void handleButtonAjouterIA(ActionEvent event){
-        String pseudo = "IA " + comboBoxDifficulteIA.getValue();
+        String pseudo = "IA";
         String type = "Ordinateur";
         String avatar = "robot_miner";
+        String difficulte = comboBoxDifficulteIA.getValue();
 
-        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulte, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
 
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
@@ -111,10 +114,12 @@ public class MenuCreationPartie {
         columnAvatar.setStyle( "-fx-alignment: CENTER;");
         columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
         columnType.setStyle( "-fx-alignment: CENTER-LEFT");
+        columnDifficulte.setStyle( "-fx-alignment: CENTER-LEFT");
         columnDelete.setStyle( "-fx-alignment: CENTER;");
         columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ImageView>("Avatar"));
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Pseudo"));
         columnType.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Type"));
+        columnDifficulte.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ComboBox<String>>("Difficulte"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
     }
 
