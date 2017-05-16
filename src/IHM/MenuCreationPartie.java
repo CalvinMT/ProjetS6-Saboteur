@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
-
 public class MenuCreationPartie {
 	
     private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar_anonyme", "avatar_test");
