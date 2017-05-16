@@ -2,13 +2,12 @@ package Board;
 
 
 import Cards.GalleryCard;
+import Cards.GoalCard;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
-
-import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
@@ -26,14 +25,14 @@ public class Board {
         for (int i = -1; i < 2; i++) {
             x = 2*i;
             if (i == gold) {
-                mine.add(new Node(new GalleryCard(but, x, 8, true, true, true, true ,true, true))); // Minerai
+                mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true))); // Minerai
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, true, false))); // Sans minerai droit
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, false, true))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
                 }
             }
         }
@@ -41,7 +40,7 @@ public class Board {
     }
 
     // Debug
-    public Board(GalleryCard start, GalleryCard but1, GalleryCard but2, GalleryCard but3) {
+    public Board(GalleryCard start, GoalCard but1, GoalCard but2, GoalCard but3) {
         mine.add(new Node(start));
         mine.add(new Node(but1));
         mine.add(new Node(but2));

@@ -14,16 +14,19 @@ public class Lobby {
 
     // ajoute un joueur dans le lobby
     public void addPlayer(String name, String type){
-        if(type.equals("Ordinateur")){
-            arrayPlayer.add(new IA(name));
-        } else if(type.equals("Joueur")){
-            arrayPlayer.add(new PlayerHuman(name));
+        if(arrayPlayer.size() < 10){
+
+            if(type.equals("Ordinateur")){
+                arrayPlayer.add(new IA(name));
+            } else if(type.equals("Joueur")){
+                arrayPlayer.add(new PlayerHuman(name));
+            }
         }
     }
 
     // enlève un joueur du lobby
     public void deletePlayer(int i){
-        if(i >= 0 && i < nbPlayer()){
+        if(i >= 0 && i < nbPlayer() && arrayPlayer.size() != 0){
             arrayPlayer.remove(i);
         }
     }
@@ -40,7 +43,7 @@ public class Lobby {
 
     // si on peut encore ajouter des joueurs
     public boolean tooMuchPlayer(){
-        return nbPlayer() >= 10;
+        return nbPlayer() > 10;
     }
 
 
