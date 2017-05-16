@@ -2,17 +2,16 @@ package Board;
 
 
 import Cards.GalleryCard;
+import Cards.GoalCard;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
 
-import static Cards.GalleryCard.Gallery_t.but;
-
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
-    private Hashtable<String, Node> accessCard = new Hashtable<String, Node>();
+    private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
     private ArrayList<Couple> possiblePositions = new ArrayList<Couple>();
 
     public Board() {
@@ -25,14 +24,14 @@ public class Board {
         for (int i = -1; i < 2; i++) {
             x = 2*i;
             if (i == gold) {
-                mine.add(new Node(new GalleryCard(but, x, 8, true, true, true, true ,true, true))); // Minerai
+                mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true))); // Minerai
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, true, false))); // Sans minerai droit
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new Node(new GalleryCard(but, x, 8, false, true, false, true, false, true))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
                 }
             }
         }
@@ -40,7 +39,7 @@ public class Board {
     }
 
     // Debug
-    public Board(GalleryCard start, GalleryCard but1, GalleryCard but2, GalleryCard but3) {
+    public Board(GalleryCard start, GoalCard but1, GoalCard but2, GoalCard but3) {
         mine.add(new Node(start));
         mine.add(new Node(but1));
         mine.add(new Node(but2));
@@ -48,7 +47,7 @@ public class Board {
     }
 
 
-    // ajoute la carte card à la suite de mine
+    // Action on the board
     public void addCard(GalleryCard card) {
         Node n = new Node(card);
 
@@ -114,7 +113,8 @@ public class Board {
         }
     }
 
-    // TODO : Tests
+
+    // Computations
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
                          visited = new LinkedList<Node>();
@@ -129,7 +129,7 @@ public class Board {
 
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
-                accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()).toString(), currentNode); // Et aux cartes accessibles
+                accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), currentNode); // Et aux cartes accessibles
 
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
@@ -195,47 +195,47 @@ public class Board {
         }
     }
 
-    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
-
-        currNode = accessCard.get(new Couple(currPos.getX() - 1, currPos.getY()));
-        if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
-            return false;
+        currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
+        if (currNode != null) {
+            if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
+                return false;
+            }
         }
-
-        currNode = accessCard.get(new Couple(currPos.getX() + 1, currPos.getY()));
-        if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
-            return false;
+        currNode = getNodeFromMine(new Couple(currPos.getX() + 1, currPos.getY()));
+        if (currNode != null) {
+            if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
+                return false;
+            }
         }
-
-        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() + 1));
-        if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
-            return false;
+        currNode = getNodeFromMine(new Couple(currPos.getX(), currPos.getY() + 1));
+        if (currNode != null) {
+            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
+                return false;
+            }
         }
-
-        currNode = accessCard.get(new Couple(currPos.getX(), currPos.getY() - 1));
-        if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
-            return false;
+        currNode = getNodeFromMine(new Couple(currPos.getX(), currPos.getY() - 1));
+        if (currNode != null) {
+            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
+                return false;
+            }
         }
-
         return true;
     }
 
-    //TODO : Tests
     public void computePossiblePositions(GalleryCard c) {
-        GalleryCard cRotated = c;
-        cRotated.rotate();
-
-        computeAccessCards();
+        this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
-            if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(cRotated, possiblePositions.get(i))) {
+            if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(c.rotate(), possiblePositions.get(i))) {
                 possiblePositions.remove(i);
                 i--;
             }
         }
     }
 
+
+    // Getters
     public ArrayList<Couple> getPossiblePositions() {
         return possiblePositions;
     }
@@ -244,8 +244,23 @@ public class Board {
         return mine;
     }
 
-    public Hashtable<String, Node> getAccessCard() {
+    public Hashtable<Couple, Node> getAccessCard() {
         return accessCard;
+    }
+
+    public Node getNodeFromMine(Couple c) {
+        int i = 1;
+        Node n = getMineElement(0);
+
+        while ((i < getMineSize()) && !c.equals(new Couple(n.card.getX(), n.card.getY()))) {
+            n = getMineElement(i);
+            i++;
+        }
+
+        if (!c.equals(new Couple(n.card.getX(), n.card.getY()))) {
+            n = null;
+        }
+        return n;
     }
 
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée

@@ -90,7 +90,12 @@ public class PlayerHuman extends Player{
 
         return renvoi;
     }
-    */
+*/
+    @Override
+    public void changeDiffulty(Difficulty d){
+
+    }
+    
     
     
 }
