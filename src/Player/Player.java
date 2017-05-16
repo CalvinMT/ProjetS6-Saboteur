@@ -22,10 +22,13 @@ public abstract class Player {
                 case "Player":
                     return Player;
                 case "Easy":
+                case "Facile":
                     return Easy;
                 case "Medium":
+                case "Moyen":
                     return Medium;
                 case "Hard":
+                case "Difficile":
                     return Hard;
                 default:
                     return Player;

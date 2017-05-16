@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
-import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
