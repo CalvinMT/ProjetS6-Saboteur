@@ -1,6 +1,7 @@
 package IHM;
 
 import Saboteur.Lobby;
+import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,18 +55,22 @@ public class MenuCreationPartie {
                 name = "Joueur";
             }
         }
-
-        System.out.println("Pseudo: "+name);
-
         lobby.addPlayer(name, type);
 
         System.out.println(lobby);
+
+        if(this.lobby.enoughPlayer()){
+            buttonPlay.setDisable(false);
+        }
 
     }
 
     @FXML
     void handleButtonPlay(ActionEvent event) {
-        System.out.println("Boutton Jouer pressed");
+
+        if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
+            Saboteur.initMoteur(this.lobby.getArrayPlayer());
+        }
     }
 
     @FXML
