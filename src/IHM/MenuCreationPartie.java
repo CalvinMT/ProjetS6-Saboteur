@@ -1,5 +1,7 @@
 package IHM;
 
+import Player.Player.Difficulty;
+import Player.Player;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
@@ -7,18 +9,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
-public class MenuCreationPartie {
 
-    private ObservableList<String> typeList = FXCollections.observableArrayList("Ordinateur", "Joueur");
+public class MenuCreationPartie {
+	
+    private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar_anonyme", "avatar_test");
+
+    private ObservableList<String> difficulteList = FXCollections.observableArrayList("Facile", "Moyen", "Difficile");
+
+    private ObservableList<BandeauPlayer> playerList = FXCollections.observableArrayList();
 
     private Lobby lobby = new Lobby();
 
@@ -26,42 +31,84 @@ public class MenuCreationPartie {
     private AnchorPane anchorPaneMenuCreationPartie;
 
     @FXML
-    private ComboBox<ImageView> comboBoxAvatar;
-
+    private ComboBox<String> comboBoxAvatar;
+    @FXML
+    private ComboBox<String> comboBoxDifficulteIA;
     @FXML
     private TextField textFieldPseudo;
-
     @FXML
-    private ComboBox<String> comboBoxType;
-
+    private Button buttonAjouterPlayer;
     @FXML
-    private Button buttonAjouter;
-
-    @FXML
-    private ScrollPane scrollPaneListeJoueur;
-
+    private Button buttonAjouterIA;
     @FXML
     private Button buttonPlay;
 
     @FXML
-    void handleButtonAjouter(ActionEvent event) {
-        String name = textFieldPseudo.getText();
-        String type = comboBoxType.getValue();
+    private TableView<BandeauPlayer> tableViewListeJoueur;
+    @FXML
+    private TableColumn<BandeauPlayer, ImageView> columnAvatar;
+    @FXML
+    private TableColumn<BandeauPlayer, String> columnPseudo;
+    @FXML
+    private TableColumn<BandeauPlayer, String> columnType;
+    @FXML
+    private TableColumn<BandeauPlayer, Button> columnDelete;
 
-        if(name == null || name.equals("")){
-            if(type.equals("Ordinateur")){
-                name = "Ordinateur";
-            } else if(type.equals("Joueur")){
-                name = "Joueur";
-            }
-        }
-        lobby.addPlayer(name, type);
 
-        System.out.println(lobby);
+    @FXML
+    void handleButtonAjouterIA(ActionEvent event){
+        String difficulty = comboBoxDifficulteIA.getValue();
+        String pseudo = "IA"+(playerList.size()+1)+" " + difficulty;
+        String type = "Ordinateur";
+        String avatar = "robot_miner";
 
-        if(this.lobby.enoughPlayer()){
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+
+        lobby.addPlayer(playerList.size(), pseudo, Difficulty.stringToDiff(difficulty));
+
+        if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
         }
+        if(playerList.size()==10){
+            buttonAjouterPlayer.setDisable(true);
+            buttonAjouterIA.setDisable(true);
+        }
+
+        System.out.println(lobby);
+    }
+
+    @FXML
+    void handleComboBoxDifficulteIA(ActionEvent event){
+        System.out.println("Difficulté de l'ia");
+    }
+
+    @FXML
+
+
+    void handleButtonAjouterPlayer(ActionEvent event) {
+		String pseudo = textFieldPseudo.getText();
+		String type = "Joueur";
+		String avatar = comboBoxAvatar.getValue();
+
+		if(pseudo == null || pseudo.equals("")){
+		    pseudo = "Joueur"+(playerList.size()+1);
+        }
+
+
+        lobby.addPlayer(playerList.size(), pseudo, avatar);
+
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+
+
+		if (playerList.size() >= 3) {
+			buttonPlay.setDisable(false);
+		}
+		if(playerList.size()>10){
+		    buttonAjouterPlayer.setDisable(true);
+		    buttonAjouterIA.setDisable(true);
+        }
+
+        System.out.println(lobby);
 
     }
 
@@ -80,19 +127,52 @@ public class MenuCreationPartie {
     }
 
     @FXML
-    void handleComboBoxAvatar(ActionEvent event) {
-        System.out.println("Combo Box avatar used");
-    }
-
-    @FXML
-    void handleComboBoxType(ActionEvent event) {
-        System.out.println("Combo Box type used");
-    }
-
-    @FXML
     public void initialize(){
         buttonPlay.setDisable(true);
-        comboBoxType.setItems(typeList);
+        comboBoxDifficulteIA.setValue(difficulteList.get(0));
+        comboBoxDifficulteIA.setItems(difficulteList);
+        comboBoxAvatar.setValue(avatarList.get(0));
+        comboBoxAvatar.setItems(avatarList);
+        comboBoxAvatar.setCellFactory(listview -> new ImageCell());
+        comboBoxAvatar.setButtonCell(new ImageCell());
+        tableViewListeJoueur.setItems(playerList);
+        columnAvatar.setStyle( "-fx-alignment: CENTER;");
+        columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
+        columnType.setStyle( "-fx-alignment: CENTER-LEFT");
+        columnDelete.setStyle( "-fx-alignment: CENTER;");
+        columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ImageView>("Avatar"));
+        columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Pseudo"));
+        columnType.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Type"));
+        columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
     }
 
+	// A custom ListCell that displays an ImageView
+	static class ImageCell extends ListCell<String> {
+		Label label;
+		@Override
+		protected void updateItem (String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setItem(null);
+				setGraphic(null);
+			}
+			else {
+				ImageView image = getImageView(item);
+				label = new Label("",image);
+				setGraphic(label);
+			}
+		}
+
+		private ImageView getImageView(String imageName) {
+			ImageView imageView = null;
+            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+			if (!imageView.equals(null)) {
+			    imageView.setFitWidth(70);
+			    imageView.setFitHeight(70);
+			}
+			return imageView;
+		}
+	
+	}
+    
 }

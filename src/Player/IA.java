@@ -8,36 +8,37 @@ import Cards.PlayerAttribute;
  */
 public class IA extends Player{
 
-    Difficulty difficulty;
 
-    public IA(){
-        this.playerName = "Joueur";
+
+    public IA(int index){
+        this.playerName = "Joueur" + index;
+        this.num = index;
         this.difficulty = Difficulty.Easy;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
-    public IA(String name){
+    public IA(int index, String name){
         this.playerName = name;
+        this.num = index;
         this.difficulty = Difficulty.Easy;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
-    public IA(String name, Difficulty d){
+    public IA(int index, String name, Difficulty d){
         this.playerName = name;
+        this.num = index;
         this.difficulty = d;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.avatar = "robot_miner";
     }
 
-    @Override
-    public void changeDiffulty(Difficulty d){
-        this.difficulty = d;
-    }
+
 
     @Override
     public String toString(){
