@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Top">
+<AnchorPane id="AnchorPanetop" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Top">
     <children>
-      <GridPane alignment="TOP_CENTER" layoutX="1.0" style="-fx-hgap: 45; -fx-vgap: 0;">
+      <GridPane alignment="TOP_CENTER" layoutX="1.0" style="-fx-hgap: 45; -fx-vgap: 0;" gridLinesVisible="true">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="22.0" prefWidth="130.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="17.0" prefWidth="96.0" />

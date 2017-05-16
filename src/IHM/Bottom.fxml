@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPaneBottom" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Bottom">
   <children>
-    <GridPane gridLinesVisible="false" style="-fx-hgap: 45; -fx-vgap: 0;">
+    <GridPane alignment="BOTTOM_CENTER" gridLinesVisible="true" style="-fx-hgap: 45; -fx-vgap: 0;" >
       <children>
           <!-- Infos private -->
           <HBox id="HboxPrivate" alignment="BOTTOM_LEFT" maxHeight="316.0" maxWidth="400.0" prefHeight="316.0" prefWidth="404.0" spacing="1.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
@@ -24,27 +24,12 @@
                         <children>
                             <HBox id="HboxStatus" maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="0">
                                 <children>
-                                   <ImageView fx:id="imageViewplayerPick" fitHeight="83.0" fitWidth="108.0">
-                                      <image>
-                                         <Image url="@lanterne.png" />
-                                      </image>
-                                   </ImageView>
-                                   <ImageView fx:id="imageViewplayerLantern" fitHeight="83.0" fitWidth="89.0">
-                                      <image>
-                                         <Image url="@pickaxe.png" />
-                                      </image>
-                                   </ImageView>
-                                   <ImageView fx:id="imageViewplayerKart" fitHeight="83.0" fitWidth="103.0">
-                                      <image>
-                                         <Image url="@wagon.png" />
-                                      </image>
-                                   </ImageView>
+                                   <ImageView fx:id="imageViewplayerPick" fitHeight="83.0" fitWidth="108.0" />
+                                   <ImageView fx:id="imageViewplayerLantern" fitHeight="83.0" fitWidth="89.0" />
+                                   <ImageView fx:id="imageViewplayerKart" fitHeight="83.0" fitWidth="103.0" />
                                 </children>
                              </HBox>      
                             <ImageView id="playerAvatar" fx:id="imageViewPlayerAvatar" fitHeight="233.0" fitWidth="303.0" pickOnBounds="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="4" HBox.hgrow="ALWAYS">
-                                <image>
-                                    <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                                </image>
                                  <viewport>
                                     <Rectangle2D />
                                  </viewport>
@@ -120,7 +105,7 @@
             <children>
                 <ImageView id="ImagePioche" fx:id="imageViewDraw" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@pioche.png" />
+                        <Image url="@ressources/pioche.png" />
                     </image>
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
@@ -128,7 +113,7 @@
                 </ImageView>
                 <ImageView id="ImageDefausse" fx:id="ImageViewDefausse" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@defausse.jpg" />
+                        <Image url="@ressources/defausse.jpg" />
                     </image>
                 </ImageView>
             </children>

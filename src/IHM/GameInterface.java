@@ -23,17 +23,15 @@ import javafx.scene.Parent;
  */
 public class GameInterface extends Application {    
    
-    private double SCREEN_WIDTH =1920.0;
-    private double SCREEN_HEIGHT =1080.0 ;
+    private double SCREEN_WIDTH =1080.0;
+    private double SCREEN_HEIGHT =720.0 ;
     
     
     
     @Override
   public void start(final Stage primaryStage) throws IOException {
     
-        // Localisation du fichier FXML.
-        final URL url = getClass().getResource("MainInterface.fxml");
-        ;
+               
         // Creation du loader.
         
         Parent parentMainGame = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
@@ -44,16 +42,18 @@ public class GameInterface extends Application {
         primaryStage.setScene(new Scene(parentMainGame, SCREEN_WIDTH, SCREEN_HEIGHT));
 	primaryStage.setResizable(true);
 	primaryStage.show();
-      
-      AnchorPane anchorPaneMainTop = (AnchorPane) parentMainGame.lookup("#anchorPaneTop");
-      AnchorPane anchorPaneTop = FXMLLoader.load(getClass().getResource("Top.fxml"));
-      anchorPaneMainTop.getChildren().setAll(anchorPaneTop);
-      AnchorPane anchorPaneMainRight = (AnchorPane) parentMainGame.lookup("#anchorPaneRight");
-      AnchorPane anchorPaneRight = FXMLLoader.load(getClass().getResource("Right.fxml"));
-      anchorPaneMainRight.getChildren().setAll(anchorPaneRight);
+        
+        
       AnchorPane anchorPaneMainBottom = (AnchorPane) parentMainGame.lookup("#anchorPaneBottom");
-      AnchorPane anchorPaneBottom = FXMLLoader.load(getClass().getResource("Bottom.fxml"));
-      anchorPaneMainBottom.getChildren().setAll(anchorPaneBottom);
+      AnchorPane anchorPane2Bottom = FXMLLoader.load(getClass().getResource("Bottom.fxml"));
+      anchorPaneMainBottom.getChildren().setAll(anchorPane2Bottom);
+      AnchorPane anchorPaneMainTop = (AnchorPane) parentMainGame.lookup("#anchorPaneTop");
+      AnchorPane anchorPane2Top = FXMLLoader.load(getClass().getResource("Top.fxml"));
+      anchorPaneMainTop.getChildren().setAll(anchorPane2Top);
+      AnchorPane anchorPaneMainRight = (AnchorPane) parentMainGame.lookup("#anchorPaneRight");
+      AnchorPane anchorPane2Right = FXMLLoader.load(getClass().getResource("Right.fxml"));
+      anchorPaneMainRight.getChildren().setAll(anchorPane2Right);
+      
       
   }
     

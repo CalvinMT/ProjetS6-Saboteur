@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
+import static Cards.GalleryCard.Gallery_t.but;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
@@ -30,7 +31,7 @@ public class Board {
                     mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
                 }
                 else {
-mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
                 }
             }
         }
@@ -194,6 +195,7 @@ mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, fals
         }
     }
 
+    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
         currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
@@ -220,8 +222,12 @@ mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, fals
                 return false;
             }
         }
+
         return true;
     }
+
+
+    //TODO : Tests
 
     public void computePossiblePositions(GalleryCard c) {
         this.computeAccessCards();

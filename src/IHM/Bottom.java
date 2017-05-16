@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 public class Bottom {
     //Joueur test
     
-    Player joueur = new PlayerHuman("Test");
+    Player joueur = new PlayerHuman(1);
     RoleCard rc = new RoleCard("Mineur");
     Deck deck = new DeckGalleryAction();
     
@@ -86,6 +86,8 @@ public class Bottom {
         textFieldPlayerGold.setText("Or : " + Integer.toString(joueur.getGoldPoints()));
         textFieldPlayerRole.setText(joueur.toString());
         textFieldPlayerPseudo.setText(joueur.getPlayerName());
+        imageViewPlayerAvatar.setImage(new Image("ressources/avatar_anonyme.png"));
+        
     }
     
         
@@ -93,16 +95,7 @@ public class Bottom {
     
     private ImageView getImageView(String imageName) {
             ImageView imageView = null;
-            switch (imageName) {
-                    case "avatar_anonyme":
-                            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
-                            break;
-                    case "avatar_test":
-                            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
-                            break;
-                    default:
-                            imageName = null;
-            }
+            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
             if (!imageView.equals(null)) {
             imageView.setFitWidth(70);
             imageView.setFitHeight(70);
@@ -110,7 +103,39 @@ public class Bottom {
             return imageView;
     }
     
-    
-    
+    /*
+    private ImageView getImageCard(Card c){
+        ImageView imageView = null;
+        switch(c.getType()){
+            case action:
+                switch(((ActionCard)c).getAction()){
+                    case Sabotage:
+                        switch(((RepareSabotageCard)c).nbTools()){
+                            case Sabotage:
+                        break;
+                    case Map:
+                        imageView = new ImageView(new Image("ressources/carte_plan_secret.jpg"));
+                        break;
+                    case Repare:
+                        break;
+                        
+                    case Crumbing:
+                        imageView = new ImageView(new Image("ressources/carte_eboulement.jpgg"));
+                        break;
+                    default:
+                        imageView = null;
+                }
+                break;
+            case gallery:
+                imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+                break;
+            default:
+                imageView = null;
+		
+        }
+        
+        return imageView;
+    }
+    */
 	
 }

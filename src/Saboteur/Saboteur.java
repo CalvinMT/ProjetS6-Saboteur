@@ -5,12 +5,18 @@ import Board.Couple;
 import Cards.ActionCard;
 import Cards.RepareSabotageCard;
 
+import Player.Player;
+
+import java.util.ArrayList;
+
 public class Saboteur {
+
+    static Moteur m;
 
     static public void main(String [] args){
 
         int nbPlayer = 4;
-        Moteur m = new Moteur(nbPlayer);
+
 
         try {
             System.out.println(m);
@@ -37,6 +43,13 @@ public class Saboteur {
         m.promptPlayers();
 
     }
+
+
+    // init du moteur a partir d'un tableau de joueur
+    static public void initMoteur(ArrayList<Player> arrayPlayer){
+        m = new Moteur(arrayPlayer);
+    }
+
 
 
 
