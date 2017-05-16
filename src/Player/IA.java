@@ -17,7 +17,6 @@ import static java.lang.Math.abs;
 public class IA extends Player{
 
     Difficulty difficulty;
-    private Couple goldGoal = new Couple(0, 0);
     private ArrayList<Couple> goalsToTest;
 
 
@@ -59,19 +58,23 @@ public class IA extends Player{
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| / |(but.y - p.y)|
-
     public float getHeuristic(Couple goal, Couple cpl) {
+/*        System.out.println(goal);
+        System.out.println(cpl);
+
+        System.out.println("X : " + abs(goal.getX() - cpl.getX()));
+        System.out.println("Y : " + abs(goal.getY() - cpl.getY()));
+
+        System.out.println("X+Y : " + (abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY())));*/
         return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
     }
 
-    // Premier jet. Ne prend pas en compte si un but a ou non de l'or.
-    // TODO : À implémenter : Si on sait qu'un but a de l'or, faire les calculs en fonctions de lui
-    // TODO :                 Si on sait qu'un but n'a pas d'or, l'ignorer
+    // TODO : Tests
     public Couple choosePosition() {
         float h, hMax = 0;
         Card currCard;
-        Couple bestCpl = new Couple(0, 0),
-               currentCpl;
+        Couple bestCpl = new Couple(0, 0);
+        Couple currentCpl;
         ArrayList<Couple> p;
 
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
@@ -79,37 +82,37 @@ public class IA extends Player{
             if (currCard.getType() == gallery) { // Si la carte est une gallerie
                 p = this.board.getPossiblePositions((GalleryCard) currCard); // On calcule les positions possibles pour cette carte
                 bestCpl = p.get(0);
+
                 for (int i = 0; i < p.size(); i++) { // Pour chaque position possible
                     currentCpl = p.get(i);
-                    if (goldGoal.getY() == 8) { // Si on connait le but avec minerai
-                        h = getHeuristic(goldGoal, currentCpl); // On calcul l'heuristique (distance position <-> but)
-                        if (h > hMax){ // Si l'heuristique est maximale
+                    for (int g = 0; g < goalsToTest.size(); g++) { // Et pour chaque but
+                        h = getHeuristic(goalsToTest.get(g), currentCpl); // On calcul l'heuristique (distance position <-> but)
+
+                        if (h > hMax) { // Si l'heuristique est maximale
                             hMax = h; // On met à jour l'heuristique max
                             bestCpl = currentCpl; // On garde la position
-                        }
-                    }
-                    else {
-                        for (int g = 0; g < goalsToTest.size(); g++) { // Et pour chaque but
-                            h = getHeuristic(goalsToTest.get(g), currentCpl); // On calcul l'heuristique (distance position <-> but)
-                            if (h > hMax) { // Si l'heuristique est maximale
-                                hMax = h; // On met à jour l'heuristique max
-                                bestCpl = currentCpl; // On garde la position
-                            }
                         }
                     }
                 }
             }
         }
-
         return bestCpl;
     }
 
+    // TODO : Test
     public void ignoreGoal(Couple cpl) {
         if (goalsToTest.contains(cpl)) this.goalsToTest.remove(cpl);
     }
 
     public void addGoldGoal(Couple cpl) {
-        this.goldGoal = cpl;
+        if (goalsToTest.contains(cpl)) {
+            for (int i = 0; i < goalsToTest.size(); i++) {
+                if (!goalsToTest.get(i).equals(cpl)) {
+                    goalsToTest.remove(i);
+                    i--;
+                }
+            }
+        }
     }
 
     @Override
