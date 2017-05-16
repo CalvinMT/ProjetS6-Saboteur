@@ -8,6 +8,7 @@ import static Cards.Card.Card_t.*;
 
 import Cards.*;
 import Player.Player;
+import Player.Player.Difficulty;
 import org.junit.Assert;
 import org.junit.Test;
 import Board.Board;
@@ -22,6 +23,27 @@ public class PlayerTest {
 		String playerName = "Ada";
 		Player p = new PlayerHuman(0, playerName, b);
 		assertTrue(p != null);
+	}
+
+
+	@Test
+	public void testPlayer2(){
+		Player p = new PlayerHuman(1, "Maxime", "mdr");
+		Assert.assertTrue(p.getDifficulty() == Difficulty.Player);
+	}
+
+	@Test
+	public void testPlayer3(){
+		Player p = new IA(1, "Bot", Difficulty.Easy);
+		Assert.assertTrue(p.getDifficulty() == Difficulty.Easy);
+		Assert.assertTrue(p.getAvatar() == "robot_miner");
+	}
+
+	@Test
+	public void setDiff1(){
+		Player p = new IA(1, "Bot", Difficulty.Easy);
+		p.setDifficulty(Difficulty.Hard);
+		Assert.assertTrue(p.getDifficulty() == Difficulty.Hard);
 	}
 
 	@Test
@@ -96,6 +118,7 @@ public class PlayerTest {
 		p.discard(2);
 		Assert.assertTrue(p.nbCardHand() == 2);
 	}
+
 
 
 }

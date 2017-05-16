@@ -17,6 +17,7 @@ public class IA extends Player{
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.avatar = "robot_miner";
     }
 
     public IA(int index, String name){
@@ -26,6 +27,7 @@ public class IA extends Player{
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.avatar = "robot_miner";
     }
 
     public IA(int index, String name, Difficulty d){
