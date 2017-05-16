@@ -113,6 +113,14 @@ public class DeckGalleryAction extends Deck {
          nbMap + nbCrash + nbWagonPickaxe + nbPickaxeLantern + nbWagonLantern);
 
     }
+    
+    public String toString(){
+    	String me = "";
+    	for (int i=0; i<this.arrayCard.size(); i++) {
+    		me += this.arrayCard.get(i).toString();
+    	}
+    	return me;
+    }
 
 
 

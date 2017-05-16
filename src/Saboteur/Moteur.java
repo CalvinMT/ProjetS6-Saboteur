@@ -5,6 +5,11 @@
  */
 package Saboteur;
 import Cards.*;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import Player.*;
 import Board.Board;
 import Board.Couple;
@@ -25,7 +30,64 @@ public class Moteur {
     //ajout du board
     Board board;
 
-
+    
+    
+    
+    public void save(String filename) {
+    	try{
+			PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
+			saveFile.println(this.arrayPlayer.size());
+			for (int i=0; i<arrayPlayer.size(); i++) {
+				saveFile.println(arrayPlayer.get(i));
+			}
+			saveFile.println(this.arrayPlayer.get(currentPlayer).getPlayerName());
+			//saveFile.println("L'état du Deck:");
+			saveFile.println(this.pile);			
+			saveFile.close();
+		} catch (IOException e) {
+			System.err.println("Erreur: Echec d'ouverture du fichier.");
+		}
+    }
+    
+    public boolean load(String filename){
+    	//boolean answer = false;
+    	try {
+    		FileReader filereader = new FileReader(filename);
+    		BufferedReader br = new BufferedReader(filereader);
+    		String playerName, playerType, playerRole, tempGoldPoints, temp; // playerType = Humain | IA
+    		int goldPoints;
+    		int nbPlayers = Integer.parseInt(br.readLine());
+    		for (int i=0; i<nbPlayers; i++){
+    			playerName = br.readLine();
+    			
+    			playerType = br.readLine();
+    			if (playerType != "Humain" || playerType != "Saboteur") return false;
+    			
+    			playerRole = br.readLine();
+    			if (playerRole != "Mineur" || playerRole != "Saboteur") return false;
+    			
+    			tempGoldPoints = br.readLine();
+    			if (tempGoldPoints.matches("[0-9]+")) goldPoints = Integer.parseInt(tempGoldPoints);
+    			else return false;
+    			// write code for the Attributes property
+    			temp = br.readLine();
+								
+				String [] handCards = temp.split("[;]");
+				if (handCards.length != 6) return false;
+				
+				
+    		}
+    	}
+    	catch(Exception e){
+    		System.out.println(e);
+    	}
+    	return false;
+    	
+    }
+    
+    
+    
+    
 
     // ligne nbJoueur colonne Nb carte de 0 à 7 contenant le nombre de cartes en début de partie
     final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
@@ -220,6 +282,8 @@ public class Moteur {
     public ArrayList<Player> getAllPlayers(){
         return this.arrayPlayer;
     }
+    
+    
 
     public String toString(){
         String renvoi = "Moteur: \n";
