@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class IATest {
     IA ia = new IA();
+
     @Test
     public void getHeuristic() throws Exception {
         assertTrue(ia.getHeuristic(new Couple(0, 8), new Couple(0, 7)) == 1.0);

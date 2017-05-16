@@ -18,6 +18,8 @@ public class IA extends Player{
 
     Difficulty difficulty;
     private ArrayList<Couple> goalsToTest;
+    private Card cardToPlay;
+    private Couple posToPlay;
 
 
     public IA(){
@@ -70,33 +72,35 @@ public class IA extends Player{
     }
 
     // TODO : Tests
-    public Couple choosePosition() {
+    // TODO : renommer la fonction
+    // Determine la position la plus proche d'un but et retourne ses coordonnées
+    public void choosePosition() {
         float h, hMax = 0;
-        Card currCard;
+        Card currCard, bestCard;
         Couple bestCpl = new Couple(0, 0);
-        Couple currentCpl;
         ArrayList<Couple> p;
 
+        bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
             currCard = lookAtCard(cardIdx);
             if (currCard.getType() == gallery) { // Si la carte est une gallerie
                 p = this.board.getPossiblePositions((GalleryCard) currCard); // On calcule les positions possibles pour cette carte
                 bestCpl = p.get(0);
-
-                for (int i = 0; i < p.size(); i++) { // Pour chaque position possible
-                    currentCpl = p.get(i);
-                    for (int g = 0; g < goalsToTest.size(); g++) { // Et pour chaque but
-                        h = getHeuristic(goalsToTest.get(g), currentCpl); // On calcul l'heuristique (distance position <-> but)
+                for (Couple currCpl : p) { // Pour chaque position possible
+                    for (Couple goal : goalsToTest) { // Et pour chaque but
+                        h = getHeuristic(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
                         if (h > hMax) { // Si l'heuristique est maximale
                             hMax = h; // On met à jour l'heuristique max
-                            bestCpl = currentCpl; // On garde la position
+                            bestCpl = currCpl; // On garde la position
+                            bestCard = currCard; // et la carte associée
                         }
                     }
                 }
             }
         }
-        return bestCpl;
+        this.posToPlay = bestCpl;
+        this.cardToPlay = bestCard;
     }
 
     // TODO : Test
