@@ -47,6 +47,7 @@ public class MenuOptions {
 	
 	@FXML
 	public void handleSliderMusic () {
+		// FIXME
 		MainLoader.mediaPlayerMusic.setVolume(sliderMusic.getValue()/100);
 	}
 

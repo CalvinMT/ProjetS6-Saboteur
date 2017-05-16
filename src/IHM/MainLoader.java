@@ -107,8 +107,8 @@ public class MainLoader extends Application {
 		
 		// Music & Effects played in background
 		try {
-			Media sound = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
-			mediaPlayerMusic = new MediaPlayer(sound);
+			Media music = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));
 			//mediaPlayerMusic.setStopTime(new Duration(135700));
