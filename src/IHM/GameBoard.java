@@ -83,8 +83,8 @@ public class GameBoard {
 			}
 		}
 		
-		gridPaneBoard.setScaleX(10);
-		gridPaneBoard.setScaleY(10);
+		gridPaneBoard.setScaleX(7);
+		gridPaneBoard.setScaleY(7);
 	}
 
 }

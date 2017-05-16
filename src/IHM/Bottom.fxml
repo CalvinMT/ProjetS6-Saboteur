@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPaneBottom" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Bottom">
   <children>
-    <GridPane gridLinesVisible="false" style="-fx-hgap: 45; -fx-vgap: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane gridLinesVisible="false" style="-fx-hgap: 45; -fx-vgap: 0;">
       <children>
           <!-- Infos private -->
           <HBox id="HboxPrivate" alignment="BOTTOM_LEFT" maxHeight="316.0" maxWidth="400.0" prefHeight="316.0" prefWidth="404.0" spacing="1.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">

@@ -13,11 +13,16 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MainLoader extends Application implements InterfaceMusic {
+public class MainLoader extends Application {
+	
+	public static Stage primaryStage; // XXX - Not good looking.
+	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
 	
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
@@ -56,7 +61,9 @@ public class MainLoader extends Application implements InterfaceMusic {
 	
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage stage) throws Exception {
+		primaryStage = stage;
+		
 		Parent parentMainMenu = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
 
 		// Initialize saboteur.cfg
@@ -100,6 +107,8 @@ public class MainLoader extends Application implements InterfaceMusic {
 		
 		// Music & Effects played in background
 		try {
+			Media sound = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			mediaPlayerMusic = new MediaPlayer(sound);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));
 			//mediaPlayerMusic.setStopTime(new Duration(135700));

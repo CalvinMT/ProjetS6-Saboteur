@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneOptions" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuOptions">
+<AnchorPane fx:id="anchorPaneOptions" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuOptions">
    <children>
       <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0">
          <columnConstraints>
