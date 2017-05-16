@@ -6,22 +6,42 @@ import com.sun.org.apache.regexp.internal.RE;
 import Board.Board;
 import Board.Couple;
 
+import javax.print.attribute.standard.PrinterLocation;
 import javax.tools.Tool;
 
 public abstract class Player {
 
     public enum Difficulty {
+        Player,
         Easy,
         Medium,
-        Hard
+        Hard;
+
+        static public Difficulty stringToDiff(String diff){
+            switch(diff){
+                case "Player":
+                    return Player;
+                case "Easy":
+                    return Easy;
+                case "Medium":
+                    return Medium;
+                case "Hard":
+                    return Hard;
+                default:
+                    return Player;
+            }
+        }
     }
 
     protected String playerName;
+    protected int num; // pour le retrouver
+    protected Difficulty difficulty;
     protected Card role;
     protected int goldPoints;
     protected HandPlayer playableCards; // les cartes données au debut du jeu
     protected PlayerAttribute attributeCards; // les cartes d'attribut devant le joueur (maximum de 3)
     protected Board board; // plateau de jeu
+    protected String avatar;
 
 
     // assignation des rôles
@@ -67,6 +87,22 @@ public abstract class Player {
         }
     }
 
+    // assigne un avatar
+    public void setAvatar(String jpg){
+        this.avatar = jpg;
+    }
+
+    //assign une difficulté
+    public void setDifficulty(Difficulty d){
+        this.difficulty = d;
+    }
+
+    //assigne un numéro
+    public void setNum(int i){
+        this.num = i;
+    }
+
+    // lui assigne un tableau de jeu
     public void setBoard(Board b){
         this.board = b;
     }
@@ -120,6 +156,18 @@ public abstract class Player {
         return playableCards;
     }
 
+    public int getNum(){
+        return this.num;
+    }
+
+    public String getAvatar(){
+        return this.avatar;
+    }
+
+    public Difficulty getDifficulty(){
+        return this.difficulty;
+    }
+
     public PlayerAttribute getAttributeCards() {
         return attributeCards;
     }
@@ -129,6 +177,7 @@ public abstract class Player {
     }
 
     public abstract String toString();
-    public abstract void changeDiffulty(Difficulty d);
+
+
 
 }

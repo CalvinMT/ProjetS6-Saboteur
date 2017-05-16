@@ -4,6 +4,7 @@ package Saboteur;
 import Board.Couple;
 import Cards.ActionCard;
 import Cards.RepareSabotageCard;
+<<<<<<< HEAD
 
 public class Saboteur {
 
@@ -11,6 +12,19 @@ public class Saboteur {
 
         int nbPlayer = 4;
         Moteur m = new Moteur(nbPlayer);
+=======
+import Player.Player;
+
+import java.util.ArrayList;
+
+public class Saboteur {
+
+    static Moteur m;
+
+    static public void main(String [] args){
+
+        int nbPlayer = 4;
+>>>>>>> 2123c36dd9bae55dc545d51e6d6029f2c6ad23a4
 
         try {
             System.out.println(m);
@@ -38,6 +52,14 @@ public class Saboteur {
 
     }
 
+<<<<<<< HEAD
+=======
+    // init du moteur a partir d'un tableau de joueur
+    static public void initMoteur(ArrayList<Player> arrayPlayer){
+        m = new Moteur(arrayPlayer);
+    }
+
+>>>>>>> 2123c36dd9bae55dc545d51e6d6029f2c6ad23a4
 
 
 }

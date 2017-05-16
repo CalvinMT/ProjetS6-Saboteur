@@ -9,6 +9,11 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
 
+<<<<<<< ./src/Board/Board_LOCAL_13027.java
+=======
+import static Cards.GalleryCard.Gallery_t.but;
+
+>>>>>>> ./src/Board/Board_REMOTE_13027.java
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
     private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
@@ -195,6 +200,10 @@ public class Board {
         }
     }
 
+<<<<<<< ./src/Board/Board_LOCAL_13027.java
+=======
+    // TODO : Tests
+>>>>>>> ./src/Board/Board_REMOTE_13027.java
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
         currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
@@ -221,9 +230,17 @@ public class Board {
                 return false;
             }
         }
+<<<<<<< ./src/Board/Board_LOCAL_13027.java
+=======
+
+>>>>>>> ./src/Board/Board_REMOTE_13027.java
         return true;
     }
 
+<<<<<<< ./src/Board/Board_LOCAL_13027.java
+=======
+    //TODO : Tests
+>>>>>>> ./src/Board/Board_REMOTE_13027.java
     public void computePossiblePositions(GalleryCard c) {
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {

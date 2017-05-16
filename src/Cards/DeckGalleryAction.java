@@ -89,7 +89,7 @@ public class DeckGalleryAction extends Deck {
 
         // Carte Repare : Wagon + Pickaxe
         for(int i=0; i<nbWagonPickaxe; i++){
-            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Wagon));
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon, RepareSabotageCard.Tools.Pickaxe));
         }
 
         // Carte Map
