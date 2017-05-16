@@ -60,7 +60,7 @@ public class MenuCreationPartie {
     @FXML
     void handleButtonAjouterIA(ActionEvent event){
         String difficulty = comboBoxDifficulteIA.getValue();
-        String pseudo = "IA " + difficulty;
+        String pseudo = "IA " + (playerList.size()+1);
         String type = "Ordinateur";
         String avatar = "robot_miner";
 
@@ -93,7 +93,7 @@ public class MenuCreationPartie {
 		String avatar = comboBoxAvatar.getValue();
 
 		if(pseudo == null || pseudo.equals("")){
-		    pseudo = "Joueur";
+		    pseudo = "Joueur "+(playerList.size()+1);
         }
 
 

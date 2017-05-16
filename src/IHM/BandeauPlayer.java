@@ -1,5 +1,6 @@
 package IHM;
 
+import Player.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,7 +79,14 @@ public class BandeauPlayer {
 		this.comboBoxDifficulte.setOnAction(new EventHandler <ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Mise à jour de la difficulté (Dans BandeauPlayer)");
+
+				// update dans le lobby
+				int num = tableView.getItems().indexOf(BandeauPlayer.this);
+				String diff = comboBoxDifficulte.getValue();
+				System.out.println("Difficulté: "+Player.Difficulty.stringToDiff(diff));
+				lobby.updateDifficulty(num, Player.Difficulty.stringToDiff(diff));
+
+				System.out.println(lobby);
 			}
 		});
 

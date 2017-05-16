@@ -74,7 +74,7 @@ public class Lobby {
         renvoi += "Nombre joueur: "+nbPlayer()+"\n";
         renvoi += "{ ";
         for(int i=0; i<nbPlayer(); i++){
-            renvoi += arrayPlayer.get(i).getNum()+ ": "+ arrayPlayer.get(i).getPlayerName() + " ; ";
+            renvoi += arrayPlayer.get(i).getNum()+ ": "+ arrayPlayer.get(i).getPlayerName() + " Difficulte: "+arrayPlayer.get(i).getDifficulty() + " ; ";
         }
 
         renvoi += "}\n";
