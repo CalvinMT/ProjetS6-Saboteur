@@ -53,7 +53,26 @@ public class PlayerHuman extends Player{
         this.playableCards = new HandPlayer();
         this.board = b;
     }
+    
+    @Override
+    public String toString(){
+        String renvoi = "";
 
+        renvoi += this.playerName + "\n";
+        renvoi += "Humain\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += this.role + "\n";
+        }
+        renvoi += this.goldPoints + "\n";
+        renvoi += this.attributeCards + "\n";
+        renvoi += this.playableCards + "\n";
+
+        return renvoi;
+    }
+
+    /*
     @Override
     public String toString(){
         String renvoi = "";
@@ -71,7 +90,7 @@ public class PlayerHuman extends Player{
 
         return renvoi;
     }
-    
+    */
     
     
 }

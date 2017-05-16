@@ -35,6 +35,8 @@ public class Saboteur {
         m.play(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon, RepareSabotageCard.Tools.Lantern), RepareSabotageCard.Tools.Lantern, m.getPlayer(2));
 
         m.promptPlayers();
+        
+        m.save("testfile");
 
     }
 
