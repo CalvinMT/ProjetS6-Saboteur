@@ -78,6 +78,7 @@ public class MenuOptions {
 		    	double newScreenHeight = Double.parseDouble(stringList[1]);
 			    MainLoader.primaryStage.setWidth(newScreenWidth);
 			    MainLoader.primaryStage.setHeight(newScreenHeight);
+			    MainLoader.primaryStage.centerOnScreen();
 		    	writer.println(":Fullscreen:" + false + ":");
 		    }
 		    writer.close();

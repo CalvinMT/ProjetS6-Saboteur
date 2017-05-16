@@ -19,6 +19,7 @@ public class GameBoard {
 	private int gridWidth = 90;
 	private int gridHeight = 89;
 	
+	// See FIXMEs below
 	private Stage stage;
 	private double pressedX;
 	private double pressedY;
@@ -35,17 +36,16 @@ public class GameBoard {
 	
 	@FXML
 	public void handlePressedGrid (MouseEvent event) {
-		stage = (Stage) gridPaneBoard.getScene().getWindow();
+		// FIXME
+		/*stage = (Stage) gridPaneBoard.getScene().getWindow();
 		pressedX = stage.getX() - event.getScreenX();
-		pressedY = stage.getY() - event.getScreenY();
+		pressedY = stage.getY() - event.getScreenY();*/
 	}
 	
 	@FXML
 	public void handleDragGrid (MouseEvent event) {
-		gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));
-		
-		/*stage.setX(event.getScreenX() + pressedX);
-		stage.setY(event.getScreenY() + pressedY);*/
+		//FIXME
+		/*gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));*/
 	}
 	
 	@FXML
@@ -83,8 +83,11 @@ public class GameBoard {
 			}
 		}
 		
-		gridPaneBoard.setScaleX(7);
-		gridPaneBoard.setScaleY(7);
+		// Recentre le plateau de jeu
+		gridPaneBoard.setPadding(new Insets(-15, -15, -15, -15));
+		
+		gridPaneBoard.setScaleX(6);
+		gridPaneBoard.setScaleY(6);
 	}
 
 }
