@@ -115,6 +115,10 @@ public class IA extends Player{
         }
     }
 
+    public ArrayList<Couple> getGoalsToTest() {
+        return goalsToTest;
+    }
+
     @Override
     public void changeDiffulty(Difficulty d){
         this.difficulty = d;
