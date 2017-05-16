@@ -8,6 +8,7 @@ import Cards.PlayerAttribute;
  */
 public class IA extends Player{
 
+    Difficulty difficulty;
 
 
     public IA(int index){

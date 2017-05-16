@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPaneMainMenu" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainMenu">
+<AnchorPane fx:id="anchorPaneMainMenu" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="+Infinity" minWidth="+Infinity" prefHeight="+Infinity" prefWidth="+Infinity" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
    <children>
       <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0">
          <columnConstraints>
@@ -28,27 +28,27 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button disable="true" mnemonicParsing="false" prefHeight="1000.0" prefWidth="1000.0" text="Partie En Ligne" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+            <Button disable="true" mnemonicParsing="false" prefHeight="+Infinity" prefWidth="+Infinity" text="Partie En Ligne" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button disable="true" mnemonicParsing="false" prefHeight="1000.0" prefWidth="1000.0" text="Didactitiel" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <Button disable="true" mnemonicParsing="false" prefHeight="+Infinity" prefWidth="+Infinity" text="Didactitiel" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleOptions" prefHeight="1000.0" prefWidth="1000.0" text="Options" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
+            <Button mnemonicParsing="false" onAction="#handleOptions" prefHeight="+Infinity" prefWidth="+Infinity" text="Options" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="1000.0" prefWidth="1000.0" text="Quitter" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+            <Button mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="+Infinity" prefWidth="+Infinity" text="Quitter" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleLocalGame" prefHeight="1000.0" prefWidth="1000.0" text="Partie Locale" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#handleLocalGame" prefHeight="+Infinity" prefWidth="+Infinity" text="Partie Locale" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin></Button>

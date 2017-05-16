@@ -21,6 +21,9 @@ import javafx.util.Duration;
 
 public class MainLoader extends Application {
 	
+	public static Stage primaryStage; // XXX - Not good looking.
+	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
+	
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
 	
@@ -28,8 +31,6 @@ public class MainLoader extends Application {
 	// TOTO - private double volumeEffects;
 	
 	private File fileOptions = new File("saboteur.cfg");
-	
-	private static String musicFile = "../ressources/pull-up-a-chair.mp3";
 
 	
 	private void initGameConfig () {
@@ -60,7 +61,9 @@ public class MainLoader extends Application {
 	
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage stage) throws Exception {
+		primaryStage = stage;
+		
 		Parent parentMainMenu = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
 
 		// Initialize saboteur.cfg
@@ -101,23 +104,23 @@ public class MainLoader extends Application {
 		} catch (Exception e) {
 				System.out.println("ERROR --> Couldn't retrieve resolution from file 'saboteur.cfg'.");
 		}
-			
+		
 		// Music & Effects played in background
 		try {
-			Media sound = new Media(getClass().getResource(musicFile).toURI().toString());
-			MediaPlayer mediaPlayer = new MediaPlayer(sound);
-			mediaPlayer.setVolume(volumeMusic/100);
-			mediaPlayer.setStartTime(new Duration(14600));
-			//mediaPlayer.setStopTime(new Duration(135700));
-			mediaPlayer.play();
-			Timeline timeline = new Timeline(new KeyFrame(new Duration(140000), new KeyValue(mediaPlayer.volumeProperty(), 0)));
-			mediaPlayer.setOnEndOfMedia(new Runnable(){
+			Media sound = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			mediaPlayerMusic = new MediaPlayer(sound);
+			mediaPlayerMusic.setVolume(volumeMusic/100);
+			mediaPlayerMusic.setStartTime(new Duration(14600));
+			//mediaPlayerMusic.setStopTime(new Duration(135700));
+			mediaPlayerMusic.play();
+			Timeline timeline = new Timeline(new KeyFrame(new Duration(140000), new KeyValue(mediaPlayerMusic.volumeProperty(), 0)));
+			mediaPlayerMusic.setOnEndOfMedia(new Runnable(){
 				@Override
 				public void run() {
-					mediaPlayer.stop();
+					mediaPlayerMusic.stop();
 					timeline.stop();
-					mediaPlayer.setStartTime(new Duration(14600));
-					mediaPlayer.play();
+					mediaPlayerMusic.setStartTime(new Duration(14600));
+					mediaPlayerMusic.play();
 					timeline.play();
 				}
 			});
@@ -132,7 +135,7 @@ public class MainLoader extends Application {
 		primaryStage.show();
 		
 		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
         anchorPaneMainLoader.getChildren().setAll(anchorPane);
 	}
 

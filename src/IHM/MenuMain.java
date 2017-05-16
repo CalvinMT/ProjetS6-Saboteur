@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
 
-public class MainMenu {
+public class MenuMain {
 	
 	@FXML
 	private AnchorPane anchorPaneMainMenu;
@@ -21,7 +21,7 @@ public class MainMenu {
 	
 	@FXML
     public void handleOptions() throws IOException {
-		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("OptionsMenu.fxml"));
+		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuOptions.fxml"));
 		anchorPaneMainMenu.getChildren().setAll(anchorPane);
     }
 	

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPaneBottom" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Bottom">
+  <children>
+    <GridPane alignment="BOTTOM_CENTER" gridLinesVisible="true" style="-fx-hgap: 45; -fx-vgap: 0;" >
+      <children>
+          <!-- Infos private -->
+          <HBox id="HboxPrivate" alignment="BOTTOM_LEFT" maxHeight="316.0" maxWidth="400.0" prefHeight="316.0" prefWidth="404.0" spacing="1.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+              <children>
+                    <VBox>
+                        <children>
+                            <HBox id="HboxStatus" maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="0">
+                                <children>
+                                   <ImageView fx:id="imageViewplayerPick" fitHeight="83.0" fitWidth="108.0" />
+                                   <ImageView fx:id="imageViewplayerLantern" fitHeight="83.0" fitWidth="89.0" />
+                                   <ImageView fx:id="imageViewplayerKart" fitHeight="83.0" fitWidth="103.0" />
+                                </children>
+                             </HBox>      
+                            <ImageView id="playerAvatar" fx:id="imageViewPlayerAvatar" fitHeight="233.0" fitWidth="303.0" pickOnBounds="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="4" HBox.hgrow="ALWAYS">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                            </ImageView>
+                        </children>
+                    </VBox>
+                <VBox id="VBoxinfos" alignment="BOTTOM_LEFT" maxHeight="60.0" maxWidth="80.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="100.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS">
+                   <children>                
+                        <TextArea id="Or" fx:id="textFieldPlayerGold" centerShape="false" editable="false" scaleShape="true" text="3 pépites" />
+                        <TextArea id="Role" fx:id="textFieldPlayerRole" centerShape="flase" editable="false" maxHeight="120.0" maxWidth="90.0" scaleShape="true" text="Saboteur" />
+                        <TextArea id="pseudo" fx:id="textFieldPlayerPseudo" centerShape="flase" editable="false" scaleShape="true" text="Bastien" />
+                   </children>
+                </VBox>
+              </children>
+          </HBox>
+        
+        <!-- La main du joueur -->  
+        <HBox id="HBoxmain" maxHeight="80.0" maxWidth="600.0" spacing="6.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <children>
+                <ImageView id="imagemain1" fx:id="imageViewplayerCard1" fitHeight="206.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="imagemain2" fx:id="imageViewplayerCard2" fitHeight="205.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="imagemain3" fx:id="imageViewplayerCard3" fitHeight="205.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="imagemain4" fx:id="imageViewplayerCard4" fitHeight="209.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="imagemain5" fx:id="imageViewplayerCard5" fitHeight="206.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="imagemain6" fx:id="imageViewplayerCard6" fitHeight="205.0" fitWidth="120.0" onDragDetected="#handleDragCard" onDragDropped="#handleDropCard" pickOnBounds="true">
+                    <image>
+                        <Image preserveRatio="true" smooth="true" url="@cartemain.jpg" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                </ImageView>
+            </children>
+        </HBox> 
+        
+        <!-- La pioche et la defausse -->
+        <HBox id="HboxPioche_Defausse" maxHeight="60.0" maxWidth="120.0" spacing="9.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS"> 
+            <children>
+                <ImageView id="ImagePioche" fx:id="imageViewDraw" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                    <image>
+                        <Image url="@ressources/pioche.png" />
+                    </image>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                </ImageView>
+                <ImageView id="ImageDefausse" fx:id="ImageViewDefausse" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                    <image>
+                        <Image url="@ressources/defausse.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+        </HBox>    
+                     
+      </children>
+         <columnConstraints>
+            <ColumnConstraints maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
+            <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>      
+    </GridPane>
+  </children>
+</AnchorPane>

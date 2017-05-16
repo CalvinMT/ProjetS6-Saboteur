@@ -1,7 +1,6 @@
 package Cards;
 
 import Board.Couple;
-
 import static Cards.GalleryCard.Gallery_t.start;
 
 public class GalleryCard extends Card {
@@ -29,7 +28,7 @@ public class GalleryCard extends Card {
         this.east = e;
         this.west = w;
     }
-
+    
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
         this.type = Card_t.gallery;
         this.type_g = Gallery_t.tunnel;

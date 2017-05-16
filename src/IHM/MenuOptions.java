@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class OptionsMenu {
+public class MenuOptions {
 	
 	private File fileOptions = new File("saboteur.cfg");
 	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1366*768","1600*900","1920*1080");
@@ -41,13 +41,13 @@ public class OptionsMenu {
 	// --------------- Controllers ---------------
 	@FXML
     public void handleReturnMenu () throws IOException {
-		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
 	
 	@FXML
 	public void handleSliderMusic () {
-		//mediaPlayer.setVolume(sliderMusic.getValue()/100);
+		MainLoader.mediaPlayerMusic.setVolume(sliderMusic.getValue()/100);
 	}
 
 	@FXML
@@ -68,9 +68,16 @@ public class OptionsMenu {
 		    writer.println(":Effects:" + sliderEffects.getValue() + ":");
 		    writer.println(":Resolution:" + choiceBox.getValue() + ":");
 		    if (checkBoxFullscreen.isSelected()) {
+		    	MainLoader.primaryStage.setFullScreen(true);
 		    	writer.println(":Fullscreen:" + true + ":");
 		    }
 		    else {
+		    	MainLoader.primaryStage.setFullScreen(false);
+		    	String[] stringList = choiceBox.getValue().split("\\*");
+		    	double newScreenWidth = Double.parseDouble(stringList[0]);
+		    	double newScreenHeight = Double.parseDouble(stringList[1]);
+			    MainLoader.primaryStage.setWidth(newScreenWidth);
+			    MainLoader.primaryStage.setHeight(newScreenHeight);
 		    	writer.println(":Fullscreen:" + false + ":");
 		    }
 		    writer.close();
