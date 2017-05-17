@@ -1,17 +1,19 @@
 package IHM;
 
+import Saboteur.Moteur;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 
 public class GameInteract {
 	
-	private int numberOfCardsInHand;
+	private Moteur moteur = Saboteur.Saboteur.getMoteur();
 	
+	private int numberOfCardsInHand;
 	private ImageView []cardsInHand;
 	
 	@FXML
 	public void initialize () {
-		numberOfCardsInHand = 4;
+		numberOfCardsInHand = moteur.getCurrentPlayer().nbCardHand();
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			
 		}
