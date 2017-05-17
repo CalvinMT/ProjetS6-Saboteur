@@ -105,7 +105,7 @@ public class RepareSabotageCard extends ActionCard{
                 renvoi += this.arrayTools.get(0);
                 renvoi += "}";
             } else if(this.nbTools() == 2){
-                renvoi += this.arrayTools.get(0) + ";";
+                renvoi += this.arrayTools.get(0) + ",";
                 renvoi += this.arrayTools.get(1);
                 renvoi += "}";
             } else {

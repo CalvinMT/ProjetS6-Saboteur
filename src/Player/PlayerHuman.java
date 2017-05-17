@@ -56,7 +56,8 @@ public class PlayerHuman extends Player{
     
     @Override
     public void setGoldPoints(int gp) {
-    	this.goldPoints += gp;
+    	if (gp >= 0)
+    		this.goldPoints += gp;
     }
     
     @Override

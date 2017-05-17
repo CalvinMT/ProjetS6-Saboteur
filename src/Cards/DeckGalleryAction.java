@@ -118,6 +118,8 @@ public class DeckGalleryAction extends Deck {
     	String me = "";
     	for (int i=0; i<this.arrayCard.size(); i++) {
     		me += this.arrayCard.get(i).toString();
+    		if (i < this.arrayCard.size()-1)
+    			me += ";";
     	}
     	return me;
     }

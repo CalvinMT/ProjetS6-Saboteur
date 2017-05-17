@@ -38,6 +38,12 @@ public class IA extends Player{
     public void changeDiffulty(Difficulty d){
         this.difficulty = d;
     }
+    
+    @Override
+    public void setGoldPoints(int gp){
+    	if (gp >= 0)
+    		this.goldPoints += gp;
+    }
 
     @Override
     public String toString(){

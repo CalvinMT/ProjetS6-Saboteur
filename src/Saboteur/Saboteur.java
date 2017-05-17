@@ -4,18 +4,19 @@ package Saboteur;
 import Board.Couple;
 import Cards.ActionCard;
 import Cards.RepareSabotageCard;
+import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 
 import java.util.ArrayList;
-
-public class Saboteur {
+import Cards.*;
+;public class Saboteur {
 
     static Moteur m;
 
     static public void main(String [] args){
 
         int nbPlayer = 4;
-
+         
         try {
         	// construct moteur
         	m = new Moteur(nbPlayer);
@@ -43,7 +44,18 @@ public class Saboteur {
         m.promptPlayers();
         
         m.save("testfile");
+              
         
+        
+        /* 
+        String s = "";
+        System.out.println(s.length());
+        if (s.matches("(([A-Z]+)|([a-z]+)|([0-9]+)|[,:;\\{\\}])+[gp\\}]"))
+        	System.out.println("yes");
+        else
+        	System.out.println("no");
+        System.out.println("here");
+        */
 
     }
 
