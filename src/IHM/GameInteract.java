@@ -6,6 +6,7 @@ import Cards.GalleryCard;
 import Cards.Hand;
 import Cards.RepareSabotageCard;
 import Saboteur.Moteur;
+import Saboteur.Saboteur;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,14 +28,16 @@ public class GameInteract {
 	
 	@FXML
 	public void initialize () {
-		moteur = Saboteur.Saboteur.getMoteur();
-		System.out.println(moteur);
+		moteur = Saboteur.getMoteur();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
 		numberOfCardsInHand = hand.nbCard();
+		System.out.println("nb: "+numberOfCardsInHand);
+		cardsInHand = new ImageView [numberOfCardsInHand];
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand[i] = new ImageView(getImageCard(card));
 		}
+		System.out.println(hboxGameCardsInHand.getPrefWidth());
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
@@ -229,7 +232,7 @@ public class GameInteract {
                         }
                     }
                 }
-            break;
+                break;
             default:
                 image = null;
         }

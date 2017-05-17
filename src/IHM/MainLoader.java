@@ -153,7 +153,7 @@ public class MainLoader extends Application {
         anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
         
         // Automatic Resizing
-        //autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT);
+        autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT);
         
         
 		primaryStage.show();

@@ -55,6 +55,8 @@ public class Moteur {
         
         
         System.out.println("Partie configurée!\n"+this);
+        
+        
     }
 
     public void setAllPlayerBoard(){
