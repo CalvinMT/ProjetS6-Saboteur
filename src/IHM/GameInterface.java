@@ -8,11 +8,9 @@ package IHM;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.net.URL ;
 import javafx.scene.Parent;
 
 
@@ -45,15 +43,16 @@ public class GameInterface extends Application {
         
         
       AnchorPane anchorPaneMainBottom = (AnchorPane) parentMainGame.lookup("#anchorPaneBottom");
-      AnchorPane anchorPane2Bottom = FXMLLoader.load(getClass().getResource("Bottom.fxml"));
+      AnchorPane anchorPane2Bottom = FXMLLoader.load(getClass().getResource("EndShaft.fxml"));
       anchorPaneMainBottom.getChildren().setAll(anchorPane2Bottom);
+      /*
       AnchorPane anchorPaneMainTop = (AnchorPane) parentMainGame.lookup("#anchorPaneTop");
       AnchorPane anchorPane2Top = FXMLLoader.load(getClass().getResource("Top.fxml"));
       anchorPaneMainTop.getChildren().setAll(anchorPane2Top);
       AnchorPane anchorPaneMainRight = (AnchorPane) parentMainGame.lookup("#anchorPaneRight");
       AnchorPane anchorPane2Right = FXMLLoader.load(getClass().getResource("Right.fxml"));
       anchorPaneMainRight.getChildren().setAll(anchorPane2Right);
-      
+      */
       
   }
     
