@@ -8,7 +8,7 @@
    <children>
       <BorderPane>
          <bottom>
-            <HBox fx:id="hboxGameCardsInHand" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+            <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>

@@ -64,20 +64,20 @@ public class GameBoard {
 		for (int i=0; i < gridWidth; i++) {
 			for (int j=0; j < gridHeight; j++) {
 				if (i == 5  &&  j == 3) {
-					ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+					ImageView viewCard = new ImageView("ressources/NSEO_C.png");
 					gridPaneBoard.add(viewCard, i, j);
 				}
 				else if (i == 13) {
 					if (j == 1) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
 					else if (j == 3) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
 					else if (j == 5) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
 				}

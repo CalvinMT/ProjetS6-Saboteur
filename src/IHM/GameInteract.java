@@ -7,9 +7,12 @@ import Cards.Hand;
 import Cards.RepareSabotageCard;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 public class GameInteract {
@@ -27,23 +30,82 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	
 	@FXML
+	private void handleHBoxMouseEntered () {
+			hboxGameCardsInHand.getScene().setCursor(Cursor.HAND);
+	}
+	
+	@FXML
+	private void handleHBoxMouseExited () {
+		if (hboxGameCardsInHand.getScene().getCursor().equals(Cursor.HAND)) {
+			hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
+		}
+	}
+	
+	@FXML
 	public void initialize () {
 		moteur = Saboteur.getMoteur();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
-
-//        moteur.promptPlayers();
-
-
-//		System.out.println("nb: "+numberOfCardsInHand);
 		cardsInHand = new ImageView [numberOfCardsInHand];
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand[i] = new ImageView(getImageCard(card));
+			cardsInHandEvents(cardsInHand[i]);
 		}
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
+	}
+	
+	
+	
+	// -------------------- ---------- --------------------
+	
+	
+	
+	private double mouseX;
+	private double mouseY;
+	private double viewCardX;
+	private double viewCardY;
+	
+	private void cardsInHandEvents (ImageView viewCard) {
+		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				viewCard.setTranslateY(viewCard.getTranslateY()-25);
+			}
+		});
+		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+			}
+		});
+		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
+				mouseX = event.getSceneX();
+				mouseY = event.getSceneY();
+				viewCardX = ((ImageView)(event.getSource())).getTranslateX();
+				viewCardY = ((ImageView)(event.getSource())).getTranslateY();
+			}
+		});
+		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				double mouseOffSetX = event.getSceneX() - mouseX;
+				double mouseOffSetY = event.getSceneY() - mouseY;
+				viewCard.setTranslateX(viewCardX + mouseOffSetX);
+				viewCard.setTranslateY(viewCardY + mouseOffSetY);
+			}
+		});
+		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
+			}
+		});
 	}
 	
 	
