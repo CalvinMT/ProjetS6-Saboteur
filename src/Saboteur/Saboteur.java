@@ -32,7 +32,7 @@ public class Saboteur {
         try {
             System.out.println(m);
             while(!m.allRoleAreSet()){
-                m.chooseRole(0);
+                m.chooseRole();
             }
 
         } catch(Exception e){
