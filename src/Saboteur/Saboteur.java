@@ -55,6 +55,10 @@ public class Saboteur {
 
     }
 
+    static public Moteur getMoteur(){
+        return m;
+    }
+
 
     // init du moteur a partir d'un tableau de joueur
     static public void initMoteur(ArrayList<Player> arrayPlayer){
