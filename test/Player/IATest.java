@@ -1,5 +1,6 @@
 package Player;
 
+import Board.Board;
 import Board.Couple;
 import Cards.ActionCard;
 import Cards.GalleryCard;
@@ -70,20 +71,13 @@ public class IATest {
         System.out.println("TODO : IATest.java changeDiffulty()");
     }
 
-
-    @Test
-    public void randomPlay() throws Exception {
-        System.out.println("TODO : IATest.java randomPlay()");
-        IA ia = new IA("Test", Easy);
+    // Test randomPlay 
+    public void randomPlayTest(IA ia) throws Exception {
         ArrayList<Couple> p;
         Hand hand;
 
-        ia.drawCard(new ActionCard("Map"));
-        ia.drawCard(new ActionCard("Map"));
-        ia.drawCard(new GalleryCard(true, true, true, true, true));
-        ia.drawCard(new RoleCard("Mineur"));
         hand = ia.getPlayableCards();
-        ia.iaPlayCard();
+        ia.randomPlay();
         Assert.assertTrue(hand.getArrayCard().contains(ia.getCardToPlay()));
         if (ia.getCardToPlay().getType() == gallery) {
             p = ia.board.getPossiblePositions((GalleryCard) ia.getCardToPlay());
@@ -91,6 +85,39 @@ public class IATest {
             Assert.assertTrue(p.contains(ia.getPosToPlay()));
         } else {
             Assert.assertTrue(ia.getPosToPlay() == null);
+        }
+
+        for (int i = 0; i < ia.nbCardHand(); i++) {
+            ia.discard(i);
+        }
+    }
+
+    public void randomPlayTests() throws Exception {
+        IA ia = new IA("Test", Easy);
+        ia.setBoard(new Board());
+
+        ia.drawCard(new ActionCard("Map"));
+        ia.drawCard(new ActionCard("Map"));
+        ia.drawCard(new GalleryCard(true, true, true, true, true));
+        ia.drawCard(new RoleCard("Mineur"));
+        randomPlayTest(ia);
+
+        ia.drawCard(new GalleryCard(true, false, true, true, true));
+        ia.drawCard(new GalleryCard(true, true, false, true, true));
+        ia.drawCard(new GalleryCard(true, true, true, false, true));
+        ia.drawCard(new GalleryCard(true, true, true, true, false));
+        randomPlayTest(ia);
+
+        ia.drawCard(new GalleryCard(true, true, true, true, false));
+        randomPlayTest(ia);
+    }
+
+    @Test
+    public void randomPlay() throws Exception {
+        System.out.println("randomPlay()");
+        for (int i = 1; i < 101; i++) {
+            System.out.format("\r\tTest n°%3d/100\n", i);
+            randomPlayTests();
         }
     }
 

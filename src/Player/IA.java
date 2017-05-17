@@ -65,11 +65,18 @@ public class IA extends Player{
     public void randomPlay() {
         ArrayList<Couple> p;
         Random r = new Random();
-        
-        this.cardToPlay = lookAtCard(r.nextInt(nbCardHand()));
+        int range = r.nextInt(nbCardHand() - 1);
+        if (range < 1) {
+            range = 1;
+        }
+        this.cardToPlay = lookAtCard(r.nextInt(range));
         if (cardToPlay.getType() == gallery) {
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
-            this.posToPlay = p.get(r.nextInt(p.size()));
+            range = r.nextInt(p.size() - 1);
+            if (range < 1) {
+                range = 1;
+            }
+            this.posToPlay = p.get(r.nextInt(range));
         }
     }
 
