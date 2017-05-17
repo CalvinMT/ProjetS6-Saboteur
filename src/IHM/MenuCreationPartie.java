@@ -126,7 +126,8 @@ public class MenuCreationPartie {
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
-            Saboteur.start_game();
+            Saboteur.test_moteur();
+            System.out.println("Lancement de la partie");
         }
     }
 

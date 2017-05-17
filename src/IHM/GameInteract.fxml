@@ -4,12 +4,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="IHM.GameInteract">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameInteract">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane>
          <bottom>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <HBox fx:id="hboxGameCardsInHand" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>
