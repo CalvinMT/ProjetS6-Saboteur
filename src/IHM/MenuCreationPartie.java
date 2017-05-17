@@ -117,17 +117,21 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonPlay(ActionEvent event) throws IOException {
-    	Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-		BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-		BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        // lancement de la manche
+        if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
+            Saboteur s = new Saboteur();
+            s.initMoteur(this.lobby.getArrayPlayer());
+            System.out.println(s.getMoteur());
+        }
+
+        Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
 
 
-        // lancement de la manche
-        if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
-            Saboteur.initMoteur(this.lobby.getArrayPlayer());
-            Saboteur.start_game();
-        }
+
+
     }
 
     @FXML
