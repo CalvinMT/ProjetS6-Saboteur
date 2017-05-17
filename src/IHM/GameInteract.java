@@ -37,7 +37,6 @@ public class GameInteract {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand[i] = new ImageView(getImageCard(card));
 		}
-		System.out.println(hboxGameCardsInHand.getPrefWidth());
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		hboxGameCardsInHand.getChildren().addAll(cardsInHand);

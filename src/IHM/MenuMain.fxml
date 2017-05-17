@@ -6,13 +6,14 @@
 
 <AnchorPane fx:id="anchorPaneMenuMain" styleClass="anchorMenuMain" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
    <children>
-      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleLocalGame" text="Partie Locale" />
-            <Button disable="true" mnemonicParsing="false" text="Partie En Ligne" />
-            <Button disable="true" mnemonicParsing="false" text="Didactitiel" />
-            <Button mnemonicParsing="false" onAction="#handleOptions" text="Options" />
-            <Button mnemonicParsing="false" onAction="#handleQuitProgram" text="Quitter" />
+            <Button fx:id="buttonLocal" mnemonicParsing="true" onAction="#handleLocalGame" text="Partie Locale" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonOnline" disable="true" mnemonicParsing="false" text="Partie En Ligne" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonTutorial" disable="true" mnemonicParsing="false" text="Didactitiel" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonOptions" mnemonicParsing="false" onAction="#handleOptions" text="Options" VBox.vgrow="ALWAYS" />
+            <Button disable="true" mnemonicParsing="false" text="NOT_TO_USE" visible="false" />
+            <Button fx:id="buttonQuit" mnemonicParsing="false" onAction="#handleQuitProgram" text="Quitter" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>
