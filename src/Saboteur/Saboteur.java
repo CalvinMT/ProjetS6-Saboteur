@@ -11,20 +11,13 @@ import java.util.ArrayList;
 
 public class Saboteur {
 
-    static Moteur m;
+    Moteur m;
 
-    static public void main(String [] args){
-        m = new Moteur(3);
-//        start_game();
-        test_moteur();
+    public Saboteur(){
+
     }
-
-    static public void test_moteur(){
-        System.out.println(m);
-        System.out.println(m.getDeck());
-    }
-
-    static public void start_game(){
+    
+    public void start_game(){
 
 
         System.out.println(m);
@@ -39,7 +32,6 @@ public class Saboteur {
             System.err.println("Erreur choix du role");
         }
 
-        m.initHand();
         m.promptPlayers();
 
         System.out.println("Maj");
@@ -55,13 +47,13 @@ public class Saboteur {
 
     }
 
-    static public Moteur getMoteur(){
+    public Moteur getMoteur(){
         return m;
     }
 
 
     // init du moteur a partir d'un tableau de joueur
-    static public void initMoteur(ArrayList<Player> arrayPlayer){
+    public void initMoteur(ArrayList<Player> arrayPlayer){
         m = new Moteur(arrayPlayer);
     }
 
