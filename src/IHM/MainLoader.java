@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
+import Saboteur.Moteur.State;
+import Saboteur.Moteur;
+import Saboteur.Saboteur;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -137,6 +142,48 @@ public class MainLoader extends Application {
 		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
         anchorPaneMainLoader.getChildren().setAll(anchorPane);
+
+
+        //TODO integrer a l'interface graphique
+		/*AnimationTimer game = new AnimationTimer() {
+			Moteur engine = Saboteur.getMoteur();
+			@Override
+			public void handle(long temps) {
+
+				switch(engine.getState()){
+					// choix des roles
+					case ChooseRole:
+						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							engine.chooseRole(engine.getRoleCards());
+							if(engine.allRoleAreSet()){
+								engine.setState(State.Game);
+							}
+						}
+
+						break;
+
+					// déroulement d'une manche
+					case Game:
+						if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							engine.nextPlayer();
+							//TODO ajouter maj graphique
+						}
+
+						break;
+
+					// choix de l'or
+					case ChooseGold:
+						//TODO chooseCard
+						// not implemented yet
+						break;
+				}
+
+
+
+				//TODO boucle de jeu
+			}
+		};
+		game.start();*/
 	}
 
     public static void main (String[] args) {

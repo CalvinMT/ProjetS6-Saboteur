@@ -6,6 +6,9 @@
 package Player;
 import Cards.*;
 import Board.Board;
+
+import java.util.Random;
+
 /**
  *
  * @author uwalakae
@@ -50,6 +53,26 @@ public class PlayerHuman extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.board = b;
+    }
+
+    @Override
+    public boolean play(){
+
+        //TODO jeu du joueur
+
+        return false;
+    }
+
+    @Override
+    public boolean chooseRoleCard(HandRole cards){
+
+        Random r = new Random();
+        Card c = cards.chooseOne_with_remove(r.nextInt(cards.nbCard()));
+        this.assignRole(c);
+
+        return true;
+
+        //TODO choix par l'interface (a changer)
     }
 
 

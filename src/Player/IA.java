@@ -1,7 +1,8 @@
 package Player;
 
-import Cards.HandPlayer;
-import Cards.PlayerAttribute;
+import Cards.*;
+
+import java.util.Random;
 
 /**
  * Created by thespygeek on 11/05/17.
@@ -41,6 +42,28 @@ public class IA extends Player{
         this.avatar = "robot_miner";
     }
 
+    // en milliseconde
+    @Override
+    public int waitingTime() {
+        return 1000;
+    }
+
+    @Override
+    public boolean pastTime() {
+
+        //TODO faire jouer l'IA ici
+
+        return true;
+    }
+
+    // choisi une carte random
+    @Override
+    public boolean chooseRoleCard(HandRole cards){
+        Random r = new Random();
+        Card c = cards.chooseOne_with_remove(r.nextInt(cards.nbCard()));
+        this.assignRole(c);
+        return true;
+    }
 
 
     @Override

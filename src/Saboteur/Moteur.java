@@ -21,9 +21,19 @@ public class Moteur {
     private Deck pile;
     private int currentPlayer;
     private HandRole roleCards;
+    private Board board;
 
-    //ajout du board
-    Board board;
+    private long echeance;
+
+    private State state;
+    public enum State {
+        ChooseRole,
+        Game,
+        ChooseGold;
+
+    }
+
+
 
 
 
@@ -38,6 +48,9 @@ public class Moteur {
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
         this.board = new Board();
+        state = State.ChooseRole;
+        setAllPlayerBoard();
+        this.echeance = System.nanoTime();
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
@@ -48,6 +61,10 @@ public class Moteur {
         this.board = new Board();
 
         setAllPlayerBoard();
+        state = State.ChooseRole;
+
+        setAllPlayerBoard();
+        this.echeance = System.nanoTime();
 
         System.out.println("Partie configurée!");
     }
@@ -120,11 +137,10 @@ public class Moteur {
     }
 
     // choix des roles en début de manche
-    public void chooseRole() throws Exception{
-
-
-
-
+    public void chooseRole(HandRole hand){
+        if(getCurrentPlayer().chooseRoleCard(hand)){
+            nextPlayer();
+        }
     }
 
     // si tous les roles sont attribués
@@ -148,6 +164,7 @@ public class Moteur {
     // passe au joueur suivant
     public void nextPlayer(){
         currentPlayer = (currentPlayer+1)%nbPlayer();
+        echeance = getCurrentPlayer().waitingTime()*1000000 + System.nanoTime();
     }
 
     // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
@@ -234,7 +251,30 @@ public class Moteur {
         }
     }
 
+    public void setState(State s){
+        this.state = s;
+    }
 
+    public State getState(){
+        return this.state;
+    }
+
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    public long getEcheance(){
+        return this.echeance;
+    }
+
+    public void setEcheance(long l){
+        this.echeance = l;
+    }
+
+    // si la manche est terminée
+    public boolean endGame(){
+        return this.board.goalReached();
+    }
 
     // renvoie le numero du joueur courant
     public int currentNumPlayer(){
