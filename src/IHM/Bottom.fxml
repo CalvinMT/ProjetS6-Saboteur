@@ -111,7 +111,7 @@
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                 </ImageView>
-                <ImageView id="ImageDefausse" fx:id="ImageViewDefausse" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                <ImageView id="ImageDefausse" fx:id="imageViewDefausse" fitHeight="205.0" fitWidth="120.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
                     <image>
                         <Image url="@ressources/defausse.jpg" />
                     </image>
