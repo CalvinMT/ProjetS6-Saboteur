@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPaneMainLoader" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainLoader">
+<BorderPane fx:id="borderPaneMainLoader" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainLoader">
    <top>
-      <ImageView fitHeight="154.0" fitWidth="592.0" BorderPane.alignment="CENTER">
+      <ImageView fx:id="imageViewTitle" fitHeight="154.0" fitWidth="592.0" BorderPane.alignment="CENTER">
          <image>
             <Image url="@../ressources/titre.png" />
          </image>
@@ -18,7 +18,7 @@
       </ImageView>
    </top>
    <left>
-      <AnchorPane fx:id="anchorPaneMainLoader" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@background.css" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
    </left>
    <right>
       <ImageView fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">

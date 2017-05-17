@@ -22,7 +22,7 @@ public class MenuOptions {
 	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1366*768","1600*900","1920*1080");
 	
 	@FXML
-	private AnchorPane anchorPaneOptions;
+	public AnchorPane anchorPaneOptions;
 	
 	@FXML
 	private Slider sliderMusic;

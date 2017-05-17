@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 
 public class GameBoard {
 	
-	private int cardsWidth = 10;
-	private int cardsHeight = 10;
+	private int cardsWidth = 118;
+	private int cardsHeight = 181;
 	
 	private int gridWidth = 90;
 	private int gridHeight = 89;
@@ -31,7 +31,7 @@ public class GameBoard {
 	public void handleClickGrid (MouseEvent event) {
 		int clickX = (int) (event.getX()/cardsWidth);
 		int clickY = (int) (event.getY()/cardsHeight);
-		gridPaneBoard.add(new ImageView(new Image("ressources/carte_test_10_10.png")), clickX, clickY);
+		gridPaneBoard.add(new ImageView(new Image("ressources/carte_test_118_181.png")), clickX, clickY);
 	}
 	
 	@FXML
@@ -45,7 +45,8 @@ public class GameBoard {
 	@FXML
 	public void handleDragGrid (MouseEvent event) {
 		//FIXME
-		/*gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));*/
+		/*gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));
+	*/
 	}
 	
 	@FXML
@@ -62,32 +63,56 @@ public class GameBoard {
         }
 		for (int i=0; i < gridWidth; i++) {
 			for (int j=0; j < gridHeight; j++) {
-				if (i == gridWidth/2  &&  j == gridHeight/2) {
-					ImageView viewCard = new ImageView("ressources/carte_test_10_10.png");
+				if (i == 5  &&  j == 3) {
+					ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+					gridPaneBoard.add(viewCard, i, j);
+				}
+				else if (i == 13) {
+					if (j == 1) {
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						gridPaneBoard.add(viewCard, i, j);
+					}
+					else if (j == 3) {
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						gridPaneBoard.add(viewCard, i, j);
+					}
+					else if (j == 5) {
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
+						gridPaneBoard.add(viewCard, i, j);
+					}
+				}
+				
+				// TODO - Original - places the cards in center of grid
+				/*if (i == gridWidth/2  &&  j == gridHeight/2) {
+					ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
 					gridPaneBoard.add(viewCard, i, j);
 				}
 				else if (i == ((gridWidth/2)+8)) {
 					if (j == ((gridHeight/2)-2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_10_10.png");
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
 					else if (j == (gridHeight/2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_10_10.png");
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
 					else if (j == ((gridHeight/2)+2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_10_10.png");
+						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
 						gridPaneBoard.add(viewCard, i, j);
 					}
-				}
+				}*/
 			}
 		}
 		
 		// Recentre le plateau de jeu
-		gridPaneBoard.setPadding(new Insets(-15, -15, -15, -15));
 		
-		gridPaneBoard.setScaleX(6);
-		gridPaneBoard.setScaleY(6);
+		gridPaneBoard.setScaleX(0.7);
+		gridPaneBoard.setScaleY(0.7);
+		
+		//gridPaneBoard.setTranslateX(gridWidth);
+		//gridPaneBoard.setTranslateY(gridHeight);
+		
+		//gridPaneBoard.setPadding(new Insets(-10000, -10000, -10000, -10000));
 	}
 
 }
