@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class GameLoader {
 	
@@ -50,6 +52,25 @@ public class GameLoader {
 		
 		
 		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameTop);
+		//exitToMenuMain();
+	}
+
+	public void exitToMenuMain() throws IOException {
+		if (borderPaneGameLoader != null)
+			borderPaneGameLoader.getChildren().clear();
+		if (anchorPaneGameLoaderBoard != null)
+			anchorPaneGameLoaderBoard.getChildren().clear();
+		if (anchorPaneGameLoaderBottom != null)
+			anchorPaneGameLoaderBottom.getChildren().clear();
+		if (anchorPaneGameLoaderTop != null)
+			anchorPaneGameLoaderTop.getChildren().clear();
+		if (anchorPaneGameLoaderRight != null)
+			anchorPaneGameLoaderRight.getChildren().clear();
+		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		MainLoader.anchorPaneMainLoader.getChildren().setAll(anchorPane);
+		Stage stage = (Stage) MainLoader.anchorPaneMainLoader.getScene().getWindow();
+		stage.setScene(new Scene(anchorPane));
+		stage.show();
 	}
 	
 }
