@@ -17,7 +17,9 @@ import static java.lang.Math.abs;
 public class IA extends Player{
 
     Difficulty difficulty;
+
     private ArrayList<Couple> goalsToTest;
+
     private Card cardToPlay;
     private Couple posToPlay;
 
@@ -59,13 +61,13 @@ public class IA extends Player{
     // Calcul de l'heuristique
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
-    // avec distance(p, but) = |(but.x - p.x)| / |(but.y - p.y)|
+    // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
     public float getHeuristic(Couple goal, Couple cpl) {
         return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
     }
 
     // TODO : Tests
-    // TODO : renommer la fonction
+    // TODO : Choisir les cartes
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void choosePosition() {
         float h, hMax = 0;
@@ -83,6 +85,7 @@ public class IA extends Player{
                     for (Couple goal : goalsToTest) { // Et pour chaque but
                         h = getHeuristic(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
+                        // TODO : Verifier si on peut finir le chemin
                         if (h > hMax) { // Si l'heuristique est maximale
                             hMax = h; // On met à jour l'heuristique max
                             bestCpl = currCpl; // On garde la position
