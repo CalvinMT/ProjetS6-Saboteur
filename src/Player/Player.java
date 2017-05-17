@@ -2,11 +2,7 @@ package Player;
 
 
 import Cards.*;
-import com.sun.org.apache.regexp.internal.RE;
 import Board.Board;
-import Board.Couple;
-
-import javax.tools.Tool;
 
 public abstract class Player {
 
