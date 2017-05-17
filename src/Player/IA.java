@@ -142,6 +142,14 @@ public class IA extends Player{
         return goalsToTest;
     }
 
+    public Card getCardToPlay() {
+        return cardToPlay;
+    }
+
+    public Couple getPosToPlay() {
+        return posToPlay;
+    }
+
     @Override
     public void changeDiffulty(Difficulty d){
         this.difficulty = d;
