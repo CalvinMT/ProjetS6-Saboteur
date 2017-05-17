@@ -62,7 +62,7 @@ public class IA extends Player{
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
-    public float getHeuristic(Couple goal, Couple cpl) {
+    public float getDistanceToGoal(Couple goal, Couple cpl) {
         return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
     }
 
@@ -83,7 +83,7 @@ public class IA extends Player{
                 bestCpl = p.get(0);
                 for (Couple currCpl : p) { // Pour chaque position possible
                     for (Couple goal : goalsToTest) { // Et pour chaque but
-                        h = getHeuristic(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+                        h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
                         // TODO : Verifier si on peut finir le chemin
                         if (h > hMax) { // Si l'heuristique est maximale
@@ -101,6 +101,7 @@ public class IA extends Player{
 
     // Supprime un but des buts à tester
     // cpl : couple de coordonnée du but
+    // /!\ Si cpl n'existe pas  dans goalsToTest ne fait rien
     public void ignoreGoal(Couple cpl) {
         if (goalsToTest.contains(cpl)) this.goalsToTest.remove(cpl);
     }

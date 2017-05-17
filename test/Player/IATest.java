@@ -13,16 +13,16 @@ public class IATest {
 
     @Test
     public void getHeuristic() throws Exception {
-        assertTrue(ia.getHeuristic(new Couple(0, 8), new Couple(0, 7)) == 1.0);
-        assertTrue(ia.getHeuristic(new Couple(-2, 8), new Couple(1, 3)) == 8.0);
-        assertTrue(ia.getHeuristic(new Couple(2, 8), new Couple(1, 12)) == 5.0);
+        assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(0, 7)) == 1.0);
+        assertTrue(ia.getDistanceToGoal(new Couple(-2, 8), new Couple(1, 3)) == 8.0);
+        assertTrue(ia.getDistanceToGoal(new Couple(2, 8), new Couple(1, 12)) == 5.0);
 
     }
 
     // TODO
     @Test
     public void choosePosition() throws Exception {
-        System.out.println("TODO : test choosePosition()");
+        System.out.println("TODO : IATest.java choosePosition()");
     }
 
     @Test
@@ -61,6 +61,6 @@ public class IATest {
 
     @Test
     public void changeDiffulty() throws Exception {
-        System.out.println("TODO : test changeDiffulty()");
+        System.out.println("TODO : IATest.java changeDiffulty()");
     }
 }
