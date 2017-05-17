@@ -1,5 +1,6 @@
 package IHM;
 
+import Cards.ActionCard;
 import Player.Player.Difficulty;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +17,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 public class MenuCreationPartie {
@@ -28,7 +34,7 @@ public class MenuCreationPartie {
     private Lobby lobby = new Lobby();
 
     @FXML
-    private AnchorPane anchorPaneMenuCreationPartie;
+    public AnchorPane anchorPaneMenuCreationPartie;
 
     @FXML
     private ComboBox<String> comboBoxAvatar;
@@ -42,6 +48,8 @@ public class MenuCreationPartie {
     private Button buttonAjouterIA;
     @FXML
     private Button buttonPlay;
+    @FXML
+    private Button buttonRetourMenu;
 
     @FXML
     private TableView<BandeauPlayer> tableViewListeJoueur;
@@ -85,8 +93,6 @@ public class MenuCreationPartie {
     }
 
     @FXML
-
-
     void handleButtonAjouterPlayer(ActionEvent event) {
 		String pseudo = textFieldPseudo.getText();
 		String type = "Joueur";
@@ -128,8 +134,22 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);
+        /*AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);*/
+        Stage stage = new Stage();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("ExitComfirmation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Popup");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(buttonRetourMenu.getScene().getWindow());
+            stage.showAndWait();
+        }catch(Exception e){
+            System.out.println("Erreur" + e);
+        }
+
     }
 
     @FXML
