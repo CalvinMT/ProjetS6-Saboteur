@@ -13,9 +13,19 @@ public class Saboteur {
 
     static Moteur m;
 
+    static public void main(String [] args){
+        m = new Moteur(3);
+//        start_game();
+        test_moteur();
+    }
+
+    static public void test_moteur(){
+        System.out.println(m);
+        System.out.println(m.getDeck());
+    }
+
     static public void start_game(){
 
-        int nbPlayer = 4;
 
         System.out.println(m);
 

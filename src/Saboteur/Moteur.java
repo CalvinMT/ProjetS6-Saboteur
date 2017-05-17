@@ -243,6 +243,10 @@ public class Moteur {
         return this.arrayPlayer;
     }
 
+    public Deck getDeck(){
+        return this.pile;
+    }
+
     public String toString(){
         String renvoi = "Moteur: \n";
 

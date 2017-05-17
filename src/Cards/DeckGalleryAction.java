@@ -36,14 +36,25 @@ public class DeckGalleryAction extends Deck {
         Random rand = new Random();
 
         this.arrayCard = new ArrayList<>();
-
-        for(int i=0; i<nbCardGallery_centered; i++){
-
-            this.arrayCard.add(new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean()));
+        int nb = 0;
+        GalleryCard c;
+        while(nb<nbCardGallery_centered){
+//        for(int i=0; i<nbCardGallery_centered; i++){
+            c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
         }
 
-        for(int i=0; i<nbCardGallery_no_centered; i++){
-            this.arrayCard.add(new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean()));
+        nb = 0;
+        while(nb<nbCardGallery_no_centered){
+//        for(int i=0; i<nbCardGallery_no_centered; i++){
+            c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
         }
 
         // Ajout des cartes actions
