@@ -47,7 +47,7 @@ public class Moteur {
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
         this.board = new Board();
-        initHand();
+
 
         setAllPlayerBoard();
         initHand();

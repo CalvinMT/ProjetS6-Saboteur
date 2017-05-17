@@ -30,8 +30,12 @@ public class GameInteract {
 	public void initialize () {
 		moteur = Saboteur.getMoteur();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
-		numberOfCardsInHand = hand.nbCard();
-		System.out.println("nb: "+numberOfCardsInHand);
+        numberOfCardsInHand = hand.nbCard();
+
+//        moteur.promptPlayers();
+
+
+//		System.out.println("nb: "+numberOfCardsInHand);
 		cardsInHand = new ImageView [numberOfCardsInHand];
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
