@@ -15,6 +15,9 @@ public class GameLoader {
 	@FXML
 	private AnchorPane anchorPaneGameLoaderBoard;
 	@FXML
+	private AnchorPane anchorPaneGameLoaderInteract;
+	
+	@FXML
 	private AnchorPane anchorPaneGameLoaderTop;
 	@FXML
 	private AnchorPane anchorPaneGameLoaderBottom;
@@ -27,8 +30,9 @@ public class GameLoader {
 		anchorPaneGameLoaderBoard = (AnchorPane) anchorPaneGameLoaderBoard.lookup("#anchorPaneGameLoaderBoard");
 		AnchorPane anchorPaneGameBoard = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
 		
-		// Game Cards
-		// TODO
+		// Game Interact
+		anchorPaneGameLoaderInteract = (AnchorPane) anchorPaneGameLoaderInteract.lookup("#anchorPaneGameLoaderInteract");
+		AnchorPane anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
 		
 		// Game Infos
 		/*anchorPaneGameLoaderInfos = (AnchorPane) anchorPaneGameLoaderInfos.lookup("#anchorPaneGameLoaderInfos");
@@ -52,7 +56,7 @@ public class GameLoader {
 		
 		
 		
-		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard);
+		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract);
 	}
 	
 }

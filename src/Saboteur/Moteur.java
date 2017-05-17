@@ -50,8 +50,11 @@ public class Moteur {
         initHand();
 
         setAllPlayerBoard();
-
-        System.out.println("Partie configurée!");
+        initHand();
+        
+        
+        
+        System.out.println("Partie configurée!\n"+this);
     }
 
     public void setAllPlayerBoard(){
