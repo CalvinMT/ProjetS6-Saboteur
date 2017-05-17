@@ -14,14 +14,25 @@ public class Saboteur {
     static Moteur m;
 
     static public void main(String [] args){
+        m = new Moteur(3);
+//        start_game();
+        test_moteur();
+    }
 
-        int nbPlayer = 4;
+    static public void test_moteur(){
+        System.out.println(m);
+        System.out.println(m.getDeck());
+    }
 
+    static public void start_game(){
+
+
+        System.out.println(m);
 
         try {
             System.out.println(m);
             while(!m.allRoleAreSet()){
-                m.chooseRole(0);
+                m.chooseRole();
             }
 
         } catch(Exception e){
@@ -42,6 +53,10 @@ public class Saboteur {
 
         m.promptPlayers();
 
+    }
+
+    static public Moteur getMoteur(){
+        return m;
     }
 
 

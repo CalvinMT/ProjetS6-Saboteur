@@ -187,6 +187,30 @@ public class GalleryCard extends Card {
         return result;
     }
 
+    // renvoi faux si une carte n'est pas possible
+    public boolean possible(){
+        int nb = 0;
+        if(this.canHasNorth()){
+            nb++;
+        }
+        if(this.canHasSouth()){
+            nb++;
+        }
+        if(this.canHasEast()){
+            nb++;
+        }
+        if(this.canHasWest()){
+            nb++;
+        }
+        if(nb == 0){
+            return false;
+        } else if(nb == 1 && this.canHasCenter()) {
+            return true;
+        } else {
+            return nb > 1;
+        }
+    }
+
     @Override
     public String toString() {
         if (type_g == start) return "Start";
@@ -200,6 +224,28 @@ public class GalleryCard extends Card {
                 ", east=" + east +
                 ", west=" + west +
                 '}';
+    }
+
+    public String debugString() {
+        String renvoi = "GalleryCard: {";
+        if(this.canHasNorth()){
+            renvoi += "N";
+        }
+        if(this.canHasSouth()){
+            renvoi += "S";
+        }
+        if(this.canHasEast()){
+            renvoi += "E";
+        }
+        if(this.canHasWest()){
+            renvoi += "W";
+        }
+        renvoi += "} ";
+        if(this.canHasCenter()){
+            renvoi += "bloqued";
+        }
+
+        return renvoi;
     }
     
     @Override

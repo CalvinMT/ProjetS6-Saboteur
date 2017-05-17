@@ -90,6 +90,9 @@ public abstract class Player {
         }
     }
 
+    // choix des cartes roles
+//    public abstract void chooseRoleCard(HandRole cards);
+
     // assigne un avatar
     public void setAvatar(String jpg){
         this.avatar = jpg;
@@ -168,6 +171,7 @@ public abstract class Player {
     }
 
     public Difficulty getDifficulty(){
+        System.out.println(this);
         return this.difficulty;
     }
 
