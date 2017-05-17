@@ -131,4 +131,8 @@ public abstract class Player {
     public abstract String toString();
     public abstract void changeDiffulty(Difficulty d);
 
+    public boolean iaPlayCard() {
+        return false;
+    }
+
 }

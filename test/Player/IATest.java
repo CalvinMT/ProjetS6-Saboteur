@@ -1,18 +1,24 @@
 package Player;
 
 import Board.Couple;
+import Cards.ActionCard;
+import Cards.GalleryCard;
+import Cards.Hand;
+import Cards.RoleCard;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static Cards.Card.Card_t.gallery;
+import static Player.Player.Difficulty.Easy;
 import static org.junit.Assert.assertTrue;
 
 public class IATest {
     IA ia = new IA();
 
     @Test
-    public void getHeuristic() throws Exception {
+    public void getDistanceToGoal() throws Exception {
         assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(0, 7)) == 1.0);
         assertTrue(ia.getDistanceToGoal(new Couple(-2, 8), new Couple(1, 3)) == 8.0);
         assertTrue(ia.getDistanceToGoal(new Couple(2, 8), new Couple(1, 12)) == 5.0);
@@ -62,5 +68,39 @@ public class IATest {
     @Test
     public void changeDiffulty() throws Exception {
         System.out.println("TODO : IATest.java changeDiffulty()");
+    }
+
+
+    @Test
+    public void randomPlay() throws Exception {
+        System.out.println("TODO : IATest.java randomPlay()");
+        IA ia = new IA("Test", Easy);
+        ArrayList<Couple> p;
+        Hand hand;
+
+        ia.drawCard(new ActionCard("Map"));
+        ia.drawCard(new ActionCard("Map"));
+        ia.drawCard(new GalleryCard(true, true, true, true, true));
+        ia.drawCard(new RoleCard("Mineur"));
+        hand = ia.getPlayableCards();
+        ia.iaPlayCard();
+        Assert.assertTrue(hand.getArrayCard().contains(ia.getCardToPlay()));
+        if (ia.getCardToPlay().getType() == gallery) {
+            p = ia.board.getPossiblePositions((GalleryCard) ia.getCardToPlay());
+            Assert.assertTrue(ia.getPosToPlay() != null);
+            Assert.assertTrue(p.contains(ia.getPosToPlay()));
+        } else {
+            Assert.assertTrue(ia.getPosToPlay() == null);
+        }
+    }
+
+    @Test
+    public void getGoalsToTest() throws Exception {
+        System.out.println("TODO : IATest.java getGoalsToTest()");
+    }
+
+    @Test
+    public void iaPlayCard() throws Exception {
+        System.out.println("TODO : IATest.java iaPlay()");
     }
 }

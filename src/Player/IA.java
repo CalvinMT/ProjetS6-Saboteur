@@ -7,6 +7,7 @@ import Cards.HandPlayer;
 import Cards.PlayerAttribute;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
@@ -57,6 +58,22 @@ public class IA extends Player{
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
     }
+
+
+
+    // IA Random
+    public void randomPlay() {
+        ArrayList<Couple> p;
+        Random r = new Random();
+        
+        this.cardToPlay = lookAtCard(r.nextInt(nbCardHand()));
+        if (cardToPlay.getType() == gallery) {
+            p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
+            this.posToPlay = p.get(r.nextInt(p.size()));
+        }
+    }
+
+    // IA Medium + Hard
 
     // Calcul de l'heuristique
     // Soit p une position
@@ -128,6 +145,19 @@ public class IA extends Player{
     @Override
     public void changeDiffulty(Difficulty d){
         this.difficulty = d;
+    }
+
+    @Override
+    public boolean iaPlayCard() {
+        switch (this.difficulty) {
+            case Easy:
+                randomPlay();
+                break;
+            default:
+                System.out.println("TODO : IA " + this.difficulty);
+        }
+
+        return true;
     }
 
     @Override
