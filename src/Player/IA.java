@@ -144,6 +144,8 @@ public class IA extends Player{
         renvoi += "Nombre d'or: "+this.goldPoints + "\n";
         renvoi += this.attributeCards + "\n";
         renvoi += this.playableCards + "\n";
+        if (this.cardToPlay != null) renvoi += this.cardToPlay + "\n";
+        if (this.posToPlay != null) renvoi += this.posToPlay + "\n";
 
         return renvoi;
     }
