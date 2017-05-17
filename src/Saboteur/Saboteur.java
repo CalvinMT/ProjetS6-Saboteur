@@ -13,10 +13,11 @@ public class Saboteur {
 
     static Moteur m;
 
-    static public void main(String [] args){
+    static public void start_game(){
 
         int nbPlayer = 4;
 
+        System.out.println(m);
 
         try {
             System.out.println(m);
