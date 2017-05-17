@@ -2,6 +2,7 @@ package IHM;
 
 import Cards.ActionCard;
 import Cards.Card;
+import Cards.Card.Card_t;
 import Cards.GalleryCard;
 import Cards.Hand;
 import Cards.RepareSabotageCard;
@@ -9,10 +10,12 @@ import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 public class GameInteract {
@@ -26,6 +29,8 @@ public class GameInteract {
 	private int numberOfCardsInHand;
 	private ImageView []cardsInHand;
 	
+	@FXML
+	BorderPane borderPaneInteract;
 	@FXML
 	HBox hboxGameCardsInHand;
 	
@@ -43,6 +48,7 @@ public class GameInteract {
 	
 	@FXML
 	public void initialize () {
+		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
@@ -55,6 +61,9 @@ public class GameInteract {
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
+		
+		// Center playable cards (hand) in bottom-middle of the screen
+		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 	}
 	
 	
@@ -89,6 +98,15 @@ public class GameInteract {
 				mouseY = event.getSceneY();
 				viewCardX = ((ImageView)(event.getSource())).getTranslateX();
 				viewCardY = ((ImageView)(event.getSource())).getTranslateY();
+				
+				// TODO
+				/*if (card.getType().equals(Card_t.gallery)) {
+					turn_on_indications_on_grid
+				}
+				else if (card.getType().equals(Card_t.action)) {
+					turn_on_indications_on_player_list
+				}
+				*/
 			}
 		});
 		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
@@ -98,12 +116,25 @@ public class GameInteract {
 				double mouseOffSetY = event.getSceneY() - mouseY;
 				viewCard.setTranslateX(viewCardX + mouseOffSetX);
 				viewCard.setTranslateY(viewCardY + mouseOffSetY);
+				// TODO
+				/*if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
+					card_sticks_to_grid
+				}*/
 			}
 		});
 		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
+				// TODO
+				/*if (card_can_go_into_grid) {
+					card_goes_into_grid
+				}
+				else {
+					card_returns_to_hand
+				}
+				turn_off_indications
+				*/
 			}
 		});
 	}

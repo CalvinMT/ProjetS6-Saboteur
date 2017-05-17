@@ -22,6 +22,7 @@ import javafx.util.Duration;
 public class MainLoader extends Application {
 	
 	public static Stage primaryStage; // XXX - Not good looking.
+	public static Scene scene; // XXX - Not good looking.
 	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMainLoader; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMenuMain; // XXX - Not good looking.
@@ -144,7 +145,8 @@ public class MainLoader extends Application {
 		}
 		
 		primaryStage.setTitle("Saboteur");
-		primaryStage.setScene(new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT));
+		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
 		// Load MenuMain.fxml

@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 
 public class GameBoard {
 	
-	private int cardsWidth = 118;
-	private int cardsHeight = 181;
+	public static int cardsWidth = 118;
+	public static int cardsHeight = 181;
 	
 	private int gridWidth = 90;
 	private int gridHeight = 89;
@@ -63,11 +63,11 @@ public class GameBoard {
         }
 		for (int i=0; i < gridWidth; i++) {
 			for (int j=0; j < gridHeight; j++) {
-				if (i == 5  &&  j == 3) {
+				if (i == 6  &&  j == 3) {
 					ImageView viewCard = new ImageView("ressources/NSEO_C.png");
 					gridPaneBoard.add(viewCard, i, j);
 				}
-				else if (i == 13) {
+				else if (i == 14) {
 					if (j == 1) {
 						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
 						gridPaneBoard.add(viewCard, i, j);
@@ -105,13 +105,10 @@ public class GameBoard {
 		}
 		
 		// Recentre le plateau de jeu
-		
-		gridPaneBoard.setScaleX(0.7);
-		gridPaneBoard.setScaleY(0.7);
-		
+		gridPaneBoard.setScaleX(0.6);
+		gridPaneBoard.setScaleY(0.6);
 		//gridPaneBoard.setTranslateX(gridWidth);
 		//gridPaneBoard.setTranslateY(gridHeight);
-		
 		//gridPaneBoard.setPadding(new Insets(-10000, -10000, -10000, -10000));
 	}
 

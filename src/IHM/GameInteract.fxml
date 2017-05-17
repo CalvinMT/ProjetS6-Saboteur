@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameInteract">
    <children>
-      <BorderPane>
+      <BorderPane fx:id="borderPaneInteract">
          <bottom>
             <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </bottom>
