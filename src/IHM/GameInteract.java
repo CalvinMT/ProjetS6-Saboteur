@@ -62,7 +62,7 @@ public class GameInteract {
 		moteur = Saboteur.getMoteur();
 		
 		// Hand configuration
-		possiblePositions = moteur.getBoard().getPossiblePositions();
+		possiblePositions = moteur.getBoard().getPossiblePositions(new GalleryCard());
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ImageView [numberOfCardsInHand];

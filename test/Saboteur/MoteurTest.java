@@ -1,7 +1,10 @@
 package Saboteur;
 
+import Player.*;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +18,7 @@ public class MoteurTest {
         Assert.assertTrue(m.currentNumPlayer() == 0);
         Assert.assertTrue(m.getCurrentPlayer().getRole() == null);
         Assert.assertTrue(m.nbPlayer() > 0);
+        Assert.assertTrue(m.currentNumPlayer() == 0);
     }
 
     @Test
@@ -24,6 +28,27 @@ public class MoteurTest {
         Assert.assertTrue(m.currentNumPlayer() == 0);
         Assert.assertTrue(m.getCurrentPlayer().getRole() == null);
         Assert.assertTrue(m.nbPlayer() > 0);
+        Assert.assertTrue(m.currentNumPlayer() == 0);
+    }
+
+    @Test
+    public void testcons3(){
+        ArrayList<Player> array = new ArrayList<Player>();
+        array.add(new PlayerHuman(0));
+        array.add(new PlayerHuman(1));
+        array.add(new PlayerHuman(2));
+        Moteur m = new Moteur(array);
+        Assert.assertTrue(m.nbPlayer() == 3);
+        Assert.assertTrue(m.currentNumPlayer() == 0);
+    }
+
+    @Test
+    public void testcons4(){
+        ArrayList<Player> array = new ArrayList<Player>();
+        array.add(new PlayerHuman(0));
+        array.add(new PlayerHuman(1));
+        Moteur m = new Moteur(array);
+        Assert.assertTrue(m.currentNumPlayer() == -1);
     }
 
     @Test

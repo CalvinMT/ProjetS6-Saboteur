@@ -1,6 +1,7 @@
 package Cards;
 
 import Board.Couple;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static Cards.GalleryCard.Gallery_t.*;
@@ -128,5 +129,53 @@ public class GalleryCardTest {
                 }
             }
         }
+    }
+
+    @Test
+    public void testPossible1(){
+        boolean center = true;
+        boolean north = true;
+        boolean south = false;
+        boolean east = false;
+        boolean west = false;
+
+        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
+        Assert.assertTrue(c.possible());
+    }
+
+    @Test
+    public void testPossible2(){
+        boolean center = false;
+        boolean north = true;
+        boolean south = false;
+        boolean east = false;
+        boolean west = false;
+
+        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
+        Assert.assertFalse(c.possible());
+    }
+
+    @Test
+    public void testPossible3(){
+        boolean center = true;
+        boolean north = false;
+        boolean south = false;
+        boolean east = false;
+        boolean west = false;
+
+        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
+        Assert.assertFalse(c.possible());
+    }
+
+    @Test
+    public void testPossible4(){
+        boolean center = true;
+        boolean north = true;
+        boolean south = true;
+        boolean east = true;
+        boolean west = true;
+
+        GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
+        Assert.assertTrue(c.possible());
     }
 }

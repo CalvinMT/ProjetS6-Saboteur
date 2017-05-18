@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;
-    private int currentPlayer;
+    private int currentPlayer = -1;
     private HandRole roleCards;
 
     //ajout du board
@@ -42,21 +42,22 @@ public class Moteur {
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
-        this.arrayPlayer = arrayPlayer;
-        this.pile = new DeckGalleryAction();
-        currentPlayer = 0;
-        roleCards = new HandRole(nbPlayer());
-        this.board = new Board();
+        if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
+            this.arrayPlayer = arrayPlayer;
+            this.pile = new DeckGalleryAction();
+            currentPlayer = 0;
+            roleCards = new HandRole(nbPlayer());
+            this.board = new Board();
+
+            setAllPlayerBoard();
+            initHand();
+
+            System.out.println("Partie configurée!");
 
 
-        setAllPlayerBoard();
-        initHand();
-        
-        
-        
-        System.out.println("Partie configurée!\n"+this);
-        
-        
+        } else {
+            System.err.println("Tableau de joueur impossible");
+        }
     }
 
     public void setAllPlayerBoard(){
