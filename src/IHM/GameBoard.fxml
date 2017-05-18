@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameBoard">
+   <children> <!-- Pour des cartes 10*10 -->
+      <GridPane fx:id="gridPaneBoard" gridLinesVisible="true" maxHeight="890.0" maxWidth="900.0" minHeight="890.0" minWidth="900.0" onMouseClicked="#handleClickGrid" onMouseDragged="#handleDragGrid" onMousePressed="#handlePressedGrid" prefHeight="890.0" prefWidth="900.0">
+      </GridPane>
+   </children>
+</AnchorPane>

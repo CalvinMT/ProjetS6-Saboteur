@@ -15,44 +15,44 @@ public class PlayerHuman extends Player{
 
 
     // Constructeur
-    public PlayerHuman() {
-        this.playerName = "Joueur";
+    public PlayerHuman(int index) {
+        this.playerName = "Joueur"+index;
+        this.num = index;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
     }
 
-    public PlayerHuman(Board b) {
-        this.playerName = "Joueur";
+    public PlayerHuman(int index, Board b) {
+        this.playerName = "Joueur"+index;
+        this.num = index;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.board = b;
     }
 
-    public PlayerHuman(String playerName) {
+    public PlayerHuman(int index, String playerName, String avatar) {
         this.playerName = playerName;
+        this.num = index;
+        this.difficulty = Difficulty.Player;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
+        this.avatar = avatar;
     }
 
 
-    public PlayerHuman(String playerName, Board b) {
+    public PlayerHuman(int index, String playerName, Board b) {
         this.playerName = playerName;
+        this.num = index;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.board = b;
     }
 
-    public PlayerHuman(int i, Board b) {
-        this.playerName = "Joueur " + i;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.board = b;
-    }
+
 
     @Override
     public String toString(){
@@ -72,10 +72,7 @@ public class PlayerHuman extends Player{
         return renvoi;
     }
 
-    @Override
-    public void changeDiffulty(Difficulty d){
 
-    }
     
     
     

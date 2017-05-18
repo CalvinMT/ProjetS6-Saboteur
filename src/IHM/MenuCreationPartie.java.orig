@@ -1,6 +1,7 @@
 package IHM;
 
 import Player.Player.Difficulty;
+import Player.Player;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
@@ -8,13 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 
 
@@ -60,14 +59,23 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonAjouterIA(ActionEvent event){
+<<<<<<< HEAD
         String difficulty = comboBoxDifficulteIA.getValue();
-        String pseudo = "IA " + (playerList.size()+1);
+        String pseudo = "IA " + difficulty;
+=======
+        String pseudo = "IA";
+>>>>>>> 34b58383debc3aa361ae25e64fbe8b63683e869b
         String type = "Ordinateur";
         String avatar = "robot_miner";
+        String difficulte = comboBoxDifficulteIA.getValue();
 
+<<<<<<< HEAD
         lobby.addPlayer(playerList.size(), pseudo, Difficulty.stringToDiff(difficulty));
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
-        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulty, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
+=======
+        playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulte, buttonPlay, buttonAjouterPlayer, buttonAjouterIA));
+>>>>>>> 34b58383debc3aa361ae25e64fbe8b63683e869b
 
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
@@ -94,7 +102,7 @@ public class MenuCreationPartie {
 		String avatar = comboBoxAvatar.getValue();
 
 		if(pseudo == null || pseudo.equals("")){
-		    pseudo = "Joueur "+(playerList.size()+1);
+		    pseudo = "Joueur";
         }
 
 
@@ -116,27 +124,16 @@ public class MenuCreationPartie {
     }
 
     @FXML
-    void handleButtonPlay(ActionEvent event) throws IOException {
-        // lancement de la manche
+    void handleButtonPlay(ActionEvent event) {
+
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
-            Saboteur s = new Saboteur();
-            s.initMoteur(this.lobby.getArrayPlayer());
-            System.out.println(s.getMoteur());
+            Saboteur.initMoteur(this.lobby.getArrayPlayer());
         }
-
-        Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-
-
-
-
     }
 
     @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);
     }
 

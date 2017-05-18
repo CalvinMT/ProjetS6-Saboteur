@@ -3,7 +3,6 @@ package Board;
 
 import Cards.GalleryCard;
 import Cards.GoalCard;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -196,6 +195,7 @@ public class Board {
         }
     }
 
+    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
         currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
@@ -222,10 +222,12 @@ public class Board {
                 return false;
             }
         }
+
         return true;
     }
 
     public void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
+
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
             if (!isCompatibleWithNeighbors(c, possiblePositions.get(i)) && !isCompatibleWithNeighbors(c.rotate(), possiblePositions.get(i))) {
