@@ -16,10 +16,6 @@ import static java.lang.Math.abs;
  * Created by thespygeek on 11/05/17.
  */
 public class IA extends Player{
-
-    Difficulty difficulty;
-
-
     private ArrayList<Couple> goalsToTest;
 
     private Card cardToPlay;

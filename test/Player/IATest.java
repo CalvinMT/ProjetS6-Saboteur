@@ -16,7 +16,7 @@ import static Player.Player.Difficulty.Easy;
 import static org.junit.Assert.assertTrue;
 
 public class IATest {
-    IA ia = new IA();
+    IA ia = new IA(0);
 
     @Test
     public void getDistanceToGoal() throws Exception {
@@ -50,7 +50,7 @@ public class IATest {
         Assert.assertTrue(goals.contains(new Couple(-2, 8)));
         Assert.assertTrue(goals.contains(new Couple(2, 8)));
 
-        ia = new IA();
+        ia = new IA(0);
         goals = ia.getGoalsToTest();
         Assert.assertTrue(goals.size() == 3);
         Assert.assertTrue(goals.contains(new Couple(0, 8)));
@@ -93,7 +93,7 @@ public class IATest {
     }
 
     public void randomPlayTests() throws Exception {
-        IA ia = new IA("Test", Easy);
+        IA ia = new IA(0, "IA", Easy);
         ia.setBoard(new Board());
 
         ia.drawCard(new ActionCard("Map"));

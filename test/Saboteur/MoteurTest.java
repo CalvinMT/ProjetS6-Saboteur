@@ -3,8 +3,6 @@ package Saboteur;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 
 public class MoteurTest {
 
@@ -29,7 +27,6 @@ public class MoteurTest {
     @Test
     public void testHandCard1(){
         Moteur m = new Moteur(10);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 4);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 4);
@@ -39,7 +36,6 @@ public class MoteurTest {
     @Test
     public void testHandCard2(){
         Moteur m = new Moteur(11);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 6);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 6);
@@ -50,7 +46,6 @@ public class MoteurTest {
     @Test
     public void testHandCard3(){
         Moteur m = new Moteur(2);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 6);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 6);
@@ -61,7 +56,6 @@ public class MoteurTest {
     @Test
     public void testHandCard4(){
         Moteur m = new Moteur(6);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 5);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 5);
