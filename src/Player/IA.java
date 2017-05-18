@@ -17,7 +17,6 @@ import static java.lang.Math.abs;
  */
 public class IA extends Player{
 
-    Difficulty difficulty;
 
 
     private ArrayList<Couple> goalsToTest;
@@ -44,7 +43,7 @@ public class IA extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.avatar = "robot_miner";
-        setUpGoals()
+        setUpGoals();
     }
 
     public IA(int index, String name, Difficulty d){
@@ -85,6 +84,7 @@ public class IA extends Player{
             this.posToPlay = p.get(r.nextInt(range));
         }
     }
+
 
     // IA Medium + Hard
 
