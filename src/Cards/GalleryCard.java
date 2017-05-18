@@ -143,6 +143,10 @@ public class GalleryCard extends Card {
         this.resist = res - 1;
     }
 
+    public int getResist() {
+        return resist;
+    }
+
     public boolean equals(GalleryCard c) {
         return  ((this.getGalleryType() == c.getGalleryType()) &&
                 (this.getX() == c.getX()) &&
