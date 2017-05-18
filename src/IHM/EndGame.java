@@ -19,10 +19,10 @@ import java.io.IOException;
 import javafx.scene.text.Text;
 
 
-public class EndGame {//ALARME CE FICHIER N'EST PAS BON, JE VAIS LE MODIFIER !!!!!!!!!!!!!!!!
+public class EndGame {
 	    
 
-    private ObservableList<BandeauPlayerFin> playerList = FXCollections.observableArrayList();
+    private ObservableList<BandeauPlayerFinGame> playerList = FXCollections.observableArrayList();
 
     //tests
     Player joueur = new PlayerHuman(1);
@@ -35,21 +35,23 @@ public class EndGame {//ALARME CE FICHIER N'EST PAS BON, JE VAIS LE MODIFIER !!!
     RoleCard sabo = new RoleCard("Saboteur");
     
     @FXML
-    private AnchorPane anchorPaneMenuFinManche;
+    private AnchorPane anchorPaneEndGame;
     @FXML
-    private TableView<BandeauPlayerFin> tableViewListeJoueur;
+    private TableView<BandeauPlayerFinGame> tableViewListeJoueur;
      @FXML
-    private Text TextWinners;
+    private Text TextWinner;
     @FXML
-    private Button ButtonMancheSuivante;
+    private Button ButtonRetourMenu;
     @FXML
-    private TableColumn<BandeauPlayerFin, ImageView> columnAvatar;
+    private TableColumn<BandeauPlayerFinGame, ImageView> columnAvatar;
     @FXML
-    private TableColumn<BandeauPlayerFin, String> columnPseudo;
+    private TableColumn<BandeauPlayerFinGame, String> columnPseudo;
     @FXML
-    private TableColumn<BandeauPlayerFin, String> columnRole;
+    private TableColumn<BandeauPlayerFinGame, String> columnOr;
+    @FXML
+    private TableColumn<BandeauPlayerFinGame, String> columnRole;
     
-    public EndGame(){//tests
+    public EndGame(){//tests à remplacer par le moteur
         joueur.setAvatar("avatar_test");
         joueur.assignRole(mine);
         joueur2.setAvatar("avatar_test");
@@ -70,9 +72,9 @@ public class EndGame {//ALARME CE FICHIER N'EST PAS BON, JE VAIS LE MODIFIER !!!
 
     @FXML
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
-        Scene scene = (Scene) anchorPaneMenuFinManche.getScene();
+        Scene scene = (Scene) anchorPaneEndGame.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
     
     }
@@ -86,16 +88,18 @@ public class EndGame {//ALARME CE FICHIER N'EST PAS BON, JE VAIS LE MODIFIER !!!
         columnAvatar.setStyle( "-fx-alignment: CENTER;");
         columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
         columnRole.setStyle( "-fx-alignment: CENTER-LEFT");
-        columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, ImageView>("Avatar"));
-        columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Pseudo"));
-        columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Role"));
-        TextWinners.setText("Les " + "Saboteurs" + "ont gagné");
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (joueur.getRole()).toString()));
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (joueur2.getRole()).toString()));
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur3.getAvatar()), joueur3.getPlayerName(), (joueur3.getRole()).toString()));
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (joueur4.getRole()).toString()));
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur5.getAvatar()), joueur5.getPlayerName(), (joueur5.getRole()).toString()));
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur6.getAvatar()), joueur6.getPlayerName(), (joueur6.getRole()).toString()));
+        columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, ImageView>("Avatar"));
+        columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Pseudo"));
+        columnOr.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Or"));
+        columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Role"));
+        TextWinner.setText("Le vainqueur à gagné");// replacer par le winner
+        //Pour chaque joueur: (Role à remplacer par leur role au cours des manches
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur.getRole()).toString()));
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur2.getRole()).toString()));
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur3.getAvatar()), joueur3.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur3.getRole()).toString()));
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur4.getRole()).toString()));
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur5.getAvatar()), joueur5.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur5.getRole()).toString()));
+        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur6.getAvatar()), joueur6.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur6.getRole()).toString()));
      }
 
 	// A custom ListCell that displays an ImageView

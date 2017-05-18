@@ -2,10 +2,7 @@ package IHM;
 
 import Cards.RoleCard;
 import Player.Player;
-import Player.Player.Difficulty;
 import Player.PlayerHuman;
-import Saboteur.Lobby;
-import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,7 +35,7 @@ public class EndShaft {
     RoleCard sabo = new RoleCard("Saboteur");
     
     @FXML
-    private AnchorPane anchorPaneMenuFinManche;
+    private AnchorPane anchorPaneEndShaft;
     @FXML
     private TableView<BandeauPlayerFin> tableViewListeJoueur;
      @FXML
@@ -52,7 +49,7 @@ public class EndShaft {
     @FXML
     private TableColumn<BandeauPlayerFin, String> columnRole;
     
-    public EndShaft(){//tests
+    public EndShaft(){//tests sera remplacer par le vrai moteur
         joueur.setAvatar("avatar_test");
         joueur.assignRole(mine);
         joueur2.setAvatar("avatar_test");
@@ -73,7 +70,7 @@ public class EndShaft {
 
     @FXML
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
-        Scene scene = (Scene) anchorPaneMenuFinManche.getScene();
+        Scene scene = (Scene) anchorPaneEndShaft.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
@@ -92,8 +89,8 @@ public class EndShaft {
         columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, ImageView>("Avatar"));
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Pseudo"));
         columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Role"));
-        TextWinners.setText("Les " + "Saboteurs" + "ont gagné");
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (joueur.getRole()).toString()));
+        TextWinners.setText("Les " + "Saboteurs" + "ont gagné");// remplacer par le winner
+        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (joueur.getRole()).toString()));//Pour chaque joueur
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (joueur2.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur3.getAvatar()), joueur3.getPlayerName(), (joueur3.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (joueur4.getRole()).toString()));

@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="anchorPaneGameLoaderRight" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane gridLinesVisible="true" >
+      <GridPane gridLinesVisible="true" prefWidth="346.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,170 +16,25 @@
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="114.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox id="HboxPublic" alignment="BOTTOM_LEFT" fillHeight="false" maxHeight="116.0" maxWidth="200.0" prefHeight="189.0" prefWidth="182.0" spacing="1.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
-               <children>
-                  <ImageView id="imageAvatar" fitHeight="135.0" fitWidth="110.0" pickOnBounds="true">
-                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-                  <VBox prefHeight="112.0" prefWidth="208.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="88.0" scaleShape="true" text="6&#10;">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="86.0" scaleShape="true" text="Bastien">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                           </children>
-                        </HBox>
-                        <HBox id="HboxStatus" maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@lanterne.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@pickaxe.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@wagon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <ImageView fitHeight="134.0" fitWidth="300.0" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@cadre.png" />
-               </image>
-            </ImageView>
-            <HBox id="HboxPublic" alignment="BOTTOM_LEFT" fillHeight="false" maxHeight="116.0" maxWidth="200.0" prefHeight="189.0" prefWidth="182.0" spacing="1.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <ImageView id="imageAvatar" fitHeight="135.0" fitWidth="110.0" pickOnBounds="true">
-                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-                  <VBox prefHeight="112.0" prefWidth="208.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="88.0" scaleShape="true" text="6">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="86.0" scaleShape="true" text="Keuvain&#10;">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                           </children>
-                        </HBox>
-                        <HBox id="HboxStatus" maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@lanterne.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@pickaxe.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@wagon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox id="HboxPublic" alignment="BOTTOM_LEFT" fillHeight="false" maxHeight="116.0" maxWidth="200.0" prefHeight="189.0" prefWidth="182.0" spacing="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <ImageView id="imageAvatar" fitHeight="135.0" fitWidth="110.0" pickOnBounds="true">
-                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-                  <VBox prefHeight="112.0" prefWidth="208.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="88.0" scaleShape="true" text="6&#10;">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                              <TextArea id="pseudo" centerShape="flase" editable="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="86.0" scaleShape="true" text="Michel">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </TextArea>
-                           </children>
-                        </HBox>
-                        <HBox id="HboxStatus" maxHeight="65.0" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@lanterne.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@pickaxe.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="55.0">
-                                 <image>
-                                    <Image url="@wagon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <ImageView fitHeight="134.0" fitWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <image>
-                  <Image url="@cadre.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="134.0" fitWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@cadre.png" />
-               </image>
-            </ImageView>
+            <AnchorPane fx:id="AnchorPaneJ1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ8" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ9" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="AnchorPaneJ10" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
          </children>
       </GridPane>
    </children>

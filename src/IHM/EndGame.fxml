@@ -37,12 +37,12 @@
             <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fx:id="TextWinners" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="260.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Text fx:id="TextWinner" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="260.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fin de la manche " GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fin de la partie" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -50,16 +50,17 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onAction="#handleButtonMancheSuivante" prefHeight="39.0" prefWidth="262.0" text="Manche suivante -&gt;" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
+            <Button mnemonicParsing="false" onAction="#handleButtonMancheSuivante" prefHeight="39.0" prefWidth="262.0" text="Retour au menu" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <TableView fx:id="tableViewListeJoueur" prefHeight="306.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="5" GridPane.rowSpan="3">
+            <TableView fx:id="tableViewListeJoueur" prefHeight="303.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="5" GridPane.rowSpan="3">
               <columns>
-                <TableColumn fx:id="columnAvatar" prefWidth="118.0" resizable="false" text="Avatar" />
-                <TableColumn fx:id="columnPseudo" prefWidth="172.0" resizable="false" text="Pseudo" />
-                <TableColumn fx:id="columnRole" prefWidth="319.0" resizable="false" text="Role" />
+                <TableColumn fx:id="columnAvatar" prefWidth="128.0" resizable="false" text="Avatar" />
+                <TableColumn fx:id="columnPseudo" prefWidth="164.0" resizable="false" text="Pseudo" />
+                <TableColumn fx:id="columnOr" prefWidth="129.0" resizable="false" text="Or" />
+                  <TableColumn fx:id="columnRole" prefWidth="212.0" resizable="false" text="Role" />
               </columns>
             </TableView>
          </children>
