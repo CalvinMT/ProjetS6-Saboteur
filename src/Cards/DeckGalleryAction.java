@@ -25,8 +25,8 @@ public class DeckGalleryAction extends Deck {
 
 
     private final int nbCardGallery = 40;
-    private final int nbCardGallery_centered = 9;
-    final int nbCardGallery_no_centered = nbCardGallery - nbCardGallery_centered;
+    final int nbCardGallery_no_centered = 9;
+    private final int nbCardGallery_centered = nbCardGallery - nbCardGallery_no_centered;
 
     public int getNbBloqued(){
         return this.nbCardGallery_centered;
