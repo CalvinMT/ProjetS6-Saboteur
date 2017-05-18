@@ -3,20 +3,34 @@ package Board;
 import Cards.GalleryCard;
 
 public class Node {
-    final int NONE = -1;
+    private static final int NONE = -1;
 
     public GalleryCard card;
-    private int north = NONE;
-    private int south = NONE;
-    private int east = NONE;
-    private int west = NONE;
+    private int north;
+    private int south;
+    private int east;
+    private int west;
+
+    private int pathRes;
 
     Node(){
-        this.card = new GalleryCard();
+        this(new GalleryCard(), NONE, NONE, NONE, NONE);
+    }
+    Node(GalleryCard c){
+        this(c, NONE, NONE, NONE, NONE, 0);
     }
 
-    Node(GalleryCard c){
-        this.card = c;
+    Node(GalleryCard c, int n, int s, int e, int w) {
+        this(c, NONE, NONE, NONE, NONE, 0);
+    }
+
+    Node(GalleryCard c, int n, int s, int e, int w, int r) {
+            this.card = c;
+            this.north = n;
+            this.south = s;
+            this.east = e;
+            this.west = w;
+            this.pathRes = r;
     }
 
     public void setNorth(int north) {
@@ -33,6 +47,10 @@ public class Node {
 
     public void setWest(int west) {
         this.west = west;
+    }
+
+    public void setPathRes(int pathRes) {
+        this.pathRes = pathRes;
     }
 
     public int getNorth() {
@@ -55,13 +73,35 @@ public class Node {
         return this.card;
     }
 
-    @Override
-    public String toString() {
-        return "Card :\n" + this.card + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
-
-
+    public int getPathRes() {
+        return pathRes;
     }
 
+/* TODO : Ne pas utiliser avant l'implémentation du save/load
+    @Override
+    public String toString() {
+        return "Node{" +
+                "card=" + card +
+                ", north=" + north +
+                ", south=" + south +
+                ", east=" + east +
+                ", west=" + west +
+                ", pathRes=" + pathRes +
+                '}';
+    }
+*/
+    @Override
+    public String toString() {
+        return "Card :\n" + this.card
+                + "\nIndexes : "
+                + "\nNorth : " + this.getNorth()
+                + "\nSouth : " + this.getSouth()
+                + "\nEast : " + this.getEast()
+                + "\nWest : " + this.getWest()
+                + "\n";
+    }
+
+    /*
     public boolean equals(Node n) {
         return this.card.equals(n.card) &&
         this.north == n.getNorth() &&
@@ -69,6 +109,7 @@ public class Node {
         this.east == n.getEast() &&
         this.west == n.getWest();
     }
+    */
 
     @Override
     public boolean equals(Object o) {
