@@ -80,7 +80,7 @@ public class MenuCreationPartie {
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
         }
-        if(playerList.size()==10){
+        if(playerList.size()>=10){
             buttonAjouterPlayer.setDisable(true);
             buttonAjouterIA.setDisable(true);
         }
