@@ -19,6 +19,8 @@ public class GoalCard extends GalleryCard {
         this.gold = g;
     }
 
+
+
     @Override
     public int getConfig() {
         if (this.gold) {
