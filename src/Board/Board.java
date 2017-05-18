@@ -136,6 +136,7 @@ public class Board {
                         newNode = mine.get(currentNode.getNorth());
                         if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
                             queue.add(newNode); // On l'ajoute dans la queue
+                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else { // Si il n'y a pas de carte au nord (case vide)
@@ -150,6 +151,7 @@ public class Board {
                         newNode = mine.get(currentNode.getSouth());
                         if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
                             queue.add(newNode); // On l'ajoute dans la queue
+                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else { // Si il n'y a pas de carte au sud (case vide)
@@ -164,6 +166,7 @@ public class Board {
                         newNode = mine.get(currentNode.getEast());
                         if (!visited.contains(newNode)) { // Si la à l'est carte n'a pas été visitée
                             queue.add(newNode);
+                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else {
@@ -178,6 +181,7 @@ public class Board {
                         newNode = mine.get(currentNode.getWest());
                         if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
                             queue.add(newNode);
+                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else {
@@ -195,7 +199,6 @@ public class Board {
         }
     }
 
-    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
         currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
@@ -274,7 +277,7 @@ public class Board {
         return mine.get(i);
     }
 
-    public Node getAccessCardElement(String k) {
+    public Node getAccessCardElement(Couple k) {
         return accessCard.get(k);
     }
 
