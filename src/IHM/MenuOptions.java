@@ -42,6 +42,7 @@ public class MenuOptions {
 	@FXML
     public void handleReturnMenu () throws IOException {
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		MainLoader.autoResizeToResolution(anchorPaneOptions.getScene().getWidth(), anchorPaneOptions.getScene().getHeight(), anchorPane);
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
 	

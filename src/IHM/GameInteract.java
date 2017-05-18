@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class GameInteract {
 	
@@ -34,10 +35,14 @@ public class GameInteract {
 	private int numberOfCardsInHand;
 	private ImageView []cardsInHand;
 	
+	private int numberOfPlayers;
+	
 	@FXML
 	BorderPane borderPaneInteract;
 	@FXML
 	HBox hboxGameCardsInHand;
+	@FXML
+	VBox vboxPlayerList;
 	
 	@FXML
 	private void handleHBoxMouseEntered () {
@@ -55,7 +60,9 @@ public class GameInteract {
 	public void initialize () {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
-		//possiblePositions = moteur.getBoard().getPossiblePositions();
+		
+		// Hand configuration
+		possiblePositions = moteur.getBoard().getPossiblePositions(new GalleryCard());
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ImageView [numberOfCardsInHand];
@@ -68,8 +75,15 @@ public class GameInteract {
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
 		
+		// Player list configuration
+		numberOfPlayers = moteur.getAllPlayers().size();
+		vboxPlayerList.setPrefHeight(vboxPlayerList.getPrefHeight()*numberOfPlayers);
+		//vboxPlayerList.getChildren().addAll(playerList);
+		
+		// Center player list on center-left of the screen
+		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center playable cards (hand) in bottom-middle of the screen
-		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 	}
 	
 	
@@ -88,12 +102,25 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent event) {
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
+				
+				// TODO
+				/*if (card.getType().equals(Card_t.gallery)) {
+					turn_on_indications_on_grid
+				}
+				else if (card.getType().equals(Card_t.action)) {
+					turn_on_indications_on_player_list
+				}
+				*/
 			}
 		});
 		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				// TODO
+				/*
+				turn_off_indications
+				*/
 			}
 		});
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
@@ -104,15 +131,6 @@ public class GameInteract {
 				mouseY = event.getSceneY();
 				viewCardX = ((ImageView)(event.getSource())).getTranslateX();
 				viewCardY = ((ImageView)(event.getSource())).getTranslateY();
-				
-				// TODO
-				/*if (card.getType().equals(Card_t.gallery)) {
-					turn_on_indications_on_grid
-				}
-				else if (card.getType().equals(Card_t.action)) {
-					turn_on_indications_on_player_list
-				}
-				*/
 			}
 		});
 		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {

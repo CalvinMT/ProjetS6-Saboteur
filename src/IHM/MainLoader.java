@@ -63,13 +63,13 @@ public class MainLoader extends Application {
 	}
 	
 	
-	public static void autoResizeToResolution (double width, double height) {
+	public static void autoResizeToResolution (double width, double height, AnchorPane anchorPaneMenu) {
 		if (anchorPaneMainLoader != null) {
 			anchorPaneMainLoader.setPrefWidth(width-(width/3));
 			anchorPaneMainLoader.setPrefHeight(height-217); // FIXME
-			if (anchorPaneMenuMain != null) {
-		        anchorPaneMenuMain.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
-		        anchorPaneMenuMain.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
+			if (anchorPaneMenu != null) {
+				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
+				anchorPaneMenu.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
 			}
 		}
 	}
@@ -151,13 +151,13 @@ public class MainLoader extends Application {
 
 		// Load MenuMain.fxml
 		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-        anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
-        
-        // Automatic Resizing
-        autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT);
-        
-        
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+		
+		// Automatic Resizing
+		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+		
+		
 		primaryStage.show();
 	}
 

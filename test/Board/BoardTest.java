@@ -139,8 +139,7 @@ public class BoardTest {
         b.addCard(card4);
         b.addCard(card5);
 
-        b.computePossiblePositions(cardTest);
-        p = b.getPossiblePositions();
+        p = b.getPossiblePositions(cardTest);
 
         Assert.assertTrue(p.contains(new Couple(1, -1)));
         Assert.assertFalse(p.contains(new Couple(1, 0)));
@@ -151,8 +150,7 @@ public class BoardTest {
 
         cardTest = new GalleryCard(tunnel, 2, 2, true, true, false, false, true);
 
-        b.computePossiblePositions(cardTest);
-        p = b.getPossiblePositions();
+        p = b.getPossiblePositions(cardTest);
 
         Assert.assertTrue(p.contains(new Couple(1, -1)));
         Assert.assertFalse(p.contains(new Couple(1, 0)));
