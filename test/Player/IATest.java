@@ -114,9 +114,9 @@ public class IATest {
 
     @Test
     public void randomPlay() throws Exception {
-        System.out.println("randomPlay()");
+        //System.out.println("randomPlay()");
         for (int i = 1; i < 101; i++) {
-            System.out.format("\r\tTest n°%3d/100\n", i);
+            //System.out.format("\r\tTest n°%3d/100\n", i);
             randomPlayTests();
         }
     }
@@ -128,6 +128,6 @@ public class IATest {
 
     @Test
     public void iaPlayCard() throws Exception {
-        System.out.println("TODO : IATest.java iaPlay()");
+        System.out.println("TODO : IATest.java iaPlayCard()");
     }
 }

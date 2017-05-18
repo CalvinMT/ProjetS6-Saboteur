@@ -256,6 +256,8 @@ public class GalleryCard extends Card {
                 ", south=" + south +
                 ", east=" + east +
                 ", west=" + west +
+                // TODO : Ne pas utiliser avant implémentation du save/load
+                // ", resist=" + resist +
                 '}';
     }
 

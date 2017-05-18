@@ -21,7 +21,7 @@ public class Node {
     }
 
     Node(GalleryCard c, int n, int s, int e, int w) {
-        this(c, NONE, NONE, NONE, NONE, 0);
+        this(c, n, s, e, w, 0);
     }
 
     Node(GalleryCard c, int n, int s, int e, int w, int r) {
