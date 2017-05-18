@@ -56,6 +56,9 @@ public class ChoixRole {
     @FXML
     private void handleButtonJoueurSuivant(){
         System.out.println("Joueur suivant");
+        buttonJoueurSuivant.setDisable(true);
+        m.nextPlayer();
+        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
     }
 
     @FXML
@@ -64,9 +67,8 @@ public class ChoixRole {
         int i=0;
 
         System.out.println("Image clicked");
-        buttonJoueurSuivant.setDisable(false);
 
-        while(i<cartesRole.size() && !event.getSource().equals(cartesRole.get(i))){ //On cherche quelle carte a été selectionnée
+        while(i<nbPlayer && i<cartesRole.size() && !event.getSource().equals(cartesRole.get(i))){ //On cherche quelle carte a été selectionnée
             i++;
         }
 
@@ -76,10 +78,10 @@ public class ChoixRole {
             if(((RoleCard)carteCourante).isMinor()){
                 cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
                 cartesRole.remove(i);
-
             }else if(((RoleCard)carteCourante).isSaboteur()){
                 cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
             }
+            buttonJoueurSuivant.setDisable(false);
         }
 
         /*if(m.allRoleAreSet()){   //Si c'était la dernière carte
@@ -111,6 +113,8 @@ public class ChoixRole {
         for(int i=0; i<nbPlayer+1; i++){
             cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
         }
+
+        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
 
     }
     // getImageCard(Card c) gameInteractive
