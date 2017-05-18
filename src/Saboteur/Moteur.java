@@ -9,7 +9,6 @@ import Player.*;
 import Board.Board;
 import Board.Couple;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -228,13 +227,13 @@ public class Moteur {
 
     // regarde la carte but choisi par le joueur
     public Card lookGoal(Couple c){
-        if(c.getY() == 8 && (c.getX() == 0 || c.getX() == 2 || c.getX() == -2)){
+        if(c.getColumn() == 8 && (c.getLine() == 0 || c.getLine() == 2 || c.getLine() == -2)){
             System.out.println("Taille mine: "+this.board.getMineSize());
-            if(c.getX() == 2){ // B3
+            if(c.getLine() == 2){ // B3
                 return this.board.getMineElement(3).getCard();
-            } else if(c.getX() == 0){ // B2
+            } else if(c.getLine() == 0){ // B2
                 return this.board.getMineElement(2).getCard();
-            } else if(c.getX() == -2){ // B1
+            } else if(c.getLine() == -2){ // B1
                 return this.board.getMineElement(1).getCard();
             } else {
                 return null;

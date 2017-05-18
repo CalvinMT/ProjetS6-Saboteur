@@ -12,17 +12,17 @@ public class GalleryCardTest {
     @Test
     public void getterSetterX() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.getX() == 0);
-        c.setX(2);
-        assertTrue(c.getX() == 2);
+        assertTrue(c.getLine() == 0);
+        c.setLine(2);
+        assertTrue(c.getLine() == 2);
     }
 
     @Test
     public void getterSetterY() throws Exception {
         GalleryCard c = new GalleryCard();
-        assertTrue(c.getY() == 0);
-        c.setY(2);
-        assertTrue(c.getY() == 2);
+        assertTrue(c.getColumn() == 0);
+        c.setColumn(2);
+        assertTrue(c.getColumn() == 2);
     }
 
     @Test

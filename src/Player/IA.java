@@ -93,7 +93,7 @@ public class IA extends Player{
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
     public float getDistanceToGoal(Couple goal, Couple cpl) {
-        return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
+        return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
     // TODO : Tests
