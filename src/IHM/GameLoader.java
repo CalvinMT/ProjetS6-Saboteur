@@ -15,6 +15,9 @@ public class GameLoader {
 	@FXML
 	private AnchorPane anchorPaneGameLoaderBoard;
 	@FXML
+	private AnchorPane anchorPaneGameLoaderInteract;
+	
+	@FXML
 	private AnchorPane anchorPaneGameLoaderTop;
 	@FXML
 	private AnchorPane anchorPaneGameLoaderBottom;
@@ -27,6 +30,10 @@ public class GameLoader {
 		anchorPaneGameLoaderBoard = (AnchorPane) anchorPaneGameLoaderBoard.lookup("#anchorPaneGameLoaderBoard");
 		AnchorPane anchorPaneGameBoard = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
 		
+		// Game Interact
+		anchorPaneGameLoaderInteract = (AnchorPane) anchorPaneGameLoaderInteract.lookup("#anchorPaneGameLoaderInteract");
+		AnchorPane anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
+		
 		// Game Infos
 		/*anchorPaneGameLoaderInfos = (AnchorPane) anchorPaneGameLoaderInfos.lookup("#anchorPaneGameLoaderInfos");
 		AnchorPane anchorPaneGameInfos = FXMLLoader.load(getClass().getResource("GameInfos.fxml"));*/
@@ -35,8 +42,8 @@ public class GameLoader {
 		
 		
 		// Game Top
-		anchorPaneGameLoaderTop = (AnchorPane) anchorPaneGameLoaderTop.lookup("#anchorPaneGameLoaderTop");
-		AnchorPane anchorPaneGameTop = FXMLLoader.load(getClass().getResource("Top.fxml"));
+		/*anchorPaneGameLoaderTop = (AnchorPane) anchorPaneGameLoaderTop.lookup("#anchorPaneGameLoaderTop");
+		AnchorPane anchorPaneGameTop = FXMLLoader.load(getClass().getResource("Top.fxml"));*/
 		
 		// Game Bottom
 		/*anchorPaneGameLoaderBottom = (AnchorPane) anchorPaneGameLoaderBottom.lookup("#anchorPaneGameLoaderBottom");
@@ -49,7 +56,7 @@ public class GameLoader {
 		
 		
 		
-		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameTop);
+		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract);
 	}
 	
 }

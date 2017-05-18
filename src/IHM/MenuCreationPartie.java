@@ -72,7 +72,7 @@ public class MenuCreationPartie {
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
         }
-        if(playerList.size()==10){
+        if(playerList.size()>=10){
             buttonAjouterPlayer.setDisable(true);
             buttonAjouterIA.setDisable(true);
         }
@@ -106,7 +106,7 @@ public class MenuCreationPartie {
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
 		}
-		if(playerList.size()>10){
+		if(playerList.size()>=10){
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
@@ -119,9 +119,8 @@ public class MenuCreationPartie {
     void handleButtonPlay(ActionEvent event) throws IOException {
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
-            Saboteur s = new Saboteur();
-            s.initMoteur(this.lobby.getArrayPlayer());
-            System.out.println(s.getMoteur());
+            Saboteur.initMoteur(this.lobby.getArrayPlayer());
+            //System.out.println(Saboteur.getMoteur());
         }
 
         Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();

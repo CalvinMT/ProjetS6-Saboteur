@@ -47,11 +47,16 @@ public class Moteur {
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
         this.board = new Board();
-        initHand();
+
 
         setAllPlayerBoard();
-
-        System.out.println("Partie configurée!");
+        initHand();
+        
+        
+        
+        System.out.println("Partie configurée!\n"+this);
+        
+        
     }
 
     public void setAllPlayerBoard(){

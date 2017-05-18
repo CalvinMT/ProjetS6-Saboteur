@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class Saboteur {
 
-    Moteur m;
+    static public Moteur engine;
 
-    public Saboteur(){
+    /*public Saboteur(){
 
     }
     
@@ -45,16 +45,16 @@ public class Saboteur {
 
         m.promptPlayers();
 
-    }
+    }*/
 
-    public Moteur getMoteur(){
-        return m;
+    static public Moteur getMoteur(){
+        return engine;
     }
 
 
     // init du moteur a partir d'un tableau de joueur
-    public void initMoteur(ArrayList<Player> arrayPlayer){
-        m = new Moteur(arrayPlayer);
+    static public void initMoteur(ArrayList<Player> arrayPlayer){
+        engine = new Moteur(arrayPlayer);
     }
 
 

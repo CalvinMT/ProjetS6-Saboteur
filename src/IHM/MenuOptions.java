@@ -22,7 +22,7 @@ public class MenuOptions {
 	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1366*768","1600*900","1920*1080");
 	
 	@FXML
-	private AnchorPane anchorPaneOptions;
+	public AnchorPane anchorPaneOptions;
 	
 	@FXML
 	private Slider sliderMusic;
@@ -47,6 +47,7 @@ public class MenuOptions {
 	
 	@FXML
 	public void handleSliderMusic () {
+		// FIXME
 		MainLoader.mediaPlayerMusic.setVolume(sliderMusic.getValue()/100);
 	}
 
@@ -78,6 +79,7 @@ public class MenuOptions {
 		    	double newScreenHeight = Double.parseDouble(stringList[1]);
 			    MainLoader.primaryStage.setWidth(newScreenWidth);
 			    MainLoader.primaryStage.setHeight(newScreenHeight);
+			    MainLoader.primaryStage.centerOnScreen();
 		    	writer.println(":Fullscreen:" + false + ":");
 		    }
 		    writer.close();
