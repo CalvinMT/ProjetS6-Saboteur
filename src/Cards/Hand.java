@@ -4,6 +4,8 @@ package Cards;
 /// Carte que le joueur a dans la main
 
 
+import java.util.ArrayList;
+
 public class Hand extends Deck {
 
     protected boolean visible = false;
@@ -77,5 +79,9 @@ public class Hand extends Deck {
     }
 
 
+    // Tests
+    public ArrayList<Card> getArrayCard() {
+        return this.arrayCard;
+    }
 
 }
