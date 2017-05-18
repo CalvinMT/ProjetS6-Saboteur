@@ -9,18 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
+<AnchorPane id="AnchorPanePublicInfos" prefHeight="392.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
             <ImageView fitHeight="335.0" fitWidth="600.0" layoutY="65.0" GridPane.columnIndex="1">
       <image>
          <Image url="@../ressources/cadre.png" />
       </image>
             </ImageView>
-    <HBox id="HboxPublic" alignment="BOTTOM_LEFT" fillHeight="false" layoutX="34.0" layoutY="87.0" maxHeight="345.0" maxWidth="542.0" prefHeight="283.0" prefWidth="542.0" spacing="1.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+    <HBox  alignment="BOTTOM_LEFT" fillHeight="false" layoutX="34.0" layoutY="87.0" maxHeight="345.0" maxWidth="542.0" prefHeight="283.0" prefWidth="542.0" spacing="1.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                <children>
-                  <ImageView id="imageAvatar" fitHeight="285.0" fitWidth="250.0" pickOnBounds="true">
-                     <image>
-                        <Image preserveRatio="true" smooth="true" url="@tetenain2.png" />
-                     </image>
+                  <ImageView id="imageViewAvatar" fitHeight="285.0" fitWidth="250.0" pickOnBounds="true">
+                     
                      <viewport>
                         <Rectangle2D />
                      </viewport>
@@ -35,20 +33,14 @@
                         </HBox>
                         <HBox id="HboxStatus" alignment="CENTER" maxHeight="250.0" maxWidth="284.0" prefHeight="80.0" prefWidth="284.0">
                            <children>
-                              <ImageView fitHeight="95.0" fitWidth="102.0">
-                                 <image>
-                                    <Image url="@lanterne.png" />
-                                 </image>
+                              <ImageView id="imageViewStatusPickaxe" fitHeight="95.0" fitWidth="102.0">
+                                 
                               </ImageView>
-                              <ImageView fitHeight="95.0" fitWidth="95.0">
-                                 <image>
-                                    <Image url="@pickaxe.png" />
-                                 </image>
+                              <ImageView id="imageViewStatusLanterne" fitHeight="95.0" fitWidth="95.0">
+                                 
                               </ImageView>
-                              <ImageView fitHeight="95.0" fitWidth="95.0">
-                                 <image>
-                                    <Image url="@wagon.png" />
-                                 </image>
+                              <ImageView id="imageViewStatusWagon" fitHeight="95.0" fitWidth="95.0">
+                                 
                               </ImageView>
                            </children>
                         </HBox>
