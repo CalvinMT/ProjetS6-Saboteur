@@ -148,6 +148,15 @@ public class Moteur {
         }
     }
 
+    // affiche les infos joueurs en version texte
+    public void promptPlayersRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
+            System.out.println();
+        }
+    }
+
+
     // passe au joueur suivant
     public void nextPlayer(){
         currentPlayer = (currentPlayer+1)%nbPlayer();
@@ -169,6 +178,11 @@ public class Moteur {
         } else {
             return null;
         }
+    }
+
+    // si le joueur courant a un role
+    public boolean roleSet(){
+        return getCurrentPlayer().getRole() != null;
     }
 
     // le joueur courant joue une carte sur le board

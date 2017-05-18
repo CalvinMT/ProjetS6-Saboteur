@@ -20,6 +20,9 @@ public class ChoixRole {
     int nbPlayer;
     HandRole roles;
     ArrayList<ImageView> cartesRole;
+    private int num;
+
+
 
     @FXML
     private ImageView imageCarteRole1;
@@ -55,10 +58,14 @@ public class ChoixRole {
 
     @FXML
     private void handleButtonJoueurSuivant(){
-        System.out.println("Joueur suivant");
-        buttonJoueurSuivant.setDisable(true);
-        m.nextPlayer();
-        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+        if(m.roleSet()){
+
+            System.out.println("Joueur suivant");
+            buttonJoueurSuivant.setDisable(true);
+            cartesRole.get(this.num).setVisible(false);
+            m.nextPlayer();
+            textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+        }
     }
 
     @FXML
@@ -68,30 +75,47 @@ public class ChoixRole {
 
         System.out.println("Image clicked");
 
-        while(i<nbPlayer && i<cartesRole.size() && !event.getSource().equals(cartesRole.get(i))){ //On cherche quelle carte a été selectionnée
-            i++;
-        }
+        if(!m.roleSet()){
 
-        if(event.getSource().equals(cartesRole.get(i))){                            //Si on l'a trouvée on la retourne
-            Card carteCourante = roles.chooseOne_with_remove(i);
-            //TODO Assigner au joueur
-            if(((RoleCard)carteCourante).isMinor()){
-                cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
-                cartesRole.remove(i);
-            }else if(((RoleCard)carteCourante).isSaboteur()){
-                cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
+
+            while(i<nbPlayer && i<cartesRole.size() && !event.getSource().equals(cartesRole.get(i))){ //On cherche quelle carte a été selectionnée
+                i++;
             }
-            buttonJoueurSuivant.setDisable(false);
+
+            if(event.getSource().equals(cartesRole.get(i))){                            //Si on l'a trouvée on la retourne
+                Card carteCourante = roles.chooseOne_with_remove(i);
+                //TODO Assigner au joueur
+                if(carteCourante.getType() == Card.Card_t.role){
+
+                    if(((RoleCard)carteCourante).isMinor()){
+                        cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
+                    }else if(((RoleCard)carteCourante).isSaboteur()){
+                        cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
+                    }
+//                    cartesRole.remove(i);
+                    this.num = i;
+
+
+                    m.getCurrentPlayer().assignRole(carteCourante);
+                    m.promptPlayersRole();
+
+                }
+
+                if(m.allRoleAreSet()){   //Si c'était la dernière carte
+                    textJoueurCourant.setText("Commencer la partie");
+                } else {
+                    buttonJoueurSuivant.setDisable(false);
+                }
+
+            }
         }
 
-        /*if(m.allRoleAreSet()){   //Si c'était la dernière carte
-            textJoueurCourant.setText("Commencer la partie");
-        }*/
+
     }
 
     @FXML
     public void initialize(){
-        Moteur m = Saboteur.getMoteur();
+        m = Saboteur.getMoteur();
         nbPlayer = m.nbPlayer();
         roles = m.getRoleCards(); // tableau de cartes roles
         cartesRole = new ArrayList<ImageView>(12);
