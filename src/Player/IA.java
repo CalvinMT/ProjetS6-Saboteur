@@ -155,10 +155,13 @@ public class IA extends Player{
         return goalsToTest;
     }
 
+    // Retroune la carte à jouer
     public Card getCardToPlay() {
         return cardToPlay;
     }
 
+    // Retourne la position où jouer la carte
+    // getPosPlay n'est affectée/mise à jour que si la carte à jouer est une gallerie
     public Couple getPosToPlay() {
         return posToPlay;
     }
