@@ -84,7 +84,6 @@ public class ChoixRole {
 
             if(event.getSource().equals(cartesRole.get(i))){                            //Si on l'a trouvée on la retourne
                 Card carteCourante = roles.chooseOne_with_remove(i);
-                //TODO Assigner au joueur
                 if(carteCourante.getType() == Card.Card_t.role){
 
                     if(((RoleCard)carteCourante).isMinor()){
@@ -103,6 +102,7 @@ public class ChoixRole {
 
                 if(m.allRoleAreSet()){   //Si c'était la dernière carte
                     textJoueurCourant.setText("Commencer la partie");
+                    //TODO changer bouton pour "Commencer partie"
                 } else {
                     buttonJoueurSuivant.setDisable(false);
                 }
