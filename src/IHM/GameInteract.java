@@ -1,5 +1,8 @@
 package IHM;
 
+import java.util.ArrayList;
+
+import Board.Couple;
 import Cards.ActionCard;
 import Cards.Card;
 import Cards.Card.Card_t;
@@ -26,6 +29,8 @@ public class GameInteract {
 	
 	private Card card;
 	
+	private ArrayList<Couple> possiblePositions;
+	
 	private int numberOfCardsInHand;
 	private ImageView []cardsInHand;
 	
@@ -50,6 +55,7 @@ public class GameInteract {
 	public void initialize () {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
+		//possiblePositions = moteur.getBoard().getPossiblePositions();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ImageView [numberOfCardsInHand];
