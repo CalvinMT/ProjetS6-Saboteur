@@ -10,23 +10,23 @@ public class GalleryCard extends Card {
     private Couple coord = new Couple();
     private int resist;
 
-    private boolean center = true,
-                    north = true,
-                    south = true,
-                    east = true,
-                    west = true;
+    private boolean center,
+                    north,
+                    south,
+                    east,
+                    west;
 
 
     public GalleryCard() { // Init start card
-        new GalleryCard(start, 0, 0, true, true, true, true, true);
+        this(start, 0, 0, true, true, true, true, true);
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        new GalleryCard(t, 0, 0, c, n, s, e, w,);
+        this(t, 0, 0, c, n, s, e, w);
     }
     
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
-        new GalleryCard(tunnel, 0, 0, c, n, s, e, w);
+        this(tunnel, 0, 0, c, n, s, e, w);
     }
 
     // Pour debug
