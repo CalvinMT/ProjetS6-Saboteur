@@ -2,6 +2,7 @@ package Cards;
 
 import Board.Couple;
 import static Cards.GalleryCard.Gallery_t.start;
+import static Cards.GalleryCard.Gallery_t.tunnel;
 
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
@@ -15,32 +16,17 @@ public class GalleryCard extends Card {
                     east = true,
                     west = true;
 
+
     public GalleryCard() { // Init start card
-        this.type = Card_t.gallery;
-        this.type_g = start;
-        resist = 3;
+        new GalleryCard(start, 0, 0, true, true, true, true, true);
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        this.type = Card_t.gallery;
-        this.type_g = t;
-        this.center = c;
-        this.north = n;
-        this.south = s;
-        this.east = e;
-        this.west = w;
-        setResist();
+        new GalleryCard(t, 0, 0, c, n, s, e, w,);
     }
     
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
-        this.type = Card_t.gallery;
-        this.type_g = Gallery_t.tunnel;
-        this.center = c;
-        this.north = n;
-        this.south = s;
-        this.east = e;
-        this.west = w;
-        setResist();
+        new GalleryCard(tunnel, 0, 0, c, n, s, e, w);
     }
 
     // Pour debug
