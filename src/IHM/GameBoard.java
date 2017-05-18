@@ -30,6 +30,8 @@ public class GameBoard {
 	private Stage stage;
 	private double pressedX;
 	private double pressedY;
+	private double gridViewX;
+	private double gridViewY;
 	
 	
 	public static GridPane gridPaneBoard;
@@ -50,16 +52,21 @@ public class GameBoard {
 	@FXML
 	public void handlePressedGrid (MouseEvent event) {
 		// FIXME
-		/*stage = (Stage) gridPaneBoard.getScene().getWindow();
-		pressedX = stage.getX() - event.getScreenX();
-		pressedY = stage.getY() - event.getScreenY();*/
+		//stage = (Stage) gridPaneBoard.getScene().getWindow();
+		/*pressedX = event.getSceneX();
+		pressedY = event.getSceneY();
+		gridViewX = gridPaneBoard.getTranslateX();//((GridView)(event.getSource())).getTranslateX();
+		gridViewY = gridPaneBoard.getTranslateY();//((GridView)(event.getSource())).getTranslateY();*/
 	}
 	
 	@FXML
 	public void handleDragGrid (MouseEvent event) {
 		//FIXME
-		/*gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));
-	*/
+		/*double mouseOffSetX = event.getSceneX() - pressedX;
+		double mouseOffSetY = event.getSceneY() - pressedY;
+		gridPaneBoard.setTranslateX(gridViewX + mouseOffSetX);
+		gridPaneBoard.setTranslateY(gridViewY + mouseOffSetY);*/
+		//gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));
 	}
 	
 	@FXML

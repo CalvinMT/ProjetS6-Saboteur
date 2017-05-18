@@ -13,14 +13,12 @@ import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -107,15 +105,30 @@ public class GameInteract {
 	private double viewCardY;
 	
 	private void cardsInHandEvents (ImageView viewCard, Card card) {
+		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				// Brings card forward
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
+				// Turns on indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView imageView = new ImageView("ressources/carte_indication.png");
-						GameBoard.gridPaneBoard.add(imageView, (position.getColomn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+						GameBoard.gridPaneBoard.add(imageView, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+						imageView.setOnMouseDragOver(new EventHandler <MouseEvent>(){
+							@Override
+							public void handle(MouseEvent event) {
+								GameBoard.gridPaneBoard.add(viewCard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+							}
+						});
+						imageView.setOnMouseDragExited(new EventHandler <MouseEvent>(){
+							@Override
+							public void handle(MouseEvent event) {
+								
+							}
+						});
 					});
 				}
 				// TODO
@@ -126,18 +139,20 @@ public class GameInteract {
 				*/
 			}
 		});
+		// ---------- Mouse exits viewCard ----------
 		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				// Puts back card into place
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
-				// TODO
-				//turn_off_indications
+				// Turns off indications
 				possiblePositions.stream().forEach(position -> {
-					Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColomn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+					Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 					GameBoard.gridPaneBoard.getChildren().remove(node);
 				});
 			}
 		});
+		// ---------- Mouse presses viewCard ----------
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -148,6 +163,7 @@ public class GameInteract {
 				viewCardY = ((ImageView)(event.getSource())).getTranslateY();
 			}
 		});
+		// ---------- Mouse drags viewCard ----------
 		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -161,6 +177,7 @@ public class GameInteract {
 				}*/
 			}
 		});
+		// ---------- Mouse releases viewCard ----------
 		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -182,9 +199,11 @@ public class GameInteract {
 	
 	private Node getNodeFromGridPane (GridPane gridPane, int col, int row) {
 	    for (Node node : gridPane.getChildren()) {
-	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-	            return node;
-	        }
+	    	if (GridPane.getColumnIndex(node) != null  &&  GridPane.getRowIndex(node) != null) {
+		        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+		            return node;
+		        }
+	    	}
 	    }
 	    return null;
 	}

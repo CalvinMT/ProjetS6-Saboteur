@@ -32,4 +32,17 @@ public class DeckGalleryActionTest {
         }
         Assert.assertTrue(nb == deck.getNbBloqued());
     }
+
+    @Test
+    public void testValidityGallery(){
+        DeckGalleryAction deck = new DeckGalleryAction();
+        Card c;
+
+        for(int i=0; i<deck.nbCard(); i++){
+            c = deck.arrayCard.get(i);
+            if(c.getType() == Card.Card_t.gallery){
+                Assert.assertTrue(((GalleryCard) c).possible());
+            }
+        }
+    }
 }

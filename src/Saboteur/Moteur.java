@@ -9,7 +9,6 @@ import Player.*;
 import Board.Board;
 import Board.Couple;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;
-    private int currentPlayer;
+    private int currentPlayer = -1;
     private HandRole roleCards;
 
     //ajout du board
@@ -42,21 +41,22 @@ public class Moteur {
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
-        this.arrayPlayer = arrayPlayer;
-        this.pile = new DeckGalleryAction();
-        currentPlayer = 0;
-        roleCards = new HandRole(nbPlayer());
-        this.board = new Board();
+        if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
+            this.arrayPlayer = arrayPlayer;
+            this.pile = new DeckGalleryAction();
+            currentPlayer = 0;
+            roleCards = new HandRole(nbPlayer());
+            this.board = new Board();
+
+            setAllPlayerBoard();
+            initHand();
+
+            System.out.println("Partie configurée!");
 
 
-        setAllPlayerBoard();
-        initHand();
-        
-        
-        
-        System.out.println("Partie configurée!\n"+this);
-        
-        
+        } else {
+            System.err.println("Tableau de joueur impossible");
+        }
     }
 
     public void setAllPlayerBoard(){
@@ -227,13 +227,13 @@ public class Moteur {
 
     // regarde la carte but choisi par le joueur
     public Card lookGoal(Couple c){
-        if(c.getY() == 8 && (c.getX() == 0 || c.getX() == 2 || c.getX() == -2)){
+        if(c.getColumn() == 8 && (c.getLine() == 0 || c.getLine() == 2 || c.getLine() == -2)){
             System.out.println("Taille mine: "+this.board.getMineSize());
-            if(c.getX() == 2){ // B3
+            if(c.getLine() == 2){ // B3
                 return this.board.getMineElement(3).getCard();
-            } else if(c.getX() == 0){ // B2
+            } else if(c.getLine() == 0){ // B2
                 return this.board.getMineElement(2).getCard();
-            } else if(c.getX() == -2){ // B1
+            } else if(c.getLine() == -2){ // B1
                 return this.board.getMineElement(1).getCard();
             } else {
                 return null;

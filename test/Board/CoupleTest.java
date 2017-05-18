@@ -10,29 +10,29 @@ public class CoupleTest {
     @Test
     public void getX() throws Exception {
         Couple c = new Couple(1, 2);
-        Assert.assertTrue(c.getX() == 1);
+        Assert.assertTrue(c.getLine() == 1);
     }
 
     @Test
     public void getY() throws Exception {
         Couple c = new Couple(1, 2);
-        Assert.assertTrue(c.getY() == 2);
+        Assert.assertTrue(c.getColumn() == 2);
     }
 
     @Test
     public void setX() throws Exception {
         Couple c = new Couple(0, 2);
-        Assert.assertTrue(c.getX() == 0);
-        c.setX(1);
-        Assert.assertTrue(c.getX() == 1);
+        Assert.assertTrue(c.getLine() == 0);
+        c.setLine(1);
+        Assert.assertTrue(c.getLine() == 1);
     }
 
     @Test
     public void setY() throws Exception {
         Couple c = new Couple(2, 0);
-        Assert.assertTrue(c.getY() == 0);
-        c.setY(1);
-        Assert.assertTrue(c.getY() == 1);
+        Assert.assertTrue(c.getColumn() == 0);
+        c.setColumn(1);
+        Assert.assertTrue(c.getColumn() == 1);
     }
 
     @Test

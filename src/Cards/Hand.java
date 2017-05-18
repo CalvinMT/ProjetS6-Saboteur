@@ -33,6 +33,7 @@ public class Hand extends Deck {
         }
     }
 
+
     public void setVisibility(boolean b){
         this.visible = b;
     }
