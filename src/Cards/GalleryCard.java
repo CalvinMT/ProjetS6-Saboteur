@@ -7,6 +7,7 @@ public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
     private Gallery_t type_g;
     private Couple coord = new Couple();
+    private int resist;
 
     private boolean center = true,
                     north = true,
@@ -17,6 +18,7 @@ public class GalleryCard extends Card {
     public GalleryCard() { // Init start card
         this.type = Card_t.gallery;
         this.type_g = start;
+        resist = 3;
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
@@ -27,6 +29,7 @@ public class GalleryCard extends Card {
         this.south = s;
         this.east = e;
         this.west = w;
+        setResist();
     }
     
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
@@ -37,6 +40,7 @@ public class GalleryCard extends Card {
         this.south = s;
         this.east = e;
         this.west = w;
+        setResist();
     }
 
     // Pour debug
@@ -50,6 +54,7 @@ public class GalleryCard extends Card {
         this.south = s;
         this.east = e;
         this.west = w;
+        setResist();
     }
 
     public int getX() {
@@ -115,6 +120,41 @@ public class GalleryCard extends Card {
 
     public void setType_g(Gallery_t type_g) {
         this.type_g = type_g;
+    }
+
+    public void setResist() {
+        int res = 0;
+        if (this.center) {
+            if (this.north) {
+                res += 1;
+            }
+            if (this.south) {
+                res += 1;
+            }
+            if (this.east) {
+                res += 1;
+            }
+            if (this.west) {
+                res += 1;
+            }
+        }
+        // Valeur négative pour les saboteurs ?
+        /*else {
+            if (this.north) {
+                res -= 1;
+            }
+            if (this.south) {
+                res -= 1;
+            }
+            if (this.east) {
+                res -= 1;
+            }
+            if (this.west) {
+                res -= 1;
+            }
+        }*/
+
+        this.resist = res - 1;
     }
 
     public boolean equals(GalleryCard c) {
