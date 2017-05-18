@@ -35,6 +35,7 @@ public class PlayerTest {
 	@Test
 	public void testPlayer3(){
 		Player p = new IA(1, "Bot", Difficulty.Easy);
+		System.out.println(p.getDifficulty());
 		Assert.assertTrue(p.getDifficulty() == Difficulty.Easy);
 		Assert.assertTrue(p.getAvatar() == "robot_miner");
 	}
