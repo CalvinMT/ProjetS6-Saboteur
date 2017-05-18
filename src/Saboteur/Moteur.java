@@ -126,12 +126,14 @@ public class Moteur {
         }
     }
 
-    // choix des roles en début de manche
-    public void chooseRole() throws Exception{
+    // get RoleCard
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
 
-
-
-
+    //renvoi le nombre de cartes dans le choix des roles
+    public int getNbCardRole(){
+        return getRoleCards().nbCard();
     }
 
     // si tous les roles sont attribués
