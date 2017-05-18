@@ -18,7 +18,7 @@
       </ImageView>
    </top>
    <left>
-      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
       <ImageView fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">

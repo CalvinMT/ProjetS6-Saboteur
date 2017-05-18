@@ -9,7 +9,7 @@
       <StackPane BorderPane.alignment="CENTER">
          <children>
             <AnchorPane fx:id="anchorPaneGameLoaderBoard" />
-            <AnchorPane fx:id="anchorPaneGameLoaderInteract" pickOnBounds="false" />
+            <AnchorPane fx:id="anchorPaneGameLoaderInteract" />
          </children>
       </StackPane>
    </center>
