@@ -115,14 +115,31 @@ public class GalleryCardTest {
 
     @Test
     public void getConfig() throws Exception {
+        int res;
         GalleryCard c;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 2; k++) {
                     for (int l = 0; l < 2; l++) {
                         for (int m = 0; m < 2; m++) {
+                            res = 0;
                             c = new GalleryCard(tunnel, 0, 0, (i==1), (j==1), (k==1), (l==1), (m==1));
-                            assertTrue(c.getConfig() == (i * 10000) + (j * 1000) + (k * 100) + (l * 10) + (m * 1));
+                            if (i==1) {
+                                res += 0b10000;
+                            }
+                            if (j==1) {
+                                res += 0b1000;
+                            }
+                            if (k==1) {
+                                res += 0b100;
+                            }
+                            if (l==1) {
+                                res += 0b10;
+                            }
+                            if (m==1) {
+                                res += 0b1;
+                            }
+                            assertTrue(c.getConfig() == res);
                         }
                     }
                 }

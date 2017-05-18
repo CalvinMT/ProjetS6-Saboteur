@@ -21,10 +21,12 @@ public class GoalCard extends GalleryCard {
 
     @Override
     public int getConfig() {
-        int i = 0;
-        if (this.gold) i = 1;
-
-        return (i * 100000) + super.getConfig();
+        if (this.gold) {
+            return 0b100000 + super.getConfig();
+        }
+        else {
+            return super.getConfig();
+        }
     }
 
     @Override
