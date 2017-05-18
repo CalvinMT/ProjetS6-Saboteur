@@ -10,12 +10,12 @@ public class GoalCard extends GalleryCard {
     }
 
     public GoalCard(Couple c) {
-        super(Gallery_t.but, c.getX(), c.getY(), true, true, true, true, true);
+        super(Gallery_t.but, c.getLine(), c.getColumn(), true, true, true, true, true);
         this.gold = true;
     }
 
     public GoalCard(Couple c, boolean n, boolean s, boolean e, boolean w, boolean g) {
-        super(Gallery_t.but, c.getX(), c.getY(), true, n, s, e, w);
+        super(Gallery_t.but, c.getLine(), c.getColumn(), true, n, s, e, w);
         this.gold = g;
     }
 
