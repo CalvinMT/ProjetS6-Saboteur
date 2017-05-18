@@ -119,6 +119,16 @@ public class Moteur {
         }
     }
 
+    // get RoleCard
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    //renvoi le nombre de cartes dans le choix des roles
+    public int getNbCardRole(){
+        return getRoleCards().nbCard();
+    }
+
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
         for(int i=0; i<nbPlayer(); i++){
