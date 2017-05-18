@@ -1,146 +1,147 @@
 package IHM;
 
-import Cards.*;
-import static Cards.RepareSabotageCard.Tools.Lantern;
-import static Cards.RepareSabotageCard.Tools.Pickaxe;
-import static Cards.RepareSabotageCard.Tools.Wagon;
-import Player.*;
+import Cards.ActionCard;
+import Cards.Card;
+import Cards.Card.Card_t;
+import Cards.GalleryCard;
+import Cards.Hand;
+import Cards.RepareSabotageCard;
+import Saboteur.Moteur;
+import Saboteur.Saboteur;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
-public class Bottom {
-    //Joueur test
-    
-    Player joueur = new PlayerHuman(1);
-    RoleCard rc = new RoleCard("Mineur");
-    RepareSabotageCard Sabo = new RepareSabotageCard("Sabotage", Lantern);
-    Deck deck = new DeckGalleryAction();
-    
-    
-    public Bottom(){
-        joueur.assignRole(rc);
-        for(int i=0; i<6;i++){
-            joueur.drawCard(deck);
-        }        
-        joueur.putSabotage(Sabo, joueur);
-    }
-    
-    
-    
-   
-
-    @FXML
-    private ImageView imageViewplayerPick;
-
-    @FXML
-    private ImageView imageViewplayerLantern;
-
-    @FXML
-    private ImageView imageViewplayerKart;
-
-    @FXML
-    private ImageView imageViewPlayerAvatar;
-
-    @FXML
-    private TextArea textFieldPlayerGold;
-
-    @FXML
-    private TextArea textFieldPlayerRole;
-
-    @FXML
-    private TextArea textFieldPlayerPseudo;
-
-    @FXML
-    private ImageView imageViewplayerCard1;
-
-    @FXML
-    private ImageView imageViewplayerCard2;
-
-    @FXML
-    private ImageView imageViewplayerCard3;
-
-    @FXML
-    private ImageView imageViewplayerCard4;
-
-    @FXML
-    private ImageView imageViewplayerCard5;
-
-    @FXML
-    private ImageView imageViewplayerCard6;
-    
-    @FXML
-    private ImageView imageViewDraw;
-
-    @FXML
-    private ImageView imageViewDefausse;
-
-    @FXML
-    void handleDragCard(MouseEvent event) {
-
-    }
-
-    @FXML
-    void handleDropCard(DragEvent event) {
-
-    }
-    
-     @FXML
-    public void initialize(){
-        textFieldPlayerGold.setText("Or : " + Integer.toString(joueur.getGoldPoints()));
-        textFieldPlayerRole.setText(joueur.toString());
-        textFieldPlayerPseudo.setText(joueur.getPlayerName());
-        imageViewPlayerAvatar.setImage(new Image("ressources/avatar_anonyme.png"));
-        if((joueur.getAttributeCards()).containsTools(Pickaxe)){
-            imageViewplayerPick.setImage(new Image("ressources/pickaxe_detruite.png"));
-        }else{
-            imageViewplayerPick.setImage(new Image("ressources/pickaxe.png"));
-        }
-        if((joueur.getAttributeCards()).containsTools(Lantern)){
-            imageViewplayerLantern.setImage(new Image("ressources/lanterne_detruite.png"));
-        }else{
-            imageViewplayerLantern.setImage(new Image("ressources/lanterne.png"));
-        }
-        if((joueur.getAttributeCards()).containsTools(Wagon)){
-            imageViewplayerKart.setImage(new Image("ressources/wagon_detruite.png"));
-        }else{
-            imageViewplayerKart.setImage(new Image("ressources/wagon.png"));
-        }
-        System.out.println(joueur.lookAtCard(0).toString());
-        System.out.println(joueur.lookAtCard(1).toString());
-        System.out.println(joueur.lookAtCard(2).toString());
-        System.out.println(joueur.lookAtCard(3).toString());
-        System.out.println(joueur.lookAtCard(4).toString());
-        System.out.println(joueur.lookAtCard(5).toString());
-        imageViewplayerCard1.setImage(getImageCard(joueur.lookAtCard(0)));
-        imageViewplayerCard2.setImage(getImageCard(joueur.lookAtCard(1)));
-        imageViewplayerCard3.setImage(getImageCard(joueur.lookAtCard(2)));
-        imageViewplayerCard4.setImage(getImageCard(joueur.lookAtCard(3)));
-        imageViewplayerCard5.setImage(getImageCard(joueur.lookAtCard(4)));
-        imageViewplayerCard6.setImage(getImageCard(joueur.lookAtCard(5)));
-        imageViewDraw.setImage(new Image("ressources/dos_carte_action.jpg"));
-        imageViewDefausse.setImage(new Image("ressources/defausse.jpg"));
-        
-    }
-    
-        
-    
-    
-    private ImageView getImageView(String imageName) {
-            ImageView imageView = null;
-            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
-            if (!imageView.equals(null)) {
-            imageView.setFitWidth(70);
-            imageView.setFitHeight(70);
-            }
-            return imageView;
-    }
-    
-    
-    private Image getImageCard(Card c){
+public class GameInteract {
+	
+	private Moteur moteur;
+	
+	private Hand hand;
+	
+	private Card card;
+	
+	private int numberOfCardsInHand;
+	private ImageView []cardsInHand;
+	
+	@FXML
+	BorderPane borderPaneInteract;
+	@FXML
+	HBox hboxGameCardsInHand;
+	
+	@FXML
+	private void handleHBoxMouseEntered () {
+			hboxGameCardsInHand.getScene().setCursor(Cursor.HAND);
+	}
+	
+	@FXML
+	private void handleHBoxMouseExited () {
+		if (hboxGameCardsInHand.getScene().getCursor().equals(Cursor.HAND)) {
+			hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
+		}
+	}
+	
+	@FXML
+	public void initialize () {
+		// Liaison Moteur IHM
+		moteur = Saboteur.getMoteur();
+		hand = moteur.getCurrentPlayer().getPlayableCards();
+        numberOfCardsInHand = hand.nbCard();
+		cardsInHand = new ImageView [numberOfCardsInHand];
+		for (int i=0; i < numberOfCardsInHand; i++) {
+			card = hand.chooseOne_without_remove(i);
+			cardsInHand[i] = new ImageView(getImageCard(card));
+			cardsInHandEvents(cardsInHand[i]);
+		}
+		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
+		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
+		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
+		
+		// Center playable cards (hand) in bottom-middle of the screen
+		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+	}
+	
+	
+	
+	// -------------------- ---------- --------------------
+	
+	
+	
+	private double mouseX;
+	private double mouseY;
+	private double viewCardX;
+	private double viewCardY;
+	
+	private void cardsInHandEvents (ImageView viewCard) {
+		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				viewCard.setTranslateY(viewCard.getTranslateY()-25);
+			}
+		});
+		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+			}
+		});
+		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
+				mouseX = event.getSceneX();
+				mouseY = event.getSceneY();
+				viewCardX = ((ImageView)(event.getSource())).getTranslateX();
+				viewCardY = ((ImageView)(event.getSource())).getTranslateY();
+				
+				// TODO
+				/*if (card.getType().equals(Card_t.gallery)) {
+					turn_on_indications_on_grid
+				}
+				else if (card.getType().equals(Card_t.action)) {
+					turn_on_indications_on_player_list
+				}
+				*/
+			}
+		});
+		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				double mouseOffSetX = event.getSceneX() - mouseX;
+				double mouseOffSetY = event.getSceneY() - mouseY;
+				viewCard.setTranslateX(viewCardX + mouseOffSetX);
+				viewCard.setTranslateY(viewCardY + mouseOffSetY);
+				// TODO
+				/*if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
+					card_sticks_to_grid
+				}*/
+			}
+		});
+		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
+				// TODO
+				/*if (card_can_go_into_grid) {
+					card_goes_into_grid
+				}
+				else {
+					card_returns_to_hand
+				}
+				turn_off_indications
+				*/
+			}
+		});
+	}
+	
+	
+	
+	private Image getImageCard(Card c){
         Image image = null;
         switch(c.getType()){
             case action:
@@ -327,12 +328,11 @@ public class Bottom {
                         }
                     }
                 }
-            break;
+                break;
             default:
                 image = null;
         }
         return image;
     }
-    
 	
 }

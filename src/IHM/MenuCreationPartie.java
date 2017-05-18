@@ -111,7 +111,7 @@ public class MenuCreationPartie {
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
 		}
-		if(playerList.size()>10){
+		if(playerList.size()>=10){
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
@@ -122,17 +122,20 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonPlay(ActionEvent event) throws IOException {
-    	Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-		BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-		BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-
-
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
-            Saboteur.start_game();
+            //System.out.println(Saboteur.getMoteur());
         }
+
+        Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
+
+
+
+
     }
 
     @FXML

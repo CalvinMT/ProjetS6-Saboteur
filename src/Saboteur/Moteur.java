@@ -38,6 +38,7 @@ public class Moteur {
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
         this.board = new Board();
+        initHand();
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
@@ -47,9 +48,15 @@ public class Moteur {
         roleCards = new HandRole(nbPlayer());
         this.board = new Board();
 
-        setAllPlayerBoard();
 
-        System.out.println("Partie configurée!");
+        setAllPlayerBoard();
+        initHand();
+        
+        
+        
+        System.out.println("Partie configurée!\n"+this);
+        
+        
     }
 
     public void setAllPlayerBoard(){
@@ -117,6 +124,14 @@ public class Moteur {
         } else {
             throw new Exception();
         }
+    }
+
+    // choix des roles en début de manche
+    public void chooseRole() throws Exception{
+
+
+
+
     }
 
     // si tous les roles sont attribués
@@ -241,6 +256,10 @@ public class Moteur {
     // renvoie une arrayList de tous les joueurs dans la partie
     public ArrayList<Player> getAllPlayers(){
         return this.arrayPlayer;
+    }
+
+    public Deck getDeck(){
+        return this.pile;
     }
 
     public String toString(){
