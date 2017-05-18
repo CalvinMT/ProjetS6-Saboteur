@@ -44,7 +44,7 @@ public class IA extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.avatar = "robot_miner";
-        setUpGoals()
+        setUpGoals();
     }
 
     public IA(int index, String name, Difficulty d){

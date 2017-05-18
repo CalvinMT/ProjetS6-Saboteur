@@ -109,7 +109,7 @@ public class GalleryCard extends Card {
     }
 
     public void setResist() {
-        int res = 0;
+        int res = -1;
         if (this.center) {
             if (this.north) {
                 res += 1;
@@ -140,7 +140,10 @@ public class GalleryCard extends Card {
             }
         }*/
 
-        this.resist = res - 1;
+        if (res == -1) {
+            res = 0;
+        }
+        this.resist = res;
     }
 
     public int getResist() {

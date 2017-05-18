@@ -8,6 +8,37 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GalleryCardTest {
+
+    @Test
+    public void setResist() throws Exception {
+        int res;
+        GalleryCard c = new GalleryCard();
+        assertTrue(c.getResist() == 3);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 2; k++) {
+                    for (int l = 0; l < 2; l++) {
+                        for (int m = 0; m < 2; m++) {
+                            c = new GalleryCard((i==1), (j==1), (k==1), (l==1), (m==1));
+                            if (i == 0) { // Center : false
+                                assertTrue(c.getResist() == 0);
+                            }
+                            else {
+                                res = j+k+l+m - 1;
+                                if (res == -1) {
+                                    res = 0;
+                                }
+                                assertTrue(c.getResist() == res);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     @Test
     public void getterSetterX() throws Exception {
         GalleryCard c = new GalleryCard();
