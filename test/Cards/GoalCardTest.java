@@ -31,16 +31,31 @@ public class GoalCardTest {
 
     @Test
     public void getConfig() throws Exception {
+        int res;
         GoalCard c;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 2; k++) {
                     for (int l = 0; l < 2; l++) {
                         for (int m = 0; m < 2; m++) {
-                            for (int n = 0; n < 2; n++) {
-                                c = new GoalCard(new Couple(0, 8), (i==1), (j==1), (k==1), (l==1), (m==1));
-                                assertTrue(c.getConfig() == 10000 + (i * 1000) + (j * 100) + (k * 10) + (l * 1) + (m * 100000));
+                            res = 0b10000;
+                            c = new GoalCard(new Couple(0, 8), (i==1), (j==1), (k==1), (l==1), (m==1));
+                            if (i==1) {
+                                res += 0b1000;
                             }
+                            if (j==1) {
+                                res += 0b100;
+                            }
+                            if (k==1) {
+                                res += 0b10;
+                            }
+                            if (l==1) {
+                                res += 0b1;
+                            }
+                            if (m==1) {
+                                res += 0b100000;
+                            }
+                            assertTrue(c.getConfig() == res);
                         }
                     }
                 }
