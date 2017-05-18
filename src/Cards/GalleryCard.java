@@ -241,7 +241,7 @@ public class GalleryCard extends Card {
             renvoi += "W";
         }
         renvoi += "} ";
-        if(this.canHasCenter()){
+        if(!this.canHasCenter()){
             renvoi += "bloqued";
         }
 
