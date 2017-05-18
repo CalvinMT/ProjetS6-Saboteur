@@ -21,6 +21,14 @@ public class Couple {
     public int getY() {
         return y;
     }
+    
+    public int getLine(){
+    	return x;
+    }
+    
+    public int getColomn(){
+    	return y;
+    }
 
     public void setX(int x) {
         this.x = x;

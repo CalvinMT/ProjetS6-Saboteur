@@ -18,13 +18,6 @@ public class GameLoader {
 	private AnchorPane anchorPaneGameLoaderInteract;
 	
 	@FXML
-	private AnchorPane anchorPaneGameLoaderTop;
-	@FXML
-	private AnchorPane anchorPaneGameLoaderBottom;
-	@FXML
-	private AnchorPane anchorPaneGameLoaderRight;
-	
-	@FXML
 	public void initialize() throws IOException {
 		// Game Board
 		anchorPaneGameLoaderBoard = (AnchorPane) anchorPaneGameLoaderBoard.lookup("#anchorPaneGameLoaderBoard");
@@ -33,27 +26,6 @@ public class GameLoader {
 		// Game Interact
 		anchorPaneGameLoaderInteract = (AnchorPane) anchorPaneGameLoaderInteract.lookup("#anchorPaneGameLoaderInteract");
 		AnchorPane anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
-		
-		// Game Infos
-		/*anchorPaneGameLoaderInfos = (AnchorPane) anchorPaneGameLoaderInfos.lookup("#anchorPaneGameLoaderInfos");
-		AnchorPane anchorPaneGameInfos = FXMLLoader.load(getClass().getResource("GameInfos.fxml"));*/
-		
-		
-		
-		
-		// Game Top
-		/*anchorPaneGameLoaderTop = (AnchorPane) anchorPaneGameLoaderTop.lookup("#anchorPaneGameLoaderTop");
-		AnchorPane anchorPaneGameTop = FXMLLoader.load(getClass().getResource("Top.fxml"));*/
-		
-		// Game Bottom
-		/*anchorPaneGameLoaderBottom = (AnchorPane) anchorPaneGameLoaderBottom.lookup("#anchorPaneGameLoaderBottom");
-		AnchorPane anchorPaneGameBottom = FXMLLoader.load(getClass().getResource("Bottom.fxml"));*/
-		
-		// Game Right
-		/*anchorPaneGameLoaderRight = (AnchorPane) anchorPaneGameLoaderRight.lookup("#anchorPaneGameLoaderRight");
-		AnchorPane anchorPaneGameRight = FXMLLoader.load(getClass().getResource("Right.fxml"));*/
-		
-		
 		
 		
 		borderPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract);

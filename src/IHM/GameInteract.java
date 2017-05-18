@@ -1,7 +1,7 @@
 package IHM;
 
+import java.io.IOException;
 import java.util.ArrayList;
-
 import Board.Couple;
 import Cards.ActionCard;
 import Cards.Card;
@@ -13,24 +13,24 @@ import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class GameInteract {
 	
 	private Moteur moteur;
-	
 	private Hand hand;
-	
 	private Card card;
-	
-	private ArrayList<Couple> possiblePositions;
 	
 	private int numberOfCardsInHand;
 	private ImageView []cardsInHand;
@@ -57,19 +57,18 @@ public class GameInteract {
 	}
 	
 	@FXML
-	public void initialize () {
+	public void initialize () throws IOException {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
 		
 		// Hand configuration
-		possiblePositions = moteur.getBoard().getPossiblePositions();
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ImageView [numberOfCardsInHand];
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand[i] = new ImageView(getImageCard(card));
-			cardsInHandEvents(cardsInHand[i]);
+			cardsInHandEvents(cardsInHand[i], card);
 		}
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
@@ -84,29 +83,43 @@ public class GameInteract {
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center playable cards (hand) in bottom-middle of the screen
 		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		
+		
+		// Get grid from GameBoard
+		/*FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(GameInteract.class.getResource("GameBoard.fxml"));
+		AnchorPane anchorPaneGameBoard = (AnchorPane) loader.load();
+		gameBoard = loader.getController();
+		MainLoader.primaryStage.getScene().setRoot(anchorPaneGameBoard);*/
 	}
 	
 	
 	
 	// -------------------- ---------- --------------------
 	
+
 	
+	private ArrayList<Couple> possiblePositions;
 	
 	private double mouseX;
 	private double mouseY;
 	private double viewCardX;
 	private double viewCardY;
 	
-	private void cardsInHandEvents (ImageView viewCard) {
+	private void cardsInHandEvents (ImageView viewCard, Card card) {
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
-				
-				// TODO
-				/*if (card.getType().equals(Card_t.gallery)) {
-					turn_on_indications_on_grid
+				if (card.getType().equals(Card_t.gallery)) {
+					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
+					possiblePositions.stream().forEach(position -> {
+						ImageView imageView = new ImageView("ressources/carte_indication.png");
+						GameBoard.gridPaneBoard.add(imageView, (position.getColomn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+					});
 				}
+				// TODO
+				/*
 				else if (card.getType().equals(Card_t.action)) {
 					turn_on_indications_on_player_list
 				}
@@ -118,9 +131,11 @@ public class GameInteract {
 			public void handle(MouseEvent event) {
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				// TODO
-				/*
-				turn_off_indications
-				*/
+				//turn_off_indications
+				possiblePositions.stream().forEach(position -> {
+					Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColomn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+					GameBoard.gridPaneBoard.getChildren().remove(node);
+				});
 			}
 		});
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
@@ -165,9 +180,20 @@ public class GameInteract {
 	
 	
 	
-	private Image getImageCard(Card c){
+	private Node getNodeFromGridPane (GridPane gridPane, int col, int row) {
+	    for (Node node : gridPane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+	            return node;
+	        }
+	    }
+	    return null;
+	}
+	
+	
+	
+	private Image getImageCard (Card c) {
         Image image = null;
-        switch(c.getType()){
+        switch(c.getType()) {
             case action:
                 switch(((ActionCard)c).getAction()){
                     case Sabotage:                        

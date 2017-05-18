@@ -136,6 +136,7 @@ public class MenuCreationPartie {
     @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		MainLoader.autoResizeToResolution(anchorPaneMenuCreationPartie.getScene().getWidth(), anchorPaneMenuCreationPartie.getScene().getHeight(), anchorPane);
         anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);
     }
 
