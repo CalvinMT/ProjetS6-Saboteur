@@ -66,6 +66,10 @@ public class IA extends Player{
     }
 
 
+    // Calcul de la resistance d'un chemin
+    // TODO :
+    // TODO - Node.java : Ajout d'un attribut correspondant à la résistance du chemin de start au node
+    // TODO - GalleryCard : Ajout d'un attribut correspondant à la resistance de la carte
 
     // IA Random
     public void randomPlay() {
