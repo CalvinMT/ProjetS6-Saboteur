@@ -1,0 +1,119 @@
+package IHM;
+
+import Cards.Card;
+import Cards.HandRole;
+import Saboteur.Saboteur;
+import Saboteur.Moteur;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import Cards.RoleCard;
+import java.util.ArrayList;
+
+public class ChoixRole {
+
+    Moteur m;
+    int nbPlayer;
+    HandRole roles;
+    ArrayList<ImageView> cartesRole;
+
+    @FXML
+    private ImageView imageCarteRole1;
+    @FXML
+    private ImageView imageCarteRole2;
+    @FXML
+    private ImageView imageCarteRole3;
+    @FXML
+    private ImageView imageCarteRole4;
+    @FXML
+    private ImageView imageCarteRole5;
+    @FXML
+    private ImageView imageCarteRole6;
+    @FXML
+    private ImageView imageCarteRole7;
+    @FXML
+    private ImageView imageCarteRole8;
+    @FXML
+    private ImageView imageCarteRole9;
+    @FXML
+    private ImageView imageCarteRole10;
+    @FXML
+    private ImageView imageCarteRole11;
+    @FXML
+    private ImageView imageCarteRole12;
+
+    @FXML
+    private Text textJoueurCourant;
+    @FXML
+    private Button buttonJoueurSuivant;
+    @FXML
+    private GridPane gridPaneChoixRole;
+
+    @FXML
+    private void handleButtonJoueurSuivant(){
+        System.out.println("Joueur suivant");
+    }
+
+    @FXML
+    private void handleMouseClickedImageChoixRole(MouseEvent event) {
+
+        int i=0;
+
+        System.out.println("Image clicked");
+        buttonJoueurSuivant.setDisable(false);
+
+        while(i<cartesRole.size() && !event.getSource().equals(cartesRole.get(i))){ //On cherche quelle carte a été selectionnée
+            i++;
+        }
+
+        if(event.getSource().equals(cartesRole.get(i))){                            //Si on l'a trouvée on la retourne
+            Card carteCourante = roles.chooseOne_with_remove(i);
+            //TODO Assigner au joueur
+            if(((RoleCard)carteCourante).isMinor()){
+                cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
+                cartesRole.remove(i);
+
+            }else if(((RoleCard)carteCourante).isSaboteur()){
+                cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
+            }
+        }
+
+        /*if(m.allRoleAreSet()){   //Si c'était la dernière carte
+            textJoueurCourant.setText("Commencer la partie");
+        }*/
+    }
+
+    @FXML
+    public void initialize(){
+        Moteur m = Saboteur.getMoteur();
+        nbPlayer = m.nbPlayer();
+        roles = m.getRoleCards(); // tableau de cartes roles
+        cartesRole = new ArrayList<ImageView>(12);
+        buttonJoueurSuivant.setDisable(true);
+
+        cartesRole.add(0, imageCarteRole1);
+        cartesRole.add(1, imageCarteRole2);
+        cartesRole.add(2, imageCarteRole3);
+        cartesRole.add(3, imageCarteRole4);
+        cartesRole.add(4, imageCarteRole5);
+        cartesRole.add(5, imageCarteRole6);
+        cartesRole.add(6, imageCarteRole7);
+        cartesRole.add(7, imageCarteRole8);
+        cartesRole.add(8, imageCarteRole9);
+        cartesRole.add(9, imageCarteRole10);
+        cartesRole.add(10, imageCarteRole11);
+        cartesRole.add(11, imageCarteRole12);
+
+        for(int i=0; i<nbPlayer+1; i++){
+            cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
+        }
+
+    }
+    // getImageCard(Card c) gameInteractive
+    //m.getCurrentPlayer().getPlayerName();
+
+}

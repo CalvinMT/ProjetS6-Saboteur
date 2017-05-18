@@ -126,13 +126,6 @@ public class Moteur {
         }
     }
 
-    // choix des roles en début de manche
-    public void chooseRole() throws Exception{
-
-
-
-
-    }
 
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
