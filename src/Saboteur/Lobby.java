@@ -23,8 +23,8 @@ public class Lobby {
     // ajoute une IA dans le lobby
     public void addPlayer(int num, String name, Difficulty d){
         if(arrayPlayer.size() < 10){
-
-            arrayPlayer.add(new IA(num, name));
+            Player p = new IA(num, name, d);
+            arrayPlayer.add(new IA(num, name, d));
         }
     }
 
@@ -74,7 +74,8 @@ public class Lobby {
         renvoi += "Nombre joueur: "+nbPlayer()+"\n";
         renvoi += "{ ";
         for(int i=0; i<nbPlayer(); i++){
-            renvoi += arrayPlayer.get(i).getNum()+ ": "+ arrayPlayer.get(i).getPlayerName() + " Difficulte: "+arrayPlayer.get(i).getDifficulty() + " ; ";
+            renvoi += arrayPlayer.get(i).getNum()+ ": "+ arrayPlayer.get(i).getPlayerName() + " Difficulté: "+this.arrayPlayer.get(i).getDifficulty() + " ; ";
+//            renvoi += arrayPlayer.get(i);
         }
 
         renvoi += "}\n";

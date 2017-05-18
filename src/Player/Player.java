@@ -168,6 +168,7 @@ public abstract class Player {
     }
 
     public Difficulty getDifficulty(){
+        System.out.println(this);
         return this.difficulty;
     }
 

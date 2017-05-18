@@ -126,9 +126,12 @@ public class MenuCreationPartie {
 		BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
 		BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-        
+
+
+        // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
+            Saboteur.start_game();
         }
     }
 
