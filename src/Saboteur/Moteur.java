@@ -139,6 +139,8 @@ public class Moteur {
         return true;
     }
 
+
+
     // affiche les infos joueurs en version texte
     public void promptPlayers(){
         for(int i=0; i<nbPlayer(); i++){
@@ -255,6 +257,18 @@ public class Moteur {
 
     public Deck getDeck(){
         return this.pile;
+    }
+
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    public int getNbRoleCards(){
+        return roleCards.nbCard();
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
     public String toString(){
