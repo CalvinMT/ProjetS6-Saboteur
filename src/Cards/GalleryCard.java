@@ -136,19 +136,19 @@ public class GalleryCard extends Card {
         int res = 0;
 
         if (this.center) {
-            res += 10000;
+            res += 0b10000;
         }
         if (this.north) {
-            res += 1000;
+            res += 0b1000;
         }
         if (this.south) {
-            res += 100;
+            res += 0b100;
         }
         if (this.east) {
-            res += 10;
+            res += 0b10;
         }
         if (this.west) {
-            res += 1;
+            res += 0b1;
         }
         return res;
     }
