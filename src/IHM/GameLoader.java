@@ -31,6 +31,8 @@ public class GameLoader {
 		//anchorPaneGameLoaderInteract = (AnchorPane) anchorPaneGameLoaderInteract.lookup("#anchorPaneGameLoaderInteract");
 		AnchorPane anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
 		anchorPaneGameInteract.setPickOnBounds(false);
+
+
 		
 
 		stackPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract);
