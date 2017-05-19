@@ -2,11 +2,13 @@ package IHM;
 
 import java.io.IOException;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -82,7 +84,7 @@ public class GameBoard {
 		AnchorPane.setRightAnchor(gridPaneBoard, 0.0);
 		AnchorPane.setBottomAnchor(gridPaneBoard, 0.0);
 		AnchorPane.setLeftAnchor(gridPaneBoard, 0.0);
-		// onMouseClicked="#handleClickGrid" onMouseDragged="#handleDragGrid" onMousePressed="#handlePressedGrid""
+		// onMouseClicked="#handleClickGrid" onMouseDragged="#handleDragGrid" onMousePressed="#handlePressedGrid"
 		
         for (int i = 0 ; i < gridWidth ; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints(cardsWidth);
@@ -137,11 +139,12 @@ public class GameBoard {
 			}
 		}
 		
-		// Recentre le plateau de jeu
+		// Centers game board
 		gridPaneBoard.setScaleX(0.6);
 		gridPaneBoard.setScaleY(0.6);
 		//gridPaneBoard.setTranslateX(gridWidth);
 		//gridPaneBoard.setTranslateY(gridHeight);
+		gridPaneBoard.setPadding(new Insets(15444, 0, 0, 9622));
 		
 	}
 
