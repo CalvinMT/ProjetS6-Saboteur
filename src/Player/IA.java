@@ -49,15 +49,15 @@ public class IA extends Player{
     public String toString(){
         String renvoi = "";
 
-        renvoi += "Player: "+this.playerName + "\n";
-        renvoi += "Type: IA\n";
-        renvoi += "Difficulté: "+this.difficulty + "\n";
+        renvoi += this.playerName + "\n";
+        renvoi += "IA\n";
+        renvoi += this.difficulty + "\n";
         if(this.role == null){
             renvoi += "Aucun role pour l'instant\n";
         } else {
             renvoi += this.role + "\n";
         }
-        renvoi += "Nombre d'or: "+this.goldPoints + "\n";
+        renvoi += this.goldPoints + "\n";
         renvoi += this.attributeCards + "\n";
         renvoi += this.playableCards + "\n";
 

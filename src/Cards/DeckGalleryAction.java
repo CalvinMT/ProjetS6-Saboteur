@@ -107,11 +107,23 @@ public class DeckGalleryAction extends Deck {
         this.shuffle();
 
     }
-
+    
+    // constructeur pour créer un Deck vide pour pouvoir ajouter des cartes d'une partie du jeu enregistrée
+    public DeckGalleryAction(int n){
+    	this.arrayCard = new ArrayList<>();
+    }
+    
     public boolean getValidity(){
         return nbCardAction == (nbNegativPickaxe + nbNegativLantern + nbNegativWagon + nbPositivWagon + nbPositivPickaxe + nbPositivLantern +
          nbMap + nbCrash + nbWagonPickaxe + nbPickaxeLantern + nbWagonLantern);
 
+    }
+    
+    // ajoute une carte au Deck quand on veut charger une partie du jeu enregistrée
+    public void addCardToDeck(Card card){
+    	if(card.getType() == Card.Card_t.action || card.getType() == Card.Card_t.gallery){
+            arrayCard.add(card);
+        }
     }
     
     public String toString(){

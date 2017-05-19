@@ -34,7 +34,7 @@ public class PlayerHuman extends Player{
         this.playerName = playerName;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
+        this.playableCards = new HandPlayer(); 
     }
 
 

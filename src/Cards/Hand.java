@@ -45,7 +45,7 @@ public class Hand extends Deck {
                 renvoi += this.arrayCard.get(i).toString();
 
                 if(i<this.arrayCard.size()-1){
-                    renvoi += " ; ";
+                    renvoi += ";";
                 }
             }
         } else {

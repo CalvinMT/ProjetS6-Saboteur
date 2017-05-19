@@ -47,7 +47,7 @@ public class Deck {
     public boolean isEmpty(){
         return (this.nbCard() <= 0);
     }
-
+    
     public String toString(){
         String renvoi = "Deck : ";
         renvoi += "[ ";

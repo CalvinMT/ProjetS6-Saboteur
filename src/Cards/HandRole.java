@@ -43,6 +43,10 @@ public class HandRole extends Hand {
 
         this.shuffle();
     }
+    
+    public HandRole(String s){
+    	this.arrayCard = new ArrayList<Card>();
+    }
 
     // rempli le paquet
     private void fillHand(int nbSaboteur, int nbMinor){
