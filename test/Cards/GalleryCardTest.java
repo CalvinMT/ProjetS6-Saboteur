@@ -157,7 +157,7 @@ public class GalleryCardTest {
         boolean west = false;
 
         GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
-        Assert.assertTrue(c.possible());
+        Assert.assertFalse(c.possible());
     }
 
     @Test
@@ -169,7 +169,7 @@ public class GalleryCardTest {
         boolean west = false;
 
         GalleryCard c = new GalleryCard(GalleryCard.Gallery_t.tunnel, center, north, south, east, west);
-        Assert.assertFalse(c.possible());
+        Assert.assertTrue(c.possible());
     }
 
     @Test

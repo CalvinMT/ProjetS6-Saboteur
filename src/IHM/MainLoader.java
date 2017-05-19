@@ -26,7 +26,7 @@ public class MainLoader extends Application {
 	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMainLoader; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMenuMain; // XXX - Not good looking.
-	
+
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
 	
@@ -148,7 +148,7 @@ public class MainLoader extends Application {
 		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		
+
 		// Load MenuMain.fxml
 		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
 		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));

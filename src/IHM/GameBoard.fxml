@@ -5,7 +5,7 @@
 
 <AnchorPane fx:id="anchorPaneGameBoard" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameBoard">
    <children> <!-- Pour des cartes 118*181 (90*89) -->
-      <GridPane fx:id="gridPaneGameBoard" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" gridLinesVisible="true" maxWidth="10620.0" maxHeight="16109.0" minWidth="10620.0" minHeight="16109.0" onMouseClicked="#handleClickGrid" onMouseDragged="#handleDragGrid" onMousePressed="#handlePressedGrid" prefHeight="890.0" prefWidth="900.0">
+      <GridPane fx:id="gridPaneGameBoard" gridLinesVisible="true" maxHeight="16109.0" maxWidth="10620.0" minHeight="16109.0" minWidth="10620.0" onMouseClicked="#handleClickGrid" onMouseDragged="#handleDragGrid" onMousePressed="#handlePressedGrid" prefHeight="890.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       </GridPane>
    </children>
 </AnchorPane>

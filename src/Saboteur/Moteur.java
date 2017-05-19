@@ -126,13 +126,6 @@ public class Moteur {
         }
     }
 
-    // choix des roles en début de manche
-    public void chooseRole() throws Exception{
-
-
-
-
-    }
 
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
@@ -153,6 +146,15 @@ public class Moteur {
             System.out.println();
         }
     }
+
+    // affiche les infos joueurs en version texte
+    public void promptPlayersRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
+            System.out.println();
+        }
+    }
+
 
     // passe au joueur suivant
     public void nextPlayer(){
@@ -175,6 +177,11 @@ public class Moteur {
         } else {
             return null;
         }
+    }
+
+    // si le joueur courant a un role
+    public boolean roleSet(){
+        return getCurrentPlayer().getRole() != null;
     }
 
     // le joueur courant joue une carte sur le board

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
+<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0">
         <columnConstraints>
@@ -64,7 +64,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="178.0" text="Retour Menu" GridPane.columnIndex="5" GridPane.rowIndex="9">
+            <Button fx:id="buttonRetourMenu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="178.0" text="Retour Menu" GridPane.columnIndex="5" GridPane.rowIndex="9">
                <font>
                   <Font size="20.0" />
                </font>
