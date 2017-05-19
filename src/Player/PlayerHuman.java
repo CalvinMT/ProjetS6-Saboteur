@@ -63,18 +63,6 @@ public class PlayerHuman extends Player{
         return false;
     }
 
-    @Override
-    public boolean chooseRoleCard(HandRole cards){
-
-        Random r = new Random();
-        Card c = cards.chooseOne_with_remove(r.nextInt(cards.nbCard()));
-        this.assignRole(c);
-
-        return true;
-
-        //TODO choix par l'interface (a changer)
-    }
-
 
 
     @Override

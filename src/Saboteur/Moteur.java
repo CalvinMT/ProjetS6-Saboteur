@@ -306,10 +306,6 @@ public class Moteur {
         return this.pile;
     }
 
-    public HandRole getRoleCards(){
-        return this.roleCards;
-    }
-
     public int getNbRoleCards(){
         return roleCards.nbCard();
     }

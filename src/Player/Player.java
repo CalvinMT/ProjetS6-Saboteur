@@ -90,7 +90,9 @@ public abstract class Player {
     }
 
     // choix des cartes roles
-    public abstract boolean chooseRoleCard(HandRole cards);
+    public boolean chooseRoleCard(HandRole cards){
+        return false;
+    }
 
     // assigne un nouveau pseudo
     public void setPlayerName(String name){

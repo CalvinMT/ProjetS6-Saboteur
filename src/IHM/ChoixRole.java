@@ -101,6 +101,8 @@ public class ChoixRole {
 
         } else if(m.roleSet()){
 
+            System.out.println(roles.print_without_visibility());
+
             System.out.println("Joueur suivant");
             buttonJoueurSuivant.setDisable(true);
             cartesRole.get(this.num).setVisible(false);
@@ -126,7 +128,7 @@ public class ChoixRole {
             }
 
             if(event.getSource().equals(cartesRole.get(i))){                            //Si on l'a trouvée on la retourne
-                Card carteCourante = roles.chooseOne_with_remove(i);
+                Card carteCourante = roles.chooseOne_without_remove(i);
                 if(carteCourante.getType() == Card.Card_t.role){
 
                     if(((RoleCard)carteCourante).isMinor()){
@@ -197,6 +199,8 @@ public class ChoixRole {
         for(int i=0; i<nbPlayer+1; i++){
             cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
         }
+
+        System.out.println(roles.print_without_visibility());
 
         textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
 
