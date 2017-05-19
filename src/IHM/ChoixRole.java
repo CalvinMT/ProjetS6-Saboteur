@@ -5,10 +5,13 @@ import Cards.HandRole;
 import Saboteur.Saboteur;
 import Saboteur.Moteur;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import Cards.RoleCard;
@@ -102,7 +105,14 @@ public class ChoixRole {
 
                 if(m.allRoleAreSet()){   //Si c'était la dernière carte
                     textJoueurCourant.setText("Commencer la partie");
+
+
                     //TODO changer bouton pour "Commencer partie"
+
+                    buttonJoueurSuivant.setDisable(false);
+                    buttonJoueurSuivant.setText("Commencer partie!!!");
+
+
                 } else {
                     buttonJoueurSuivant.setDisable(false);
                 }

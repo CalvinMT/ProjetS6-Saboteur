@@ -126,13 +126,9 @@ public class MenuCreationPartie {
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
-            //System.out.println(Saboteur.getMoteur());
         }
 
-        /*Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);*/
+
 
         Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");

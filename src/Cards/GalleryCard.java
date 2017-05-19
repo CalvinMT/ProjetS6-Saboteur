@@ -204,7 +204,7 @@ public class GalleryCard extends Card {
         }
         if(nb == 0){
             return false;
-        } else if(nb == 1 && this.canHasCenter()) {
+        } else if(nb == 1 && !this.canHasCenter()) {
             return true;
         } else {
             return nb > 1;
