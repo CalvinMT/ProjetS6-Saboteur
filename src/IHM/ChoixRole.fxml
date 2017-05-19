@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="borderPaneChoixRole" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.ChoixRole">
+   <center>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="805.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="705.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="181.0" minHeight="181.0" prefHeight="181.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="181.0" minHeight="181.0" prefHeight="181.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choix du rôle" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choisis une carte afin de connaître ton rôle au cours de la prochaine manche" textAlignment="CENTER" wrappingWidth="306.07080078125" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="118.0" prefWidth="118.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="181.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="181.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="imageCarteRole1" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageCarteRole2" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                  <ImageView fx:id="imageCarteRole12" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole11" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole10" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole9" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole8" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole7" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole6" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+                  <ImageView fx:id="imageCarteRole5" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+                  <ImageView fx:id="imageCarteRole4" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+                  <ImageView fx:id="imageCarteRole3" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                  <Text fx:id="textRolePris1" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris2" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris3" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris4" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris5" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris6" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris7" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris8" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris9" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris10" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris11" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="textRolePris12" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </GridPane>
+            <Text fx:id="textJoueurCourant" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour du joueur X" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+            <Button fx:id="buttonJoueurSuivant" mnemonicParsing="false" onAction="#handleButtonJoueurSuivant" text="Joueur suivant" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

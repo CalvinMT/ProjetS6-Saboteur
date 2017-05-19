@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;
-    private int currentPlayer;
+    private int currentPlayer = -1;
     private HandRole roleCards;
     private Board board;
 
@@ -54,19 +54,22 @@ public class Moteur {
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
-        this.arrayPlayer = arrayPlayer;
-        this.pile = new DeckGalleryAction();
-        currentPlayer = 0;
-        roleCards = new HandRole(nbPlayer());
-        this.board = new Board();
+        if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
+            this.arrayPlayer = arrayPlayer;
+            this.pile = new DeckGalleryAction();
+            currentPlayer = 0;
+            roleCards = new HandRole(nbPlayer());
+            this.board = new Board();
 
-        setAllPlayerBoard();
-        state = State.ChooseRole;
+            setAllPlayerBoard();
+            initHand();
 
-        setAllPlayerBoard();
-        this.echeance = System.nanoTime();
+            System.out.println("Partie configurée!");
 
-        System.out.println("Partie configurée!");
+
+        } else {
+            System.err.println("Tableau de joueur impossible");
+        }
     }
 
     public void setAllPlayerBoard(){
@@ -136,12 +139,6 @@ public class Moteur {
         }
     }
 
-    // choix des roles en début de manche
-    public void chooseRole(HandRole hand){
-        if(getCurrentPlayer().chooseRoleCard(hand)){
-            nextPlayer();
-        }
-    }
 
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
@@ -160,6 +157,15 @@ public class Moteur {
             System.out.println();
         }
     }
+
+    // affiche les infos joueurs en version texte
+    public void promptPlayersRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
+            System.out.println();
+        }
+    }
+
 
     // passe au joueur suivant
     public void nextPlayer(){
@@ -183,6 +189,11 @@ public class Moteur {
         } else {
             return null;
         }
+    }
+
+    // si le joueur courant a un role
+    public boolean roleSet(){
+        return getCurrentPlayer().getRole() != null;
     }
 
     // le joueur courant joue une carte sur le board
@@ -235,13 +246,13 @@ public class Moteur {
 
     // regarde la carte but choisi par le joueur
     public Card lookGoal(Couple c){
-        if(c.getY() == 8 && (c.getX() == 0 || c.getX() == 2 || c.getX() == -2)){
+        if(c.getColumn() == 8 && (c.getLine() == 0 || c.getLine() == 2 || c.getLine() == -2)){
             System.out.println("Taille mine: "+this.board.getMineSize());
-            if(c.getX() == 2){ // B3
+            if(c.getLine() == 2){ // B3
                 return this.board.getMineElement(3).getCard();
-            } else if(c.getX() == 0){ // B2
+            } else if(c.getLine() == 0){ // B2
                 return this.board.getMineElement(2).getCard();
-            } else if(c.getX() == -2){ // B1
+            } else if(c.getLine() == -2){ // B1
                 return this.board.getMineElement(1).getCard();
             } else {
                 return null;
@@ -293,6 +304,18 @@ public class Moteur {
 
     public Deck getDeck(){
         return this.pile;
+    }
+
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    public int getNbRoleCards(){
+        return roleCards.nbCard();
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
     public String toString(){

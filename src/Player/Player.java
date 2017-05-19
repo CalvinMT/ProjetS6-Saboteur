@@ -2,7 +2,6 @@ package Player;
 
 
 import Cards.*;
-import com.sun.org.apache.regexp.internal.RE;
 import Board.Board;
 import Board.Couple;
 
@@ -92,6 +91,11 @@ public abstract class Player {
 
     // choix des cartes roles
     public abstract boolean chooseRoleCard(HandRole cards);
+
+    // assigne un nouveau pseudo
+    public void setPlayerName(String name){
+        this.playerName = name;
+    }
 
     // assigne un avatar
     public void setAvatar(String jpg){
@@ -188,7 +192,6 @@ public abstract class Player {
     }
 
     public Difficulty getDifficulty(){
-        System.out.println(this);
         return this.difficulty;
     }
 
@@ -203,5 +206,9 @@ public abstract class Player {
     public abstract String toString();
 
 
+
+    public boolean iaPlayCard() {
+        return false;
+    }
 
 }

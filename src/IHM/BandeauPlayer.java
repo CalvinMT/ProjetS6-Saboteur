@@ -22,12 +22,45 @@ public class BandeauPlayer {
     private Text textType;
     private ComboBox<String> comboBoxDifficulte;
     private Button buttonDelete;
-    
-	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
+
+	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, String difficulte, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
 		this.imageViewAvatar = avatar;
 		this.textPseudo = new Text(pseudo);
 		this.textType = new Text(type);
-		
+
+		if(!difficulte.equals("")){
+
+			this.comboBoxDifficulte = new ComboBox<String>(difficulteList);
+
+			switch(difficulte){
+				case "Facile":
+					this.comboBoxDifficulte.setValue(difficulteList.get(0));
+					break;
+				case "Moyen":
+					this.comboBoxDifficulte.setValue(difficulteList.get(1));
+					break;
+				case "Difficile":
+					this.comboBoxDifficulte.setValue(difficulteList.get(2));
+					break;
+				default:
+					this.comboBoxDifficulte.setValue(difficulteList.get(0));
+					break;
+			}
+			this.comboBoxDifficulte.setOnAction(new EventHandler <ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+
+					// update dans le lobby
+					int num = tableView.getItems().indexOf(BandeauPlayer.this);
+					String diff = comboBoxDifficulte.getValue();
+					System.out.println("Difficulté: "+Player.Difficulty.stringToDiff(diff));
+					lobby.updateDifficulty(num, Player.Difficulty.stringToDiff(diff));
+
+					System.out.println(lobby);
+				}
+			});
+		}
+
 		ImageView imageViewCross = new ImageView(new Image("ressources/cross.png"));
 		imageViewCross.setFitWidth(20);
 		imageViewCross.setFitHeight(20);
@@ -39,10 +72,18 @@ public class BandeauPlayer {
 				int num = tableView.getItems().indexOf(BandeauPlayer.this);
 
 				lobby.deletePlayer(num);
+				tableView.getItems().remove(BandeauPlayer.this);
+
+
+				// mise a jour des bandeau
+				for(int i=num; i<tableView.getItems().size(); i++){
+
+					String name = lobby.getArrayPlayer().get(i).getPlayerName();
+					tableView.getItems().get(i).setTextPseudo(name);
+				}
 
 				System.out.println(lobby);
 
-				tableView.getItems().remove(BandeauPlayer.this);
 				if(tableView.getItems().size()<=3)
 					buttonJouer.setDisable(true);
 				if(tableView.getItems().size()<10){
@@ -53,64 +94,12 @@ public class BandeauPlayer {
 		});
 	}
 
-	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, String difficulte, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
-		this.imageViewAvatar = avatar;
-		this.textPseudo = new Text(pseudo);
-		this.textType = new Text(type);
-		this.comboBoxDifficulte = new ComboBox<String>(difficulteList);
+	public BandeauPlayer (TableView<BandeauPlayer> tableView, ImageView avatar, String pseudo, String type, Button buttonJouer, Button buttonAjouterPlayer, Button buttonAjouterIA, Lobby lobby) {
+		this(tableView, avatar, pseudo, type, "", buttonJouer, buttonAjouterPlayer, buttonAjouterIA, lobby);
+	}
 
-		switch(difficulte){
-			case "Facile":
-				this.comboBoxDifficulte.setValue(difficulteList.get(0));
-				break;
-			case "Moyen":
-				this.comboBoxDifficulte.setValue(difficulteList.get(1));
-				break;
-			case "Difficile":
-				this.comboBoxDifficulte.setValue(difficulteList.get(2));
-				break;
-			default:
-				this.comboBoxDifficulte.setValue(difficulteList.get(0));
-				break;
-		}
-		this.comboBoxDifficulte.setOnAction(new EventHandler <ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-
-				// update dans le lobby
-				int num = tableView.getItems().indexOf(BandeauPlayer.this);
-				String diff = comboBoxDifficulte.getValue();
-				System.out.println("Difficulté: "+Player.Difficulty.stringToDiff(diff));
-				lobby.updateDifficulty(num, Player.Difficulty.stringToDiff(diff));
-
-				System.out.println(lobby);
-			}
-		});
-
-		ImageView imageViewCross = new ImageView(new Image("ressources/cross.png"));
-		imageViewCross.setFitWidth(20);
-		imageViewCross.setFitHeight(20);
-		this.buttonDelete = new Button("", imageViewCross);
-		this.buttonDelete.setOnAction(new EventHandler <ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-
-				int num = tableView.getItems().indexOf(BandeauPlayer.this);
-
-				lobby.deletePlayer(num);
-
-				System.out.println(lobby);
-
-
-				tableView.getItems().remove(BandeauPlayer.this);
-				if(tableView.getItems().size()<=3)
-					buttonJouer.setDisable(true);
-				if(tableView.getItems().size()<10){
-					buttonAjouterPlayer.setDisable((false));
-					buttonAjouterIA.setDisable((false));
-				}
-			}
-		});
+	public void setTextPseudo(String name){
+		this.textPseudo.setText(name);
 	}
 
 	public ImageView getAvatar () {
