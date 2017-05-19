@@ -2,7 +2,6 @@ package Player;
 
 
 import Cards.*;
-import com.sun.org.apache.regexp.internal.RE;
 import Board.Board;
 import Board.Couple;
 
@@ -171,7 +170,6 @@ public abstract class Player {
     }
 
     public Difficulty getDifficulty(){
-        System.out.println(this);
         return this.difficulty;
     }
 
@@ -186,5 +184,9 @@ public abstract class Player {
     public abstract String toString();
 
 
+
+    public boolean iaPlayCard() {
+        return false;
+    }
 
 }

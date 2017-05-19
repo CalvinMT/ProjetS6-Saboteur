@@ -22,6 +22,7 @@ import javafx.util.Duration;
 public class MainLoader extends Application {
 	
 	public static Stage primaryStage; // XXX - Not good looking.
+	public static Scene scene; // XXX - Not good looking.
 	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMainLoader; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMenuMain; // XXX - Not good looking.
@@ -62,13 +63,13 @@ public class MainLoader extends Application {
 	}
 	
 	
-	public static void autoResizeToResolution (double width, double height) {
+	public static void autoResizeToResolution (double width, double height, AnchorPane anchorPaneMenu) {
 		if (anchorPaneMainLoader != null) {
 			anchorPaneMainLoader.setPrefWidth(width-(width/3));
 			anchorPaneMainLoader.setPrefHeight(height-217); // FIXME
-			if (anchorPaneMenuMain != null) {
-		        anchorPaneMenuMain.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
-		        anchorPaneMenuMain.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
+			if (anchorPaneMenu != null) {
+				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
+				anchorPaneMenu.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
 			}
 		}
 	}
@@ -144,18 +145,19 @@ public class MainLoader extends Application {
 		}
 		
 		primaryStage.setTitle("Saboteur");
-		primaryStage.setScene(new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT));
+		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
 		// Load MenuMain.fxml
 		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-        anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
-        
-        // Automatic Resizing
-        //autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT);
-        
-        
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+		
+		// Automatic Resizing
+		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+		
+		
 		primaryStage.show();
 	}
 

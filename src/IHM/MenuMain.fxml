@@ -3,62 +3,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="anchorPaneMenuMain" styleClass="anchorMenuMain" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
+<AnchorPane fx:id="anchorPaneMenuMain" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
    <children>
-      <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane alignment="CENTER">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-               </rowConstraints>
-               <children>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="+Infinity" prefWidth="+Infinity" text="Partie En Ligne" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="+Infinity" prefWidth="+Infinity" text="Didactitiel" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleOptions" prefHeight="+Infinity" prefWidth="+Infinity" text="Options" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="+Infinity" prefWidth="+Infinity" text="Quitter" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleLocalGame" prefHeight="+Infinity" prefWidth="+Infinity" text="Partie Locale" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-               </children>
-            </GridPane>
+            <Button fx:id="buttonLocal" mnemonicParsing="true" onAction="#handleLocalGame" prefHeight="60.0" text="Partie Locale" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonOnline" disable="true" mnemonicParsing="false" prefHeight="60.0" text="Partie En Ligne" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonTutorial" disable="true" mnemonicParsing="false" prefHeight="60.0" text="Didactitiel" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonOptions" mnemonicParsing="false" onAction="#handleOptions" prefHeight="60.0" text="Options" VBox.vgrow="ALWAYS" />
+            <Button disable="true" mnemonicParsing="false" text="NOT_TO_USE" visible="false" />
+            <Button fx:id="buttonQuit" mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="60.0" text="Quitter" VBox.vgrow="ALWAYS" />
          </children>
-      </HBox>
+         <padding>
+            <Insets bottom="50.0" left="300.0" right="300.0" top="50.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

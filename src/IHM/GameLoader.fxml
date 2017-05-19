@@ -4,13 +4,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="borderPaneGameLoader" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameLoader">
+<BorderPane fx:id="borderPaneGameLoader" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameLoader">
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
             <AnchorPane fx:id="anchorPaneGameLoaderBoard" />
-            <AnchorPane fx:id="anchorPaneGameLoaderTop" pickOnBounds="false" />
-            <AnchorPane fx:id="anchorPaneGameLoaderBottom" pickOnBounds="false" />
+            <AnchorPane fx:id="anchorPaneGameLoaderInteract" />
          </children>
       </StackPane>
    </center>
