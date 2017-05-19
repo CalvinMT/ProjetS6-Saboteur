@@ -16,7 +16,7 @@ public class PlayerHuman extends Player{
 
     // Constructeur
     public PlayerHuman(int index) {
-        this.playerName = "Joueur"+index;
+        this.playerName = "Joueur "+index;
         this.num = index;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
@@ -24,7 +24,7 @@ public class PlayerHuman extends Player{
     }
 
     public PlayerHuman(int index, Board b) {
-        this.playerName = "Joueur"+index;
+        this.playerName = "Joueur "+index;
         this.num = index;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();

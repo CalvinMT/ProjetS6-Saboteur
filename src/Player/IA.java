@@ -25,7 +25,7 @@ public class IA extends Player{
     private Couple posToPlay;
 
     public IA(int index){
-        this.playerName = "Joueur" + index;
+        this.playerName = "IA " + index;
         this.num = index;
         this.difficulty = Difficulty.Easy;
         this.goldPoints = 0;
