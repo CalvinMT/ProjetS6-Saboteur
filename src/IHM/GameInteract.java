@@ -65,7 +65,7 @@ public class GameInteract {
 		cardsInHand = new ImageView [numberOfCardsInHand];
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
-			cardsInHand[i] = new ImageView(getImageCard(card));
+			cardsInHand[i] = new ImageView(Bottom.getImageCard(card));
 			cardsInHandEvents(cardsInHand[i], card);
 		}
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
@@ -210,7 +210,7 @@ public class GameInteract {
 	
 	
 	
-	private Image getImageCard (Card c) {
+	/*private Image getImageCard (Card c) {
         Image image = null;
         switch(c.getType()) {
             case action:
@@ -402,6 +402,6 @@ public class GameInteract {
                 image = null;
         }
         return image;
-    }
+    }*/
 	
 }

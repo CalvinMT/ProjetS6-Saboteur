@@ -128,8 +128,6 @@ public class MenuCreationPartie {
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
         }
 
-
-
         Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));

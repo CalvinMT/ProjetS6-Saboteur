@@ -60,14 +60,28 @@ public class ChoixRole {
     private GridPane gridPaneChoixRole;
 
     @FXML
-    private void handleButtonJoueurSuivant(){
-        if(m.roleSet()){
+    private BorderPane borderPaneChoixRole;
+
+    @FXML
+    private void handleButtonJoueurSuivant() throws Exception {
+        if(m.allRoleAreSet()){
+
+            // Lancement de la partie
+            System.out.println("Lancement de la partie");
+
+            Scene scene = (Scene) borderPaneChoixRole.getScene();
+            borderPaneChoixRole = (BorderPane) scene.lookup("#borderPaneChoixRole");
+            BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+            borderPaneChoixRole.getChildren().setAll(borderPaneGameLoader);
+
+        } else if(m.roleSet()){
 
             System.out.println("Joueur suivant");
             buttonJoueurSuivant.setDisable(true);
             cartesRole.get(this.num).setVisible(false);
             m.nextPlayer();
             textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+
         }
     }
 

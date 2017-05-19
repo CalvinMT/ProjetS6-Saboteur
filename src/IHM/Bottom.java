@@ -140,7 +140,7 @@ public class Bottom {
     }
     
     
-    private Image getImageCard(Card c){
+    static public Image getImageCard(Card c){
         Image image = null;
         switch(c.getType()){
             case action:
