@@ -19,10 +19,11 @@ import java.util.ArrayList;
 
 public class ChoixRole {
 
-    Moteur m;
-    int nbPlayer;
-    HandRole roles;
-    ArrayList<ImageView> cartesRole;
+    private Moteur m;
+    private int nbPlayer;
+    private HandRole roles;
+    private ArrayList<ImageView> cartesRole;
+    private ArrayList<Text> infoEmplacement;
     private int num;
 
 
@@ -51,6 +52,30 @@ public class ChoixRole {
     private ImageView imageCarteRole11;
     @FXML
     private ImageView imageCarteRole12;
+    @FXML
+    private Text textRolePris1;
+    @FXML
+    private Text textRolePris2;
+    @FXML
+    private Text textRolePris3;
+    @FXML
+    private Text textRolePris4;
+    @FXML
+    private Text textRolePris5;
+    @FXML
+    private Text textRolePris6;
+    @FXML
+    private Text textRolePris7;
+    @FXML
+    private Text textRolePris8;
+    @FXML
+    private Text textRolePris9;
+    @FXML
+    private Text textRolePris10;
+    @FXML
+    private Text textRolePris11;
+    @FXML
+    private Text textRolePris12;
 
     @FXML
     private Text textJoueurCourant;
@@ -79,6 +104,7 @@ public class ChoixRole {
             System.out.println("Joueur suivant");
             buttonJoueurSuivant.setDisable(true);
             cartesRole.get(this.num).setVisible(false);
+            infoEmplacement.get(this.num).setText(m.getCurrentPlayer().getPlayerName());
             m.nextPlayer();
             textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
 
@@ -118,14 +144,10 @@ public class ChoixRole {
                 }
 
                 if(m.allRoleAreSet()){   //Si c'était la dernière carte
+
                     textJoueurCourant.setText("Commencer la partie");
-
-
-                    //TODO changer bouton pour "Commencer partie"
-
                     buttonJoueurSuivant.setDisable(false);
                     buttonJoueurSuivant.setText("Commencer partie!!!");
-
 
                 } else {
                     buttonJoueurSuivant.setDisable(false);
@@ -133,7 +155,6 @@ public class ChoixRole {
 
             }
         }
-
 
     }
 
@@ -143,6 +164,7 @@ public class ChoixRole {
         nbPlayer = m.nbPlayer();
         roles = m.getRoleCards(); // tableau de cartes roles
         cartesRole = new ArrayList<ImageView>(12);
+        infoEmplacement = new ArrayList<Text>(12);
         buttonJoueurSuivant.setDisable(true);
 
         cartesRole.add(0, imageCarteRole1);
@@ -157,6 +179,20 @@ public class ChoixRole {
         cartesRole.add(9, imageCarteRole10);
         cartesRole.add(10, imageCarteRole11);
         cartesRole.add(11, imageCarteRole12);
+        infoEmplacement.add(0, textRolePris1);
+        infoEmplacement.add(1, textRolePris2);
+        infoEmplacement.add(2, textRolePris3);
+        infoEmplacement.add(3, textRolePris4);
+        infoEmplacement.add(4, textRolePris5);
+        infoEmplacement.add(5, textRolePris6);
+        infoEmplacement.add(6, textRolePris7);
+        infoEmplacement.add(7, textRolePris8);
+        infoEmplacement.add(8, textRolePris9);
+        infoEmplacement.add(9, textRolePris10);
+        infoEmplacement.add(10, textRolePris11);
+        infoEmplacement.add(11, textRolePris12);
+
+
 
         for(int i=0; i<nbPlayer+1; i++){
             cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
