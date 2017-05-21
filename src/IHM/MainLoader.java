@@ -146,6 +146,8 @@ public class MainLoader extends Application {
 		
 		primaryStage.setTitle("Saboteur");
 		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setWidth(SCREEN_WIDTH);
+		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
