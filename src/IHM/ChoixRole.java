@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import Cards.RoleCard;
 import java.util.ArrayList;
 
+import static javafx.scene.shape.StrokeType.OUTSIDE;
+
 public class ChoixRole {
 
     static private Moteur m;
@@ -30,6 +32,8 @@ public class ChoixRole {
     private int num;
 
 
+    @FXML
+    private GridPane MainGridPane;
 
     @FXML
     private ImageView imageCarteRole1;
@@ -80,8 +84,9 @@ public class ChoixRole {
     @FXML
     private Text textRolePris12;
 
-    @FXML
-    private Text textJoueurCourant;
+
+    static public Text textJoueurCourant;
+
     @FXML
     private Button buttonJoueurSuivant;
     @FXML
@@ -169,7 +174,7 @@ public class ChoixRole {
     }
 
     static public void updateText(){
-
+        textJoueurCourant.setText(m.getCurrentPlayer().getPlayerName());
     }
 
 
@@ -223,6 +228,16 @@ public class ChoixRole {
         infoEmplacement.add(11, textRolePris12);
 
 
+        // init textCurrentPlayer
+        textJoueurCourant = new Text();
+        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+        textJoueurCourant.setStrokeWidth(0.0);
+        textJoueurCourant.setStrokeType(OUTSIDE);
+
+        MainGridPane.add(textJoueurCourant, 1, 0);
+
+//        <Text fx:id="textJoueurCourant" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+
 
         for(int i=0; i<nbPlayer+1; i++){
             cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
@@ -230,7 +245,6 @@ public class ChoixRole {
 
 //        System.out.println(roles.print_without_visibility());
 
-        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
         m.setState(State.ChooseRole);
     }
     // getImageCard(Card c) gameInteractive
