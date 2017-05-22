@@ -284,6 +284,17 @@ public class Board {
         //TODO à changer car la carte gold peut etre bloquer et inacessible
     }
 
+    public String mine(){
+        String renvoi = "Mine:\n";
+
+        for(int i=0; i<mine.size(); i++){
+            renvoi +=  mine.get(i) + "\n";
+        }
+
+
+        return renvoi;
+    }
+
 
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
 
