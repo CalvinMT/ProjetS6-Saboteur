@@ -178,6 +178,7 @@ public class IA extends Player{
         return true;
     }
 
+
     @Override
     public String toString(){
         String renvoi = "";
