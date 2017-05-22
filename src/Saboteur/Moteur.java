@@ -27,7 +27,7 @@ public class Moteur {
 
     private long echeance;
 
-    private State state = State.Waiting;
+    private State state;
     public enum State {
         Waiting,
         ChooseRole,
@@ -359,6 +359,7 @@ public class Moteur {
     public String toString(){
         String renvoi = "Moteur: \n";
 
+        renvoi += "Etat: "+this.state+"\n";
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";

@@ -167,16 +167,14 @@ public class MainLoader extends Application {
         ///// POUR FAIRE JOUER L'IA
 
 
-        //TODO integrer a l'interface graphique
 		AnimationTimer game = new AnimationTimer() {
 
-			Moteur engine = Saboteur.getMoteur();
-
 			Random rand = new Random();
+
 			@Override
 			public void handle(long temps) {
 
-
+				Moteur engine = Saboteur.getMoteur();
 
 				if(engine != null){
 
@@ -185,7 +183,7 @@ public class MainLoader extends Application {
 						case ChooseRole:
 //						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
 							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player){
-//							engine.chooseRole(engine.getRoleCards());
+
 
 								int numRoleCards;
 
@@ -197,13 +195,24 @@ public class MainLoader extends Application {
 									Card c = engine.getRoleCard(numRoleCards);
 									engine.setTrueTaken(numRoleCards);
 									engine.getCurrentPlayer().assignRole(c);
-									ChoixRole.returnCard(numRoleCards);
+									ChoixRole.updateGraphic(numRoleCards);
+									engine.nextPlayer();
+									ChoixRole.updateText();
+
+									long l = 1000;
+									try {
+
+										Thread.sleep(l);
+									} catch (Exception ex){
+										System.err.println("Erreur sleep");
+									}
 
 								} catch (Exception ex){
 									System.err.println("Erreur lors du choix des roles");
 									ex.printStackTrace();
 								}
 
+								engine.promptPlayersRole();
 
 								if(engine.allRoleAreSet()){
 									engine.setState(State.Game);
@@ -214,6 +223,7 @@ public class MainLoader extends Application {
 
 						// déroulement d'une manche
 						case Game:
+//							System.err.println("Game");
 							if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
 							/*engine.nextAnimationTimer anim = new AnimationTimer() {
 								@Override

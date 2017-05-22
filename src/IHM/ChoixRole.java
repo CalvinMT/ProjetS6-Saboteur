@@ -162,11 +162,14 @@ public class ChoixRole {
         configEndChoose();
     }
 
-    static public void returnCard(int i){
+    static public void updateGraphic(int i){
         String pseudo = m.getCurrentPlayer().getPlayerName();
         cartesRole.get(i).setVisible(false);
         infoEmplacement.get(i).setText(pseudo);
+    }
 
+    static public void updateText(){
+//        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
     }
 
 
@@ -225,10 +228,10 @@ public class ChoixRole {
             cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
         }
 
-        System.out.println(roles.print_without_visibility());
+//        System.out.println(roles.print_without_visibility());
 
         textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
-        m.setState(State.ChooseGold);
+        m.setState(State.ChooseRole);
     }
     // getImageCard(Card c) gameInteractive
     //m.getCurrentPlayer().getPlayerName();
