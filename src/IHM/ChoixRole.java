@@ -130,9 +130,9 @@ public class ChoixRole {
                 if(carteCourante.getType() == Card.Card_t.role){
 
                     if(((RoleCard)carteCourante).isMinor()){
-                        cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
+                        cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.png"));
                     }else if(((RoleCard)carteCourante).isSaboteur()){
-                        cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
+                        cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.png"));
                     }
 //                    cartesRole.remove(i);
                     this.num = i;
@@ -195,7 +195,7 @@ public class ChoixRole {
 
 
         for(int i=0; i<nbPlayer+1; i++){
-            cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
+            cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.png"));
         }
 
         textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
