@@ -9,6 +9,7 @@ import Player.*;
 import Board.Board;
 import Board.Couple;
 
+import javax.management.relation.Role;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -21,12 +22,14 @@ public class Moteur {
     private Deck pile;
     private int currentPlayer = -1;
     private HandRole roleCards;
+    private ArrayList<Boolean> roleTaken;
     private Board board;
 
     private long echeance;
 
-    private State state;
+    private State state = State.Waiting;
     public enum State {
+        Waiting,
         ChooseRole,
         Game,
         ChooseGold;
@@ -47,8 +50,9 @@ public class Moteur {
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
+        initRoleTaken();
         this.board = new Board();
-        state = State.ChooseRole;
+        state = State.Waiting;
         setAllPlayerBoard();
         this.echeance = System.nanoTime();
     }
@@ -59,7 +63,10 @@ public class Moteur {
             this.pile = new DeckGalleryAction();
             currentPlayer = 0;
             roleCards = new HandRole(nbPlayer());
+            initRoleTaken();
             this.board = new Board();
+            state = State.Waiting;
+            this.echeance = System.nanoTime();
 
             setAllPlayerBoard();
             initHand();
@@ -91,6 +98,14 @@ public class Moteur {
 
         for(int i=0; i<nbPlayer; i++){
             arrayPlayer.add(new PlayerHuman(i+1, this.board));
+        }
+    }
+
+    public void initRoleTaken(){
+        roleTaken = new ArrayList<>();
+
+        for(int i=0; i<roleCards.nbCard(); i++){
+            roleTaken.add(false);
         }
     }
 
@@ -162,7 +177,6 @@ public class Moteur {
     public void promptPlayersRole(){
         for(int i=0; i<nbPlayer(); i++){
             System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
-            System.out.println();
         }
     }
 
@@ -274,6 +288,32 @@ public class Moteur {
         return this.roleCards;
     }
 
+    public ArrayList<Boolean> getRoleCardsTaken(){
+        return this.roleTaken;
+    }
+
+    public boolean isTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            return roleTaken.get(i);
+        } else {
+            return false;
+        }
+    }
+
+    public void setTrueTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            this.roleTaken.set(i, true);
+        }
+    }
+
+    public Card getRoleCard(int i) throws Exception{
+        if(i >= 0 && i < roleTaken.size()){
+            return roleCards.chooseOne_without_remove(i);
+        } else {
+            throw new Exception();
+        }
+    }
+
     public long getEcheance(){
         return this.echeance;
     }
@@ -309,6 +349,8 @@ public class Moteur {
     public int getNbRoleCards(){
         return roleCards.nbCard();
     }
+
+
 
     public Board getBoard(){
         return this.board;

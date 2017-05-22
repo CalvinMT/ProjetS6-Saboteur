@@ -3,8 +3,12 @@ package IHM;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 
+import Cards.Card;
+import Cards.RoleCard;
+import Player.Player;
 import Saboteur.Moteur.State;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
@@ -160,38 +164,80 @@ public class MainLoader extends Application {
         anchorPaneMainLoader.getChildren().setAll(anchorPane);
 
 
+        ///// POUR FAIRE JOUER L'IA
+
+
         //TODO integrer a l'interface graphique
-		/*AnimationTimer game = new AnimationTimer() {
+		AnimationTimer game = new AnimationTimer() {
+
 			Moteur engine = Saboteur.getMoteur();
+
+			Random rand = new Random();
 			@Override
 			public void handle(long temps) {
 
-				switch(engine.getState()){
-					// choix des roles
-					case ChooseRole:
-						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
-							engine.chooseRole(engine.getRoleCards());
-							if(engine.allRoleAreSet()){
-								engine.setState(State.Game);
+
+
+				if(engine != null){
+
+					switch(engine.getState()){
+						// choix des roles
+						case ChooseRole:
+//						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player){
+//							engine.chooseRole(engine.getRoleCards());
+
+								int numRoleCards;
+
+								do {
+									numRoleCards = rand.nextInt(engine.getNbRoleCards());
+								} while(engine.isTaken(numRoleCards));
+
+								try {
+									Card c = engine.getRoleCard(numRoleCards);
+									engine.setTrueTaken(numRoleCards);
+									engine.getCurrentPlayer().assignRole(c);
+									ChoixRole.returnCard(numRoleCards);
+
+								} catch (Exception ex){
+									System.err.println("Erreur lors du choix des roles");
+									ex.printStackTrace();
+								}
+
+
+								if(engine.allRoleAreSet()){
+									engine.setState(State.Game);
+								}
 							}
-						}
 
-						break;
+							break;
 
-					// déroulement d'une manche
-					case Game:
-						if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
-							engine.nextPlayer();
-							//TODO ajouter maj graphique
-						}
+						// déroulement d'une manche
+						case Game:
+							if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							/*engine.nextAnimationTimer anim = new AnimationTimer() {
+								@Override
+								public void handle(long temps) {
+									if (plateau.enCours() && (temps > echeance) && joueurs[joueurCourant].tempsEcoule()) {
+										changeJoueur();
+										dessin();
+									}
+								}
+							};
+        					anim.start();Player();*/
+								//TODO ajouter maj graphique
+							}
 
-						break;
+							break;
 
-					// choix de l'or
-					case ChooseGold:
-						//TODO chooseCard
-						// not implemented yet
-						break;
+						// choix de l'or
+						case ChooseGold:
+							//TODO chooseCard
+							// not implemented yet
+							break;
+						default:
+							break;
+					}
 				}
 
 
@@ -199,7 +245,8 @@ public class MainLoader extends Application {
 				//TODO boucle de jeu
 			}
 		};
-		game.start();*/
+
+		game.start();
 	}
 
     public static void main (String[] args) {
