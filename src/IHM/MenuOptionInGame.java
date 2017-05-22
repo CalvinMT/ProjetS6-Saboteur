@@ -2,8 +2,14 @@ package IHM;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MenuOptionInGame {
 
@@ -14,8 +20,11 @@ public class MenuOptionInGame {
     private Slider sliderEffets;
 
     @FXML
-    void handleRetour(ActionEvent event) {
-        System.out.println("Retour pressed");
+    void handleRetour(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MenuPause.fxml"));
+        Stage stage = (Stage) sliderEffets.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML

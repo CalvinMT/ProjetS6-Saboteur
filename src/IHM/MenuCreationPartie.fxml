@@ -3,8 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,38 +15,38 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
+<AnchorPane fx:id="anchorPaneMenuCreationPartie" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ComboBox fx:id="comboBoxAvatar" onAction="#handleComboBoxAvatar" prefHeight="70.0" prefWidth="104.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <ComboBox fx:id="comboBoxAvatar" prefHeight="70.0" prefWidth="104.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -51,37 +54,61 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" GridPane.columnIndex="5" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <ComboBox fx:id="comboBoxType" onAction="#handleComboBoxType" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="buttonAjouterPlayer" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterPlayer" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </ComboBox>
-            <Button fx:id="buttonAjouter" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouter" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="178.0" text="Retour Menu" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Button fx:id="buttonRetourMenu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="178.0" text="Retour Menu" GridPane.columnIndex="5" GridPane.rowIndex="9">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </TextField>
-            <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="3" GridPane.rowSpan="3" />
+            <TableView fx:id="tableViewListeJoueur" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="5" GridPane.rowSpan="3">
+              <columns>
+                <TableColumn fx:id="columnAvatar" prefWidth="118.0" resizable="false" text="Avatar" />
+                <TableColumn fx:id="columnPseudo" prefWidth="172.0" resizable="false" text="Pseudo" />
+                <TableColumn fx:id="columnType" prefWidth="120.0" resizable="false" text="Type" />
+                  <TableColumn fx:id="columnDifficulte" prefWidth="114.0" resizable="false" text="Difficulté" />
+                <TableColumn fx:id="columnDelete" prefWidth="85.0" resizable="false" text="Suppr." />
+              </columns>
+            </TableView>
+            <Button fx:id="buttonAjouterIA" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ordinateur :" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../ressources/robot_miner.png" />
+               </image>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="comboBoxDifficulteIA" onAction="#handleComboBoxDifficulteIA" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </ComboBox>
          </children>
       </GridPane>
    </children>

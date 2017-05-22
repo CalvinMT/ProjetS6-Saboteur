@@ -5,24 +5,31 @@ import Board.Couple;
 import Cards.ActionCard;
 import Cards.RepareSabotageCard;
 
+import Player.Player;
+
+import java.util.ArrayList;
+
 public class Saboteur {
 
-    static public void main(String [] args){
+    static public Moteur engine;
 
-        int nbPlayer = 4;
-        Moteur m = new Moteur(nbPlayer);
+    /*public Saboteur(){
+
+    }
+    
+    public void start_game(){
+
+
+        System.out.println(m);
 
         try {
             System.out.println(m);
-            while(!m.allRoleAreSet()){
-                m.chooseRole(0);
-            }
+
 
         } catch(Exception e){
             System.err.println("Erreur choix du role");
         }
 
-        m.initHand();
         m.promptPlayers();
 
         System.out.println("Maj");
@@ -36,7 +43,18 @@ public class Saboteur {
 
         m.promptPlayers();
 
+    }*/
+
+    static public Moteur getMoteur(){
+        return engine;
     }
+
+
+    // init du moteur a partir d'un tableau de joueur
+    static public void initMoteur(ArrayList<Player> arrayPlayer){
+        engine = new Moteur(arrayPlayer);
+    }
+
 
 
 

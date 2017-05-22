@@ -4,6 +4,8 @@ package Cards;
 /// Carte que le joueur a dans la main
 
 
+import java.util.ArrayList;
+
 public class Hand extends Deck {
 
     protected boolean visible = false;
@@ -30,6 +32,7 @@ public class Hand extends Deck {
             return this.arrayCard.remove(0);
         }
     }
+
 
     public void setVisibility(boolean b){
         this.visible = b;
@@ -77,5 +80,9 @@ public class Hand extends Deck {
     }
 
 
+    // Tests
+    public ArrayList<Card> getArrayCard() {
+        return this.arrayCard;
+    }
 
 }

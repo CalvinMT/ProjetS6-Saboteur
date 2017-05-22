@@ -1,42 +1,42 @@
 package Board;
 
 public class Couple {
-    private int x, y;
+    private int l, c;
 
 
     public Couple() {
-        this.x = 0;
-        this.y = 0;
+        this.l = 0;
+        this.c = 0;
     }
 
-    public Couple(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Couple(int l, int c) {
+        this.l = l;
+        this.c = c;
     }
 
-    public int getX() {
-        return x;
+    public int getLine() {
+        return l;
     }
 
-    public int getY() {
-        return y;
+    public int getColumn() {
+        return c;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setLine(int l) {
+        this.l = l;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setColumn(int c) {
+        this.c = c;
     }
 
     /*    public boolean equals(Couple c) {
-        return this.x == c.getX() && this.y == c.getY();
+        return this.x == c.getLine() && this.y == c.getColumn();
     }*/
 
     @Override
     public String toString() {
-        return "("+this.x+","+this.y+")";
+        return "("+this.l+","+this.c+")";
     }
 
     @Override
@@ -46,14 +46,14 @@ public class Couple {
 
         Couple couple = (Couple) o;
 
-        if (getX() != couple.getX()) return false;
-        return getY() == couple.getY();
+        if (getLine() != couple.getLine()) return false;
+        return getColumn() == couple.getColumn();
     }
 
     @Override
     public int hashCode() {
-        int result = getX();
-        result = 31 * result + getY();
+        int result = getLine();
+        result = 31 * result + getColumn();
         return result;
     }
 }

@@ -9,6 +9,7 @@ import Player.*;
 import Board.Board;
 import Board.Couple;
 
+import javax.management.relation.Role;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -19,11 +20,23 @@ import java.util.ArrayList;
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;
-    private int currentPlayer;
+    private int currentPlayer = -1;
     private HandRole roleCards;
+    private ArrayList<Boolean> roleTaken;
+    private Board board;
 
-    //ajout du board
-    Board board;
+    private long echeance;
+
+    private State state;
+    public enum State {
+        Waiting,
+        ChooseRole,
+        Game,
+        ChooseGold;
+
+    }
+
+
 
 
 
@@ -37,7 +50,39 @@ public class Moteur {
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
+        initRoleTaken();
         this.board = new Board();
+        state = State.Waiting;
+        setAllPlayerBoard();
+        this.echeance = System.nanoTime();
+    }
+
+    public Moteur(ArrayList<Player> arrayPlayer){
+        if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
+            this.arrayPlayer = arrayPlayer;
+            this.pile = new DeckGalleryAction();
+            currentPlayer = 0;
+            roleCards = new HandRole(nbPlayer());
+            initRoleTaken();
+            this.board = new Board();
+            state = State.Waiting;
+            this.echeance = System.nanoTime();
+
+            setAllPlayerBoard();
+            initHand();
+
+            System.out.println("Partie configurée!");
+
+
+        } else {
+            System.err.println("Tableau de joueur impossible");
+        }
+    }
+
+    public void setAllPlayerBoard(){
+        for(int i=0; i<nbPlayer(); i++){
+            arrayPlayer.get(i).setBoard(this.board);
+        }
     }
 
 
@@ -53,6 +98,14 @@ public class Moteur {
 
         for(int i=0; i<nbPlayer; i++){
             arrayPlayer.add(new PlayerHuman(i+1, this.board));
+        }
+    }
+
+    public void initRoleTaken(){
+        roleTaken = new ArrayList<>();
+
+        for(int i=0; i<roleCards.nbCard(); i++){
+            roleTaken.add(false);
         }
     }
 
@@ -101,6 +154,7 @@ public class Moteur {
         }
     }
 
+
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
         for(int i=0; i<nbPlayer(); i++){
@@ -119,9 +173,18 @@ public class Moteur {
         }
     }
 
+    // affiche les infos joueurs en version texte
+    public void promptPlayersRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
+        }
+    }
+
+
     // passe au joueur suivant
     public void nextPlayer(){
         currentPlayer = (currentPlayer+1)%nbPlayer();
+        echeance = getCurrentPlayer().waitingTime()*1000000 + System.nanoTime();
     }
 
     // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
@@ -142,10 +205,18 @@ public class Moteur {
         }
     }
 
+    // si le joueur courant a un role
+    public boolean roleSet(){
+        return getCurrentPlayer().getRole() != null;
+    }
+
     // le joueur courant joue une carte sur le board
     public void play(GalleryCard c){
         if(c.getType() == Card.Card_t.gallery){
+
+            // TODO a test
             // ajout dans sur le board
+            this.board.addCard(c);
             nextPlayer();
         }
     }
@@ -159,7 +230,8 @@ public class Moteur {
                 nextPlayer();
             } else if(c.getAction() == ActionCard.Action.Crumbing){
 
-                // TODO methode crumbing
+                // TODO a test
+                this.board.removeCard(cou);
                 nextPlayer();
             }
         }
@@ -188,13 +260,13 @@ public class Moteur {
 
     // regarde la carte but choisi par le joueur
     public Card lookGoal(Couple c){
-        if(c.getY() == 8 && (c.getX() == 0 || c.getX() == 2 || c.getX() == -2)){
+        if(c.getColumn() == 8 && (c.getLine() == 0 || c.getLine() == 2 || c.getLine() == -2)){
             System.out.println("Taille mine: "+this.board.getMineSize());
-            if(c.getX() == 2){ // B3
+            if(c.getLine() == 2){ // B3
                 return this.board.getMineElement(3).getCard();
-            } else if(c.getX() == 0){ // B2
+            } else if(c.getLine() == 0){ // B2
                 return this.board.getMineElement(2).getCard();
-            } else if(c.getX() == -2){ // B1
+            } else if(c.getLine() == -2){ // B1
                 return this.board.getMineElement(1).getCard();
             } else {
                 return null;
@@ -204,7 +276,56 @@ public class Moteur {
         }
     }
 
+    public void setState(State s){
+        this.state = s;
+    }
 
+    public State getState(){
+        return this.state;
+    }
+
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    public ArrayList<Boolean> getRoleCardsTaken(){
+        return this.roleTaken;
+    }
+
+    public boolean isTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            return roleTaken.get(i);
+        } else {
+            return false;
+        }
+    }
+
+    public void setTrueTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            this.roleTaken.set(i, true);
+        }
+    }
+
+    public Card getRoleCard(int i) throws Exception{
+        if(i >= 0 && i < roleTaken.size()){
+            return roleCards.chooseOne_without_remove(i);
+        } else {
+            throw new Exception();
+        }
+    }
+
+    public long getEcheance(){
+        return this.echeance;
+    }
+
+    public void setEcheance(long l){
+        this.echeance = l;
+    }
+
+    // si la manche est terminée
+    public boolean endGame(){
+        return this.board.goalReached();
+    }
 
     // renvoie le numero du joueur courant
     public int currentNumPlayer(){
@@ -221,9 +342,24 @@ public class Moteur {
         return this.arrayPlayer;
     }
 
+    public Deck getDeck(){
+        return this.pile;
+    }
+
+    public int getNbRoleCards(){
+        return roleCards.nbCard();
+    }
+
+
+
+    public Board getBoard(){
+        return this.board;
+    }
+
     public String toString(){
         String renvoi = "Moteur: \n";
 
+        renvoi += "Etat: "+this.state+"\n";
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";

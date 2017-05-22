@@ -1,7 +1,6 @@
 package Cards;
 
 import Board.Couple;
-
 import static Cards.GalleryCard.Gallery_t.start;
 
 public class GalleryCard extends Card {
@@ -29,7 +28,7 @@ public class GalleryCard extends Card {
         this.east = e;
         this.west = w;
     }
-
+    
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
         this.type = Card_t.gallery;
         this.type_g = Gallery_t.tunnel;
@@ -44,8 +43,8 @@ public class GalleryCard extends Card {
     public GalleryCard(Gallery_t t, int x, int y, boolean c, boolean n, boolean s, boolean e, boolean w) {
         this.type = Card_t.gallery;
         this.type_g = t;
-        this.coord.setX(x);
-        this.coord.setY(y);
+        this.coord.setLine(x);
+        this.coord.setColumn(y);
         this.center = c;
         this.north = n;
         this.south = s;
@@ -53,20 +52,20 @@ public class GalleryCard extends Card {
         this.west = w;
     }
 
-    public int getX() {
-        return coord.getX();
+    public int getLine() {
+        return coord.getLine();
     }
 
-    public int getY() {
-        return coord.getY();
+    public int getColumn() {
+        return coord.getColumn();
     }
 
-    public void setX(int x) {
-        this.coord.setX(x);
+    public void setLine(int x) {
+        this.coord.setLine(x);
     }
 
-    public void setY(int y) {
-        this.coord.setY(y);
+    public void setColumn(int y) {
+        this.coord.setColumn(y);
     }
 
     public Gallery_t getGalleryType() {
@@ -120,8 +119,8 @@ public class GalleryCard extends Card {
 
     public boolean equals(GalleryCard c) {
         return  ((this.getGalleryType() == c.getGalleryType()) &&
-                (this.getX() == c.getX()) &&
-                (this.getY() == c.getY()) &&
+                (this.getLine() == c.getLine()) &&
+                (this.getColumn() == c.getColumn()) &&
                 (this.canHasCenter() == c.canHasCenter()) &&
                 (this.canHasNorth() == c.canHasNorth()) &&
                 (this.canHasSouth() == c.canHasSouth()) &&
@@ -130,26 +129,26 @@ public class GalleryCard extends Card {
     }
 
     public GalleryCard rotate() {
-        return new GalleryCard(this.getGalleryType(), this.getX(), this.getY(), this.canHasCenter(), this.canHasSouth(), this.canHasNorth(), this.canHasWest(), this.canHasEast());
+        return new GalleryCard(this.getGalleryType(), this.getLine(), this.getColumn(), this.canHasCenter(), this.canHasSouth(), this.canHasNorth(), this.canHasWest(), this.canHasEast());
     }
 
     public int getConfig() {
         int res = 0;
 
         if (this.center) {
-            res += 10000;
+            res += 0b10000;
         }
         if (this.north) {
-            res += 1000;
+            res += 0b1000;
         }
         if (this.south) {
-            res += 100;
+            res += 0b100;
         }
         if (this.east) {
-            res += 10;
+            res += 0b10;
         }
         if (this.west) {
-            res += 1;
+            res += 0b1;
         }
         return res;
     }
@@ -165,8 +164,8 @@ public class GalleryCard extends Card {
 
         GalleryCard card = (GalleryCard) o;
 
-        if (getX() != card.getX()) return false;
-        if (getY() != card.getY()) return false;
+        if (getLine() != card.getLine()) return false;
+        if (getColumn() != card.getColumn()) return false;
         if (center != card.center) return false;
         if (north != card.north) return false;
         if (south != card.south) return false;
@@ -178,8 +177,8 @@ public class GalleryCard extends Card {
     @Override
     public int hashCode() {
         int result = getType().hashCode();
-        result = 31 * result + getX();
-        result = 31 * result + getY();
+        result = 31 * result + getLine();
+        result = 31 * result + getColumn();
         result = 31 * result + (center ? 1 : 0);
         result = 31 * result + (north ? 1 : 0);
         result = 31 * result + (south ? 1 : 0);
@@ -188,19 +187,65 @@ public class GalleryCard extends Card {
         return result;
     }
 
+    // renvoi faux si une carte n'est pas possible
+    public boolean possible(){
+        int nb = 0;
+        if(this.canHasNorth()){
+            nb++;
+        }
+        if(this.canHasSouth()){
+            nb++;
+        }
+        if(this.canHasEast()){
+            nb++;
+        }
+        if(this.canHasWest()){
+            nb++;
+        }
+        if(nb == 0){
+            return false;
+        } else if(nb == 1 && !this.canHasCenter()) {
+            return true;
+        } else {
+            return nb > 1;
+        }
+    }
+
     @Override
     public String toString() {
         if (type_g == start) return "Start";
         return "GalleryCard{" +
                 "type=" + type +
-                ", x=" + coord.getX() +
-                ", y=" + coord.getY() +
+                ", x=" + coord.getLine() +
+                ", y=" + coord.getColumn() +
                 ", center=" + center +
                 ", north=" + north +
                 ", south=" + south +
                 ", east=" + east +
                 ", west=" + west +
                 '}';
+    }
+
+    public String debugString() {
+        String renvoi = "GalleryCard: {";
+        if(this.canHasNorth()){
+            renvoi += "N";
+        }
+        if(this.canHasSouth()){
+            renvoi += "S";
+        }
+        if(this.canHasEast()){
+            renvoi += "E";
+        }
+        if(this.canHasWest()){
+            renvoi += "W";
+        }
+        renvoi += "} ";
+        if(!this.canHasCenter()){
+            renvoi += "bloqued";
+        }
+
+        return renvoi;
     }
     
     @Override
