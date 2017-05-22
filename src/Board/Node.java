@@ -57,7 +57,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Card :\n" + this.card + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
+        return "Card :\n" + this.card.simplified() + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
 
 
     }
@@ -95,4 +95,5 @@ public class Node {
         result = 31 * result + getWest();
         return result;
     }
+
 }

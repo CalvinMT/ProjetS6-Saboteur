@@ -11,16 +11,11 @@ import Cards.Hand;
 import Cards.RepareSabotageCard;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -34,10 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class GameInteract {
 	
@@ -46,7 +37,7 @@ public class GameInteract {
 	private Card card;
 	
 	private int numberOfCardsInHand;
-	private GamePlayingCard []cardsInHand;
+	private ArrayList <GamePlayingCard> cardsInHand;
 	
 	private int numberOfPlayers;
 	
@@ -56,9 +47,7 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	@FXML
 	VBox vboxPlayerList;
-	@FXML
-	HBox HBoxTop;
-
+	
 	@FXML
 	private void handleHBoxMouseEntered () {
 			hboxGameCardsInHand.getScene().setCursor(Cursor.HAND);
@@ -79,14 +68,14 @@ public class GameInteract {
 		// Hand configuration
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
-		cardsInHand = new GamePlayingCard [numberOfCardsInHand];
+		cardsInHand = new ArrayList <GamePlayingCard> ();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
-			cardsInHand[i] = getImageCard(card);
-			cardsInHandEvents(cardsInHand[i].getImageView(), card, cardsInHand[i].getName());
-			hboxGameCardsInHand.getChildren().add(cardsInHand[i].getImageView());
+			cardsInHand.add(getImageCard(card));
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName());
+			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
 		}
 		
 		// Player list configuration
@@ -203,7 +192,7 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent event) {
 				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				//viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				// Turns off indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions.stream().forEach(position -> {
@@ -252,9 +241,12 @@ public class GameInteract {
 	            	}
 	            });
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-		            viewCard.setVisible(false);
-		            //GalleryCard galleryCard = new GalleryCard((Gallery_t) card.getType(), droppedColumn, droppedLine, card.getconfig());
-		            //moteur.getBoard().addCard(galleryCard);
+		            cardsInHand.remove(viewCard);
+		            hboxGameCardsInHand.getChildren().remove(viewCard);
+		            numberOfCardsInHand--;
+		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+		            System.out.println(possiblePositions);
+		            System.out.println(((GalleryCard) card).debugString());
 		        }
 				dragEvent.consume();
 			}
@@ -395,6 +387,7 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NSO_C");//NSE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NS_C");
                                 }
@@ -403,6 +396,7 @@ public class GameInteract {
                                 	playingCard = new GamePlayingCard("NE_C");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//N
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -411,28 +405,35 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NEO_C");//SEO
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NE_C");//SO
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_C");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//O
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NO_C");//SE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East carte_test_118_181
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//S
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//E
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//rien
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -458,6 +459,7 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NSO_NC");//NSE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NS_NC");
                                 }
@@ -466,6 +468,7 @@ public class GameInteract {
                                 	playingCard = new GamePlayingCard("SO_NC");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//N
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -474,28 +477,35 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NEO_NC");//SEO
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("SO_NC");//SO
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_NC");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("O_NC");//O
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NO_NC");//SE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//S
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("O_NC");//E
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//rien
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -540,49 +550,4 @@ public class GameInteract {
 		}
 	
 	}
-
-
-
-
-	// ---------------------------------------------------------------------------------------------------------------
-
-	@FXML
-	private Button buttonMenuIngame;
-
-	@FXML
-	private Button buttonAideInGame;
-
-	@FXML
-	private Button buttonRecommencer;
-
-	@FXML
-	private Text textMancheCounter;
-
-	@FXML
-	void handleButtonMenuInGame(ActionEvent event) {
-		Stage stage = new Stage();
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("MenuPause.fxml"));
-			stage.setScene(new Scene(root));
-			stage.setTitle("Pause");
-			stage.initStyle(StageStyle.UNDECORATED);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(buttonMenuIngame.getScene().getWindow());
-			stage.showAndWait();
-		}catch(Exception e){
-			System.out.println("Erreur " + e);
-		}
-	}
-
-	@FXML
-	void handleButtonAideInGame(ActionEvent event){
-		System.out.println("Tu veux de l'aide?");
-	}
-
-	@FXML
-	void handleButtonRecommencer(ActionEvent event){
-		System.out.println("Remise à zéro de la partie");
-	}
-
 }
