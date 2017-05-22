@@ -213,7 +213,7 @@ public class MainLoader extends Application {
 									ex.printStackTrace();
 								}
 
-								engine.promptPlayersRole();
+//								engine.promptPlayersRole();
 
 								if(engine.allRoleAreSet()){
 									engine.setState(State.Game);

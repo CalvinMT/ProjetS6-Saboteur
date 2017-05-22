@@ -97,7 +97,7 @@ public class ChoixRole {
             // Lancement de la partie
             System.out.println("Lancement de la partie");
             m.nextPlayer();
-            m.setState(State.Game);
+//            m.setState(State.Game);
 
             Scene scene = (Scene) borderPaneChoixRole.getScene();
             borderPaneChoixRole = (BorderPane) scene.lookup("#borderPaneChoixRole");
@@ -155,7 +155,7 @@ public class ChoixRole {
             this.num = i;
 
             m.getCurrentPlayer().assignRole(carteCourante);
-            m.promptPlayersRole();
+//            m.promptPlayersRole();
 
         }
 
