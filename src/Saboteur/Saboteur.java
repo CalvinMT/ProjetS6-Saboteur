@@ -19,10 +19,10 @@ public class Saboteur {
     static public void main(String [] args){
     	
     	
-    	 /*   	
+    	    	
     	int nbPlayer = 4;
         Moteur m1 = new Moteur(nbPlayer);
-        System.out.println(m1);
+        System.out.println("Moteur m1 before roles are set:\n" + m1 + "\n");
         try {
         	while(!m1.allRoleAreSet()){
                 m1.chooseRole(0);
@@ -32,12 +32,13 @@ public class Saboteur {
         	System.out.println(e);
         }
         m1.initHand();
-        m1.save("m1file");*/
-        Moteur m2 = new Moteur("m1file");
+        m1.save("m11file");
+        System.out.println("Moteur m1 saved to text file after roles are set:\n" + m1 + "\n");
+        Moteur m2 = new Moteur("m11file");
         //PlayerHuman p = new PlayerHuman ("Emez");
         //System.out.println(p+"heehee");
-      //  System.out.println();
-      //  System.out.println(m2);
+        System.out.println();
+        System.out.println("Moteur m2, saved version of Moteur m1:\n" + m2);
  /*        
         try {
         	// construct moteur

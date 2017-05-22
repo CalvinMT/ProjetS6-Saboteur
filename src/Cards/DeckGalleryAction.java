@@ -122,7 +122,7 @@ public class DeckGalleryAction extends Deck {
     // ajoute une carte au Deck quand on veut charger une partie du jeu enregistrée
     public void addCardToDeck(Card card){
     	if(card.getType() == Card.Card_t.action || card.getType() == Card.Card_t.gallery){
-            arrayCard.add(card);
+            this.arrayCard.add(card); 
         }
     }
     

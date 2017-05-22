@@ -49,7 +49,7 @@ public class HandRole extends Hand {
     }
 
     // rempli le paquet
-    private void fillHand(int nbSaboteur, int nbMinor){
+    public void fillHand(int nbSaboteur, int nbMinor){
 
         for(int i=0; i<nbSaboteur; i++){
             arrayCard.add(new RoleCard("Saboteur"));

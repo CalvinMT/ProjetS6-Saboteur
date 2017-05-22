@@ -68,8 +68,7 @@ public class Moteur {
 		this.roleCards = new HandRole(filename);
 		this.currentPlayer = 0;
 		boolean yes = this.load(filename);
-			//this.board = new Board();
-		
+			
 	}
 
 	public void setAllPlayerBoard() {
@@ -264,95 +263,111 @@ public class Moteur {
 	public boolean reinitSavedDeck(String[] handCards, DeckGalleryAction deck) {
 		int x, y;
 		String[] tempSplit;
-		boolean north, east, south, west, center;
+		boolean north=false, east=false, south=false, west=false, center=false;
 		String actionType;
+		
 		for (int j = 0; j < handCards.length; j++) {
-			GalleryCard gallerycard;
-			ActionCard actioncard;
+			GalleryCard gallerycard = null;
+			ActionCard actioncard = null;
+			RepareSabotageCard repair = null, sabotage = null;
 			String[] eachCard = handCards[j].split("[:]");
+			
 			switch (eachCard[0]) {
 			case "GalleryCard":
-				tempSplit = eachCard[1].split("[,]");
+				tempSplit = eachCard[1].split(","); 
 				if (tempSplit.length != 8)
 					return false;
-
+				
 				if (tempSplit[1].matches("[0-9]+") && tempSplit[2].matches("[0-9]+")) {
 					x = Integer.parseInt(tempSplit[1]);
-					y = Integer.parseInt(tempSplit[2]);
-				} else
-					return false;
-				if (tempSplit[3] != "true" || tempSplit[3] != "false") // c n s
-																		// e w
-					return false;
+					y = Integer.parseInt(tempSplit[2]); 
+				} 
 				else
-					center = Boolean.getBoolean(tempSplit[3]);
-				if (tempSplit[4] != "true" || tempSplit[4] != "false")
 					return false;
-				else
-					north = Boolean.getBoolean(tempSplit[4]);
-				if (tempSplit[5] != "true" || tempSplit[5] != "false")
-					return false;
-				else
-					south = Boolean.getBoolean(tempSplit[5]);
-				if (tempSplit[6] != "true" || tempSplit[6] != "false")
-					return false;
-				else
-					east = Boolean.getBoolean(tempSplit[6]);
-				String tmp = tempSplit[7].substring(0, tempSplit[7].length() - 1);
-				if (tmp != "true" || tmp != "false")
-					return false;
-				else
-					west = Boolean.getBoolean(tmp);
-
+				if (tempSplit[3].equals("true")) center = true;
+				else if (tempSplit[3].equals("false")) center = false;
+				else return false;
+				
+				if (tempSplit[4].equals("true")) north = true;
+				else if (tempSplit[4].equals("false")) north = false;
+				else return false;
+				
+				if (tempSplit[5].equals("true")) south = true;
+				else if (tempSplit[5].equals("false")) south = false;
+				else return false;
+				
+				if (tempSplit[6].equals("true")) east = true;
+				else if (tempSplit[6].equals("false")) east = false;
+				else return false;
+				
+				if (tempSplit[7].equals("true}")) west = true;
+				else if (tempSplit[7].equals("false}")) west = false;
+				else return false;
+				
 				gallerycard = new GalleryCard(Gallery_t.tunnel, x, y, center, north, south, east, west);
 				deck.addCardToDeck(gallerycard);
 				break;
 
 			case "Action":
-				System.out.println("here here");
-				if (eachCard[1] == "Map" || eachCard[1] == "Crumbing") {
-					actionType = eachCard[1];
+				if (eachCard[1].equals("Map") || eachCard[1].equals("Crumbing")) {
+					actionType = eachCard[1]; 
 					actioncard = new ActionCard(actionType);
-				} else if (eachCard[1].matches("(R|S)[a-z]+\\{((W|L|P)[a-z]+;)?(W|L|P)[a-z]+\\}")) {
-					tempSplit = eachCard[1].split("[{]");
-					if (tempSplit.length == 2 && (tempSplit[0] == "Sabotage" || tempSplit[0] == "Repare")) {
+				} 
+				else if (eachCard[1].matches("(R|S)[a-z]+\\{((W|L|P)[a-z]+,)?(W|L|P)[a-z]+\\}")) {
+					tempSplit = eachCard[1].split("[{]"); 
+					if (tempSplit[0].equals("Sabotage")){
 						actionType = tempSplit[0];
-						if (tempSplit[1] == "Lantern")
-							actioncard = new RepareSabotageCard(actionType, Tools.Lantern);
-						else if (tempSplit[1] == "Wagon")
-							actioncard = new RepareSabotageCard(actionType, Tools.Wagon);
-						else if (tempSplit[1] == "Pickaxe")
-							actioncard = new RepareSabotageCard(actionType, Tools.Pickaxe);
-						else
-							return false;
-					} else
-						return false;
-
-					if (tempSplit.length == 3 && (tempSplit[0] == "Repare")) {
-						actionType = tempSplit[0];
-						if ((tempSplit[1] == "Lantern" && tempSplit[2] == "Wagon")
-								|| (tempSplit[2] == "Lantern" && tempSplit[1] == "Wagon"))
-							actioncard = new RepareSabotageCard(actionType, Tools.Lantern, Tools.Wagon);
-						else if ((tempSplit[1] == "Lantern" && tempSplit[2] == "Pickaxe")
-								|| (tempSplit[2] == "Lantern" && tempSplit[1] == "Pickaxe"))
-							actioncard = new RepareSabotageCard(actionType, Tools.Lantern, Tools.Pickaxe);
-						else if ((tempSplit[1] == "Pickaxe" && tempSplit[2] == "Wagon")
-								|| (tempSplit[2] == "Pickaxe" && tempSplit[1] == "Wagon"))
-							actioncard = new RepareSabotageCard(actionType, Tools.Pickaxe, Tools.Wagon);
+						if (tempSplit[1].equals("Lantern}"))
+							sabotage = new RepareSabotageCard("Sabotage", Tools.Lantern);
+						else if (tempSplit[1].equals("Wagon}"))
+							sabotage = new RepareSabotageCard("Sabotage", Tools.Wagon);
+						else if (tempSplit[1].equals("Pickaxe}")) {
+							sabotage = new RepareSabotageCard("Sabotage", Tools.Pickaxe);
+						}
 						else
 							return false;
 					}
-
-				} else
+					else if (tempSplit[0].equals("Repare")){
+						actionType = tempSplit[0]; 
+						if (tempSplit[1].equals("Lantern}"))
+							repair = new RepareSabotageCard("Repare", Tools.Lantern);
+						else if (tempSplit[1].equals("Wagon}"))
+							repair = new RepareSabotageCard("Repare", Tools.Wagon);
+						else if (tempSplit[1].equals("Pickaxe}"))
+							repair = new RepareSabotageCard("Repare", Tools.Pickaxe);
+						else if (tempSplit[1].equals("Lantern,Wagon}") || tempSplit[1].equals("Wagon,Lantern}") ) 
+							repair = new RepareSabotageCard("Repare", Tools.Lantern, Tools.Wagon);
+						else if (tempSplit[1].equals("Lantern,Pickaxe}") || tempSplit[1].equals("Pickaxe,Lantern}")) 
+							repair = new RepareSabotageCard("Repare", Tools.Lantern, Tools.Pickaxe);
+						else if (tempSplit[1].equals("Pickaxe,Wagon}") || tempSplit[1].equals("Wagon,Pickaxe}")) 
+							repair = new RepareSabotageCard("Repare", Tools.Pickaxe, Tools.Wagon);
+						else
+							return false;
+					}
+					else
+						return false;
+				} 
+				else
 					return false;
-				deck.addCardToDeck(actioncard);
+				
+				if (actioncard != null){ 
+					deck.addCardToDeck(actioncard); 
+				}
+				if (repair != null) 
+					deck.addCardToDeck(repair);  
+				if (sabotage != null) 
+					deck.addCardToDeck(sabotage);  
+				
+				
 				break;
 			default:
 				return false;
 			}
+			
 		}
 		return true;
-	}
+
+		}
 	
 
 	public boolean reinitSavedPlayerHand(String[] handCards, Player player) {
@@ -367,23 +382,24 @@ public class Moteur {
 			RepareSabotageCard repair = null, sabotage = null;
 			String[] eachCard = handCards[j].split("[:]");
 			
-			System.out.println(j);
+			//System.out.println(j);
 			
 			switch (eachCard[0]) {
 			case "GalleryCard":
 				tempSplit = eachCard[1].split(","); 
 				if (tempSplit.length != 8)
 					return false;
+				
 				if (tempSplit[1].matches("[0-9]+") && tempSplit[2].matches("[0-9]+")) {
 					x = Integer.parseInt(tempSplit[1]);
 					y = Integer.parseInt(tempSplit[2]); //System.out.println(player.getPlayerName() + ": x = " + x + ", y = " + y);
-					if (j==5) System.out.println("x = " + x);
+					//if (j==5) System.out.println("x = " + x);
 				} 
 				else
 					return false;
-				if (j==5) System.out.println("here");
+				//if (j==5) System.out.println("here");
 				// continue boolean check from here
-				
+				//System.out.println(x + "," + y);
 				if (tempSplit[3].equals("true")) center = true;
 				else if (tempSplit[3].equals("false")) center = false;
 				else return false;
@@ -397,31 +413,19 @@ public class Moteur {
 				else return false;
 				
 				if (tempSplit[6].equals("true")) east = true;
-				else if (tempSplit[3].equals("false")) east = false;
+				else if (tempSplit[6].equals("false")) east = false;
 				else return false;
 				
 				if (tempSplit[7].equals("true}")) west = true;
 				else if (tempSplit[7].equals("false}")) west = false;
-				else return false;
-				
-				if (j==5){
-				System.out.println(player.getPlayerName() + ": " + tempSplit[3] + " " + center);
-				System.out.println(player.getPlayerName() + ": " + tempSplit[4] + " " + north);
-				System.out.println(player.getPlayerName() + ": " + tempSplit[5] + " " + south);
-				System.out.println(player.getPlayerName() + ": " + tempSplit[6] + " " + east);
-				System.out.println(player.getPlayerName() + ": " + tempSplit[7] + " " + west); 
-				}
-				gallerycard = new GalleryCard(Gallery_t.tunnel, x, y, center, north, south, east, west);
-				if (j==5) System.out.println(gallerycard);
+				else return false;gallerycard = new GalleryCard(Gallery_t.tunnel, x, y, center, north, south, east, west);
 				player.drawCard(gallerycard);
-				//System.out.println(player);
+				
 				break;
 
 			case "Action":
-				//System.out.println(player.getPlayerName() + ": I'm an Action ass hole");
-				//tempSplit = eachCard[1].split("[{]");
 				if (eachCard[1].equals("Map") || eachCard[1].equals("Crumbing")) {
-					actionType = eachCard[1]; System.out.println(actionType);
+					actionType = eachCard[1]; //System.out.println(actionType);
 					actioncard = new ActionCard(actionType);
 				} 
 				else if (eachCard[1].matches("(R|S)[a-z]+\\{((W|L|P)[a-z]+,)?(W|L|P)[a-z]+\\}")) {
@@ -464,7 +468,7 @@ public class Moteur {
 				
 				if (actioncard != null){ 
 					player.drawCard(actioncard); 
-					System.out.println("me "+actioncard);
+					//System.out.println("me is "+ j + actioncard);
 				}
 				if (repair != null) 
 					player.drawCard(repair);
@@ -475,10 +479,9 @@ public class Moteur {
 				break;
 			default:
 				return false;
-			}System.out.println(player);
+			}
+			//System.out.println(player);
 		}
-		//System.out.println(player);
-		//System.out.println("Done with "+player.getPlayerName()+"\n"+player);
 		return true;
 	}
 	
@@ -492,7 +495,7 @@ public class Moteur {
 				saveFile.println(arrayPlayer.get(i));
 			}
 			saveFile.println(this.arrayPlayer.get(currentPlayer).getPlayerName()); // the current player
-			saveFile.println(this.pile.nbCard()); // le nombre de cartes dans la pioche au moment du save
+			saveFile.println(this.pile.nbCard());   // le nombre de cartes dans la pioche au moment du save
 			saveFile.println(this.pile); // les cartes dans la pioche
 			/*for (int i=0; i<this.board.getMineSize(); i++)
 				saveFile.println(this.board.getMineElement(i));*/
@@ -514,11 +517,11 @@ public class Moteur {
     			return false;
     		int nbPlayers = Integer.parseInt(temp);
     		Player player;
+    		int mineurs = 0, saboteurs = 0;
     		 		
     		// création des joueurs enregistrés
     		for (int i=0; i<nbPlayers; i++) {
-    			playerName = br.readLine(); 
-    			//Player player;    			
+    			playerName = br.readLine();
     			playerType = br.readLine();
     			if (playerType.equals("Humain")){
     				
@@ -539,13 +542,23 @@ public class Moteur {
 				else
     				return false;
     			
-    			playerRole = br.readLine();
-    			if (!playerRole.equals("Mineur") && !playerRole.equals("Saboteur")) 
-    				return false;
+    			playerRole = br.readLine(); 
     			Card rolecard;
-    			rolecard = new RoleCard(playerRole);
+    			
+    			if (playerRole.equals("Mineur")) {
+    				rolecard = new RoleCard("Mineur");
+    				mineurs++;
+    			}
+    			else if (playerRole.equals("Saboteur")) {
+    				rolecard = new RoleCard("Saboteur");
+    				saboteurs++;
+    			}
+    			else
+    				return false;
+    			
+    			
     			player.assignRole(rolecard);
-    			tempGoldPoints = br.readLine();
+    			tempGoldPoints = br.readLine(); // System.out.println(player.getRole());
     			if (tempGoldPoints.matches("[0-9]+")) {
     				goldPoints = Integer.parseInt(tempGoldPoints);
     				player.setGoldPoints(goldPoints);
@@ -594,22 +607,12 @@ public class Moteur {
 				
 				if (!reinitSavedPlayerHand(handCards, player))
 					return false;
+				this.arrayPlayer.add(player);			
 				
-				System.out.print("Done with Player ");
-				System.out.print(i+1);
-				System.out.print(":\n");
-				System.out.println(player);
-				System.out.println("i am here");
-				
-				
-				this.arrayPlayer.add(player);
-				
-				
-				temp = br.readLine(); //System.out.println(temp);
+				temp = br.readLine(); 
     		}
-    		//System.out.println(this.nbPlayer());
-    		System.out.println(this.getAllPlayers());
-    		//for (int i=0; i<this.arrayPlayer.size(); i++) System.out.println(this.arrayPlayer.get(i).toString());
+    		
+    		roleCards.fillHand(saboteurs, mineurs);
     		
     		
     		//setting the currentplayer 
@@ -624,8 +627,7 @@ public class Moteur {
     		}
     		if (foundplayer == 0) 
     			return false;
-    		//System.out.println(this.getCurrentPlayer());
-    		
+    		    		
     		
     		// to get the number of cards remaining in the Deck
     		temp = br.readLine();
@@ -635,30 +637,28 @@ public class Moteur {
 			deckSize = Integer.parseInt(temp);
     		if (deckSize > 67)
     			return false;
-    		//System.out.println(deckSize);
     		
     		
     		// setting the Deck 
-    		/*
-    		temp = br.readLine(); System.out.println(temp);
+    		
+    		temp = br.readLine(); 
     		String[] savedDeck = temp.split("[;]");
     		DeckGalleryAction tempDeck = new DeckGalleryAction(deckSize);
     		
+    		
     		boolean goodDeck = true;
-    		for (int i=0; i<deckSize; i++) {
-    			if (!reinitSavedDeck(savedDeck, tempDeck)) {
-    				goodDeck = false;
-    				break;
-    			}
+    		if (!reinitSavedDeck(savedDeck, tempDeck)) {
+    				goodDeck = false;    				
     		}
     		
+    		 
+    		
+    		
     		if (goodDeck)
-    			this.pile = tempDeck; 
+    			this.pile = tempDeck;  // System.out.println("Good deck");
     		else
     			return false;
-			*/
-    		
-    		//System.out.println(this.pile);System.out.println(this.pile.nbCard());
+    		//System.out.println("Size: "+ this.pile.nbCard());
     		br.close();
     	}
     	catch(Exception e){
