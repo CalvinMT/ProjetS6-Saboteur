@@ -118,6 +118,8 @@ public class GameInteract {
 	private int droppedColumn;
 	private int droppedLine;
 	
+	private boolean isDragged = false;
+	
 	private double mouseX;
 	private double mouseY;
 	private double viewCardX;
@@ -129,7 +131,7 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Brings card forward
-				//viewCard.setTranslateY(viewCard.getTranslateY()-25);
+				viewCard.setTranslateY(viewCard.getTranslateY()-25);
 				// Turns on indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
@@ -199,20 +201,25 @@ public class GameInteract {
 			}
 		});
 		// ---------- Mouse exits viewCard ----------
-		/*viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
+		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// Puts back card into place
-				//viewCard.setTranslateY(viewCard.getTranslateY()+25);
-				// Turns off indications
-				if (card.getType().equals(Card_t.gallery)) {
-					possiblePositions.stream().forEach(position -> {
-						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-						GameBoard.gridPaneBoard.getChildren().remove(node);
-					});
+				if (!isDragged) {
+					// Puts back card into place
+					viewCard.setTranslateY(viewCard.getTranslateY()+25);
+					// Turns off indications
+					if (card.getType().equals(Card_t.gallery)) {
+						possiblePositions.stream().forEach(position -> {
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+							GameBoard.gridPaneBoard.getChildren().remove(node);
+						});
+					}
+					else if (card.getType().equals(Card_t.action)) {
+						// TODO
+					}
 				}
 			}
-		});*/
+		});
 		// ---------- Mouse presses viewCard ----------
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
@@ -234,6 +241,7 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
+				isDragged = true;
 				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 				ClipboardContent content = new ClipboardContent();
 		        content.putImage(viewCard.getImage());
@@ -245,6 +253,9 @@ public class GameInteract {
 		viewCard.setOnDragDone(new EventHandler <DragEvent>() {
 			@Override
 			public void handle(DragEvent dragEvent) {
+				// Puts back card into place
+				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				isDragged = false;
 	            possiblePositions.stream().forEach(position -> {
 	            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
 						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
