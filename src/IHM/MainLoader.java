@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
-
 import Cards.Card;
-import Cards.RoleCard;
 import Player.Player;
 import Saboteur.Moteur.State;
 import Saboteur.Moteur;
@@ -133,7 +131,7 @@ public class MainLoader extends Application {
 		
 		// Music & Effects played in background
 		try {
-			Media music = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			Media music = new Media(new File("ressources/pull-up-a-chair.mp3").toURI().toString());
 			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));

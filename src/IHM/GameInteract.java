@@ -11,11 +11,16 @@ import Cards.Hand;
 import Cards.RepareSabotageCard;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -29,6 +34,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class GameInteract {
 	
@@ -47,7 +56,9 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	@FXML
 	VBox vboxPlayerList;
-	
+	@FXML
+	HBox HBoxTop;
+
 	@FXML
 	private void handleHBoxMouseEntered () {
 			hboxGameCardsInHand.getScene().setCursor(Cursor.HAND);
@@ -550,4 +561,49 @@ public class GameInteract {
 		}
 	
 	}
+
+
+
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	@FXML
+	private Button buttonMenuIngame;
+
+	@FXML
+	private Button buttonAideInGame;
+
+	@FXML
+	private Button buttonRecommencer;
+
+	@FXML
+	private Text textMancheCounter;
+
+	@FXML
+	void handleButtonMenuInGame(ActionEvent event) {
+		Stage stage = new Stage();
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("MenuPause.fxml"));
+			stage.setScene(new Scene(root));
+			stage.setTitle("Pause");
+			stage.initStyle(StageStyle.UNDECORATED);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(buttonMenuIngame.getScene().getWindow());
+			stage.showAndWait();
+		}catch(Exception e){
+			System.out.println("Erreur " + e);
+		}
+	}
+
+	@FXML
+	void handleButtonAideInGame(ActionEvent event){
+		System.out.println("Tu veux de l'aide?");
+	}
+
+	@FXML
+	void handleButtonRecommencer(ActionEvent event){
+		System.out.println("Remise à zéro de la partie");
+	}
+
 }

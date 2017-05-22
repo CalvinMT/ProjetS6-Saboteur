@@ -84,7 +84,7 @@ public class BandeauPlayer {
 
 				System.out.println(lobby);
 
-				if(tableView.getItems().size()<=3)
+				if(tableView.getItems().size()<3)
 					buttonJouer.setDisable(true);
 				if(tableView.getItems().size()<10){
 					buttonAjouterPlayer.setDisable((false));
