@@ -66,7 +66,7 @@ public class MainLoader extends Application {
 	public static void autoResizeToResolution (double width, double height, AnchorPane anchorPaneMenu) {
 		if (anchorPaneMainLoader != null) {
 			anchorPaneMainLoader.setPrefWidth(width-(width/3));
-			anchorPaneMainLoader.setPrefHeight(height-217); // FIXME
+			anchorPaneMainLoader.setPrefHeight(height-300); // XXX - 217
 			if (anchorPaneMenu != null) {
 				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
 				anchorPaneMenu.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
@@ -146,6 +146,8 @@ public class MainLoader extends Application {
 		
 		primaryStage.setTitle("Saboteur");
 		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setWidth(SCREEN_WIDTH);
+		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 
