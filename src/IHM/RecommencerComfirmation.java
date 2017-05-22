@@ -17,7 +17,7 @@ public class RecommencerComfirmation {
 
     @FXML
     void handleButtonOui(ActionEvent event) {
-        System.out.println("Réinitialisation de la partie");
+        System.out.println("Réinitialisation de la partie");    // TODO RECOMMENCER
     }
 
 }

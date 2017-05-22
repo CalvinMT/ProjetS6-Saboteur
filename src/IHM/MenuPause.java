@@ -1,5 +1,6 @@
 package IHM;
 
+import Cards.ActionCard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +53,11 @@ public class MenuPause {
         }catch(Exception e){
             System.out.println("Erreur" + e);
         }
+    }
+
+    @FXML
+    void handleButtonSave(ActionEvent event){
+        System.out.println("Sauvegarde");    //TODO SAUVEGARDE
     }
 
     @FXML
