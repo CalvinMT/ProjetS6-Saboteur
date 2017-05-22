@@ -166,6 +166,8 @@ public class MainLoader extends Application {
 		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
         anchorPaneMainLoader.getChildren().setAll(anchorPane);
+        
+        autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
 
 
         ///// POUR FAIRE JOUER L'IA

@@ -37,7 +37,7 @@ public class GameInteract {
 	private Card card;
 	
 	private int numberOfCardsInHand;
-	private GamePlayingCard []cardsInHand;
+	private ArrayList <GamePlayingCard> cardsInHand;
 	
 	private int numberOfPlayers;
 	
@@ -68,14 +68,14 @@ public class GameInteract {
 		// Hand configuration
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
-		cardsInHand = new GamePlayingCard [numberOfCardsInHand];
+		cardsInHand = new ArrayList <GamePlayingCard> ();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
-			cardsInHand[i] = getImageCard(card);
-			cardsInHandEvents(cardsInHand[i].getImageView(), card, cardsInHand[i].getName());
-			hboxGameCardsInHand.getChildren().add(cardsInHand[i].getImageView());
+			cardsInHand.add(getImageCard(card));
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName());
+			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
 		}
 		
 		// Player list configuration
@@ -241,9 +241,11 @@ public class GameInteract {
 	            	}
 	            });
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-		            viewCard.setVisible(false);
-		            //GalleryCard galleryCard = new GalleryCard((Gallery_t) card.getType(), droppedColumn, droppedLine, card.getconfig());
-		            //moteur.getBoard().addCard(galleryCard);
+		            cardsInHand.remove(viewCard);
+		            hboxGameCardsInHand.getChildren().remove(viewCard);
+		            numberOfCardsInHand--;
+		            moteur.getBoard().addCard((GalleryCard) card);
+		            System.out.println(moteur.getBoard().mine());
 		        }
 				dragEvent.consume();
 			}

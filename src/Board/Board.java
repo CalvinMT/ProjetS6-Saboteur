@@ -113,6 +113,17 @@ public class Board {
         }
     }
 
+    public void putCard(GalleryCard c, int line, int column){
+        Couple cou = new Couple(line, column);
+
+        c.setLine(line);
+        c.setColumn(column);
+
+        addCard(c);
+
+        computeAccessCards();
+    }
+
 
     // Computations
     public void computeAccessCards() {
