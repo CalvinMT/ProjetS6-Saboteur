@@ -104,6 +104,9 @@ public class GameInteract {
 	
 	private ArrayList<Couple> possiblePositions;
 	
+	private int droppedColumn;
+	private int droppedLine;
+	
 	private double mouseX;
 	private double mouseY;
 	private double viewCardX;
@@ -122,26 +125,56 @@ public class GameInteract {
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
 						GameBoard.gridPaneBoard.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-						// Drag over viewIndication
-						viewIndication.setOnDragDropped(new EventHandler <DragEvent>(){
+						// Drag enters viewIndication
+						/*viewIndication.setOnDragEntered(new EventHandler <DragEvent>() {
 							@Override
 							public void handle(DragEvent dragEvent) {
-								System.out.println("DROPPED");
-								if (dragEvent.getGestureSource() != viewIndication  &&  dragEvent.getDragboard().hasImage()) {
-									dragEvent.acceptTransferModes(TransferMode.COPY);
+						        if (dragEvent.getGestureSource() != viewIndication  &&  dragEvent.getDragboard().hasImage()) {
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 									viewCard.setVisible(false);
-								}
-								dragEvent.setDropCompleted(true);
-								dragEvent.consume();
+						        }
+					            dragEvent.consume();
 							}
 						});
-						viewIndication.setOnMouseDragExited(new EventHandler <MouseEvent>(){
+						// Drag exits viewIndication
+						viewIndication.setOnDragExited(new EventHandler <DragEvent>() {
 							@Override
-							public void handle(MouseEvent event) {
-								
+							public void handle(DragEvent dragEvent) {
+								Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+								GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+								GameBoard.gridPaneBoard.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+								viewCard.setVisible(true);
+					            dragEvent.consume();
+							}
+						});*/
+						// Drag over viewIndication
+						viewIndication.setOnDragOver(new EventHandler <DragEvent>() {
+							@Override
+							public void handle(DragEvent dragEvent) {
+					            if (dragEvent.getGestureSource() != viewIndication  &&  dragEvent.getDragboard().hasImage()) {
+					            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+					            }
+					            dragEvent.consume();
+							}
+						});
+						// Drag dropped viewIndication
+						viewIndication.setOnDragDropped(new EventHandler <DragEvent>(){
+							@Override
+							public void handle(DragEvent dragEvent) {
+								Dragboard dragBoard = dragEvent.getDragboard();
+								boolean success = false;
+								if (dragBoard.hasImage()) {
+									droppedColumn = (position.getColumn() + GameBoard.startCardX);
+									droppedLine = (position.getLine() + GameBoard.startCardY);
+									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+									success = true;
+								}
+								dragEvent.setDropCompleted(success);
+								dragEvent.consume();
 							}
 						});
 					});
@@ -190,31 +223,49 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
-				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.ANY);
+				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 				ClipboardContent content = new ClipboardContent();
 		        content.putImage(viewCard.getImage());
 		        dragBoard.setContent(content);
 		        mouseEvent.consume();
 			}
 		});
+		// ---------- Drag finished on viewCard ----------
+		viewCard.setOnDragDone(new EventHandler <DragEvent>() {
+			@Override
+			public void handle(DragEvent dragEvent) {
+	            possiblePositions.stream().forEach(position -> {
+	            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
+						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+						GameBoard.gridPaneBoard.getChildren().remove(node);
+	            	}
+	            });
+				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+		            viewCard.setVisible(false);
+		            //GalleryCard galleryCard = new GalleryCard((Gallery_t) card.getType(), droppedColumn, droppedLine, card.getconfig());
+		            //moteur.getBoard().addCard(galleryCard);
+		        }
+				dragEvent.consume();
+			}
+		});
 		// ---------- Mouse drags viewCard ----------
-		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+		/*viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()) {
-					/*double mouseOffSetX = event.getSceneX() - mouseX;
+					double mouseOffSetX = event.getSceneX() - mouseX;
 					double mouseOffSetY = event.getSceneY() - mouseY;
 					viewCard.setTranslateX(viewCardX + mouseOffSetX);
-					viewCard.setTranslateY(viewCardY + mouseOffSetY);*/
+					viewCard.setTranslateY(viewCardY + mouseOffSetY);
 					// TODO
-					/*if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
+					if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
 						card_sticks_to_grid
-					}*/
+					}
 				}
 			}
-		});
+		});*/
 		// ---------- Mouse releases viewCard ----------
-		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				// Puts back card into place
@@ -230,8 +281,12 @@ public class GameInteract {
 					}
 				}
 			}
-		});
+		});*/
 	}
+	
+	
+	
+	// -------------------- ---------- --------------------
 	
 	
 	
