@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPaneMainLoader" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MainLoader">
+   <top>
+      <ImageView fx:id="imageViewTitle" fitHeight="154.0" fitWidth="592.0" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../ressources/titre.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets bottom="25.0" top="50.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </top>
+   <left>
+      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <ImageView fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../ressources/nain_mineurs.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets right="50.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </right>
+</BorderPane>

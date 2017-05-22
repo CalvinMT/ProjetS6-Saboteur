@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="AnchorPanePublicInfos" prefHeight="379.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
+            <ImageView fitHeight="335.0" fitWidth="600.0" layoutY="65.0" GridPane.columnIndex="1">
+      <image>
+         <Image url="@../ressources/cadre.png" />
+      </image>
+            </ImageView>
+    <HBox alignment="BOTTOM_LEFT" fillHeight="false" layoutX="34.0" layoutY="87.0" maxHeight="345.0" maxWidth="542.0" prefHeight="283.0" prefWidth="542.0" spacing="1.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+               <children>
+                  <ImageView fx:id="imageViewAvatar" fitHeight="285.0" fitWidth="250.0" pickOnBounds="true">
+                     
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="344.0" prefWidth="243.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="193.0" prefWidth="292.0">
+                  <children>
+                     <Text fx:id="textPseudo" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo" wrappingWidth="76.05517578125" />
+                     <Text fx:id="textCartesRestantes" strokeType="OUTSIDE" strokeWidth="0.0" text="Carte Restantes" />
+                  </children>
+                        </HBox>
+                        <HBox fx:id="HboxStatus" alignment="CENTER" maxHeight="250.0" maxWidth="284.0" prefHeight="80.0" prefWidth="284.0">
+                           <children>
+                              <ImageView fx:id="imageViewStatusPickaxe" fitHeight="95.0" fitWidth="102.0">
+                                 
+                              </ImageView>
+                              <ImageView fx:id="imageViewStatusLanterne" fitHeight="95.0" fitWidth="95.0">
+                                 
+                              </ImageView>
+                              <ImageView fx:id="imageViewStatusWagon" fitHeight="95.0" fitWidth="95.0">
+                                 
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+</AnchorPane>

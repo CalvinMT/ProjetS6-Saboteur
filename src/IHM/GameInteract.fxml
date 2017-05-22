@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane pickOnBounds="false" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameInteract">
+   <children>
+      <BorderPane fx:id="borderPaneInteract" pickOnBounds="false">
+         <bottom>
+            <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+         </bottom>
+         <right>
+            <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="150.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
