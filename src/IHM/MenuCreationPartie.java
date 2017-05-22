@@ -1,6 +1,5 @@
 package IHM;
 
-import Cards.ActionCard;
 import Player.Player.Difficulty;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
@@ -17,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -123,15 +121,19 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonPlay(ActionEvent event) throws IOException {
+
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
+
+            System.out.println(Saboteur.getMoteur());
+
+            Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+            BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+            BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
         }
 
-        Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
 
     }
 

@@ -34,10 +34,27 @@ public class Lobby {
             arrayPlayer.remove(num);
         }
 
+        Player p;
+        String name;
+        int pnum;
+
         // on décrémente le num de chacun
         for(int i=num; i<nbPlayer(); i++){
-            num = arrayPlayer.get(i).getNum();
-            arrayPlayer.get(i).setNum(num-1);
+            p = arrayPlayer.get(i);
+            pnum = p.getNum();
+            p.setNum(pnum-1);
+
+
+            // on change le nom du joueur
+            name = p.getPlayerName();
+
+            if(p.getDifficulty() == Difficulty.Easy || p.getDifficulty() == Difficulty.Medium || p.getDifficulty() == Difficulty.Hard){
+                p.setPlayerName("IA "+(pnum));
+            } else if(name.equals("Joueur "+(pnum+1))){
+                System.out.println("Joueur "+(pnum));
+                p.setPlayerName("Joueur "+(pnum));
+            }
+
         }
     }
 

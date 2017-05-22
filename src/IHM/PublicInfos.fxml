@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="AnchorPanePublicInfos" prefHeight="379.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
+<AnchorPane fx:id="AnchorPanePublicInfos" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
             <ImageView fitHeight="335.0" fitWidth="600.0" layoutY="65.0" GridPane.columnIndex="1">
       <image>
          <Image url="@../ressources/cadre.png" />
