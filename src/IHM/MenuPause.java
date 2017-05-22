@@ -34,6 +34,27 @@ public class MenuPause {
     }
 
     @FXML
+    void handleButtonRecommencer(ActionEvent event) throws IOException {
+        //Parent root = FXMLLoader.load(getClass().getResource("RecommencerComfirmation.fxml"));
+        //Stage stage = (Stage) buttonReprendre.getScene().getWindow();
+        //stage.setScene(new Scene(root));
+        //stage.show();
+        Stage stage = new Stage();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("RecommencerComfirmation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Recommencer");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(buttonReprendre.getScene().getWindow());
+            stage.showAndWait();
+        }catch(Exception e){
+            System.out.println("Erreur" + e);
+        }
+    }
+
+    @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
 
         Stage stage = new Stage();

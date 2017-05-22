@@ -55,7 +55,7 @@
             <Insets />
          </GridPane.margin>
       </Button>
-      <Button fx:id="buttonRecommencer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonRecommencer" prefHeight="30.0" prefWidth="251.0" text="Recommencer" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonRecommencer" prefHeight="30.0" prefWidth="251.0" text="Recommencer" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
