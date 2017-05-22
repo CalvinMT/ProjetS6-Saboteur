@@ -38,7 +38,9 @@ public class MainLoader extends Application {
 
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
-	
+
+	static public final long shortWaitingTime = 500;
+
 	private double volumeMusic;
 	// TOTO - private double volumeEffects;
 	
@@ -199,10 +201,9 @@ public class MainLoader extends Application {
 									engine.nextPlayer();
 									ChoixRole.updateText();
 
-									long l = 1000;
 									try {
 
-										Thread.sleep(l);
+										Thread.sleep(shortWaitingTime);
 									} catch (Exception ex){
 										System.err.println("Erreur sleep");
 									}

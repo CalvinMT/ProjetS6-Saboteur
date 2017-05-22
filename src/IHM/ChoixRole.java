@@ -169,7 +169,7 @@ public class ChoixRole {
     }
 
     static public void updateText(){
-//        textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+
     }
 
 
