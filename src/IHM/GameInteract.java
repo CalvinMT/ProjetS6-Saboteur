@@ -92,10 +92,24 @@ public class GameInteract {
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
 		vboxPlayerList.setPrefHeight(vboxPlayerList.getPrefHeight()*numberOfPlayers);
-		/*for (int i=0; i < numberOfPlayers; i++) {
-			// TODO
-			vboxPlayerList.getChildren().add(null);
-		}*/
+		GridPane gridPanePlayer;
+		for (int i=0; i < numberOfPlayers; i++) {
+			gridPanePlayer = new GridPane();
+			gridPanePlayer.setPrefSize(150.0, 75.0);
+			// Avatar
+			ImageView viewAvatar = new ImageView("ressources/" + moteur.getPlayer(i).getAvatar() + ".png");
+			viewAvatar.setFitWidth(70);
+			viewAvatar.setFitHeight(70);
+			// Pseudo
+			Text textPseudo = new Text(moteur.getPlayer(i).getPlayerName());
+			// Constraints
+			int numberOfConstraints = moteur.getPlayer(i).getAttributeCards().getNbAttribute();
+			// Puts all into the grid list
+			gridPanePlayer.add(viewAvatar, 0, 0); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
+			gridPanePlayer.add(textPseudo, 2, 0);
+			gridPanePlayer.add(new Text("Constraints"), 2, 1);
+			vboxPlayerList.getChildren().add(gridPanePlayer);
+		}
 		//vboxPlayerList.getChildren().addAll(playerList);
 		
 		// Center player list on center-left of the screen
@@ -192,12 +206,11 @@ public class GameInteract {
 						});
 					});
 				}
-				// TODO
-				/*
 				else if (card.getType().equals(Card_t.action)) {
-					turn_on_indications_on_player_list
+					// TODO
+					/*turn_on_indications_on_player_list
+					*/
 				}
-				*/
 			}
 		});
 		// ---------- Mouse exits viewCard ----------
@@ -216,6 +229,8 @@ public class GameInteract {
 					}
 					else if (card.getType().equals(Card_t.action)) {
 						// TODO
+						/*turn_off_indications_on_player_list
+						*/
 					}
 				}
 			}
