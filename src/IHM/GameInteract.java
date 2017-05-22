@@ -16,10 +16,15 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,7 +37,7 @@ public class GameInteract {
 	private Card card;
 	
 	private int numberOfCardsInHand;
-	private ImageView []cardsInHand;
+	private GamePlayingCard []cardsInHand;
 	
 	private int numberOfPlayers;
 	
@@ -63,19 +68,23 @@ public class GameInteract {
 		// Hand configuration
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
-		cardsInHand = new ImageView [numberOfCardsInHand];
-		for (int i=0; i < numberOfCardsInHand; i++) {
-			card = hand.chooseOne_without_remove(i);
-			cardsInHand[i] = new ImageView(Bottom.getImageCard(card));
-			cardsInHandEvents(cardsInHand[i], card);
-		}
+		cardsInHand = new GamePlayingCard [numberOfCardsInHand];
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
-		hboxGameCardsInHand.getChildren().addAll(cardsInHand);
+		for (int i=0; i < numberOfCardsInHand; i++) {
+			card = hand.chooseOne_without_remove(i);
+			cardsInHand[i] = getImageCard(card);
+			cardsInHandEvents(cardsInHand[i].getImageView(), card, cardsInHand[i].getName());
+			hboxGameCardsInHand.getChildren().add(cardsInHand[i].getImageView());
+		}
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
 		vboxPlayerList.setPrefHeight(vboxPlayerList.getPrefHeight()*numberOfPlayers);
+		/*for (int i=0; i < numberOfPlayers; i++) {
+			// TODO
+			vboxPlayerList.getChildren().add(null);
+		}*/
 		//vboxPlayerList.getChildren().addAll(playerList);
 		
 		// Center player list on center-left of the screen
@@ -95,36 +104,77 @@ public class GameInteract {
 	
 	private ArrayList<Couple> possiblePositions;
 	
+	private int droppedColumn;
+	private int droppedLine;
+	
 	private double mouseX;
 	private double mouseY;
 	private double viewCardX;
 	private double viewCardY;
 	
-	private void cardsInHandEvents (ImageView viewCard, Card card) {
+	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(MouseEvent mouseEvent) {
 				// Brings card forward
-				viewCard.setTranslateY(viewCard.getTranslateY()-25);
+				//viewCard.setTranslateY(viewCard.getTranslateY()-25);
 				// Turns on indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
 						GameBoard.gridPaneBoard.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-						viewIndication.setOnDragOver(new EventHandler <DragEvent>(){
+						// Drag enters viewIndication
+						/*viewIndication.setOnDragEntered(new EventHandler <DragEvent>() {
 							@Override
-							public void handle(DragEvent event) {
-								ImageView newViewCard = viewCard;
-								GameBoard.gridPaneBoard.add(newViewCard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-								viewCard.setVisible(false);
+							public void handle(DragEvent dragEvent) {
+						        if (dragEvent.getGestureSource() != viewIndication  &&  dragEvent.getDragboard().hasImage()) {
+									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+									viewCard.setVisible(false);
+						        }
+					            dragEvent.consume();
 							}
 						});
-						viewIndication.setOnMouseDragExited(new EventHandler <MouseEvent>(){
+						// Drag exits viewIndication
+						viewIndication.setOnDragExited(new EventHandler <DragEvent>() {
 							@Override
-							public void handle(MouseEvent event) {
-								
+							public void handle(DragEvent dragEvent) {
+								Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+								GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+								GameBoard.gridPaneBoard.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+								viewCard.setVisible(true);
+					            dragEvent.consume();
+							}
+						});*/
+						// Drag over viewIndication
+						viewIndication.setOnDragOver(new EventHandler <DragEvent>() {
+							@Override
+							public void handle(DragEvent dragEvent) {
+					            if (dragEvent.getGestureSource() != viewIndication  &&  dragEvent.getDragboard().hasImage()) {
+					            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+					            }
+					            dragEvent.consume();
+							}
+						});
+						// Drag dropped viewIndication
+						viewIndication.setOnDragDropped(new EventHandler <DragEvent>(){
+							@Override
+							public void handle(DragEvent dragEvent) {
+								Dragboard dragBoard = dragEvent.getDragboard();
+								boolean success = false;
+								if (dragBoard.hasImage()) {
+									droppedColumn = (position.getColumn() + GameBoard.startCardX);
+									droppedLine = (position.getLine() + GameBoard.startCardY);
+									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+									success = true;
+								}
+								dragEvent.setDropCompleted(success);
+								dragEvent.consume();
 							}
 						});
 					});
@@ -138,7 +188,7 @@ public class GameInteract {
 			}
 		});
 		// ---------- Mouse exits viewCard ----------
-		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
+		/*viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				// Puts back card into place
@@ -151,25 +201,55 @@ public class GameInteract {
 					});
 				}
 			}
-		});
+		});*/
 		// ---------- Mouse presses viewCard ----------
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()  &&  !event.isSecondaryButtonDown()) {
-					hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
+					/*hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
 					mouseX = event.getSceneX();
 					mouseY = event.getSceneY();
 					viewCardX = ((ImageView)(event.getSource())).getTranslateX();
-					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
+					viewCardY = ((ImageView)(event.getSource())).getTranslateY();*/
 				}
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
 					viewCard.setRotate(viewCard.getRotate() + 180);
 				}
 			}
 		});
+		// ---------- Drag detected on viewCard ----------
+		viewCard.setOnDragDetected(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				// Drag & Drop
+				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.COPY_OR_MOVE);
+				ClipboardContent content = new ClipboardContent();
+		        content.putImage(viewCard.getImage());
+		        dragBoard.setContent(content);
+		        mouseEvent.consume();
+			}
+		});
+		// ---------- Drag finished on viewCard ----------
+		viewCard.setOnDragDone(new EventHandler <DragEvent>() {
+			@Override
+			public void handle(DragEvent dragEvent) {
+	            possiblePositions.stream().forEach(position -> {
+	            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
+						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+						GameBoard.gridPaneBoard.getChildren().remove(node);
+	            	}
+	            });
+				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+		            viewCard.setVisible(false);
+		            //GalleryCard galleryCard = new GalleryCard((Gallery_t) card.getType(), droppedColumn, droppedLine, card.getconfig());
+		            //moteur.getBoard().addCard(galleryCard);
+		        }
+				dragEvent.consume();
+			}
+		});
 		// ---------- Mouse drags viewCard ----------
-		viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+		/*viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()) {
@@ -178,32 +258,35 @@ public class GameInteract {
 					viewCard.setTranslateX(viewCardX + mouseOffSetX);
 					viewCard.setTranslateY(viewCardY + mouseOffSetY);
 					// TODO
-					/*if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
+					if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
 						card_sticks_to_grid
-					}*/
+					}
 				}
 			}
-		});
+		});*/
 		// ---------- Mouse releases viewCard ----------
-		viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				// Puts back card into place
+				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				// Turns off indications
 				if (!event.isPrimaryButtonDown()) {
 					hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
-					// TODO
-					/*if (card_can_go_into_grid) {
-						card_goes_into_grid
+					if (card.getType().equals(Card_t.gallery)) {
+						possiblePositions.stream().forEach(position -> {
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+							GameBoard.gridPaneBoard.getChildren().remove(node);
+						});
 					}
-					else {*/
-						viewCard.setTranslateX(viewCardX);
-						viewCard.setTranslateY(viewCardY);
-					/*}
-					turn_off_indications
-					*/
 				}
 			}
-		});
+		});*/
 	}
+	
+	
+	
+	// -------------------- ---------- --------------------
 	
 	
 	
@@ -220,64 +303,64 @@ public class GameInteract {
 	
 	
 	
-	/*private Image getImageCard (Card c) {
-        Image image = null;
+	private GamePlayingCard getImageCard (Card c) {
+		GamePlayingCard playingCard = null;
         switch(c.getType()) {
             case action:
                 switch(((ActionCard)c).getAction()){
-                    case Sabotage:                        
+                    case Sabotage:
                         switch(((RepareSabotageCard)c).getTool()){
                             case Pickaxe:
-                                image = (new Image("ressources/carte_brise_pioche.jpg"));
+                            	playingCard = new GamePlayingCard("carte_brise_pioche");
                                 break;
                             case Lantern:
-                                image = (new Image("ressources/carte_brise_lanterne.jpg"));
+                            	playingCard = new GamePlayingCard("carte_brise_lanterne");
                                 break;
                             case Wagon:
-                                image = (new Image("ressources/carte_brise_chariot.jpg"));
+                            	playingCard = new GamePlayingCard("carte_brise_chariot");
                                 break;
                         }
-                        break;                          
+                        break;
                     case Map:
-                        image = (new Image("ressources/carte_plan_secret.jpg"));
+                    	playingCard = new GamePlayingCard("carte_plan_secret");
                         break;
                     case Repare:
                         switch(((RepareSabotageCard)c).nbTools()){
                             case 1 :
                                 switch(((RepareSabotageCard)c).getTool()){
                                     case Pickaxe:
-                                        image = (new Image("ressources/carte_repare_pioche.jpg"));
+                                    	playingCard = new GamePlayingCard("carte_repare_pioche");
                                         break;
                                     case Lantern:
-                                        image = (new Image("ressources/carte_repare_lanterne.jpg"));
+                                    	playingCard = new GamePlayingCard("carte_repare_lanterne");
                                         break;
                                     case Wagon:
-                                        image = (new Image("ressources/carte_repare_chariot.jpg"));
-                                        break;                           
+                                    	playingCard = new GamePlayingCard("carte_repare_chariot");
+                                        break; 
                                 }
                             break;
                             case 2 :
                                 switch(((RepareSabotageCard)c).getTool()){
                                     case Pickaxe:
-                                        image = (new Image("ressources/carte_repare_pioche_lanterne.jpg"));
+                                    	playingCard = new GamePlayingCard("carte_repare_pioche_lanterne");
                                         break;
                                     case Lantern:
-                                        image = (new Image("ressources/carte_repare_lanterne_chariot.jpg"));
+                                    	playingCard = new GamePlayingCard("carte_repare_lanterne_chariot");
                                         break;
                                     case Wagon:
-                                        image = (new Image("ressources/carte_repare_chariot_pioche.jpg"));
+                                    	playingCard = new GamePlayingCard("carte_repare_chariot_pioche");
                                         break;
                                 }
                             break;
                             default:
-                                image = null;
+                            	playingCard = new GamePlayingCard("carte_test_118_181");
                         }
                         break;
                     case Crumbing:
-                        image = (new Image("ressources/carte_eboulement.jpg"));
+                    	playingCard = new GamePlayingCard("carte_eboulement");
                         break;
                     default:
-                        image = null;
+                    	playingCard = new GamePlayingCard("carte_test_118_181");
                 }
                 break;
             case gallery:
@@ -286,29 +369,29 @@ public class GameInteract {
                         if(((GalleryCard)c).canHasWest()){
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NSEO_C.png"));
+                                	playingCard = new GamePlayingCard("NSEO_C");
                                 }else{//Sans East
-                                    image = (new Image("ressources/NSO_C.png"));
+                                	playingCard = new GamePlayingCard("NSO_C");
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NEO_C.png"));
+                                	playingCard = new GamePlayingCard("NEO_C");
                                 }else{//Sans East
-                                    image = (new Image("ressources/NO_C.png"));
+                                	playingCard = new GamePlayingCard("NO_C");
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NSO_C.png"));//NSE
+                                	playingCard = new GamePlayingCard("NSO_C");//NSE
                                 }else{//Sans East
-                                    image = (new Image("ressources/NS_C.png"));
+                                	playingCard = new GamePlayingCard("NS_C");
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NE_C.png"));
+                                	playingCard = new GamePlayingCard("NE_C");
                                 }else{//Sans East
-                                    image = null;//N
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//N
                                 }
                             }
                         }
@@ -316,29 +399,29 @@ public class GameInteract {
                         if(((GalleryCard)c).canHasWest()){
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NEO_C.png"));//SEO
+                                	playingCard = new GamePlayingCard("NEO_C");//SEO
                                 }else{//Sans East
-                                    image = (new Image("ressources/NE_C.png"));//SO
+                                	playingCard = new GamePlayingCard("NE_C");//SO
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/EO_C.png"));
+                                	playingCard = new GamePlayingCard("EO_C");
                                 }else{//Sans East
-                                    image = null;//O
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//O
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NO_C.png"));//SE
-                                }else{//Sans East
-                                    image = null;//S
+                                	playingCard = new GamePlayingCard("NO_C");//SE
+                                }else{//Sans East carte_test_118_181
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//S
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = null;//E
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//E
                                 }else{//Sans East
-                                    image = null;//rien
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//rien
                                 }
                             }
                         }
@@ -349,29 +432,29 @@ public class GameInteract {
                         if(((GalleryCard)c).canHasWest()){
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NSEO_NC.png"));
+                                	playingCard = new GamePlayingCard("NSEO_NC");
                                 }else{//Sans East
-                                    image = (new Image("ressources/NSO_NC.png"));
+                                	playingCard = new GamePlayingCard("NSO_NC");
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NEO_NC.png"));
+                                	playingCard = new GamePlayingCard("NEO_NC");
                                 }else{
-                                    image = (new Image("ressources/NO_NC.png"));
+                                	playingCard = new GamePlayingCard("NO_NC");
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NSO_NC.png"));//NSE
+                                	playingCard = new GamePlayingCard("NSO_NC");//NSE
                                 }else{//Sans East
-                                    image = (new Image("ressources/NS_NC.png"));
+                                	playingCard = new GamePlayingCard("NS_NC");
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/SO_NC.png"));
+                                	playingCard = new GamePlayingCard("SO_NC");
                                 }else{//Sans East
-                                    image = (new Image("ressources/N_NC.png"));//N
+                                	playingCard = new GamePlayingCard("N_NC");//N
                                 }
                             }
                         }
@@ -379,29 +462,29 @@ public class GameInteract {
                         if(((GalleryCard)c).canHasWest()){
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NEO_NC.png"));//SEO
+                                	playingCard = new GamePlayingCard("NEO_NC");//SEO
                                 }else{//Sans East
-                                    image = (new Image("ressources/SO_NC.png"));//SO
+                                	playingCard = new GamePlayingCard("SO_NC");//SO
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/EO_NC.png"));
+                                	playingCard = new GamePlayingCard("EO_NC");
                                 }else{//Sans East
-                                    image = (new Image("ressources/O_NC.png"));//O
+                                	playingCard = new GamePlayingCard("O_NC");//O
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/NO_NC.png"));//SE
+                                	playingCard = new GamePlayingCard("NO_NC");//SE
                                 }else{//Sans East
-                                    image = (new Image("ressources/N_NC.png"));//S
+                                	playingCard = new GamePlayingCard("N_NC");//S
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
-                                    image = (new Image("ressources/O_NC.png"));//E
+                                	playingCard = new GamePlayingCard("O_NC");//E
                                 }else{//Sans East
-                                    image = null;//rien
+                                	playingCard = new GamePlayingCard("carte_test_118_181");//rien
                                 }
                             }
                         }
@@ -409,9 +492,41 @@ public class GameInteract {
                 }
                 break;
             default:
-                image = null;
+            	playingCard = new GamePlayingCard("carte_test_118_181");
         }
-        return image;
-    }*/
+        return playingCard;
+    }
 	
+	
+	
+
+
+	// A custom ListCell that displays an ImageView
+	static class ImageCell extends ListCell<String> {
+		Label label;
+		@Override
+		protected void updateItem (String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setItem(null);
+				setGraphic(null);
+			}
+			else {
+				ImageView image = getImageView(item);
+				label = new Label("",image);
+				setGraphic(label);
+			}
+		}
+
+		private ImageView getImageView(String imageName) {
+			ImageView imageView = null;
+            imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
+			if (!imageView.equals(null)) {
+			    //imageView.setFitWidth(70);
+			    //imageView.setFitHeight(70);
+			}
+			return imageView;
+		}
+	
+	}
 }
