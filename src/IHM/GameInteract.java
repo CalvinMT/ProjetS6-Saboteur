@@ -49,6 +49,8 @@ public class GameInteract {
 	private ArrayList <GamePlayingCard> cardsInHand;
 	
 	private int numberOfPlayers;
+	private int listAvatarSize = 75;
+	private int listConstraintSize = 40;
 	
 	@FXML
 	BorderPane borderPaneInteract;
@@ -95,19 +97,29 @@ public class GameInteract {
 		GridPane gridPanePlayer;
 		for (int i=0; i < numberOfPlayers; i++) {
 			gridPanePlayer = new GridPane();
-			gridPanePlayer.setPrefSize(150.0, 75.0);
+			gridPanePlayer.setPrefSize(hboxGameCardsInHand.getPrefWidth(), (hboxGameCardsInHand.getPrefHeight()/numberOfPlayers));
 			// Avatar
 			ImageView viewAvatar = new ImageView("ressources/" + moteur.getPlayer(i).getAvatar() + ".png");
-			viewAvatar.setFitWidth(70);
-			viewAvatar.setFitHeight(70);
+			viewAvatar.setFitWidth(listAvatarSize);
+			viewAvatar.setFitHeight(listAvatarSize);
 			// Pseudo
 			Text textPseudo = new Text(moteur.getPlayer(i).getPlayerName());
 			// Constraints
-			int numberOfConstraints = moteur.getPlayer(i).getAttributeCards().getNbAttribute();
-			// Puts all into the grid list
+			ImageView viewConstraintLantern = new ImageView("ressources/lanterne.png");
+			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
+			ImageView viewConstraintWagon = new ImageView("ressources/wagon.png");
+			viewConstraintLantern.setFitWidth(listConstraintSize);
+			viewConstraintLantern.setFitHeight(listConstraintSize);
+			viewConstraintPickaxe.setFitWidth(listConstraintSize);
+			viewConstraintPickaxe.setFitHeight(listConstraintSize);
+			viewConstraintWagon.setFitWidth(listConstraintSize);
+			viewConstraintWagon.setFitHeight(listConstraintSize);
+			// Puts everything into the grid list
 			gridPanePlayer.add(viewAvatar, 0, 0); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
-			gridPanePlayer.add(textPseudo, 2, 0);
-			gridPanePlayer.add(new Text("Constraints"), 2, 1);
+			gridPanePlayer.add(textPseudo, 2, 0); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
+			gridPanePlayer.add(viewConstraintLantern, 2, 1);
+			gridPanePlayer.add(viewConstraintPickaxe, 3, 1);
+			gridPanePlayer.add(viewConstraintWagon, 4, 1);
 			vboxPlayerList.getChildren().add(gridPanePlayer);
 		}
 		//vboxPlayerList.getChildren().addAll(playerList);

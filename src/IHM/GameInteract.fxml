@@ -17,7 +17,7 @@
             <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
          </bottom>
          <right>
-            <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="150.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
+            <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="200.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
          </right>
          <top>
             <HBox fx:id="hboxTop" prefHeight="57.0" BorderPane.alignment="CENTER">
