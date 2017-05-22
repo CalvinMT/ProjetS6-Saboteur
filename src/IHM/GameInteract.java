@@ -56,6 +56,8 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	@FXML
 	VBox vboxPlayerList;
+	@FXML
+	HBox hboxTop;
 	
 	@FXML
 	private void handleHBoxMouseEntered () {
@@ -99,7 +101,7 @@ public class GameInteract {
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center playable cards (hand) in bottom-middle of the screen
-		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
 		borderPaneInteract.setPickOnBounds(false);
@@ -254,8 +256,6 @@ public class GameInteract {
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
 		            numberOfCardsInHand--;
 		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
-		            System.out.println(possiblePositions);
-		            System.out.println(((GalleryCard) card).debugString());
 		        }
 				dragEvent.consume();
 			}
