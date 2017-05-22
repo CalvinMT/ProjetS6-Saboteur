@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
+
 import Cards.Card;
+import Cards.RoleCard;
 import Player.Player;
 import Saboteur.Moteur.State;
 import Saboteur.Moteur;
@@ -159,6 +161,16 @@ public class MainLoader extends Application {
 		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+
+		// Load MenuMain.fxml
+		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+		
+		// Automatic Resizing
+		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+		
+		
 		primaryStage.show();
 		
 		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");

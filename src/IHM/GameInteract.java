@@ -56,9 +56,7 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	@FXML
 	VBox vboxPlayerList;
-	@FXML
-	HBox HBoxTop;
-
+	
 	@FXML
 	private void handleHBoxMouseEntered () {
 			hboxGameCardsInHand.getScene().setCursor(Cursor.HAND);
@@ -562,9 +560,6 @@ public class GameInteract {
 	
 	}
 
-
-
-
 	// ---------------------------------------------------------------------------------------------------------------
 
 	@FXML
@@ -605,5 +600,4 @@ public class GameInteract {
 	void handleButtonRecommencer(ActionEvent event){
 		System.out.println("Remise à zéro de la partie");
 	}
-
 }
