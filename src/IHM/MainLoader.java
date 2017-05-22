@@ -3,7 +3,14 @@ package IHM;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
+import Cards.Card;
+import Player.Player;
+import Saboteur.Moteur.State;
+import Saboteur.Moteur;
+import Saboteur.Saboteur;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -29,7 +36,9 @@ public class MainLoader extends Application {
 
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
-	
+
+	static public final long shortWaitingTime = 500;
+
 	private double volumeMusic;
 	// TOTO - private double volumeEffects;
 	
@@ -122,7 +131,7 @@ public class MainLoader extends Application {
 		
 		// Music & Effects played in background
 		try {
-			Media music = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			Media music = new Media(new File("ressources/pull-up-a-chair.mp3").toURI().toString());
 			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));
@@ -150,17 +159,107 @@ public class MainLoader extends Application {
 		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-
-		// Load MenuMain.fxml
-		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
-		
-		// Automatic Resizing
-		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
-		
-		
 		primaryStage.show();
+		
+		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        anchorPaneMainLoader.getChildren().setAll(anchorPane);
+        
+        autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+
+
+        ///// POUR FAIRE JOUER L'IA
+
+
+		AnimationTimer game = new AnimationTimer() {
+
+			Random rand = new Random();
+
+			@Override
+			public void handle(long temps) {
+
+				Moteur engine = Saboteur.getMoteur();
+
+				if(engine != null){
+
+					switch(engine.getState()){
+						// choix des roles
+						case ChooseRole:
+//						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player){
+
+
+								int numRoleCards;
+
+								do {
+									numRoleCards = rand.nextInt(engine.getNbRoleCards());
+								} while(engine.isTaken(numRoleCards));
+
+								try {
+									Card c = engine.getRoleCard(numRoleCards);
+									engine.setTrueTaken(numRoleCards);
+									engine.getCurrentPlayer().assignRole(c);
+									ChoixRole.updateGraphic(numRoleCards);
+									engine.nextPlayer();
+									ChoixRole.updateText();
+
+									try {
+
+										Thread.sleep(shortWaitingTime);
+									} catch (Exception ex){
+										System.err.println("Erreur sleep");
+									}
+
+								} catch (Exception ex){
+									System.err.println("Erreur lors du choix des roles");
+									ex.printStackTrace();
+								}
+
+//								engine.promptPlayersRole();
+
+								if(engine.allRoleAreSet()){
+									engine.setState(State.Game);
+								}
+							}
+
+							break;
+
+						// déroulement d'une manche
+						case Game:
+//							System.err.println("Game");
+							if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
+							/*engine.nextAnimationTimer anim = new AnimationTimer() {
+								@Override
+								public void handle(long temps) {
+									if (plateau.enCours() && (temps > echeance) && joueurs[joueurCourant].tempsEcoule()) {
+										changeJoueur();
+										dessin();
+									}
+								}
+							};
+        					anim.start();Player();*/
+								//TODO ajouter maj graphique
+							}
+
+							break;
+
+						// choix de l'or
+						case ChooseGold:
+							//TODO chooseCard
+							// not implemented yet
+							break;
+						default:
+							break;
+					}
+				}
+
+
+
+				//TODO boucle de jeu
+			}
+		};
+
+		game.start();
 	}
 
     public static void main (String[] args) {

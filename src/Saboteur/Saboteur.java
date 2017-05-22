@@ -24,9 +24,7 @@ public class Saboteur {
 
         try {
             System.out.println(m);
-            while(!m.allRoleAreSet()){
-                m.chooseRole();
-            }
+
 
         } catch(Exception e){
             System.err.println("Erreur choix du role");
