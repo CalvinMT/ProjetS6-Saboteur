@@ -29,6 +29,16 @@ public class HandPlayer extends Hand {
         }
     }
 
+    // fait la rotation de la carte a la ième position
+    public void rotateCard(int i){
+        if(i >= 0 && i <this.nbCard()){
+            Card c = arrayCard.get(i);
+            if(c.getType() == Card.Card_t.gallery){
+                arrayCard.set(i, ((GalleryCard) c).rotate());
+            }
+        }
+    }
+
     public void addCard(Card c){
         if (c.getType() == Card.Card_t.gallery || c.getType() == Card.Card_t.action){
             this.arrayCard.add(c);

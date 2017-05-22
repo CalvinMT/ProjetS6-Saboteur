@@ -204,7 +204,7 @@ public class GalleryCard extends Card {
         }
         if(nb == 0){
             return false;
-        } else if(nb == 1 && this.canHasCenter()) {
+        } else if(nb == 1 && !this.canHasCenter()) {
             return true;
         } else {
             return nb > 1;
@@ -247,7 +247,28 @@ public class GalleryCard extends Card {
 
         return renvoi;
     }
-    
+
+    public String simplified(){
+        String renvoi = this.coord + " {";
+        if(this.canHasNorth()){
+            renvoi += "N";
+        }
+        if(this.canHasSouth()){
+            renvoi += "S";
+        }
+        if(this.canHasEast()){
+            renvoi += "E";
+        }
+        if(this.canHasWest()){
+            renvoi += "W";
+        }
+        renvoi += "} ";
+        if(!this.canHasCenter()){
+            renvoi += "bloqued";
+        }
+        return renvoi;
+    }
+
     @Override
 	public int getGold(){
 		return 0;

@@ -268,6 +268,34 @@ public class Board {
         return n;
     }
 
+    public boolean goalReached(){
+
+        final Couple goal1 = new Couple(-2, 8);
+        final Couple goal2 = new Couple(0, 8);
+        final Couple goal3 = new Couple(2, 8);
+
+        if(accessCard.contains(goal1) && accessCard.get(goal1).getCard().isGold() || accessCard.contains(goal2) && accessCard.get(goal2).getCard().isGold() || accessCard.contains(goal3) && accessCard.get(goal3).getCard().isGold()){
+            // fin de la manche
+            return true;
+        } else {
+            return false;
+        }
+
+        //TODO à changer car la carte gold peut etre bloquer et inacessible
+    }
+
+    public String mine(){
+        String renvoi = "Mine:\n";
+
+        for(int i=0; i<mine.size(); i++){
+            renvoi +=  mine.get(i) + "\n";
+        }
+
+
+        return renvoi;
+    }
+
+
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
 
     public Node getMineElement(int i) {
@@ -281,4 +309,6 @@ public class Board {
     public int getMineSize() {
         return mine.size();
     }
+
+
 }

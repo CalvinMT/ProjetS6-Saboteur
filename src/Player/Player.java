@@ -90,7 +90,14 @@ public abstract class Player {
     }
 
     // choix des cartes roles
-//    public abstract void chooseRoleCard(HandRole cards);
+    public boolean chooseRoleCard(HandRole cards){
+        return false;
+    }
+
+    // assigne un nouveau pseudo
+    public void setPlayerName(String name){
+        this.playerName = name;
+    }
 
     // assigne un avatar
     public void setAvatar(String jpg){
@@ -141,6 +148,23 @@ public abstract class Player {
     // uniquement pour les tests
     public void removeAttribute(int n){
         this.attributeCards.removeAttribute(n);
+    }
+
+    // alternance IA Joueur
+
+
+    public int waitingTime() {
+        return -1;
+    }
+
+    // Méthode appelée une fois le temps écoulé
+    public boolean pastTime() {
+        return false;
+    }
+
+    // clic sur le plateau
+    public boolean play(){
+        return false;
     }
 
 

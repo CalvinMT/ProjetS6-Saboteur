@@ -245,7 +245,7 @@ public class GameInteract {
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
 		            numberOfCardsInHand--;
 		            moteur.getBoard().addCard((GalleryCard) card);
-		            System.out.println(moteur.getBoard().toString());
+		            System.out.println(moteur.getBoard().mine());
 		        }
 				dragEvent.consume();
 			}

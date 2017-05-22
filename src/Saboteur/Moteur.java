@@ -9,6 +9,8 @@ import Player.*;
 import Board.Board;
 import Board.Couple;
 
+import javax.management.relation.Role;
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -20,9 +22,21 @@ public class Moteur {
     private Deck pile;
     private int currentPlayer = -1;
     private HandRole roleCards;
+    private ArrayList<Boolean> roleTaken;
+    private Board board;
 
-    //ajout du board
-    Board board;
+    private long echeance;
+
+    private State state;
+    public enum State {
+        Waiting,
+        ChooseRole,
+        Game,
+        ChooseGold;
+
+    }
+
+
 
 
 
@@ -36,8 +50,11 @@ public class Moteur {
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
         roleCards = new HandRole(nbPlayer());
+        initRoleTaken();
         this.board = new Board();
-        initHand();
+        state = State.Waiting;
+        setAllPlayerBoard();
+        this.echeance = System.nanoTime();
     }
 
     public Moteur(ArrayList<Player> arrayPlayer){
@@ -46,7 +63,10 @@ public class Moteur {
             this.pile = new DeckGalleryAction();
             currentPlayer = 0;
             roleCards = new HandRole(nbPlayer());
+            initRoleTaken();
             this.board = new Board();
+            state = State.Waiting;
+            this.echeance = System.nanoTime();
 
             setAllPlayerBoard();
             initHand();
@@ -78,6 +98,14 @@ public class Moteur {
 
         for(int i=0; i<nbPlayer; i++){
             arrayPlayer.add(new PlayerHuman(i+1, this.board));
+        }
+    }
+
+    public void initRoleTaken(){
+        roleTaken = new ArrayList<>();
+
+        for(int i=0; i<roleCards.nbCard(); i++){
+            roleTaken.add(false);
         }
     }
 
@@ -126,13 +154,6 @@ public class Moteur {
         }
     }
 
-    // choix des roles en début de manche
-    public void chooseRole() throws Exception{
-
-
-
-
-    }
 
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
@@ -144,8 +165,6 @@ public class Moteur {
         return true;
     }
 
-
-
     // affiche les infos joueurs en version texte
     public void promptPlayers(){
         for(int i=0; i<nbPlayer(); i++){
@@ -154,9 +173,18 @@ public class Moteur {
         }
     }
 
+    // affiche les infos joueurs en version texte
+    public void promptPlayersRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
+        }
+    }
+
+
     // passe au joueur suivant
     public void nextPlayer(){
         currentPlayer = (currentPlayer+1)%nbPlayer();
+        echeance = getCurrentPlayer().waitingTime()*1000000 + System.nanoTime();
     }
 
     // renvoie le nombre max de cartes que les joueurs peuvent avoir en main
@@ -175,6 +203,11 @@ public class Moteur {
         } else {
             return null;
         }
+    }
+
+    // si le joueur courant a un role
+    public boolean roleSet(){
+        return getCurrentPlayer().getRole() != null;
     }
 
     // le joueur courant joue une carte sur le board
@@ -243,7 +276,56 @@ public class Moteur {
         }
     }
 
+    public void setState(State s){
+        this.state = s;
+    }
 
+    public State getState(){
+        return this.state;
+    }
+
+    public HandRole getRoleCards(){
+        return this.roleCards;
+    }
+
+    public ArrayList<Boolean> getRoleCardsTaken(){
+        return this.roleTaken;
+    }
+
+    public boolean isTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            return roleTaken.get(i);
+        } else {
+            return false;
+        }
+    }
+
+    public void setTrueTaken(int i){
+        if(i >= 0 && i < roleTaken.size()){
+            this.roleTaken.set(i, true);
+        }
+    }
+
+    public Card getRoleCard(int i) throws Exception{
+        if(i >= 0 && i < roleTaken.size()){
+            return roleCards.chooseOne_without_remove(i);
+        } else {
+            throw new Exception();
+        }
+    }
+
+    public long getEcheance(){
+        return this.echeance;
+    }
+
+    public void setEcheance(long l){
+        this.echeance = l;
+    }
+
+    // si la manche est terminée
+    public boolean endGame(){
+        return this.board.goalReached();
+    }
 
     // renvoie le numero du joueur courant
     public int currentNumPlayer(){
@@ -264,13 +346,11 @@ public class Moteur {
         return this.pile;
     }
 
-    public HandRole getRoleCards(){
-        return this.roleCards;
-    }
-
     public int getNbRoleCards(){
         return roleCards.nbCard();
     }
+
+
 
     public Board getBoard(){
         return this.board;
@@ -279,6 +359,7 @@ public class Moteur {
     public String toString(){
         String renvoi = "Moteur: \n";
 
+        renvoi += "Etat: "+this.state+"\n";
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
