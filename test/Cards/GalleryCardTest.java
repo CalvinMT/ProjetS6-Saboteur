@@ -13,7 +13,7 @@ public class GalleryCardTest {
     public void setResist() throws Exception {
         int res;
         GalleryCard c = new GalleryCard();
-        assertTrue(c.getResist() == 3);
+        assertTrue(c.getResist() == 4);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
@@ -25,10 +25,7 @@ public class GalleryCardTest {
                                 assertTrue(c.getResist() == 0);
                             }
                             else {
-                                res = j+k+l+m - 1;
-                                if (res == -1) {
-                                    res = 0;
-                                }
+                                res = j+k+l+m;
                                 assertTrue(c.getResist() == res);
                             }
                         }

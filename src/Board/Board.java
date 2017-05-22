@@ -3,6 +3,7 @@ package Board;
 
 import Cards.GalleryCard;
 import Cards.GoalCard;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -114,29 +115,147 @@ public class Board {
     }
 
 
+    // Path Resistance
+    /*public boolean isNeighbourVisited(int idx, LinkedList<Node> v) {
+        if (idx !=-1) return v.contains(mine.get(idx));
+        return true;
+    }
+
+    public boolean allNeighborsVisited(Node n, LinkedList<Node> v) {
+        boolean b = isNeighbourVisited(n.getNorth(), v)
+                && isNeighbourVisited(n.getSouth(), v)
+                && isNeighbourVisited(n.getEast(), v)
+                && isNeighbourVisited(n.getWest(), v);
+        System.out.printf("\t%-5s -> ", b);
+        System.out.println(n);
+        return b;
+    } */
+
     // Computations
+
+
+
+
+    private int getRes(int idx, Node end, LinkedList<Node> path){
+        Node curr;
+        if (idx != -1) {
+            curr = mine.get(idx);
+            if (!path.contains(curr)) {
+                System.out.printf("getRes[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\n", curr.getPathRes(), path, curr.card.getX(), curr.card.getY(), curr.card.getConfig(), curr.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
+                return pathRes(curr, end, path);
+            }
+        }
+        System.out.println("END getRes");
+        return 0;
+    }
+
+    public int pathRes(Node start, Node end, LinkedList<Node> path) {
+        if (start == end) {
+            System.out.printf("pathRes[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\nEND pathRes\n", start.getPathRes(), path, start.card.getX(), start.card.getY(), start.card.getConfig(), start.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
+            return end.getPathRes();
+        }
+        else {
+            path.contains(start);
+            return Math.max(getRes(start.getNorth(), end, path), Math.max(getRes(start.getSouth(), end, path), Math.max(getRes(start.getEast(), end, path), getRes(start.getWest(), end, path)))) + start.card.getResist();
+        }
+    }
+
+
+
+
+
+
+    // Compute pathResistance
+    public void computePathRes_rec(Node start, Node end, LinkedList<Node> path, int res) {
+        Node curr;
+        //System.out.printf("[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\n", res, path, start.card.getX(), start.card.getY(), start.card.getConfig(), start.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
+
+        if (start == end) {
+            //System.out.println("END");
+            res = res + end.card.getResist();
+            if (res > end.getPathRes()) end.setPathRes(res);
+        }
+        else {
+            res += start.card.getResist();
+
+            if (res > start.getPathRes()) start.setPathRes(res); // Garde la resistance max
+
+            if (start.getNorth() != -1) { // Si il y a un élément au nord
+                curr = mine.get(start.getNorth());
+                if (!path.contains(curr)) {
+                //    System.out.println("\t\t\tNorth add : " + curr);
+                    path.add(curr);
+                    computePathRes_rec(curr, end, path, res); // Si l'élément nord n'a pas déjà été visité
+                }
+                //else System.out.println("\t\tNorth path contains " + curr);
+            }
+            if (start.getSouth() != -1) { // Si il y a un élément au sud
+
+                curr = mine.get(start.getSouth());
+                if (!path.contains(curr)) {
+                //    System.out.println("\t\t\tSouth add : " + curr);
+                    path.add(curr);
+                    computePathRes_rec(curr, end, path, res); // Si l'élément sud n'a pas déjà été visité
+                }
+                //else System.out.println("\t\tSouth path contains " + curr);
+            }
+            if (start.getEast() != -1) { // Si il y a un élément à l'est
+
+                curr = mine.get(start.getEast());
+                if (!path.contains(curr)) {
+                //    System.out.println("\t\t\tEast  add : " + curr);
+                    path.add(curr);
+                    computePathRes_rec(curr, end, path, res); // Si l'élément à l'est n'a pas déjà été visité
+                }
+                //else System.out.println("\t\tEast  path contains " + curr);
+            }
+            if (start.getWest() != -1) { // Si il y a un élément à l'ouest
+                curr = mine.get(start.getWest());
+                if (!path.contains(curr)) {
+                //    System.out.println("\t\t\tWest  add : " + curr);
+                    path.add(curr);
+                    computePathRes_rec(curr, end, path, res); // Si l'élément ouest n'a pas déjà été visité
+                }
+                //else System.out.println("\t\tWest  path contains " + curr);
+            }
+        }
+    }
+
+    public void computePathRes() {
+        Node start, n;
+        LinkedList<Node> path = new LinkedList<Node>();
+        start = mine.get(0);
+        path.add(start);
+        for (int i = 4; i < mine.size(); i++) {
+            n = mine.get(i);
+            computePathRes_rec(start, n, path, 0);
+        }
+    }
+
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
                 visited = new LinkedList<Node>();
 
         Node currentNode, newNode;
         Couple cpl;
+        int res;
 
         try {
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
-                // System.out.println(mine);
 
+                // TODO : Migrer les calculs de résistance dans une autre fonction, recurssive,
+                // TODO | gardant en mémoire les chemins (différent de garder les cartes visitées)
+
+                // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
                 accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), currentNode); // Et aux cartes accessibles
-
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
                         if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
                             queue.add(newNode); // On l'ajoute dans la queue
-                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else { // Si il n'y a pas de carte au nord (case vide)
@@ -151,7 +270,6 @@ public class Board {
                         newNode = mine.get(currentNode.getSouth());
                         if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
                             queue.add(newNode); // On l'ajoute dans la queue
-                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else { // Si il n'y a pas de carte au sud (case vide)
@@ -164,9 +282,8 @@ public class Board {
                 if (currentNode.card.canHasEast()) {
                     if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
                         newNode = mine.get(currentNode.getEast());
-                        if (!visited.contains(newNode)) { // Si la à l'est carte n'a pas été visitée
+                        if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
                             queue.add(newNode);
-                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else {
@@ -181,7 +298,6 @@ public class Board {
                         newNode = mine.get(currentNode.getWest());
                         if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
                             queue.add(newNode);
-                            newNode.setPathRes(currentNode.getPathRes() + currentNode.card.getResist());
                         }
                     }
                     else {
@@ -229,7 +345,7 @@ public class Board {
         return true;
     }
 
-    public void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
+    private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
 
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
@@ -271,7 +387,7 @@ public class Board {
         return n;
     }
 
-    // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
+    // Debug: Les fonctions ci-après sont prévues pour les tests uniquement, aucune verification n'est effectuée
 
     public Node getMineElement(int i) {
         return mine.get(i);

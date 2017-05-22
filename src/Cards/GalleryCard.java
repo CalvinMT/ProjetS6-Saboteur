@@ -109,7 +109,7 @@ public class GalleryCard extends Card {
     }
 
     public void setResist() {
-        int res = -1;
+        int res = 0;
         if (this.center) {
             if (this.north) {
                 res += 1;
@@ -140,14 +140,15 @@ public class GalleryCard extends Card {
             }
         }*/
 
-        if (res == -1) {
-            res = 0;
-        }
         this.resist = res;
     }
 
     public int getResist() {
         return resist;
+    }
+
+    public Couple getCoord() {
+        return coord;
     }
 
     public boolean equals(GalleryCard c) {
@@ -246,7 +247,7 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
-        if (type_g == start) return "Start";
+        //if (type_g == start) return "Start";
         return "GalleryCard{" +
                 "type=" + type +
                 ", x=" + coord.getX() +
@@ -257,7 +258,7 @@ public class GalleryCard extends Card {
                 ", east=" + east +
                 ", west=" + west +
                 // TODO : Ne pas utiliser avant implémentation du save/load
-                // ", resist=" + resist +
+                ", resist=" + resist +
                 '}';
     }
 

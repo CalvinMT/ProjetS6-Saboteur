@@ -88,7 +88,7 @@ public class IA extends Player{
 
     // IA Medium + Hard
 
-    // Calcul de l'heuristique
+    // Calcul de l'heuristique (distance)
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
@@ -165,8 +165,6 @@ public class IA extends Player{
     public Couple getPosToPlay() {
         return posToPlay;
     }
-
-
 
     @Override
     public boolean iaPlayCard() {

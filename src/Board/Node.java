@@ -17,11 +17,11 @@ public class Node {
         this(new GalleryCard(), NONE, NONE, NONE, NONE);
     }
     Node(GalleryCard c){
-        this(c, NONE, NONE, NONE, NONE, 0);
+        this(c, NONE, NONE, NONE, NONE, c.getResist());
     }
 
     Node(GalleryCard c, int n, int s, int e, int w) {
-        this(c, n, s, e, w, 0);
+        this(c, n, s, e, w, c.getResist());
     }
 
     Node(GalleryCard c, int n, int s, int e, int w, int r) {
@@ -77,7 +77,8 @@ public class Node {
         return pathRes;
     }
 
-/* TODO : Ne pas utiliser avant l'implémentation du save/load
+// TODO : Ne pas utiliser avant l'implémentation du save/load
+
     @Override
     public String toString() {
         return "Node{" +
@@ -89,7 +90,7 @@ public class Node {
                 ", pathRes=" + pathRes +
                 '}';
     }
-*/
+/*
     @Override
     public String toString() {
         return "Card :\n" + this.card
@@ -100,8 +101,8 @@ public class Node {
                 + "\nWest : " + this.getWest()
                 + "\n";
     }
+*/
 
-    /*
     public boolean equals(Node n) {
         return this.card.equals(n.card) &&
         this.north == n.getNorth() &&
@@ -109,7 +110,7 @@ public class Node {
         this.east == n.getEast() &&
         this.west == n.getWest();
     }
-    */
+
 
     @Override
     public boolean equals(Object o) {

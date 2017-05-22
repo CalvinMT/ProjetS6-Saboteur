@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import static Cards.GalleryCard.Gallery_t.*;
 
@@ -63,7 +64,11 @@ public class BoardTest {
         GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, false, true, true, false),
                     card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
                     card3 = new GalleryCard(tunnel, -2, 1, true, true, true, false, false),
-                    card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true);
+                    card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true)/*,
+                    card5 = new GalleryCard(tunnel, -3, 1, true, false, true, true, false),
+                    card6 = new GalleryCard(tunnel, -3, 2, true, false, true, false, true),
+                    card7 = new GalleryCard(tunnel, -2, 2, true, true, true, false, true),
+                    card8 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false)*/;
         Couple  cpl1 = new Couple(-1, 0),
                 cpl2 = new Couple(-1, 1),
                 cpl3 = new Couple(-2, 1),
@@ -83,6 +88,16 @@ public class BoardTest {
         Assert.assertTrue(h.get(cpl1).card.equals(card1));
         Assert.assertTrue(h.get(cpl2).card.equals(card2));
         Assert.assertTrue(h.get(cpl3).card.equals(card3));
+        /*
+        b.removeCard(new Couple(-2, 1));
+        b.addCard(card8);
+        b.addCard(card5);
+        b.addCard(card6);
+        b.addCard(card7);
+        b.computeAccessCards();
+        h = b.getAccessCard();
+        //System.out.println(b.getMine());
+        //System.out.println(h);*/
     }
 
     @Test
@@ -93,11 +108,12 @@ public class BoardTest {
                 card3 = new GalleryCard(tunnel, -2, 1, true, true, true, false, false),
                 card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true),
                 cardTest = new GalleryCard(tunnel, 1, 1, true, true, true, false, false);
-
+        /*
         Couple  cpl1 = new Couple(-1, 0),
                 cpl2 = new Couple(-1, 1),
                 cpl3 = new Couple(-2, 1),
                 cpl4 = new Couple(1, 1);
+        */
 
         b.addCard(card1);
         b.addCard(card2);
@@ -159,4 +175,192 @@ public class BoardTest {
         Assert.assertTrue(p.contains(new Couple(-2, 2)));
         Assert.assertTrue(p.contains(new Couple(-3, 1)));
     }
+
+
+
+    /*@Test
+    public void pathRes() throws Exception {
+        int res;
+        //LinkedList<Node> path = new LinkedList<Node>();
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, false, true, true, false),
+                card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
+                card3 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false),
+                card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true),
+                card5 = new GalleryCard(tunnel, -3, 1, true, false, true, true, false),
+                card6 = new GalleryCard(tunnel, -3, 2, true, false, true, false, true),
+                card7 = new GalleryCard(tunnel, -2, 2, true, true, true, false, true);
+
+        // start            // 0
+        // but1             // 1
+        // but2             // 2
+        // but3             // 3
+        b.addCard(card1);   // 4
+        b.addCard(card2);   // 5
+        b.addCard(card3);   // 6
+        b.addCard(card4);   // 7
+        b.addCard(card5);   // 8
+        b.addCard(card6);   // 9
+        b.addCard(card7);   //10
+
+
+        b.computeAccessCards();
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(0), new LinkedList<Node>());
+        if (res != 4) System.out.println("\nExpected 4 found " + res);
+        Assert.assertTrue(res == 4);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(4), new LinkedList<>());
+        if (res != 6) System.out.println("\nExpected 6 found " + res);
+        Assert.assertTrue( res == 6);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(5), new LinkedList<>());
+        if (res != 9) System.out.println("\nExpected 9 found " + res);
+        Assert.assertTrue( res == 9);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(6), new LinkedList<>());
+        if (res != 12) System.out.println("\nExpected 12 found " + res);
+        Assert.assertTrue( res == 12);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(7), new LinkedList<>());
+        if (res != 2) System.out.println("\nExpected 2 found " + res);
+        Assert.assertTrue( res == 2);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(8), new LinkedList<>());
+        if (res != 14) System.out.println("\nExpected 14 found " + res);
+        Assert.assertTrue( res == 14);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(9), new LinkedList<>());
+        if (res != 16) System.out.println("\nExpected 16 found " + res);
+        Assert.assertTrue( res == 16);
+
+        res = b.pathRes(b.getMineElement(0), b.getMineElement(10), new LinkedList<>());
+        if (res != 19) System.out.println("\nExpected 19 found " + res);
+        Assert.assertTrue( res == 19);
+
+
+
+    }
+    */
+
+
+    @Test
+    public void computePathRes_rec() throws Exception {
+        int res;
+        //LinkedList<Node> path = new LinkedList<Node>();
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, false, true, true, false),
+                    card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
+                    card3 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false),
+                    card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true),
+                    card5 = new GalleryCard(tunnel, -3, 1, true, false, true, true, false),
+                    card6 = new GalleryCard(tunnel, -3, 2, true, false, true, false, true),
+                    card7 = new GalleryCard(tunnel, -2, 2, true, true, true, false, true);
+
+        // start            // 0
+        // but1             // 1
+        // but2             // 2
+        // but3             // 3
+        b.addCard(card1);   // 4
+        b.addCard(card2);   // 5
+        b.addCard(card3);   // 6
+        b.addCard(card4);   // 7
+        b.addCard(card5);   // 8
+        b.addCard(card6);   // 9
+        b.addCard(card7);   //10
+
+        b.computeAccessCards();
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(0), new LinkedList<>(), 0);
+        res = b.getMineElement(0).getPathRes();
+        if (res != 4) System.out.println("\nExpected 4 found " + res);
+        Assert.assertTrue(res == 4);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(4), new LinkedList<>(), 0);
+        res = b.getMineElement(4).getPathRes();
+        if (res != 6) System.out.println("\nExpected 6 found " + res);
+        Assert.assertTrue( res == 6);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(5), new LinkedList<>(), 0);
+        res = b.getMineElement(5).getPathRes();
+        if (res != 9) System.out.println("\nExpected 9 found " + res);
+        Assert.assertTrue( res == 9);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(6), new LinkedList<>(), 0);
+        res = b.getMineElement(6).getPathRes();
+        if (res != 12) System.out.println("\nExpected 12 found " + res);
+        Assert.assertTrue( res == 12);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(7), new LinkedList<>(), 0);
+        res = b.getMineElement(7).getPathRes();
+        if (res != 2) System.out.println("\nExpected 2 found " + res);
+        Assert.assertTrue( res == 2);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(8), new LinkedList<>(), 0);
+        res = b.getMineElement(8).getPathRes();
+        if (res != 14) System.out.println("\nExpected 14 found " + res);
+        Assert.assertTrue( res == 14);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(9), new LinkedList<>(), 0);
+        res = b.getMineElement(9).getPathRes();
+        if (res != 17) System.out.println("\nExpected 17 found " + res);
+        Assert.assertTrue( res == 17);
+
+        b.computePathRes_rec(b.getMineElement(0), b.getMineElement(10), new LinkedList<>(), 0);
+        res = b.getMineElement(10).getPathRes();
+        if (res != 19) System.out.println("\nExpected 19 found " + res);
+        Assert.assertTrue( res == 19);
+    }
+
+//    @Test
+//    public void computePathRes() throws Exception {
+//        int res;
+//        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, false, true, true, false),
+//                    card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
+//                    card3 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false),
+//                    card4 = new GalleryCard(tunnel,  1, 1, true, false, false, true, true),
+//                    card5 = new GalleryCard(tunnel, -3, 1, true, false, true, true, false),
+//                    card6 = new GalleryCard(tunnel, -3, 2, true, false, true, false, true),
+//                    card7 = new GalleryCard(tunnel, -2, 2, true, true, true, false, true);
+//
+//        // start            // 0
+//        // but1             // 1
+//        // but2             // 2
+//        // but3             // 3
+//        b.addCard(card1);   // 4
+//        b.addCard(card2);   // 5
+//        b.addCard(card3);   // 6
+//        b.addCard(card4);   // 7
+//        b.addCard(card5);   // 8
+//        b.addCard(card6);   // 9
+//        b.addCard(card7);   //10
+//
+//        System.out.println(b.getMine());
+//        b.computePathRes();
+//        System.out.println(b.getMine());
+//        System.out.println(b.getMineElement(0).getPathRes());
+//
+//        res = b.getMineElement(0).getPathRes();
+//        if (res != 4) System.out.println("\nExpected 4 found " + res);
+//        Assert.assertTrue(res == 4);                // ( 0, 0)
+//        res = b.getMineElement(4).getPathRes();
+//        if (res != 6) System.out.println("\nExpected 6 found " + res);
+//        Assert.assertTrue(res == 6);                // (-1, 0)
+//        res = b.getMineElement(5).getPathRes();
+//        if (res != 9) System.out.println("\nExpected 9 found " + res);
+//        Assert.assertTrue(res == 9);                // (-1, 1)
+//        res = b.getMineElement(6).getPathRes();
+//        if (res != 12) System.out.println("\nExpected 12 found " + res);
+//        Assert.assertTrue(res == 12);               // (-2, 1)
+//        res = b.getMineElement(7).getPathRes();
+//        if (res != 2) System.out.println("\nExpected 2 found " + res);
+//        Assert.assertTrue(res == 2);                // ( 1, 1)
+//        res = b.getMineElement(8).getPathRes();
+//        if (res != 14) System.out.println("\nExpected 14 found " + res);
+//        Assert.assertTrue(res == 14);               // (-3, 1)
+//        res = b.getMineElement(9).getPathRes();
+//        if (res != 17) System.out.println("\nExpected 17 found " + res);
+//        Assert.assertTrue(res == 17);               // (-3, 2)
+//        res = b.getMineElement(10).getPathRes();
+//        if (res != 19) System.out.println("\nExpected 19 found " + res);
+//        Assert.assertTrue(res == 19);               // (-2, 2)
+//    }
 }
