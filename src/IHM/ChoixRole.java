@@ -130,7 +130,6 @@ public class ChoixRole {
             }
 
             if(event.getSource().equals(cartesRole.get(i)) && !m.isTaken(i)){                            //Si on l'a trouvée on la retourne
-
                 assignRoleToPlayer(i);
                 m.setTrueTaken(i);
             } else {
@@ -144,7 +143,6 @@ public class ChoixRole {
     public void assignRoleToPlayer(int i){
         Card carteCourante = roles.chooseOne_without_remove(i);
         if(carteCourante.getType() == Card.Card_t.role){
-
             if(((RoleCard)carteCourante).isMinor()){
                 cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.png"));
             }else if(((RoleCard)carteCourante).isSaboteur()){
@@ -170,7 +168,6 @@ public class ChoixRole {
     static public void updateText(){
 
     }
-
 
     public void configEndChoose(){
         if(m.allRoleAreSet()){   //Si c'était la dernière carte
