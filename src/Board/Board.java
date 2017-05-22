@@ -133,6 +133,7 @@ public class Board {
         Node currentNode, newNode;
         Couple cpl;
 
+        this.positionCandidates = new ArrayList<>();
         try {
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir

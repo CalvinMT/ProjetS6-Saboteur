@@ -192,7 +192,7 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent event) {
 				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				//viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				// Turns off indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions.stream().forEach(position -> {
@@ -244,8 +244,9 @@ public class GameInteract {
 		            cardsInHand.remove(viewCard);
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
 		            numberOfCardsInHand--;
-		            moteur.getBoard().addCard((GalleryCard) card);
-		            System.out.println(moteur.getBoard().mine());
+		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+		            System.out.println(possiblePositions);
+		            System.out.println(((GalleryCard) card).debugString());
 		        }
 				dragEvent.consume();
 			}
@@ -386,6 +387,7 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NSO_C");//NSE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NS_C");
                                 }
@@ -394,6 +396,7 @@ public class GameInteract {
                                 	playingCard = new GamePlayingCard("NE_C");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//N
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -402,28 +405,35 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NEO_C");//SEO
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NE_C");//SO
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_C");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//O
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NO_C");//SE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East carte_test_118_181
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//S
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//E
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//rien
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -449,6 +459,7 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NSO_NC");//NSE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("NS_NC");
                                 }
@@ -457,6 +468,7 @@ public class GameInteract {
                                 	playingCard = new GamePlayingCard("SO_NC");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//N
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
@@ -465,28 +477,35 @@ public class GameInteract {
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NEO_NC");//SEO
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("SO_NC");//SO
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_NC");
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("O_NC");//O
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }else{//Sans West
                             if(((GalleryCard)c).canHasSouth()){
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("NO_NC");//SE
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//S
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("O_NC");//E
+                                	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("carte_test_118_181");//rien
+                                	playingCard.getImageView().setRotate(180);
                                 }
                             }
                         }
