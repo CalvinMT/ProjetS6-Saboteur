@@ -328,13 +328,13 @@ public class GameInteract {
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()  &&  !event.isSecondaryButtonDown()) {
-					/*hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
+				/*if (event.isPrimaryButtonDown()  &&  !event.isSecondaryButtonDown()) {
+					hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
 					mouseX = event.getSceneX();
 					mouseY = event.getSceneY();
 					viewCardX = ((ImageView)(event.getSource())).getTranslateX();
-					viewCardY = ((ImageView)(event.getSource())).getTranslateY();*/
-				}
+					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
+				}*/
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
 					viewCard.setRotate(viewCard.getRotate() + 180);
 				}
@@ -360,17 +360,31 @@ public class GameInteract {
 				// Puts back card into place
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				isDragged = false;
-	            possiblePositions.stream().forEach(position -> {
-	            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
-						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-						GameBoard.gridPaneBoard.getChildren().remove(node);
-	            	}
-	            });
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+		            possiblePositions.stream().forEach(position -> {
+		            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+							GameBoard.gridPaneBoard.getChildren().remove(node);
+		            	}
+		            });
 		            cardsInHand.remove(viewCard);
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
 		            numberOfCardsInHand--;
 		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+		        }
+				else if (dragEvent.getTransferMode() == TransferMode.COPY) {
+					GameBoard.endCards.stream().forEach(endCard -> {
+						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+						if (endCard.getColumn() != droppedColumn  ||  endCard.getLine() != droppedLine) {
+							node.toFront();
+							node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+						}
+						GameBoard.gridPaneBoard.getChildren().remove(node);
+					});
+		            cardsInHand.remove(viewCard);
+		            hboxGameCardsInHand.getChildren().remove(viewCard);
+		            numberOfCardsInHand--;
+		            // TODO
 		        }
 				dragEvent.consume();
 			}
