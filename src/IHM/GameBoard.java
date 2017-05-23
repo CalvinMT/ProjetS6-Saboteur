@@ -1,7 +1,9 @@
 package IHM;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import Board.Couple;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,12 @@ public class GameBoard {
 	
 	public static int startCardX = 6;
 	public static int startCardY = 3;
+	
+	public static ArrayList <Couple>endCards;
+	private int endCardX = 14;
+	private int endTopCardY = 1;
+	private int endMiddleCardY = 3;
+	private int endBottomCardY = 5;
 	
 	// See FIXMEs below
 	private Stage stage;
@@ -77,6 +85,7 @@ public class GameBoard {
 		anchorPaneGameBoard.getChildren().clear();
 		anchorPaneGameBoard.getChildren().setAll(gridPaneBoard);
 		
+		// Grid initialization
 		gridPaneBoard.setPrefWidth(10620.0);
 		gridPaneBoard.setPrefHeight(10620.0);
 		gridPaneBoard.setGridLinesVisible(true);
@@ -102,42 +111,25 @@ public class GameBoard {
 					ImageView viewCard = new ImageView("ressources/NSEO_C.png");
 					gridPaneBoard.add(viewCard, i, j);
 				}
-				else if (i == 14) {
-					if (j == 1) {
-						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
-					else if (j == 3) {
-						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
-					else if (j == 5) {
-						ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
-				}
 				
 				// TODO - Original - places the cards in center of grid
 				/*if (i == gridWidth/2  &&  j == gridHeight/2) {
 					ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
 					gridPaneBoard.add(viewCard, i, j);
-				}
-				else if (i == ((gridWidth/2)+8)) {
-					if (j == ((gridHeight/2)-2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
-					else if (j == (gridHeight/2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
-					else if (j == ((gridHeight/2)+2)) {
-						ImageView viewCard = new ImageView("ressources/carte_test_118_181.png");
-						gridPaneBoard.add(viewCard, i, j);
-					}
 				}*/
 			}
 		}
+		
+		// End cards initialization
+		endCards = new ArrayList<>();
+		endCards.add(new Couple(endTopCardY, endCardX)); // TODO - ((gridHeight/2)-2), ((gridWidth/2)+8)
+		endCards.add(new Couple(endMiddleCardY, endCardX)); // TODO - (gridHeight/2), ((gridWidth/2)+8)
+		endCards.add(new Couple(endBottomCardY, endCardX)); // TODO - ((gridHeight/2)+2), ((gridWidth/2)+8)
+		endCards.stream().forEach(endCard -> {
+			System.out.println(endCard);
+			ImageView viewCard = new ImageView("ressources/dos_carte_arrivee.png");
+			gridPaneBoard.add(viewCard, endCard.getColumn(), endCard.getLine());
+		});
 		
 		// Centers game board
 		gridPaneBoard.setScaleX(0.6);
