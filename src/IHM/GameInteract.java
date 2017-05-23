@@ -52,6 +52,8 @@ public class GameInteract {
 	private int listAvatarSize = 75;
 	private int listConstraintSize = 40;
 	
+	private int numberOfCardsInDeck;
+	
 	@FXML
 	BorderPane borderPaneInteract;
 	@FXML
@@ -123,7 +125,15 @@ public class GameInteract {
 			gridPanePlayer.add(viewConstraintWagon, 4, 1);
 			vboxPlayerList.getChildren().add(gridPanePlayer);
 		}
-		//vboxPlayerList.getChildren().addAll(playerList);
+		// TODO - bring forward first player
+		
+		// Deck and Discard configuration
+		numberOfCardsInDeck = moteur.getDeck().nbCard();
+		// TODO - show deck with numberOfCardsInDeck when mouse hovers
+		// TODO - show discard zone
+		
+		// Player's info
+		// TODO - show avatar, pseudo, role and gold
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
@@ -220,9 +230,55 @@ public class GameInteract {
 					});
 				}
 				else if (card.getType().equals(Card_t.action)) {
-					// TODO
-					/*turn_on_indications_on_player_list
-					*/
+					if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
+						GameBoard.endCards.stream().forEach(endCard -> {
+							ImageView viewIndicationEndCard = new ImageView("ressources/carte_indication.png");
+							GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
+							// Drag over viewIndicationEndCard
+							viewIndicationEndCard.setOnDragOver(new EventHandler <DragEvent>() {
+								@Override
+								public void handle(DragEvent dragEvent) {
+						            if (dragEvent.getGestureSource() != viewIndicationEndCard  &&  dragEvent.getDragboard().hasImage()) {
+						            	dragEvent.acceptTransferModes(TransferMode.COPY);
+						            }
+						            dragEvent.consume();
+								}
+							});
+							// Drag dropped viewIndicationEndCard
+							viewIndicationEndCard.setOnDragDropped(new EventHandler <DragEvent>(){
+								@Override
+								public void handle(DragEvent dragEvent) {
+									Dragboard dragBoard = dragEvent.getDragboard();
+									boolean success = false;
+									if (dragBoard.hasImage()) {
+										droppedColumn = endCard.getColumn();
+										droppedLine = endCard.getLine();
+										Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+										GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+										GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+										success = true;
+									}
+									dragEvent.setDropCompleted(success);
+									dragEvent.consume();
+								}
+							});
+						});
+					}
+					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+						// TODO
+						/*turn_on_indications_on_all_tunnel_cards
+						*/
+					}
+					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+						// TODO
+						/*turn_on_indications_on_player_list
+						*/
+					}
+					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
+						// TODO
+						/*turn_on_indications_on_player_list
+						*/
+					}
 				}
 			}
 		});
@@ -241,9 +297,27 @@ public class GameInteract {
 						});
 					}
 					else if (card.getType().equals(Card_t.action)) {
-						// TODO
-						/*turn_off_indications_on_player_list
-						*/
+						if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
+							GameBoard.endCards.stream().forEach(endCard -> {
+								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+								GameBoard.gridPaneBoard.getChildren().remove(node);
+							});
+						}
+						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+							// TODO
+							/*turn_off_indications_on_all_tunnel_cards
+							*/
+						}
+						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+							// TODO
+							/*turn_off_indications_on_player_list
+							*/
+						}
+						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
+							// TODO
+							/*turn_off_indications_on_player_list
+							*/
+						}
 					}
 				}
 			}
