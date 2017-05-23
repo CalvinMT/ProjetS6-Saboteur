@@ -47,6 +47,27 @@ public class HandPlayer extends Hand {
         }
     }
 
+    @Override
+    public String toString(){
+        String renvoi = "Hand : ";
+        renvoi += "[ ";
+        for(int i=0; i<this.arrayCard.size(); i++){
+            if(this.arrayCard.get(i).getType() == Card.Card_t.gallery){
+
+                renvoi += ((GalleryCard) this.arrayCard.get(i)).debugString();
+            } else {
+                renvoi += this.arrayCard.get(i).toString();
+            }
+
+            if(i<this.arrayCard.size()-1){
+                renvoi += " ; ";
+            }
+        }
+
+        renvoi += " ]";
+        return renvoi;
+    }
+
     public int nbCard(){
         return arrayCard.size();
     }

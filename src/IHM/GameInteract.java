@@ -143,6 +143,9 @@ public class GameInteract {
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
 		borderPaneInteract.setPickOnBounds(false);
+
+
+		moteur.setGameInteractControler(this);
 	}
 	
 	
@@ -272,6 +275,12 @@ public class GameInteract {
 						// TODO
 						/*turn_on_indications_on_all_tunnel_cards
 						*/
+
+
+
+
+
+
 					}
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
 						// TODO
@@ -372,30 +381,21 @@ public class GameInteract {
 	            });
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
 
-
-					System.out.println("Avant "+cardsInHand.size());
 					cardsInHand.remove(playingCard);
-					System.out.println("Après "+cardsInHand.size());
 
 		            moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
 
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
-//		            numberOfCardsInHand--;
-
 
 		            //piocher
 		            if(!moteur.getDeck().isEmpty()){
 		            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
-//						numberOfCardsInHand++;
-
 
 						Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
 						cardsInHand.add(getImageCard(cardDraw));
 
-						System.out.println("Encore Après "+cardsInHand.size());
-
 						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
-						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());œ
+						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 
 					}
 		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
@@ -734,6 +734,14 @@ public class GameInteract {
 			System.out.println("Erreur " + e);
 		}
 	}
+
+	public void addGalleryCard(GalleryCard c, int line, int column){
+
+		GameBoard.gridPaneBoard.add(getImageCard(c).getImageView(), (column + GameBoard.startCardX), (line + GameBoard.startCardY));
+	}
+
+
+
 
 	@FXML
 	void handleButtonAideInGame(ActionEvent event){

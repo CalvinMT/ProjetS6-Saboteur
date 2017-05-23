@@ -6,6 +6,7 @@
 package Saboteur;
 import Cards.*;
 import IHM.ChoixRole;
+import IHM.GameInteract;
 import Player.*;
 import Board.Board;
 import Board.Couple;
@@ -31,6 +32,7 @@ public class Moteur {
     private long echeance;
 
     private ChoixRole choixroleControler;
+    private GameInteract gameInteractControler;
 
     private State state;
     public enum State {
@@ -98,6 +100,9 @@ public class Moteur {
 
     public void setChoixroleControler(ChoixRole c){
         this.choixroleControler = c;
+    }
+    public void setGameInteractControler(GameInteract g){
+        this.gameInteractControler = g;
     }
 
     public void setAllPlayerBoard(){
@@ -373,6 +378,10 @@ public class Moteur {
 
     public ChoixRole getChoixroleControleur(){
         return this.choixroleControler;
+    }
+
+    public GameInteract getGameInteractControler(){
+        return this.gameInteractControler;
     }
 
     public Board getBoard(){
