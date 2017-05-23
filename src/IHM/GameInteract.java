@@ -582,19 +582,8 @@ public class GameInteract {
 	@FXML
 	void handleButtonAideInGame(ActionEvent event){
             Stage stage = new Stage();
-            stage.initStyle(StageStyle.TRANSPARENT);
-            ImageView imageview =new ImageView("ressources/calqueaide.png");
-            AnchorPane pane = new AnchorPane();
-            //Button button =new Button(); -----faire le button-----
-            //button.setGraphic(new ImageView("ressources/aideneg.png"));
-            //button.maxHeight(25.0);
-            //button.maxWidth(25.0);
-            //pane.getChildren().add(button);
-            pane.getChildren().add(imageview);
-            final Scene scene = new Scene(pane,1920, 1080);
-            scene.setFill(null);
-            stage.setScene(scene);
-            stage.show();
+            TransparentStage tspStage= new TransparentStage();
+            tspStage.start(stage);
 	}
 
 	@FXML
