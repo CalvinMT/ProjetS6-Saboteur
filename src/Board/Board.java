@@ -113,122 +113,42 @@ public class Board {
             }
         }
     }
-
-
-    // Path Resistance
-    /*public boolean isNeighbourVisited(int idx, LinkedList<Node> v) {
-        if (idx !=-1) return v.contains(mine.get(idx));
-        return true;
-    }
-
-    public boolean allNeighborsVisited(Node n, LinkedList<Node> v) {
-        boolean b = isNeighbourVisited(n.getNorth(), v)
-                && isNeighbourVisited(n.getSouth(), v)
-                && isNeighbourVisited(n.getEast(), v)
-                && isNeighbourVisited(n.getWest(), v);
-        System.out.printf("\t%-5s -> ", b);
-        System.out.println(n);
-        return b;
-    } */
-
-    // Computations
-
-
-
-
-    private int getRes(int idx, Node end, LinkedList<Node> path){
-        Node curr;
-        if (idx != -1) {
-            curr = mine.get(idx);
-            if (!path.contains(curr)) {
-                System.out.printf("getRes[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\n", curr.getPathRes(), path, curr.card.getX(), curr.card.getY(), curr.card.getConfig(), curr.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
-                return pathRes(curr, end, path);
-            }
-        }
-        System.out.println("END getRes");
-        return 0;
-    }
-
-    public int pathRes(Node start, Node end, LinkedList<Node> path) {
-        if (start == end) {
-            System.out.printf("pathRes[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\nEND pathRes\n", start.getPathRes(), path, start.card.getX(), start.card.getY(), start.card.getConfig(), start.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
-            return end.getPathRes();
-        }
-        else {
-            path.contains(start);
-            return Math.max(getRes(start.getNorth(), end, path), Math.max(getRes(start.getSouth(), end, path), Math.max(getRes(start.getEast(), end, path), getRes(start.getWest(), end, path)))) + start.card.getResist();
-        }
-    }
-
-
-
-
-
-
+    
     // Compute pathResistance
-    public void computePathRes_rec(Node start, Node end, LinkedList<Node> path, int res) {
+    public void computePathRes(Node start, LinkedList<Node> path, int res) {
         Node curr;
-        //System.out.printf("[%2d] %s\n\t start : {(%2d,%2d) %5s/%2d}\n\t end   : {(%2d,%2d) %5s/%2d}\n", res, path, start.card.getX(), start.card.getY(), start.card.getConfig(), start.getPathRes(), end.card.getX(), end.card.getY(), end.card.getConfig(), end.getPathRes());
 
-        if (start == end) {
-            //System.out.println("END");
-            res = res + end.card.getResist();
-            if (res > end.getPathRes()) end.setPathRes(res);
-        }
-        else {
-            res += start.card.getResist();
-
-            if (res > start.getPathRes()) start.setPathRes(res); // Garde la resistance max
-
-            if (start.getNorth() != -1) { // Si il y a un élément au nord
-                curr = mine.get(start.getNorth());
-                if (!path.contains(curr)) {
-                //    System.out.println("\t\t\tNorth add : " + curr);
-                    path.add(curr);
-                    computePathRes_rec(curr, end, path, res); // Si l'élément nord n'a pas déjà été visité
-                }
-                //else System.out.println("\t\tNorth path contains " + curr);
-            }
-            if (start.getSouth() != -1) { // Si il y a un élément au sud
-
-                curr = mine.get(start.getSouth());
-                if (!path.contains(curr)) {
-                //    System.out.println("\t\t\tSouth add : " + curr);
-                    path.add(curr);
-                    computePathRes_rec(curr, end, path, res); // Si l'élément sud n'a pas déjà été visité
-                }
-                //else System.out.println("\t\tSouth path contains " + curr);
-            }
-            if (start.getEast() != -1) { // Si il y a un élément à l'est
-
-                curr = mine.get(start.getEast());
-                if (!path.contains(curr)) {
-                //    System.out.println("\t\t\tEast  add : " + curr);
-                    path.add(curr);
-                    computePathRes_rec(curr, end, path, res); // Si l'élément à l'est n'a pas déjà été visité
-                }
-                //else System.out.println("\t\tEast  path contains " + curr);
-            }
-            if (start.getWest() != -1) { // Si il y a un élément à l'ouest
-                curr = mine.get(start.getWest());
-                if (!path.contains(curr)) {
-                //    System.out.println("\t\t\tWest  add : " + curr);
-                    path.add(curr);
-                    computePathRes_rec(curr, end, path, res); // Si l'élément ouest n'a pas déjà été visité
-                }
-                //else System.out.println("\t\tWest  path contains " + curr);
-            }
-        }
-    }
-
-    public void computePathRes() {
-        Node start, n;
-        LinkedList<Node> path = new LinkedList<Node>();
-        start = mine.get(0);
         path.add(start);
-        for (int i = 4; i < mine.size(); i++) {
-            n = mine.get(i);
-            computePathRes_rec(start, n, path, 0);
+
+        res += start.card.getResist();
+
+        if (res > start.getPathRes()) start.setPathRes(res); // Garde la resistance max
+
+        if (start.getNorth() != -1) { // Si il y a un élément au nord
+            curr = mine.get(start.getNorth());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément nord n'a pas déjà été visité
+            }
+        }
+        if (start.getSouth() != -1) { // Si il y a un élément au sud
+
+            curr = mine.get(start.getSouth());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément sud n'a pas déjà été visité
+            }
+        }
+        if (start.getEast() != -1) { // Si il y a un élément à l'est
+
+            curr = mine.get(start.getEast());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément à l'est n'a pas déjà été visité
+            }
+        }
+        if (start.getWest() != -1) { // Si il y a un élément à l'ouest
+            curr = mine.get(start.getWest());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément ouest n'a pas déjà été visité
+            }
         }
     }
 
@@ -238,14 +158,10 @@ public class Board {
 
         Node currentNode, newNode;
         Couple cpl;
-        int res;
 
         try {
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
-
-                // TODO : Migrer les calculs de résistance dans une autre fonction, recurssive,
-                // TODO | gardant en mémoire les chemins (différent de garder les cartes visitées)
 
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
