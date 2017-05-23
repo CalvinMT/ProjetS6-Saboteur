@@ -12,25 +12,27 @@ public class Node {
     private int west;
 
     private int pathRes;
+    private int pathLength;
 
     Node(){
         this(new GalleryCard(), NONE, NONE, NONE, NONE);
     }
     Node(GalleryCard c){
-        this(c, NONE, NONE, NONE, NONE, c.getResist());
+        this(c, NONE, NONE, NONE, NONE);
     }
 
     Node(GalleryCard c, int n, int s, int e, int w) {
-        this(c, n, s, e, w, c.getResist());
+        this(c, n, s, e, w, c.getResist(), 1);
     }
 
-    Node(GalleryCard c, int n, int s, int e, int w, int r) {
+    Node(GalleryCard c, int n, int s, int e, int w, int r, int l) {
             this.card = c;
             this.north = n;
             this.south = s;
             this.east = e;
             this.west = w;
             this.pathRes = r;
+            this.pathLength = l;
     }
 
     public void setNorth(int north) {
@@ -51,6 +53,10 @@ public class Node {
 
     public void setPathRes(int pathRes) {
         this.pathRes = pathRes;
+    }
+
+    public void setPathLength(int pathLength) {
+        this.pathLength = pathLength;
     }
 
     public int getNorth() {
@@ -75,6 +81,10 @@ public class Node {
 
     public int getPathRes() {
         return pathRes;
+    }
+
+    public int getPathLength() {
+        return pathLength;
     }
 
 // TODO : Ne pas utiliser avant l'implémentation du save/load
