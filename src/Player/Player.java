@@ -55,6 +55,13 @@ public abstract class Player {
         }
     }
 
+    // reset playerAttribute et HandCard
+    public void resetPlayer(){
+        this.playableCards = new HandPlayer();
+        this.attributeCards = new PlayerAttribute();
+        this.role = null;
+    }
+
     // le joueur pioche
     public void drawCard(Deck d) {
         if(playableCards.nbCard() < 6 && !d.isEmpty()){
