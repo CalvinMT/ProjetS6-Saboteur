@@ -15,7 +15,7 @@ public class Node {
         this.card = new GalleryCard();
     }
 
-    Node(GalleryCard c){
+    public Node(GalleryCard c){
         this.card = c;
     }
 
@@ -70,7 +70,18 @@ public class Node {
 
 
     }
-
+    
+    // GoalCard-false!GalleryCard:{gallery,-2,8,true,false,false,true,true}!-1,-1,-1,-1?GoalCard-true:GalleryCard:{gallery,0,8,true,true,true,true,true}:-1,-1,-1,-1? 
+    // 
+    
+    public String saveToFile() {
+    	String me = "";
+    	me += this.card;
+    	me += ":";
+    	me += this.getNorth() + "," + this.getEast() + "," + this.getWest() + "," + this.getSouth();
+    	return me;
+    }
+    
     public boolean equals(Node n) {
         return this.card.equals(n.card) &&
         this.north == n.getNorth() &&

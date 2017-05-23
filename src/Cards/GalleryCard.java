@@ -117,7 +117,24 @@ public class GalleryCard extends Card {
     public void setType_g(Gallery_t type_g) {
         this.type_g = type_g;
     }
-
+    
+    public boolean getNorth() {
+    	return north;
+    }
+    
+    public boolean getSouth() {
+    	return south;
+    }
+    
+    public boolean getEast() {
+    	return east;
+    }
+    
+    public boolean getWest() {
+    	return west;
+    }
+    
+    
     public boolean equals(GalleryCard c) {
         return  ((this.getGalleryType() == c.getGalleryType()) &&
                 (this.getX() == c.getX()) &&

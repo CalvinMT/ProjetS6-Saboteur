@@ -10,11 +10,14 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Board {
-    private ArrayList<Node> mine = new ArrayList<Node>();
-    private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
-    private ArrayList<Couple> possiblePositions = new ArrayList<Couple>();
+    private ArrayList<Node> mine;
+    private Hashtable<Couple, Node> accessCard;
+    private ArrayList<Couple> possiblePositions;
 
     public Board() {
+    	mine = new ArrayList<Node>();
+    	accessCard = new Hashtable<Couple, Node>();
+    	possiblePositions = new ArrayList<Couple>();
         Random r = new Random();
         int gold = r.nextInt(3) -1;
         int x;
@@ -40,10 +43,20 @@ public class Board {
 
     // Debug
     public Board(GalleryCard start, GoalCard but1, GoalCard but2, GoalCard but3) {
+    	mine = new ArrayList<Node>();
+    	accessCard = new Hashtable<Couple, Node>();
+    	possiblePositions = new ArrayList<Couple>();
         mine.add(new Node(start));
         mine.add(new Node(but1));
         mine.add(new Node(but2));
         mine.add(new Node(but3));
+    }
+    
+    
+    public Board(int n) {
+    	mine = new ArrayList<Node>();
+    	accessCard = new Hashtable<Couple, Node>();
+    	possiblePositions = new ArrayList<Couple>();
     }
 
 

@@ -18,7 +18,8 @@ public class GoalCard extends GalleryCard {
         super(Gallery_t.but, c.getX(), c.getY(), true, n, s, e, w);
         this.gold = g;
     }
-
+    
+    
     @Override
     public int getConfig() {
         int i = 0;
@@ -53,8 +54,7 @@ public class GoalCard extends GalleryCard {
 
     @Override
     public String toString() {
-        return "GoalCard{" +
-                "gold=" + gold +
-                "} " + super.toString();
+        return "GoalCard:" +gold +
+                ":" + super.toString();
     }
 }
