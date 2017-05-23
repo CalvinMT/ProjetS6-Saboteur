@@ -33,6 +33,10 @@ public class Hand extends Deck {
         }
     }
 
+    public void removeCard(Card c){
+        this.arrayCard.remove(c);
+    }
+
 
     public void setVisibility(boolean b){
         this.visible = b;
