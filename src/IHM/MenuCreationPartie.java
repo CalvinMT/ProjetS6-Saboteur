@@ -154,7 +154,6 @@ public class MenuCreationPartie {
         }catch(Exception e){
             System.out.println("Erreur" + e);
         }
-
     }
 
     @FXML

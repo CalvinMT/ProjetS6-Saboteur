@@ -129,7 +129,7 @@ public class Bottom {
         
     
     
-    private ImageView getImageView(String imageName) {
+    /*private ImageView getImageView(String imageName) {
             ImageView imageView = null;
             imageView = new ImageView(new Image("ressources/" + imageName + ".png"));
             if (!imageView.equals(null)) {
@@ -137,7 +137,7 @@ public class Bottom {
             imageView.setFitHeight(70);
             }
             return imageView;
-    }
+    }*/
     
     
     static public Image getImageCard(Card c){

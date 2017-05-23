@@ -133,7 +133,7 @@ public class MainLoader extends Application {
 		
 		// Music & Effects played in background
 		try {
-			Media music = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			Media music = new Media(new File("ressources/pull-up-a-chair.mp3").toURI().toString());
 			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));
@@ -161,6 +161,16 @@ public class MainLoader extends Application {
 		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+
+		// Load MenuMain.fxml
+		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+		
+		// Automatic Resizing
+		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+		
+		
 		primaryStage.show();
 		
 		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");

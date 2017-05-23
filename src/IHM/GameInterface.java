@@ -1,27 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package IHM;
 
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.net.URL ;
 import javafx.scene.Parent;
 
-
-
-/**
- *
- * @author villermt
- */
-public class GameInterface extends Application {    
+public class GameInterface extends Application {    //Loader de test 
    
     private double SCREEN_WIDTH =1080.0;
     private double SCREEN_HEIGHT =720.0 ;
@@ -45,22 +32,20 @@ public class GameInterface extends Application {
         
         
       AnchorPane anchorPaneMainBottom = (AnchorPane) parentMainGame.lookup("#anchorPaneBottom");
-      AnchorPane anchorPane2Bottom = FXMLLoader.load(getClass().getResource("Bottom.fxml"));
+      AnchorPane anchorPane2Bottom = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
       anchorPaneMainBottom.getChildren().setAll(anchorPane2Bottom);
+      /*
       AnchorPane anchorPaneMainTop = (AnchorPane) parentMainGame.lookup("#anchorPaneTop");
       AnchorPane anchorPane2Top = FXMLLoader.load(getClass().getResource("Top.fxml"));
       anchorPaneMainTop.getChildren().setAll(anchorPane2Top);
       AnchorPane anchorPaneMainRight = (AnchorPane) parentMainGame.lookup("#anchorPaneRight");
       AnchorPane anchorPane2Right = FXMLLoader.load(getClass().getResource("Right.fxml"));
       anchorPaneMainRight.getChildren().setAll(anchorPane2Right);
-      
+      */
       
   }
     
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
