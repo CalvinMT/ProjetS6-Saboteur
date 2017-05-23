@@ -3,12 +3,8 @@ package IHM;
 import java.io.IOException;
 import java.util.ArrayList;
 import Board.Couple;
-import Cards.ActionCard;
-import Cards.Card;
+import Cards.*;
 import Cards.Card.Card_t;
-import Cards.GalleryCard;
-import Cards.Hand;
-import Cards.RepareSabotageCard;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.event.ActionEvent;
@@ -352,10 +348,16 @@ public class GameInteract {
 					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
 				}*/
 
-				// TODO reverse card in engine
-
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
+					System.out.println(moteur.getCurrentPlayer());
 					viewCard.setRotate(viewCard.getRotate() + 180);
+
+					GalleryCard cardChanged = ((GalleryCard) card).rotate();
+
+					int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+					((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
+
+					System.out.println(moteur.getCurrentPlayer());
 				}
 			}
 		});

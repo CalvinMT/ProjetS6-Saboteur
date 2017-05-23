@@ -29,6 +29,15 @@ public class HandPlayer extends Hand {
         }
     }
 
+    // pour changer une carte s'il faut
+    public void setGalleryCard(int i, GalleryCard c){
+        if(i >= 0 && i<this.arrayCard.size()){
+            this.arrayCard.set(i, c);
+        } else {
+            System.err.println("HandPlayer: Index impossible a atteindre");
+        }
+    }
+
     // fait la rotation de la carte a la ième position
     public void rotateCard(int i){
         if(i >= 0 && i <this.nbCard()){
