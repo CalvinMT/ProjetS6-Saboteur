@@ -285,7 +285,7 @@ public class MainLoader extends Application {
 										System.err.println("Erreur sleep");
 									}
 
-									System.out.println(engine.getBoard().mine());
+//									System.out.println(engine.getBoard().mine());
 								}
 
 

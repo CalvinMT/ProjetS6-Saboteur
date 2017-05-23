@@ -274,6 +274,12 @@ public class GameInteract {
 						// TODO
 						/*turn_on_indications_on_all_tunnel_cards
 						*/
+
+
+
+
+
+
 					}
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
 						// TODO
@@ -387,9 +393,28 @@ public class GameInteract {
 					});
 				}
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+<<<<<<< HEAD
+
 					cardsInHand.remove(playingCard);
+
+=======
+					cardsInHand.remove(playingCard);
+>>>>>>> a632b42d19cecbe5e2c8e1ff0aa9924d2386ee84
 		            moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
+<<<<<<< HEAD
+
+		            //piocher
+		            if(!moteur.getDeck().isEmpty()){
+		            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+
+						Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
+						cardsInHand.add(getImageCard(cardDraw));
+
+						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
+						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+
+=======
 		            // Draws the first card from the deck
 		            if(!moteur.getDeck().isEmpty()){
 		            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
@@ -397,6 +422,7 @@ public class GameInteract {
 						cardsInHand.add(getImageCard(cardDraw));
 						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
 						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+>>>>>>> a632b42d19cecbe5e2c8e1ff0aa9924d2386ee84
 					}
 		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 		        }
