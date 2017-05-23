@@ -200,8 +200,6 @@ public class ChoixRole {
         infoEmplacement = new ArrayList<Text>(12);
         buttonJoueurSuivant.setDisable(true);
 
-        //TODO simplifier ça
-
         cartesRole.add(0, imageCarteRole1);
         cartesRole.add(1, imageCarteRole2);
         cartesRole.add(2, imageCarteRole3);

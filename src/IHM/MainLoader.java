@@ -257,7 +257,6 @@ public class MainLoader extends Application {
 
 
 
-				//TODO boucle de jeu
 			}
 		};
 

@@ -56,16 +56,6 @@ public class PlayerHuman extends Player{
     }
 
     @Override
-    public boolean play(){
-
-        //TODO jeu du joueur
-
-        return false;
-    }
-
-
-
-    @Override
     public String toString(){
         String renvoi = "";
 
