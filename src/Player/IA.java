@@ -111,16 +111,20 @@ public class IA extends Player{
             currCard = lookAtCard(cardIdx);
             if (currCard.getType() == gallery) { // Si la carte est une gallerie
                 p = this.board.getPossiblePositions((GalleryCard) currCard); // On calcule les positions possibles pour cette carte
-                bestCpl = p.get(0);
-                for (Couple currCpl : p) { // Pour chaque position possible
-                    for (Couple goal : goalsToTest) { // Et pour chaque but
-                        h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
-                        // TODO : Verifier si on peut finir le chemin
-                        if (h > hMax) { // Si l'heuristique est maximale
-                            hMax = h; // On met à jour l'heuristique max
-                            bestCpl = currCpl; // On garde la position
-                            bestCard = currCard; // et la carte associée
+                if(p.size() > 0){
+
+                    bestCpl = p.get(0);
+                    for (Couple currCpl : p) { // Pour chaque position possible
+                        for (Couple goal : goalsToTest) { // Et pour chaque but
+                            h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+
+                            // TODO : Verifier si on peut finir le chemin
+                            if (h > hMax) { // Si l'heuristique est maximale
+                                hMax = h; // On met à jour l'heuristique max
+                                bestCpl = currCpl; // On garde la position
+                                bestCard = currCard; // et la carte associée
+                            }
                         }
                     }
                 }
