@@ -30,10 +30,12 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,6 +46,8 @@ public class GameInteract {
 	private Moteur moteur;
 	private Hand hand;
 	private Card card;
+        
+      
 	
 	private int numberOfCardsInHand;
 	private ArrayList <GamePlayingCard> cardsInHand;
@@ -741,7 +745,20 @@ public class GameInteract {
 
 	@FXML
 	void handleButtonAideInGame(ActionEvent event){
-		System.out.println("Tu veux de l'aide?");
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            ImageView imageview =new ImageView("ressources/calqueaide.png");
+            AnchorPane pane = new AnchorPane();
+            //Button button =new Button(); -----faire le button-----
+            //button.setGraphic(new ImageView("ressources/aideneg.png"));
+            //button.maxHeight(25.0);
+            //button.maxWidth(25.0);
+            //pane.getChildren().add(button);
+            pane.getChildren().add(imageview);
+            final Scene scene = new Scene(pane,1920, 1080);
+            scene.setFill(null);
+            stage.setScene(scene);
+            stage.show();
 	}
 
 	@FXML

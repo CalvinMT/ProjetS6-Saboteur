@@ -10,11 +10,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+
 <AnchorPane pickOnBounds="false" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameInteract">
    <children>
       <BorderPane fx:id="borderPaneInteract" pickOnBounds="false">
          <bottom>
-            <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" BorderPane.alignment="CENTER" />
+            <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" BorderPane.alignment="CENTER" />
          </bottom>
          <right>
             <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="200.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
@@ -34,7 +35,7 @@
                         <Font name="System Italic" size="1.0" />
                      </font>
                   </Button>
-                  <Button fx:id="buttonAideInGame" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleButtonAideInGame">
+                  <Button fx:id="buttonAideInGame" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="true" onAction="#handleButtonAideInGame">
                      <graphic>
                         <ImageView id="carte" fitHeight="57.0" fitWidth="57.0" pickOnBounds="true">
                            <image>
@@ -46,10 +47,10 @@
                         <Font size="1.0" />
                      </font>
                   </Button>
-                  <Text fx:id="textMancheCounter" strokeType="OUTSIDE" strokeWidth="0.0" text="Manche : X/3" />
+                  <Text fx:id="textMancheCounter" strokeType="OUTSIDE" strokeWidth="0.0" text="Manche : X/3" textAlignment="CENTER" />
                </children>
             </HBox>
          </top>
-      </BorderPane>
+      </BorderPane>     
    </children>
 </AnchorPane>
