@@ -21,26 +21,12 @@ public class IA extends Player{
     private Card cardToPlay;
     private Couple posToPlay;
 
-    public IA(int index){
-        this.playerName = "IA " + index;
-        this.num = index;
-        this.difficulty = Difficulty.Easy;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
-        setUpGoals();
+    public IA(int index) {
+        this(index, "IA", Difficulty.Easy);
     }
 
-    public IA(int index, String name){
-        this.playerName = name;
-        this.num = index;
-        this.difficulty = Difficulty.Easy;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
-        setUpGoals();
+    public IA(int index, String name) {
+        this(index, name, Difficulty.Easy);
     }
 
     public IA(int index, String name, Difficulty d){
