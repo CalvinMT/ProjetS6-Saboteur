@@ -220,12 +220,22 @@ public class GameInteract {
 								Dragboard dragBoard = dragEvent.getDragboard();
 								boolean success = false;
 								if (dragBoard.hasImage()) {
+									GalleryCard cardToPut;
 									droppedColumn = (position.getColumn() + GameBoard.startCardX);
 									droppedLine = (position.getLine() + GameBoard.startCardY);
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+
+									if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) card, new Couple(position.getLine(), position.getColumn()))){
+										cardToPut = ((GalleryCard) card).rotate();
+									} else {
+										cardToPut = (GalleryCard) card;
+									}
+
+									moteur.getBoard().putCard(cardToPut, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+
+
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-									GameBoard.gridPaneBoard.add(new ImageView(viewCard.snapshot(null, null)), droppedColumn, droppedLine);
-									//GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+									GameBoard.gridPaneBoard.add(getImageCard(cardToPut).getImageView(), droppedColumn, droppedLine);
 									success = true;
 								}
 								dragEvent.setDropCompleted(success);
@@ -341,6 +351,9 @@ public class GameInteract {
 					viewCardX = ((ImageView)(event.getSource())).getTranslateX();
 					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
 				}*/
+
+				// TODO reverse card in engine
+
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
 					viewCard.setRotate(viewCard.getRotate() + 180);
 				}
@@ -374,6 +387,7 @@ public class GameInteract {
 							GameBoard.gridPaneBoard.getChildren().remove(node);
 		            	}
 		            });
+
 				}
 				// Turns off end card's indication
 				if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
@@ -398,7 +412,7 @@ public class GameInteract {
 						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
 						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 					}
-		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+
 		        }
 				else if (dragEvent.getTransferMode() == TransferMode.COPY) {
 		            cardsInHand.remove(viewCard);
