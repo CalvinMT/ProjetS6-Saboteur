@@ -207,33 +207,57 @@ public class BoardTest {
         res = b.getMineElement(0).getPathRes();
         if (res != 4) System.out.println("\nExpected 4 found " + res);
         Assert.assertTrue(res == 4);
+        res = b.getMineElement(0).getPathLength();
+        if (res != 1) System.out.println("\nExpected 1 found " + res);
+        Assert.assertTrue(res == 1);
 
         res = b.getMineElement(4).getPathRes();
         if (res != 6) System.out.println("\nExpected 6 found " + res);
         Assert.assertTrue( res == 6);
+        res = b.getMineElement(4).getPathLength();
+        if (res != 2) System.out.println("\nExpected 2 found " + res);
+        Assert.assertTrue(res == 2);
 
         res = b.getMineElement(5).getPathRes();
         if (res != 9) System.out.println("\nExpected 9 found " + res);
         Assert.assertTrue( res == 9);
+        res = b.getMineElement(5).getPathLength();
+        if (res != 3) System.out.println("\nExpected 3 found " + res);
+        Assert.assertTrue(res == 3);
 
         res = b.getMineElement(6).getPathRes();
         if (res != 12) System.out.println("\nExpected 12 found " + res);
         Assert.assertTrue( res == 12);
+        res = b.getMineElement(6).getPathLength();
+        if (res != 4) System.out.println("\nExpected 4 found " + res);
+        Assert.assertTrue(res == 4);
 
         res = b.getMineElement(7).getPathRes();
         if (res != 2) System.out.println("\nExpected 2 found " + res);
         Assert.assertTrue( res == 2);
+        res = b.getMineElement(7).getPathLength();
+        if (res != 1) System.out.println("\nExpected 4 found " + res);
+        Assert.assertTrue(res == 1);
 
         res = b.getMineElement(8).getPathRes();
         if (res != 14) System.out.println("\nExpected 14 found " + res);
         Assert.assertTrue( res == 14);
+        res = b.getMineElement(8).getPathLength();
+        if (res != 5) System.out.println("\nExpected 5 found " + res);
+        Assert.assertTrue(res == 5);
 
         res = b.getMineElement(9).getPathRes();
         if (res != 16) System.out.println("\nExpected 16 found " + res);
         Assert.assertTrue( res == 16);
+        res = b.getMineElement(9).getPathLength();
+        if (res != 6) System.out.println("\nExpected 6 found " + res);
+        Assert.assertTrue(res == 6);
 
         res = b.getMineElement(10).getPathRes();
         if (res != 19) System.out.println("\nExpected 19 found " + res);
         Assert.assertTrue( res == 19);
+        res = b.getMineElement(10).getPathLength();
+        if (res != 7) System.out.println("\nExpected 7 found " + res);
+        Assert.assertTrue(res == 7);
     }
 }

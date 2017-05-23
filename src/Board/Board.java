@@ -122,7 +122,10 @@ public class Board {
 
         res += start.card.getResist();
 
-        if (res > start.getPathRes()) start.setPathRes(res); // Garde la resistance max
+        if (res > start.getPathRes()) {
+            start.setPathRes(res); // Garde la resistance max
+            start.setPathLength(path.size());
+        }
 
         if (start.getNorth() != -1) { // Si il y a un élément au nord
             curr = mine.get(start.getNorth());
