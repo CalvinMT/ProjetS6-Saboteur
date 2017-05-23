@@ -12,7 +12,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static Cards.Card.Card_t.gallery;
+import static Cards.GalleryCard.Gallery_t.tunnel;
 import static Player.Player.Difficulty.Easy;
+import static Player.Player.Difficulty.Medium;
 import static org.junit.Assert.assertTrue;
 
 public class IATest {
@@ -124,5 +126,15 @@ public class IATest {
     @Test
     public void iaPlayCard() throws Exception {
         System.out.println("TODO : IATest.java iaPlayCard()");
+    }
+
+    @Test
+    public void getClosestCoordToGoal() throws Exception {
+        IA ia = new IA(0, "IA", Medium);
+        ia.setBoard(new Board());
+        Assert.assertFalse(ia.isInSwitchZone());
+        ia.board.addCard(new GalleryCard(tunnel, 4, 6, true, false, true, true, true));
+        Assert.assertTrue(ia.isInSwitchZone());
+
     }
 }

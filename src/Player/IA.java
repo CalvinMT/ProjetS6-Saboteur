@@ -83,6 +83,19 @@ public class IA extends Player{
 
 
     // IA Medium + Hard
+    public boolean isInSwitchZone() {
+        for (int c = 6; c < 11; c++) {
+            for (int l = -4; l < 5; l++) {
+                if (c != 8 || (l != -2 && l != 0 && l != 2)) {
+                    if (null != board.getNodeFromMine(new Couple(l, c))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
     // Calcul de l'heuristique (distance)
     // Soit p une position
