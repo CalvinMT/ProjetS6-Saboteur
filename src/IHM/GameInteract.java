@@ -77,6 +77,7 @@ public class GameInteract {
 	public void initialize () throws IOException {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
+		moteur.getBoard().computeAccessCards();
 		
 		// Hand configuration
 		hand = moteur.getCurrentPlayer().getPlayableCards();

@@ -100,9 +100,9 @@ public abstract class Player {
     }
 
     // assigne un nouveau pseudo
-    public void setPlayerName(String name){
+    /*public void setPlayerName(String name){
         this.playerName = name;
-    }
+    }*/
 
     // assigne un avatar
     public void setAvatar(String jpg){
