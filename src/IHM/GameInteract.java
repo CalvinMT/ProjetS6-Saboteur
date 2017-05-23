@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -53,6 +54,8 @@ public class GameInteract {
 	private int listConstraintSize = 40;
 	
 	private int numberOfCardsInDeck;
+	private ImageView viewDeck;
+	private ImageView viewDiscard;
 	
 	@FXML
 	BorderPane borderPaneInteract;
@@ -62,6 +65,10 @@ public class GameInteract {
 	VBox vboxPlayerList;
 	@FXML
 	HBox hboxTop;
+	@FXML
+	HBox hboxDeckDiscard;
+	@FXML
+	StackPane stackPaneBottom;
 	
 	@FXML
 	private void handleHBoxMouseEntered () {
@@ -86,7 +93,7 @@ public class GameInteract {
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ArrayList <GamePlayingCard> ();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
-		hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
+		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand.add(getImageCard(card));
@@ -130,16 +137,20 @@ public class GameInteract {
 		
 		// Deck and Discard configuration
 		numberOfCardsInDeck = moteur.getDeck().nbCard();
-		// TODO - show deck with numberOfCardsInDeck when mouse hovers
-		// TODO - show discard zone
+		viewDeck = new ImageView("ressources/dos_carte_jeu.png");
+		hboxDeckDiscard.getChildren().add(viewDeck);
+		deckEvents(viewDeck);
+		viewDiscard = new ImageView("ressources/dos_carte_jeu.png");
+		hboxDeckDiscard.getChildren().add(viewDiscard);
 		
 		// Player's info
 		// TODO - show avatar, pseudo, role and gold
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
-		// Center playable cards (hand) in bottom-middle of the screen
-		BorderPane.setMargin(hboxGameCardsInHand, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen
+		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		StackPane.setMargin(hboxDeckDiscard, new Insets(0, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
 		borderPaneInteract.setPickOnBounds(false);
@@ -271,8 +282,7 @@ public class GameInteract {
 										droppedLine = endCard.getLine();
 										Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 										GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-										// TODO
-										GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+										GameBoard.gridPaneBoard.add(getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView(), droppedColumn, droppedLine);
 										success = true;
 									}
 									dragEvent.setDropCompleted(success);
@@ -297,6 +307,8 @@ public class GameInteract {
 						*/
 					}
 				}
+				// TODO - indicationDiscard
+				ImageView viewIndicationDiscard = new ImageView("ressources/carte_indication.png");
 			}
 		});
 		// ---------- Mouse exits viewCard ----------
@@ -463,6 +475,16 @@ public class GameInteract {
 				}
 			}
 		});*/
+	}
+	
+	
+	
+	// -------------------- ---------- --------------------
+	
+	
+	
+	private void deckEvents (ImageView viewDeck) {
+		// TODO - Deck with numberOfCardsInDeck when mouse hovers
 	}
 	
 	
