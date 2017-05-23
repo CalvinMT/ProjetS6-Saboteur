@@ -170,7 +170,7 @@ public class GameInteract {
 			public void handle(MouseEvent mouseEvent) {
 				// Brings card forward
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
-				// Turns on indications
+				// Turns on gallery card's indications
 				if (card.getType().equals(Card_t.gallery)) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
@@ -221,7 +221,8 @@ public class GameInteract {
 									droppedLine = (position.getLine() + GameBoard.startCardY);
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+									GameBoard.gridPaneBoard.add(new ImageView(viewCard.snapshot(null, null)), droppedColumn, droppedLine);
+									//GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
 									success = true;
 								}
 								dragEvent.setDropCompleted(success);
@@ -231,6 +232,7 @@ public class GameInteract {
 					});
 				}
 				else if (card.getType().equals(Card_t.action)) {
+					// Turns on end card's indications
 					if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 						GameBoard.endCards.stream().forEach(endCard -> {
 							ImageView viewIndicationEndCard = new ImageView("ressources/carte_indication.png");
@@ -349,7 +351,7 @@ public class GameInteract {
 				isDragged = true;
 				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 				ClipboardContent content = new ClipboardContent();
-		        content.putImage(viewCard.getImage());
+		        content.putImage(viewCard.snapshot(null, null));
 		        dragBoard.setContent(content);
 		        mouseEvent.consume();
 			}
