@@ -226,7 +226,7 @@ public class GameInteract {
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 									GameBoard.gridPaneBoard.add(new ImageView(viewCard.snapshot(null, null)), droppedColumn, droppedLine);
-									//GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
+						            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 									success = true;
 								}
 								dragEvent.setDropCompleted(success);
@@ -400,13 +400,12 @@ public class GameInteract {
 		            // TODO
 		        }
 	            // Draws the first card from the deck
-	            if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.getCurrentPlayer().getPlayableCards().nbCard()){
+	            if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
 	            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
 					Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
 					cardsInHand.add(getImageCard(cardDraw));
 					cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
 					hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
-		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 				}
 				dragEvent.consume();
 			}
