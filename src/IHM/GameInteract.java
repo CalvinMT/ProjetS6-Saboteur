@@ -300,6 +300,8 @@ public class GameInteract {
 						if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 							GameBoard.endCards.stream().forEach(endCard -> {
 								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+								node.toFront();
+								node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
 								GameBoard.gridPaneBoard.getChildren().remove(node);
 							});
 						}
