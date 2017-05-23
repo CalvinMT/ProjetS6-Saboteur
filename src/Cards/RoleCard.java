@@ -19,7 +19,7 @@ public class RoleCard extends Card {
             this.type = Card_t.role;
         }
 
-        public boolean isMinor(){
+        public boolean isMiner(){
             return (this.role == "Mineur");
         }
 

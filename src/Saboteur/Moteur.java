@@ -5,9 +5,12 @@
  */
 package Saboteur;
 import Cards.*;
+import IHM.ChoixRole;
 import Player.*;
 import Board.Board;
 import Board.Couple;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.BorderPane;
 
 import javax.management.relation.Role;
 import javax.swing.*;
@@ -26,6 +29,8 @@ public class Moteur {
     private Board board;
 
     private long echeance;
+
+    private ChoixRole choixroleControler;
 
     private State state;
     public enum State {
@@ -54,6 +59,7 @@ public class Moteur {
         this.board = new Board();
         state = State.Waiting;
         setAllPlayerBoard();
+        initHand();
         this.echeance = System.nanoTime();
     }
 
@@ -77,6 +83,11 @@ public class Moteur {
         } else {
             System.err.println("Tableau de joueur impossible");
         }
+    }
+
+
+    public void setChoixroleControler(ChoixRole c){
+        this.choixroleControler = c;
     }
 
     public void setAllPlayerBoard(){
@@ -350,7 +361,9 @@ public class Moteur {
         return roleCards.nbCard();
     }
 
-
+    public ChoixRole getChoixroleControleur(){
+        return this.choixroleControler;
+    }
 
     public Board getBoard(){
         return this.board;

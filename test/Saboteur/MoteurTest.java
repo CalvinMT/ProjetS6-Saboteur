@@ -63,7 +63,6 @@ public class MoteurTest {
     @Test
     public void testHandCard2(){
         Moteur m = new Moteur(11);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 6);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 6);

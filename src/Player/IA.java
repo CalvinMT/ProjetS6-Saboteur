@@ -76,6 +76,7 @@ public class IA extends Player{
         }
         this.cardToPlay = lookAtCard(r.nextInt(range));
         if (cardToPlay.getType() == gallery) {
+            this.board.computeAccessCards();
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
             range = r.nextInt(p.size() - 1);
             if (range < 1) {

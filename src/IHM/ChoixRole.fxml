@@ -129,6 +129,7 @@
                   </Text>
                </children>
             </GridPane>
+             <Text fx:id="textJoueurCourant" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour du joueur X" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
             <Button fx:id="buttonJoueurSuivant" mnemonicParsing="false" onAction="#handleButtonJoueurSuivant" text="Joueur suivant" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
          </children>
       </GridPane>

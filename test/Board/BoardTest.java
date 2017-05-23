@@ -139,6 +139,7 @@ public class BoardTest {
         b.addCard(card4);
         b.addCard(card5);
 
+        b.computeAccessCards();
         p = b.getPossiblePositions(cardTest);
 
         Assert.assertTrue(p.contains(new Couple(1, -1)));

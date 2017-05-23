@@ -99,10 +99,10 @@ public abstract class Player {
         this.playerName = name;
     }
 
-    // assigne un nouveau pseudo
-    /*public void setPlayerName(String name){
-        this.playerName = name;
-    }*/
+    // si le joueur n'a aucune attribut de sabotage sur lui
+    public boolean canPlayGalleryCard(){
+        return this.attributeCards.nbCard() == 0;
+    }
 
     // assigne un avatar
     public void setAvatar(String jpg){

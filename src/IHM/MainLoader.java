@@ -22,6 +22,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
@@ -39,7 +41,7 @@ public class MainLoader extends Application {
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
 
-	static public final long shortWaitingTime = 500;
+	static public final long shortWaitingTime = 1000;
 
 	private double volumeMusic;
 	// TOTO - private double volumeEffects;
@@ -198,7 +200,7 @@ public class MainLoader extends Application {
 						// choix des roles
 						case ChooseRole:
 //						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
-							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player){
+							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player && !engine.roleSet()){
 
 
 								int numRoleCards;
@@ -208,12 +210,24 @@ public class MainLoader extends Application {
 								} while(engine.isTaken(numRoleCards));
 
 								try {
+
+//									FXMLLoader loader =  new FXMLLoader();
+//									BorderPane border = loader.load(getClass().getResource("ChoixRole.fxml").openStream());
+//									ChoixRole choixroleControler = loader.<ChoixRole>getController();
+
+
 									Card c = engine.getRoleCard(numRoleCards);
 									engine.setTrueTaken(numRoleCards);
 									engine.getCurrentPlayer().assignRole(c);
-									ChoixRole.updateGraphic(numRoleCards);
+
+
+
+									engine.getChoixroleControleur().updateGraphic(numRoleCards);
 									engine.nextPlayer();
-									ChoixRole.updateText();
+									engine.getChoixroleControleur().updateText();
+
+
+
 
 									try {
 
@@ -230,7 +244,7 @@ public class MainLoader extends Application {
 //								engine.promptPlayersRole();
 
 								if(engine.allRoleAreSet()){
-									engine.setState(State.Game);
+									engine.getChoixroleControleur().configEndChoose();
 								}
 							}
 
