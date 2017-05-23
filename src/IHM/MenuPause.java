@@ -1,6 +1,7 @@
 package IHM;
 
-import Cards.ActionCard;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
 public class MenuPause {
@@ -82,6 +82,23 @@ public class MenuPause {
             System.out.println("Erreur" + e);
         }
 
+    }
+
+    @FXML
+    void handleButtonQuitter(ActionEvent event){
+        Stage stage = new Stage();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("QuitterComfirmation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Options");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(buttonReprendre.getScene().getWindow());
+            stage.showAndWait();
+        }catch(Exception e){
+            System.out.println("Erreur" + e);
+        }
     }
 
 }
