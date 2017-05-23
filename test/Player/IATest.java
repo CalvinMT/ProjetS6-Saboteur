@@ -2,10 +2,7 @@ package Player;
 
 import Board.Board;
 import Board.Couple;
-import Cards.ActionCard;
-import Cards.GalleryCard;
-import Cards.Hand;
-import Cards.RoleCard;
+import Cards.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,6 +29,25 @@ public class IATest {
     @Test
     public void choosePosition() throws Exception {
         System.out.println("TODO : IATest.java choosePosition()");
+        IA ia = new IA(0, "IA", Medium);
+        Board b = new Board();
+
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, true, true, true, false),
+                card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
+                card3 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false),
+                card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true),
+                card5 = new GalleryCard(tunnel, 0, -1, true, false, true, true, false);
+
+        b.addCard(card1);
+        b.addCard(card2);
+        b.addCard(card3);
+        b.addCard(card4);
+        b.addCard(card5);
+
+        ia.setBoard(b);
+
+
+
     }
 
     @Test

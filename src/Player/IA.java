@@ -1,10 +1,7 @@
 package Player;
 
 import Board.Couple;
-import Cards.Card;
-import Cards.GalleryCard;
-import Cards.HandPlayer;
-import Cards.PlayerAttribute;
+import Cards.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -91,7 +88,6 @@ public class IA extends Player{
         return false;
     }
 
-
     // Calcul de l'heuristique (distance)
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
@@ -132,6 +128,14 @@ public class IA extends Player{
         this.posToPlay = bestCpl;
         this.cardToPlay = bestCard;
     }
+
+
+    public void mediumPlay() {
+            System.out.println("TODO : IA Medium");
+    }
+
+
+    // Utils
 
     // Supprime un but des buts à tester
     // cpl : couple de coordonnée du but
@@ -176,6 +180,11 @@ public class IA extends Player{
             case Easy:
                 randomPlay();
                 break;
+            case Medium:
+                //playMedium();
+                break;
+            case Player:
+                System.err.println("Pas une IA");
             default:
                 System.out.println("TODO : IA " + this.difficulty);
         }
