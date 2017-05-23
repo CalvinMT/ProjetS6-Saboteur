@@ -1,5 +1,6 @@
 package IHM;
 
+import Cards.ActionCard;
 import Player.Player.Difficulty;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,8 +17,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import java.io.IOException;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 
 public class MenuCreationPartie {
 	
@@ -29,7 +35,7 @@ public class MenuCreationPartie {
     private Lobby lobby = new Lobby();
 
     @FXML
-    private AnchorPane anchorPaneMenuCreationPartie;
+    public AnchorPane anchorPaneMenuCreationPartie;
 
     @FXML
     private ComboBox<String> comboBoxAvatar;
@@ -43,6 +49,8 @@ public class MenuCreationPartie {
     private Button buttonAjouterIA;
     @FXML
     private Button buttonPlay;
+    @FXML
+    private Button buttonRetourMenu;
 
     @FXML
     private TableView<BandeauPlayer> tableViewListeJoueur;
@@ -72,7 +80,7 @@ public class MenuCreationPartie {
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
         }
-        if(playerList.size()==10){
+        if(playerList.size()>=10){
             buttonAjouterPlayer.setDisable(true);
             buttonAjouterIA.setDisable(true);
         }
@@ -86,8 +94,6 @@ public class MenuCreationPartie {
     }
 
     @FXML
-
-
     void handleButtonAjouterPlayer(ActionEvent event) {
 		String pseudo = textFieldPseudo.getText();
 		String type = "Joueur";
@@ -117,27 +123,40 @@ public class MenuCreationPartie {
 
     @FXML
     void handleButtonPlay(ActionEvent event) throws IOException {
+
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
-            Saboteur s = new Saboteur();
-            s.initMoteur(this.lobby.getArrayPlayer());
-            System.out.println(s.getMoteur());
+            Saboteur.initMoteur(this.lobby.getArrayPlayer());
+
+            System.out.println(Saboteur.getMoteur());
+
+            Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+            BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+            BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
         }
-
-        Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
-        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-
-
 
 
     }
 
     @FXML
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);
+        /*AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);*/
+        Stage stage = new Stage();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("ExitComfirmation.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Popup");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(buttonRetourMenu.getScene().getWindow());
+            stage.showAndWait();
+        }catch(Exception e){
+            System.out.println("Erreur" + e);
+        }
+
     }
 
     @FXML

@@ -27,4 +27,8 @@ public abstract class Card {
     }
     
     public abstract int getGold();
+    
+    public int getconfig(){
+    	return -1;
+    }
 }

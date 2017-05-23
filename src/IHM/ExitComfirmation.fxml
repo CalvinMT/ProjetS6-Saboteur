@@ -18,7 +18,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonNon" prefHeight="30.0" prefWidth="251.0" text="Non" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="buttonNon" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonNon" prefHeight="30.0" prefWidth="251.0" text="Non" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,7 +31,7 @@
             <Insets bottom="100.0" />
          </GridPane.margin>
       </Button>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Voulez-vous vraiment quitter?" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Voulez-vous vraiment revenir au menu?" textAlignment="CENTER" wrappingWidth="617.71435546875" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>

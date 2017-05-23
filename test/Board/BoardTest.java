@@ -42,7 +42,7 @@ public class BoardTest {
         GalleryCard c = new GalleryCard(tunnel, 1, 0, true, false, true, true, false);
         b.addCard(c);
         size = b.getMineSize();
-        b.removeCard(new Couple(c.getX(), c.getY()));
+        b.removeCard(new Couple(c.getLine(), c.getColumn()));
 
         Assert.assertTrue(b.getMineSize() == size - 1);
         Assert.assertFalse(b.getMineElement(b.getMineSize() - 1).card.equals(c));
@@ -53,9 +53,9 @@ public class BoardTest {
         Hashtable<Couple , Node> h = new Hashtable<Couple , Node>();
         GalleryCard c = new GalleryCard(tunnel, -1, 0, true, false, true, true, false);
 
-        h.put(new Couple(c.getX(), c.getY()), new Node(c));
+        h.put(new Couple(c.getLine(), c.getColumn()), new Node(c));
 
-        Assert.assertTrue(h.get(new Couple(c.getX(), c.getY())).equals(new Node(c)));
+        Assert.assertTrue(h.get(new Couple(c.getLine(), c.getColumn())).equals(new Node(c)));
     }
 
     @Test

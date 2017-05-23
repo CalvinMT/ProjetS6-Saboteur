@@ -1,12 +1,8 @@
 package Player;
 
 
-import Cards.*;
 import Board.Board;
-import Board.Couple;
-
-import javax.print.attribute.standard.PrinterLocation;
-import javax.tools.Tool;
+import Cards.*;
 
 public abstract class Player {
 
@@ -90,7 +86,14 @@ public abstract class Player {
     }
 
     // choix des cartes roles
-//    public abstract void chooseRoleCard(HandRole cards);
+    public boolean chooseRoleCard(HandRole cards){
+        return false;
+    }
+
+    // assigne un nouveau pseudo
+    public void setPlayerName(String name){
+        this.playerName = name;
+    }
 
     // assigne un avatar
     public void setAvatar(String jpg){
@@ -143,6 +146,23 @@ public abstract class Player {
         this.attributeCards.removeAttribute(n);
     }
 
+    // alternance IA Joueur
+
+
+    public int waitingTime() {
+        return -1;
+    }
+
+    // Méthode appelée une fois le temps écoulé
+    public boolean pastTime() {
+        return false;
+    }
+
+    // clic sur le plateau
+    public boolean play(){
+        return false;
+    }
+
 
     //// GETTEUR
     public String getPlayerName() {
@@ -170,7 +190,6 @@ public abstract class Player {
     }
 
     public Difficulty getDifficulty(){
-        System.out.println(this);
         return this.difficulty;
     }
 

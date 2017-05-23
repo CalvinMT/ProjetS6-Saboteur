@@ -5,7 +5,7 @@ package Cards;
 // carte d'or pour la fin de la manche
 
 public class GoldCard extends Card {
-	private int type;
+	private int type = 0;
 	
 
 	public GoldCard(int type) {

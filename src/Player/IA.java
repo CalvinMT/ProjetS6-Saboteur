@@ -22,7 +22,7 @@ public class IA extends Player{
     private Couple posToPlay;
 
     public IA(int index){
-        this.playerName = "Joueur" + index;
+        this.playerName = "IA " + index;
         this.num = index;
         this.difficulty = Difficulty.Easy;
         this.goldPoints = 0;
@@ -62,11 +62,6 @@ public class IA extends Player{
     }
 
 
-    // Calcul de la resistance d'un chemin
-    // TODO :
-    // TODO - Node.java : Ajout d'un attribut correspondant à la résistance du chemin de start au node
-    // TODO - GalleryCard : Ajout d'un attribut correspondant à la resistance de la carte
-
     // IA Random
     public void randomPlay() {
         ArrayList<Couple> p;
@@ -86,6 +81,7 @@ public class IA extends Player{
         }
     }
 
+
     // IA Medium + Hard
 
     // Calcul de l'heuristique (distance)
@@ -93,7 +89,7 @@ public class IA extends Player{
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
     public float getDistanceToGoal(Couple goal, Couple cpl) {
-        return abs(goal.getX() - cpl.getX()) + abs(goal.getY() - cpl.getY());
+        return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
     // TODO : Tests
@@ -178,6 +174,7 @@ public class IA extends Player{
 
         return true;
     }
+
 
     @Override
     public String toString(){

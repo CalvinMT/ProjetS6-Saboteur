@@ -25,8 +25,8 @@ public class DeckGalleryAction extends Deck {
 
 
     private final int nbCardGallery = 40;
-    private final int nbCardGallery_centered = 9;
-    final int nbCardGallery_no_centered = nbCardGallery - nbCardGallery_centered;
+    final int nbCardGallery_no_centered = 9;
+    private final int nbCardGallery_centered = nbCardGallery - nbCardGallery_no_centered;
 
     public int getNbBloqued(){
         return this.nbCardGallery_centered;
@@ -43,7 +43,6 @@ public class DeckGalleryAction extends Deck {
         int nb = 0;
         GalleryCard c;
         while(nb<nbCardGallery_centered){
-//        for(int i=0; i<nbCardGallery_centered; i++){
             c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
             if(c.possible()){
                 nb++;
@@ -53,7 +52,6 @@ public class DeckGalleryAction extends Deck {
 
         nb = 0;
         while(nb<nbCardGallery_no_centered){
-//        for(int i=0; i<nbCardGallery_no_centered; i++){
             c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
             if(c.possible()){
                 nb++;
@@ -118,6 +116,8 @@ public class DeckGalleryAction extends Deck {
         }
 
 
+        this.shuffle();
+        this.shuffle();
         this.shuffle();
         this.shuffle();
 

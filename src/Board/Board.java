@@ -53,19 +53,19 @@ public class Board {
         Node n = new Node(card);
 
         for (int i = 0; i < mine.size(); i++) {
-            if ((mine.get(i).card.getX() == (card.getX() - 1)) && (mine.get(i).card.getY() == card.getY())) {
+            if ((mine.get(i).card.getLine() == (card.getLine() - 1)) && (mine.get(i).card.getColumn() == card.getColumn())) {
                 n.setNorth(i);
                 mine.get(i).setSouth(mine.size());
             }
-            else if ((mine.get(i).card.getX() == (card.getX() + 1)) && (mine.get(i).card.getY() == card.getY())) {
+            else if ((mine.get(i).card.getLine() == (card.getLine() + 1)) && (mine.get(i).card.getColumn() == card.getColumn())) {
                 n.setSouth(i);
                 mine.get(i).setNorth(mine.size());
             }
-            else if ((mine.get(i).card.getX() == card.getX()) && (mine.get(i).card.getY() == (card.getY() + 1))) {
+            else if ((mine.get(i).card.getLine() == card.getLine()) && (mine.get(i).card.getColumn() == (card.getColumn() + 1))) {
                 n.setEast(i);
                 mine.get(i).setWest(mine.size());
             }
-            else if ((mine.get(i).card.getX() == (card.getX())) && (mine.get(i).card.getY() == (card.getY() - 1))) {
+            else if ((mine.get(i).card.getLine() == (card.getLine())) && (mine.get(i).card.getColumn() == (card.getColumn() - 1))) {
                 n.setWest(i);
                 mine.get(i).setEast(mine.size());
             }
@@ -77,7 +77,7 @@ public class Board {
     public void removeCard(Couple coord) {
         int idx = 0;
         for (int i = 0; i < mine.size(); i++) {
-            if (mine.get(i).card.getX() == coord.getX() && mine.get(i).card.getY() == coord.getY()) {
+            if (mine.get(i).card.getLine() == coord.getLine() && mine.get(i).card.getColumn() == coord.getColumn()) {
                 idx = i;
                 mine.remove(i);
             }
@@ -169,7 +169,7 @@ public class Board {
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
-                accessCard.put(new Couple(currentNode.card.getX(), currentNode.card.getY()), currentNode); // Et aux cartes accessibles
+                accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
@@ -178,7 +178,7 @@ public class Board {
                         }
                     }
                     else { // Si il n'y a pas de carte au nord (case vide)
-                        cpl = new Couple(currentNode.card.getX() - 1, currentNode.card.getY());
+                        cpl = new Couple(currentNode.card.getLine() - 1, currentNode.card.getColumn());
                         if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
                             positionCandidates.add(cpl); // On l'ajoute aux possibilités
                         }
@@ -192,7 +192,7 @@ public class Board {
                         }
                     }
                     else { // Si il n'y a pas de carte au sud (case vide)
-                        cpl = new Couple(currentNode.card.getX() + 1, currentNode.card.getY());
+                        cpl = new Couple(currentNode.card.getLine() + 1, currentNode.card.getColumn());
                         if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
                             positionCandidates.add(cpl); // On l'ajoute aux possibilités
                         }
@@ -206,7 +206,7 @@ public class Board {
                         }
                     }
                     else {
-                        cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() + 1);
+                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() + 1);
                         if (!positionCandidates.contains(cpl)) {
                             positionCandidates.add(cpl);
                         }
@@ -220,7 +220,7 @@ public class Board {
                         }
                     }
                     else {
-                        cpl = new Couple(currentNode.card.getX(), currentNode.card.getY() - 1);
+                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() - 1);
                         if (!positionCandidates.contains(cpl)) {
                             positionCandidates.add(cpl);
                         }
@@ -236,25 +236,25 @@ public class Board {
 
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
-        currNode = getNodeFromMine(new Couple(currPos.getX() - 1, currPos.getY()));
+        currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
         if (currNode != null) {
             if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
                 return false;
             }
         }
-        currNode = getNodeFromMine(new Couple(currPos.getX() + 1, currPos.getY()));
+        currNode = getNodeFromMine(new Couple(currPos.getLine() + 1, currPos.getColumn()));
         if (currNode != null) {
             if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
                 return false;
             }
         }
-        currNode = getNodeFromMine(new Couple(currPos.getX(), currPos.getY() + 1));
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() + 1));
         if (currNode != null) {
             if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
                 return false;
             }
         }
-        currNode = getNodeFromMine(new Couple(currPos.getX(), currPos.getY() - 1));
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() - 1));
         if (currNode != null) {
             if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
                 return false;
@@ -295,19 +295,35 @@ public class Board {
         int i = 1;
         Node n = getMineElement(0);
 
-        while ((i < getMineSize()) && !c.equals(new Couple(n.card.getX(), n.card.getY()))) {
+        while ((i < getMineSize()) && !c.equals(new Couple(n.card.getLine(), n.card.getColumn()))) {
             n = getMineElement(i);
             i++;
         }
 
-        if (!c.equals(new Couple(n.card.getX(), n.card.getY()))) {
+        if (!c.equals(new Couple(n.card.getLine(), n.card.getColumn()))) {
             n = null;
         }
         return n;
     }
 
-    // Debug: Les fonctions ci-après sont prévues pour les tests uniquement, aucune verification n'est effectuée
+    public boolean goalReached(){
 
+        final Couple goal1 = new Couple(-2, 8);
+        final Couple goal2 = new Couple(0, 8);
+        final Couple goal3 = new Couple(2, 8);
+
+        if(accessCard.contains(goal1) && accessCard.get(goal1).getCard().isGold() || accessCard.contains(goal2) && accessCard.get(goal2).getCard().isGold() || accessCard.contains(goal3) && accessCard.get(goal3).getCard().isGold()){
+            // fin de la manche
+            return true;
+        } else {
+            return false;
+        }
+
+        //TODO à changer car la carte gold peut etre bloquer et inacessible
+    }
+
+
+    // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
     public Node getMineElement(int i) {
         return mine.get(i);
     }
@@ -319,4 +335,6 @@ public class Board {
     public int getMineSize() {
         return mine.size();
     }
+
+
 }

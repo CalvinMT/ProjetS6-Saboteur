@@ -66,11 +66,6 @@ public class IATest {
         Assert.assertFalse(goals.contains(new Couple(0, 8)));
     }
 
-    @Test
-    public void changeDiffulty() throws Exception {
-        System.out.println("TODO : IATest.java changeDiffulty()");
-    }
-
     // Test randomPlay 
     public void randomPlayTest(IA ia) throws Exception {
         ArrayList<Couple> p;
