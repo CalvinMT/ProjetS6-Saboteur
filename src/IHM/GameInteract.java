@@ -90,9 +90,10 @@ public class GameInteract {
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand.add(getImageCard(card));
-			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName());
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
 			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
 		}
+
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
@@ -162,7 +163,7 @@ public class GameInteract {
 	private double viewCardX;
 	private double viewCardY;
 	
-	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName) {
+	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
@@ -222,6 +223,9 @@ public class GameInteract {
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 									GameBoard.gridPaneBoard.add(new ImageCell().getImageView(cardName), droppedColumn, droppedLine);
 									success = true;
+
+
+
 								}
 								dragEvent.setDropCompleted(success);
 								dragEvent.consume();
@@ -367,9 +371,33 @@ public class GameInteract {
 	            	}
 	            });
 				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-		            cardsInHand.remove(viewCard);
+
+
+					System.out.println("Avant "+cardsInHand.size());
+					cardsInHand.remove(playingCard);
+					System.out.println("Après "+cardsInHand.size());
+
+		            moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
+
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
-		            numberOfCardsInHand--;
+//		            numberOfCardsInHand--;
+
+
+		            //piocher
+		            if(!moteur.getDeck().isEmpty()){
+		            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+//						numberOfCardsInHand++;
+
+
+						Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
+						cardsInHand.add(getImageCard(cardDraw));
+
+						System.out.println("Encore Après "+cardsInHand.size());
+
+						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
+						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());œ
+
+					}
 		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 		        }
 				dragEvent.consume();
@@ -389,7 +417,7 @@ public class GameInteract {
 						card_sticks_to_grid
 					}
 				}
-			}
+		}
 		});*/
 		// ---------- Mouse releases viewCard ----------
 		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
@@ -428,7 +456,8 @@ public class GameInteract {
 	    return null;
 	}
 	
-	
+	// TODO FACTORISER @Copyright G - Huard 2017
+	// TODO getConfig
 	
 	private GamePlayingCard getImageCard (Card c) {
 		GamePlayingCard playingCard = null;
