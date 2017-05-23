@@ -20,16 +20,21 @@ public class IA extends Player{
 
     private Card cardToPlay;
     private Couple posToPlay;
+    private ArrayList<Player> allPlayers;
 
     public IA(int index) {
-        this(index, "IA", Difficulty.Easy);
+        this(index, "IA", Difficulty.Easy, new ArrayList<>());
     }
 
     public IA(int index, String name) {
-        this(index, name, Difficulty.Easy);
+        this(index, name, Difficulty.Easy, new ArrayList<>());
     }
 
     public IA(int index, String name, Difficulty d){
+        this(index, name, d, new ArrayList<>());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p){
         this.playerName = name;
         this.num = index;
         this.difficulty = d;
@@ -37,6 +42,7 @@ public class IA extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.avatar = "robot_miner";
+        this.allPlayers = p;
         setUpGoals();
     }
 
@@ -68,7 +74,10 @@ public class IA extends Player{
     }
 
 
-    // IA Medium + Hard
+    // Computing
+
+    // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
+    // Faux sinon
     public boolean isInSwitchZone() {
         for (int c = 6; c < 11; c++) {
             for (int l = -4; l < 5; l++) {
