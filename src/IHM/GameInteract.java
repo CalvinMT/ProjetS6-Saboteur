@@ -52,6 +52,8 @@ public class GameInteract {
 	private int listAvatarSize = 75;
 	private int listConstraintSize = 40;
 	
+	private int numberOfCardsInDeck;
+	
 	@FXML
 	BorderPane borderPaneInteract;
 	@FXML
@@ -123,7 +125,15 @@ public class GameInteract {
 			gridPanePlayer.add(viewConstraintWagon, 4, 1);
 			vboxPlayerList.getChildren().add(gridPanePlayer);
 		}
-		//vboxPlayerList.getChildren().addAll(playerList);
+		// TODO - bring forward first player
+		
+		// Deck and Discard configuration
+		numberOfCardsInDeck = moteur.getDeck().nbCard();
+		// TODO - show deck with numberOfCardsInDeck when mouse hovers
+		// TODO - show discard zone
+		
+		// Player's info
+		// TODO - show avatar, pseudo, role and gold
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
