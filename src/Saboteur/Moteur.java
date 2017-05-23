@@ -54,6 +54,11 @@ public class Moteur {
         this.pile = new DeckGalleryAction();
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
+
+        for(int i=0; i<nbPlayer(); i++){
+            arrayPlayer.get(i).resetPlayer();
+        }
+
         roleCards = new HandRole(nbPlayer());
         initRoleTaken();
         this.board = new Board();
@@ -68,6 +73,11 @@ public class Moteur {
             this.arrayPlayer = arrayPlayer;
             this.pile = new DeckGalleryAction();
             currentPlayer = 0;
+
+            for(int i=0; i<nbPlayer(); i++){
+                arrayPlayer.get(i).resetPlayer();
+            }
+
             roleCards = new HandRole(nbPlayer());
             initRoleTaken();
             this.board = new Board();

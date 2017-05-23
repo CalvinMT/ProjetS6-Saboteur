@@ -90,9 +90,10 @@ public class GameInteract {
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand.add(getImageCard(card));
-			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName());
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
 			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
 		}
+
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
@@ -162,7 +163,7 @@ public class GameInteract {
 	private double viewCardX;
 	private double viewCardY;
 	
-	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName) {
+	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
@@ -360,19 +361,17 @@ public class GameInteract {
 				// Puts back card into place
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				isDragged = false;
-				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+				// Turns off gallery card's indication
+				if (card.getType().equals(Card_t.gallery)  &&  !possiblePositions.isEmpty()) {
 		            possiblePositions.stream().forEach(position -> {
 		            	if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
 							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 							GameBoard.gridPaneBoard.getChildren().remove(node);
 		            	}
 		            });
-		            cardsInHand.remove(viewCard);
-		            hboxGameCardsInHand.getChildren().remove(viewCard);
-		            numberOfCardsInHand--;
-		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
-		        }
-				else if (dragEvent.getTransferMode() == TransferMode.COPY) {
+				}
+				// Turns off end card's indication
+				if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 					GameBoard.endCards.stream().forEach(endCard -> {
 						Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
 						if (endCard.getColumn() != droppedColumn  ||  endCard.getLine() != droppedLine) {
@@ -381,6 +380,22 @@ public class GameInteract {
 						}
 						GameBoard.gridPaneBoard.getChildren().remove(node);
 					});
+				}
+				if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+					cardsInHand.remove(playingCard);
+		            moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
+		            hboxGameCardsInHand.getChildren().remove(viewCard);
+		            // Draws the first card from the deck
+		            if(!moteur.getDeck().isEmpty()){
+		            	moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+						Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
+						cardsInHand.add(getImageCard(cardDraw));
+						cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
+						hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+					}
+		            moteur.getBoard().putCard((GalleryCard) card, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+		        }
+				else if (dragEvent.getTransferMode() == TransferMode.COPY) {
 		            cardsInHand.remove(viewCard);
 		            hboxGameCardsInHand.getChildren().remove(viewCard);
 		            numberOfCardsInHand--;
@@ -403,7 +418,7 @@ public class GameInteract {
 						card_sticks_to_grid
 					}
 				}
-			}
+		}
 		});*/
 		// ---------- Mouse releases viewCard ----------
 		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
@@ -442,7 +457,8 @@ public class GameInteract {
 	    return null;
 	}
 	
-	
+	// TODO FACTORISER @Copyright G - Huard 2017
+	// TODO getConfig
 	
 	private GamePlayingCard getImageCard (Card c) {
 		GamePlayingCard playingCard = null;
