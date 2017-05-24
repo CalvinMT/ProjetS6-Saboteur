@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -127,10 +128,14 @@ public class MenuCreationPartie {
 
             System.out.println(Saboteur.getMoteur());
 
-            Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            Scene scene = (Scene) anchorPaneMenuCreationPartie.getScene();
+            BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+            BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
+            /*Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
             Stage stage = (Stage) buttonPlay.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.show();*/
         }
 
 
