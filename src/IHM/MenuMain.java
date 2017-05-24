@@ -19,12 +19,15 @@ public class MenuMain {
     public void handleLocalGame() throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuCreationPartie.fxml"));
         anchorPaneMenuMain.getChildren().setAll(anchorPane);
+		MainLoader.autoResizeToResolution(anchorPane);
     }
 	
 	@FXML
     public void handleOptions() throws IOException {
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuOptions.fxml"));
 		anchorPaneMenuMain.getChildren().setAll(anchorPane);
+		MainLoader.autoResizeToResolution(anchorPane);
+
     }
 	
 	@FXML

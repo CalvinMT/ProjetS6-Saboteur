@@ -42,7 +42,7 @@ public class MenuOptions {
 	@FXML
     public void handleReturnMenu () throws IOException {
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-		MainLoader.autoResizeToResolution(anchorPaneOptions.getScene().getWidth(), anchorPaneOptions.getScene().getHeight(), anchorPane);
+		MainLoader.autoResizeToResolution(anchorPane);
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
 	
@@ -82,6 +82,7 @@ public class MenuOptions {
 			    MainLoader.primaryStage.setHeight(newScreenHeight);
 			    MainLoader.primaryStage.centerOnScreen();
 		    	writer.println(":Fullscreen:" + false + ":");
+		    	MainLoader.autoResizeToResolution(anchorPaneOptions);
 		    }
 		    writer.close();
 			textRestart.setVisible(true);
@@ -96,6 +97,7 @@ public class MenuOptions {
 		    fadeTextApplied.setCycleCount(1);
 		    fadeTextRestart.play();
 		    fadeTextApplied.play();
+
 		} catch (IOException e) {
 			System.out.println("ERROR --> Couldn't apply changes.");
 		}
