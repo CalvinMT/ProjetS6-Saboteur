@@ -230,6 +230,9 @@ public class ChoixRole {
 
         m.setState(State.ChooseRole);
         m.setChoixroleControler(this);
+
+
+
     }
 
     // getImageCard(Card c) gameInteractive

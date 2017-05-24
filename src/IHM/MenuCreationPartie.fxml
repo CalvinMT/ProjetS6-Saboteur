@@ -38,7 +38,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <ComboBox fx:id="comboBoxAvatar" prefHeight="70.0" prefWidth="93.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
@@ -74,7 +74,7 @@
                   <Insets top="3.0" />
                </GridPane.margin>
             </TextField>
-            <TableView fx:id="tableViewListeJoueur" prefHeight="365.0" prefWidth="961.0" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
+            <TableView fx:id="tableViewListeJoueur" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="columnAvatar" prefWidth="118.0" resizable="false" text="Avatar" />
                 <TableColumn fx:id="columnPseudo" prefWidth="172.0" resizable="false" text="Pseudo" />
