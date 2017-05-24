@@ -27,7 +27,7 @@ public class RecommencerComfirmation {
     void handleButtonOui(ActionEvent event) throws IOException {
         System.out.println("Réinitialisation de la partie");
 
-        Saboteur.setMoteur(new Moteur(Saboteur.getMoteur().getAllPlayers()));
+        Saboteur.setMoteur(new Moteur(Saboteur.getMoteur().getAllPlayers(), ""));
         Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
         Stage stage = (Stage)((Stage)((Stage) buttonNon.getScene().getWindow()).getOwner()).getOwner();
         ((Stage)buttonNon.getScene().getWindow()).close();

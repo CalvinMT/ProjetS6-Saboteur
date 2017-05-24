@@ -11,7 +11,7 @@ public class HandRoleTest {
     @Test
     public void TestCons1(){
         Hand h = new HandRole(1);
-        Assert.assertTrue(h.nbCard() > 3);
+        Assert.assertTrue(h.nbCard() >= 3);
     }
 
     @Test

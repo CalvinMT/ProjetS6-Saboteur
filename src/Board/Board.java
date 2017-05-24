@@ -28,10 +28,10 @@ public class Board {
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false))); // Sans minerai gauche
                 }
             }
         }
