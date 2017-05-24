@@ -19,9 +19,13 @@ public class IATest {
 
     @Test
     public void getDistanceToGoal() throws Exception {
-        assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(0, 7)) == 1.0);
-        assertTrue(ia.getDistanceToGoal(new Couple(-2, 8), new Couple(1, 3)) == 8.0);
-        assertTrue(ia.getDistanceToGoal(new Couple(2, 8), new Couple(1, 12)) == 5.0);
+        assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(0, 7)) == 1);
+        assertTrue(ia.getDistanceToGoal(new Couple(-2, 8), new Couple(1, 3)) == 8);
+        assertTrue(ia.getDistanceToGoal(new Couple(2, 8), new Couple(1, 12)) == 5);
+        assertTrue(ia.getDistanceToGoal(new Couple(2, 8), new Couple(1, 12)) == 5);
+        assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(1, 0)) == 9);
+        assertTrue(ia.getDistanceToGoal(new Couple(-2, 8), new Couple(-1, 2)) == 7);
+        assertTrue(ia.getDistanceToGoal(new Couple(0, 8), new Couple(0, 1)) == 7);
 
     }
 
@@ -31,23 +35,52 @@ public class IATest {
         System.out.println("TODO : IATest.java choosePosition()");
         IA ia = new IA(0, "IA", Medium);
         Board b = new Board();
-
-        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, true, true, true, false),
+        GalleryCard card1 = new GalleryCard(tunnel, -1, 0, true, false, true, true, false),
                 card2 = new GalleryCard(tunnel, -1, 1, true, true, true, false, true),
                 card3 = new GalleryCard(tunnel, -2, 1, true, true, true, true, false),
                 card4 = new GalleryCard(tunnel, 1, 1, true, false, false, true, true),
-                card5 = new GalleryCard(tunnel, 0, -1, true, false, true, true, false);
+                card5 = new GalleryCard(tunnel, -3, 1, true, false, true, true, false),
+                card6 = new GalleryCard(tunnel, -3, 2, true, false, true, false, true),
+                card7 = new GalleryCard(tunnel, -2, 2, true, true, true, false, true),
+                handCard1 = new GalleryCard(tunnel, 0, 0, true, true, false, true, false),
+                handCard2 = new GalleryCard(tunnel, 0, 0, true, true, false, true, true),
+                handCard3 = new GalleryCard(tunnel, 0, 0, true, false, true, true, true),
+                handCard4 = new GalleryCard(tunnel, 0, 0, true, false, false, true, true),
+                cardTest;
 
-        b.addCard(card1);
-        b.addCard(card2);
-        b.addCard(card3);
-        b.addCard(card4);
-        b.addCard(card5);
+        // start            // 0
+        // but1             // 1
+        // but2             // 2
+        // but3             // 3
+        b.addCard(card1);   // 4
+        b.addCard(card2);   // 5
+        b.addCard(card3);   // 6
+        b.addCard(card4);   // 7
+        b.addCard(card5);   // 8
+        b.addCard(card6);   // 9
+        b.addCard(card7);   //10
 
         ia.setBoard(b);
+        ia.drawCard(handCard1);
+        ia.drawCard(handCard2);
+        ia.drawCard(handCard3);
+        ia.drawCard(handCard4);
 
+        ia.choosePosition();
 
+        Assert.assertTrue(ia.getCardToPlay() == handCard1);
+        Assert.assertTrue(ia.getPosToPlay().equals(new Couple(-1, 2)));
 
+        // Exemple jeu IA
+        ia.getPlayableCards().getArrayCard().remove(ia.getCardToPlay());
+        cardTest = (GalleryCard) ia.getCardToPlay();
+        cardTest.setLine(ia.getPosToPlay().getLine());
+        cardTest.setColumn(ia.getPosToPlay().getColumn());
+        ia.board.addCard(cardTest);
+
+        ia.choosePosition();
+        Assert.assertTrue(ia.getCardToPlay() == handCard2);
+        Assert.assertTrue(ia.getPosToPlay().equals(new Couple(-1, 3)));
     }
 
     @Test
