@@ -275,7 +275,7 @@ public class GameInteract {
 								@Override
 								public void handle(DragEvent dragEvent) {
 						            if (dragEvent.getGestureSource() != viewIndicationEndCard  &&  dragEvent.getDragboard().hasImage()) {
-						            	dragEvent.acceptTransferModes(TransferMode.COPY);
+						            	dragEvent.acceptTransferModes(TransferMode.MOVE);
 						            }
 						            dragEvent.consume();
 								}
@@ -322,7 +322,7 @@ public class GameInteract {
 									@Override
 									public void handle(DragEvent dragEvent) {
 							            if (dragEvent.getGestureSource() != viewIndicationConstraints  &&  dragEvent.getDragboard().hasImage()) {
-							            	dragEvent.acceptTransferModes(TransferMode.COPY);
+							            	dragEvent.acceptTransferModes(TransferMode.MOVE);
 							            }
 							            dragEvent.consume();
 									}
@@ -337,17 +337,17 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
-												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Lantern);
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
 												viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
-												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Pickaxe);
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
-												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Wagon);
 											}
 											success = true;
 										}
@@ -475,7 +475,7 @@ public class GameInteract {
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
 				isDragged = true;
-				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.ANY);
+				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.MOVE);
 				ClipboardContent content = new ClipboardContent();
 		        content.putImage(viewCard.snapshot(null, null));
 		        dragBoard.setContent(content);
@@ -534,12 +534,8 @@ public class GameInteract {
                     }
                     
                     
+                    // Removes card from hand
                     if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-                        cardsInHand.remove(playingCard);
-                        moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
-                        hboxGameCardsInHand.getChildren().remove(viewCard);
-                    }
-                    else if (dragEvent.getTransferMode() == TransferMode.COPY) {
                         cardsInHand.remove(playingCard);
                         moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
