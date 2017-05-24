@@ -1,6 +1,8 @@
 package Cards;
 
 
+import Saboteur.Saboteur;
+
 import java.util.ArrayList;
 
 public class PlayerAttribute extends Hand {
@@ -27,6 +29,21 @@ public class PlayerAttribute extends Hand {
             }
         }
         return false;
+    }
+
+    // si on peut casser l'outil du joueur
+    public boolean canBreakTool(RepareSabotageCard t){
+        boolean breakTool = true;
+        if(t.getAction() == ActionCard.Action.Sabotage){
+            for(int i=0; i<this.nbCard(); i++){
+                if(containsTools(t.getTool())){
+                    breakTool = false;
+                }
+            }
+            return breakTool;
+        } else {
+            return false;
+        }
     }
 
     // enleve un carte de sabotage
@@ -85,16 +102,16 @@ public class PlayerAttribute extends Hand {
 
     @Override
     public String toString(){
-        String renvoi = "Attribute : ";
-        renvoi += "[ ";
+        String renvoi = "";
+        //renvoi += "{";
         for(int i=0; i<this.arrayCard.size(); i++){
             renvoi += this.arrayCard.get(i).toString();
             if(i<this.arrayCard.size()-1){
-                renvoi += " ; ";
+                renvoi += ";";
             }
         }
 
-        renvoi += " ]";
+        //renvoi += "}";
         return renvoi;
     }
 }

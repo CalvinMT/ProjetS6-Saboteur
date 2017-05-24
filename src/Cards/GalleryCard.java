@@ -283,7 +283,28 @@ public class GalleryCard extends Card {
 
         return renvoi;
     }
-    
+
+    public String simplified(){
+        String renvoi = this.coord + " {";
+        if(this.canHasNorth()){
+            renvoi += "N";
+        }
+        if(this.canHasSouth()){
+            renvoi += "S";
+        }
+        if(this.canHasEast()){
+            renvoi += "E";
+        }
+        if(this.canHasWest()){
+            renvoi += "W";
+        }
+        renvoi += "} ";
+        if(!this.canHasCenter()){
+            renvoi += "bloqued";
+        }
+        return renvoi;
+    }
+
     @Override
 	public int getGold(){
 		return 0;

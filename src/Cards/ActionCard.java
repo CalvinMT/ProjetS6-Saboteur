@@ -49,7 +49,7 @@ public class ActionCard extends Card {
     }
 
     public String toString(){
-        String renvoi = "Action: ";
+        String renvoi = "Action:";
         switch(this.action){
             case Map:
                 renvoi += "Map";

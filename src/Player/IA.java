@@ -8,7 +8,6 @@ import Cards.Card.Card_t;
 import Cards.GalleryCard;
 import Cards.HandPlayer;
 import Cards.PlayerAttribute;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -71,6 +70,7 @@ public class IA extends Player{
         }
         this.cardToPlay = lookAtCard(r.nextInt(range));
         if (cardToPlay.getType() == gallery) {
+            this.board.computeAccessCards();
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
             if (p.size() > 1) {
             	range = r.nextInt(p.size() - 1);
@@ -120,12 +120,11 @@ public class IA extends Player{
         return false;
     }
 
-
     // Calcul de l'heuristique (distance)
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
-    public float getDistanceToGoal(Couple goal, Couple cpl) {
+    public int getDistanceToGoal(Couple goal, Couple cpl) {
         return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
@@ -133,27 +132,34 @@ public class IA extends Player{
     // TODO : Choisir les cartes
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void choosePosition() {
-        float h, hMax = 0;
-        Card currCard, bestCard;
+        int h, hMin = -1;
+        Card c, bestCard;
+        GalleryCard currCard;
         Couple bestCpl = new Couple(0, 0);
         ArrayList<Couple> p;
 
         bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
-            currCard = lookAtCard(cardIdx);
-            if (currCard.getType() == gallery) { // Si la carte est une gallerie
-                p = this.board.getPossiblePositions((GalleryCard) currCard); // On calcule les positions possibles pour cette carte
-                bestCpl = p.get(0);
+            c = lookAtCard(cardIdx);
+            if (c.getType() == gallery) { // Si la carte est une gallerie
+                currCard = (GalleryCard) c;
+                p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
+
                 for (Couple currCpl : p) { // Pour chaque position possible
                     for (Couple goal : goalsToTest) { // Et pour chaque but
                         h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
 
                         // TODO : Verifier si on peut finir le chemin
-                        if (h > hMax) { // Si l'heuristique est maximale
-                            hMax = h; // On met à jour l'heuristique max
+                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
+
+                        if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
+                            //System.out.printf(" True");
+                            hMin = h; // On met à jour l'heuristique max
                             bestCpl = currCpl; // On garde la position
                             bestCard = currCard; // et la carte associée
                         }
+                        //System.out.printf("\n");
                     }
                 }
             }
@@ -161,6 +167,14 @@ public class IA extends Player{
         this.posToPlay = bestCpl;
         this.cardToPlay = bestCard;
     }
+
+
+    public void mediumPlay() {
+            System.out.println("TODO : IA Medium");
+    }
+
+
+    // Utils
 
     // Supprime un but des buts à tester
     // cpl : couple de coordonnée du but
@@ -254,11 +268,22 @@ public class IA extends Player{
             case Easy:
                 randomPlay();
                 break;
+            case Medium:
+                //playMedium();
+                break;
+            case Player:
+                System.err.println("Pas une IA");
             default:
                 System.out.println("TODO : IA " + this.difficulty);
         }
 
         return true;
+    }
+    
+    @Override
+    public void setGoldPoints(int gp){
+        if (gp >= 0)
+            this.goldPoints += gp;
     }
 
 

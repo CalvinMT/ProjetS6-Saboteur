@@ -51,6 +51,13 @@ public abstract class Player {
         }
     }
 
+    // reset playerAttribute et HandCard
+    public void resetPlayer(){
+        this.playableCards = new HandPlayer();
+        this.attributeCards = new PlayerAttribute();
+        this.role = null;
+    }
+
     // le joueur pioche
     public void drawCard(Deck d) {
         if(playableCards.nbCard() < 6 && !d.isEmpty()){
@@ -93,6 +100,11 @@ public abstract class Player {
     // assigne un nouveau pseudo
     public void setPlayerName(String name){
         this.playerName = name;
+    }
+
+    // si le joueur n'a aucune attribut de sabotage sur lui
+    public boolean canPlayGalleryCard(){
+        return this.attributeCards.nbCard() == 0;
     }
 
     // assigne un avatar
@@ -200,6 +212,8 @@ public abstract class Player {
     public int nbCardHand(){
         return this.playableCards.nbCard();
     }
+    
+    public abstract void setGoldPoints(int gp);
 
     public abstract String toString();
 

@@ -1,6 +1,5 @@
 package IHM;
 
-import Cards.ActionCard;
 import Player.Player.Difficulty;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
@@ -17,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -112,7 +110,7 @@ public class MenuCreationPartie {
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
 		}
-		if(playerList.size()>10){
+		if(playerList.size()>=10){
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
@@ -146,7 +144,7 @@ public class MenuCreationPartie {
         Stage stage = new Stage();
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("ExitComfirmation.fxml"));
+            root = FXMLLoader.load(getClass().getResource("ExitComfirmationCreationPartie.fxml"));
             stage.setScene(new Scene(root));
             stage.setTitle("Popup");
             stage.initStyle(StageStyle.UNDECORATED);
@@ -156,7 +154,6 @@ public class MenuCreationPartie {
         }catch(Exception e){
             System.out.println("Erreur" + e);
         }
-
     }
 
     @FXML

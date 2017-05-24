@@ -15,6 +15,7 @@ import Cards.PlayerAttribute;
 public class PlayerHuman extends Player{
 
 
+    // TODO Factoriser
 
     // Constructeur
     public PlayerHuman(int index) {
@@ -54,36 +55,30 @@ public class PlayerHuman extends Player{
         this.board = b;
     }
 
+    
     @Override
-    public boolean play(){
-
-        //TODO jeu du joueur
-
-        return false;
+    public void setGoldPoints(int gp) {
+    	if (gp >= 0)
+    		this.goldPoints += gp;
     }
-
-
-
+    
     @Override
     public String toString(){
         String renvoi = "";
 
-        renvoi += "Player: "+this.playerName + "\n";
-        renvoi += "Type: Humain\n";
+        renvoi += this.playerName + "\n";
+        renvoi += "Humain\n";
         if(this.role == null){
             renvoi += "Aucun role pour l'instant\n";
         } else {
             renvoi += this.role + "\n";
         }
-        renvoi += "Nombre d'or: "+this.goldPoints + "\n";
+        renvoi += this.goldPoints + "\n";
         renvoi += this.attributeCards + "\n";
         renvoi += this.playableCards + "\n";
 
         return renvoi;
     }
 
-
-    
-    
     
 }

@@ -79,6 +79,12 @@ public class Node {
         return this.card;
     }
 
+    @Override
+    public String toString() {
+        return "Card :\n" + this.card.simplified() + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
+
+    }
+
     public int getPathRes() {
         return pathRes;
     }
@@ -86,32 +92,6 @@ public class Node {
     public int getPathLength() {
         return pathLength;
     }
-
-// TODO : Ne pas utiliser avant l'implémentation du save/load
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "card=" + card +
-                ", north=" + north +
-                ", south=" + south +
-                ", east=" + east +
-                ", west=" + west +
-                ", pathRes=" + pathRes +
-                '}';
-    }
-/*
-    @Override
-    public String toString() {
-        return "Card :\n" + this.card
-                + "\nIndexes : "
-                + "\nNorth : " + this.getNorth()
-                + "\nSouth : " + this.getSouth()
-                + "\nEast : " + this.getEast()
-                + "\nWest : " + this.getWest()
-                + "\n";
-    }
-*/
 
     public boolean equals(Node n) {
         return this.card.equals(n.card) &&
@@ -147,4 +127,5 @@ public class Node {
         result = 31 * result + getWest();
         return result;
     }
+
 }

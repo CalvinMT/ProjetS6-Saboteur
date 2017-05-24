@@ -29,10 +29,10 @@ public class Board {
             }
             else {
                 if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, true, false))); // Sans minerai droit
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false))); // Sans minerai droit
                 }
                 else {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, false, true, false, false))); // Sans minerai gauche
+                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false))); // Sans minerai gauche
                 }
             }
         }
@@ -141,7 +141,6 @@ public class Board {
             }
         }
         if (start.getEast() != -1) { // Si il y a un élément à l'est
-
             curr = mine.get(start.getEast());
             if (!path.contains(curr)) {
                 computePathRes(curr, path, res); // Si l'élément à l'est n'a pas déjà été visité
@@ -155,6 +154,17 @@ public class Board {
         }
     }
 
+    public void putCard(GalleryCard c, int line, int column){
+        Couple cou = new Couple(line, column);
+
+        c.setLine(line);
+        c.setColumn(column);
+
+        addCard(c);
+
+        computeAccessCards();
+    }
+
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
                 visited = new LinkedList<Node>();
@@ -162,6 +172,7 @@ public class Board {
         Node currentNode, newNode;
         Couple cpl;
 
+        this.positionCandidates = new ArrayList<>();
         try {
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
@@ -320,6 +331,17 @@ public class Board {
         }
 
         //TODO à changer car la carte gold peut etre bloquer et inacessible
+    }
+
+    public String mine(){
+        String renvoi = "Mine:\n";
+
+        for(int i=0; i<mine.size(); i++){
+            renvoi +=  mine.get(i) + "\n";
+        }
+
+
+        return renvoi;
     }
 
 

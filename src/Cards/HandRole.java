@@ -37,7 +37,7 @@ public class HandRole extends Hand {
         }
 
         int nbSaboteur = rulePLayer[nbPlayer-3][0];
-        int nbMinor = rulePLayer[nbPlayer-3][1];
+        int nbMinor = rulePLayer[nbPlayer-3][1] - 1;
 
         fillHand(nbSaboteur, nbMinor);
 
@@ -53,5 +53,12 @@ public class HandRole extends Hand {
         for(int i=0; i<nbMinor; i++){
             arrayCard.add(new RoleCard("Mineur"));
         }
+    }
+    
+    public String toString(){
+    	String me = "";
+    	for (int i=0; i<this.arrayCard.size(); i++)
+    		me += (this.arrayCard.get(i).toString() + "\n");
+    	return me;
     }
 }

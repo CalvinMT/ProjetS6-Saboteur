@@ -35,7 +35,7 @@ public class MoteurTest {
         array.add(new PlayerHuman(0));
         array.add(new PlayerHuman(1));
         array.add(new PlayerHuman(2));
-        Moteur m = new Moteur(array);
+        Moteur m = new Moteur(array, "");
         Assert.assertTrue(m.nbPlayer() == 3);
         Assert.assertTrue(m.currentNumPlayer() == 0);
     }
@@ -45,7 +45,7 @@ public class MoteurTest {
         ArrayList<Player> array = new ArrayList<Player>();
         array.add(new PlayerHuman(0));
         array.add(new PlayerHuman(1));
-        Moteur m = new Moteur(array);
+        Moteur m = new Moteur(array, "");
         Assert.assertTrue(m.currentNumPlayer() == -1);
     }
 

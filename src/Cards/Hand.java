@@ -33,6 +33,10 @@ public class Hand extends Deck {
         }
     }
 
+    public void removeCard(Card c){
+        this.arrayCard.remove(c);
+    }
+
 
     public void setVisibility(boolean b){
         this.visible = b;
@@ -40,8 +44,9 @@ public class Hand extends Deck {
 
     @Override
     public String toString(){
-        String renvoi = "Hand : ";
-        renvoi += "[ ";
+        //String renvoi = "Hand : ";
+        //renvoi += "[ ";
+    	String renvoi = "";
         if(this.visible()){
             for(int i=0; i<this.arrayCard.size(); i++){
                 renvoi += this.arrayCard.get(i).toString();
@@ -59,7 +64,7 @@ public class Hand extends Deck {
                 }
             }
         }
-        renvoi += " ]";
+        //renvoi += " ]";
         return renvoi;
     }
 
