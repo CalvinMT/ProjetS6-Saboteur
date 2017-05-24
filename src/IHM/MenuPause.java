@@ -17,11 +17,6 @@ public class MenuPause {
 
     @FXML
     private Button buttonReprendre;
-    
-    @FXML
-    void handleButtonRecommencer () {
-    	// TODO
-    }
 
     @FXML
     void handleButtonOption(ActionEvent event) throws IOException {
