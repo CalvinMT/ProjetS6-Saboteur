@@ -10,8 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane fx:id="borderPaneChoixRole" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.ChoixRole">
+<BorderPane fx:id="borderPaneChoixRole" GridPane.halignment="CENTER" GridPane.valignment="CENTER" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.ChoixRole">
    <center>
       <GridPane fx:id="MainGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="805.0">
         <columnConstraints>
@@ -42,7 +41,7 @@
                   <Font size="15.0" />
                </font>
             </Text>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+            <GridPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="118.0" prefWidth="118.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="118.0" />
@@ -56,18 +55,18 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="181.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="imageCarteRole1" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imageCarteRole2" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <ImageView fx:id="imageCarteRole12" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole11" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole10" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole9" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole8" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole7" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                  <ImageView fx:id="imageCarteRole6" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-                  <ImageView fx:id="imageCarteRole5" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                  <ImageView fx:id="imageCarteRole4" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                  <ImageView fx:id="imageCarteRole3" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                  <ImageView fx:id="imageCarteRole1" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageCarteRole2" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageCarteRole12" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole11" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole10" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole9" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole8" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole7" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imageCarteRole6" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageCarteRole5" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageCarteRole4" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+                  <ImageView fx:id="imageCarteRole3" fitHeight="181.0" fitWidth="118.0" onMouseClicked="#handleMouseClickedImageChoixRole" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
                   <Text fx:id="textRolePris1" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="15.0" />

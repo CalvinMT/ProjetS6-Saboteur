@@ -27,6 +27,7 @@ public class ExitComfirmation{  // RETOUR AU MENU
         Parent root = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
         MainLoader.anchorPaneMainLoader = (AnchorPane) root.lookup("#anchorPaneMainLoader");
         MainLoader.anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        MainLoader.autoResizeToResolution(MainLoader.anchorPaneMenuMain);
         MainLoader.anchorPaneMainLoader.getChildren().setAll(MainLoader.anchorPaneMenuMain);
         ((Stage)buttonNon.getScene().getWindow()).close();                                                      //quitter la popup de comfirmation
         ((Stage)((Stage) buttonNon.getScene().getWindow()).getOwner()).close();                                 //quitter la popup de Pause
