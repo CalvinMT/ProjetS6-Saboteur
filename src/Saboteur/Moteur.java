@@ -70,10 +70,14 @@ public class Moteur {
         this.echeance = System.nanoTime();
     }
 
-    public Moteur(ArrayList<Player> arrayPlayer){
+    public Moteur(ArrayList<Player> arrayPlayer, String option){
         if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
             this.arrayPlayer = arrayPlayer;
-            this.pile = new DeckGalleryAction();
+            if(option.equals("--debugMoteur")){
+                this.pile = new DeckGalleryAction();
+            } else {
+                this.pile = new DeckGalleryAction();
+            }
             currentPlayer = 0;
 
             for(int i=0; i<nbPlayer(); i++){
