@@ -82,6 +82,9 @@
                   <TableColumn fx:id="columnDifficulte" prefWidth="114.0" resizable="false" text="Difficulté" />
                 <TableColumn fx:id="columnDelete" prefWidth="85.0" resizable="false" text="Suppr." />
               </columns>
+               <GridPane.margin>
+                  <Insets bottom="50.0" />
+               </GridPane.margin>
             </TableView>
             <Button fx:id="buttonAjouterIA" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
