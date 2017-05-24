@@ -25,8 +25,12 @@ public class DeckGalleryAction extends Deck {
 
 
     private final int nbCardGallery = 40;
-    private final int nbCardGallery_centered = 9;
-    final int nbCardGallery_no_centered = nbCardGallery - nbCardGallery_centered;
+    final int nbCardGallery_no_centered = 9;
+    private final int nbCardGallery_centered = nbCardGallery - nbCardGallery_no_centered;
+
+    public int getNbBloqued(){
+        return this.nbCardGallery_centered;
+    }
 
 
     public DeckGalleryAction(){
@@ -36,14 +40,23 @@ public class DeckGalleryAction extends Deck {
         Random rand = new Random();
 
         this.arrayCard = new ArrayList<>();
-
-        for(int i=0; i<nbCardGallery_centered; i++){
-
-            this.arrayCard.add(new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean()));
+        int nb = 0;
+        GalleryCard c;
+        while(nb<nbCardGallery_centered){
+            c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
         }
 
-        for(int i=0; i<nbCardGallery_no_centered; i++){
-            this.arrayCard.add(new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean()));
+        nb = 0;
+        while(nb<nbCardGallery_no_centered){
+            c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
         }
 
         // Ajout des cartes actions
@@ -89,7 +102,7 @@ public class DeckGalleryAction extends Deck {
 
         // Carte Repare : Wagon + Pickaxe
         for(int i=0; i<nbWagonPickaxe; i++){
-            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Pickaxe, RepareSabotageCard.Tools.Wagon));
+            this.arrayCard.add(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon, RepareSabotageCard.Tools.Pickaxe));
         }
 
         // Carte Map
@@ -103,6 +116,8 @@ public class DeckGalleryAction extends Deck {
         }
 
 
+        this.shuffle();
+        this.shuffle();
         this.shuffle();
         this.shuffle();
 

@@ -19,17 +19,14 @@ public class HandGold extends Hand {
 
         for(int i=0; i<threeGold; i++){
             this.arrayCard.add(new GoldCard(3));
-            //TODO
         }
 
         for(int i=0; i<twoGold; i++){
             this.arrayCard.add(new GoldCard(2));
-            //TODO
         }
 
         for(int i=0; i<oneGold; i++){
             this.arrayCard.add(new GoldCard(1));
-            //TODO
         }
     }
 
@@ -67,5 +64,4 @@ public class HandGold extends Hand {
         }        
 
     }
-    // TODO
 }

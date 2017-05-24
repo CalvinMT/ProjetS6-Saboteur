@@ -19,15 +19,6 @@ public class Node {
         this.card = c;
     }
 
-/*    Node(GalleryCard.Gallery_t t, int n, int s, int e, int w){
-        this.card = new GalleryCard(t);
-        this.idx.add(n);
-        this.idx.add(s);
-        this.idx.add(e);
-        this.idx.add(w);
-    }
-*/
-
     public void setNorth(int north) {
         this.north = north;
     }
@@ -66,7 +57,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Card :\n" + this.card + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
+        return "Card :\n" + this.card.simplified() + "\n" + "Indexes : \nNorth : " + this.getNorth() + "\nSouth : " + this.getSouth() + "\nEast : " + this.getEast() + "\nWest : " + this.getWest() + "\n";
 
 
     }
@@ -115,7 +106,5 @@ public class Node {
         result = 31 * result + getWest();
         return result;
     }
+
 }
-
-
-

@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package Player;
-import Cards.*;
 import Board.Board;
+import Cards.HandPlayer;
+import Cards.PlayerAttribute;
+
 /**
  *
  * @author uwalakae
@@ -13,53 +15,49 @@ import Board.Board;
 public class PlayerHuman extends Player{
 
 
+    // TODO Factoriser
 
     // Constructeur
-    public PlayerHuman() {
-        this.playerName = "Joueur";
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
+    public PlayerHuman(int index) {
+        this(index, "Joueur " + index, new Board(), "avater_anonyme.png");
     }
 
-    public PlayerHuman(Board b) {
-        this.playerName = "Joueur";
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.board = b;
+    public PlayerHuman(int index, String playerHuman) {
+        this(index, playerHuman, new Board(), "avater_anonyme.png");
     }
 
-    public PlayerHuman(String playerName) {
+    public PlayerHuman(int index, Board b) {
+        this(index, "Joueur " + index, b, "avatar_anonyme.png");
+    }
+
+    public PlayerHuman(int index, String playerName, String avatar) {
+        this(index, playerName, new Board(), avatar);
+    }
+
+
+    public PlayerHuman(int index, String playerName, Board b) {
+        this(index, playerName, b, "avatar_anonyme.png");
+    }
+
+
+    public PlayerHuman(int index, String playerName, Board b, String avatar) {
+        this.num = index;
         this.playerName = playerName;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer(); 
-    }
-
-
-    public PlayerHuman(String playerName, Board b) {
-        this.playerName = playerName;
+        this.difficulty = Difficulty.Player;
         this.goldPoints = 0;
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.board = b;
+        this.avatar = avatar;
     }
 
-    public PlayerHuman(int i, Board b) {
-        this.playerName = "Joueur " + i;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.board = b;
-    }
-    
+
     @Override
     public void setGoldPoints(int gp) {
     	if (gp >= 0)
     		this.goldPoints += gp;
     }
-    
+
     @Override
     public String toString(){
         String renvoi = "";
@@ -78,30 +76,5 @@ public class PlayerHuman extends Player{
         return renvoi;
     }
 
-    /*
-    @Override
-    public String toString(){
-        String renvoi = "";
 
-        renvoi += "Player: "+this.playerName + "\n";
-        renvoi += "Type: Humain\n";
-        if(this.role == null){
-            renvoi += "Aucun role pour l'instant\n";
-        } else {
-            renvoi += this.role + "\n";
-        }
-        renvoi += "Nombre d'or: "+this.goldPoints + "\n";
-        renvoi += this.attributeCards + "\n";
-        renvoi += this.playableCards + "\n";
-
-        return renvoi;
-    }
-*/
-    @Override
-    public void changeDiffulty(Difficulty d){
-
-    }
-    
-    
-    
 }
