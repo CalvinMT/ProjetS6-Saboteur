@@ -141,10 +141,10 @@ public class MenuCreationPartie {
     void handleButtonRetourMenu(ActionEvent event) throws IOException {
         /*AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
         anchorPaneMenuCreationPartie.getChildren().setAll(anchorPane);*/
-        /*Stage stage = new Stage();
+        Stage stage = new Stage();
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("ExitComfirmation.fxml"));
+            root = FXMLLoader.load(getClass().getResource("ExitComfirmationCreationPartie.fxml"));
             stage.setScene(new Scene(root));
             stage.setTitle("Popup");
             stage.initStyle(StageStyle.UNDECORATED);
@@ -153,9 +153,7 @@ public class MenuCreationPartie {
             stage.showAndWait();
         }catch(Exception e){
             System.out.println("Erreur" + e);
-        }*/
-        System.out.println("Retour au menu");
-        //TODO -- Creer un AUTRE ExitComfirmation
+        }
     }
 
     @FXML
