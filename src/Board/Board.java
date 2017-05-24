@@ -84,7 +84,7 @@ public class Board {
 
         computeAccessCards();
     }
-    
+
     public void removeCard(Couple coord) {
         int idx = 0;
         for (int i = 0; i < mine.size(); i++) {
@@ -181,7 +181,9 @@ public class Board {
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
-                accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
+                if (currentNode.card.canHasCenter()) {
+                    accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
+                }
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
