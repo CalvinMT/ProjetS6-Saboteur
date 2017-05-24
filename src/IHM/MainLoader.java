@@ -269,6 +269,14 @@ public class MainLoader extends Application {
 
 								if(cardToPlay.getType() == Card.Card_t.gallery){
 
+								    GalleryCard cardToPut;
+
+									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+										cardToPut = ((GalleryCard) cardToPlay).rotate();
+									} else {
+										cardToPut = (GalleryCard) cardToPlay;
+									}
+
 									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
 
 									player.getPlayableCards().removeCard(cardToPlay);

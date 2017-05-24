@@ -102,16 +102,16 @@ public class PlayerAttribute extends Hand {
 
     @Override
     public String toString(){
-        String renvoi = "Attribute : ";
-        renvoi += "[ ";
+        String renvoi = "";
+        //renvoi += "{";
         for(int i=0; i<this.arrayCard.size(); i++){
             renvoi += this.arrayCard.get(i).toString();
             if(i<this.arrayCard.size()-1){
-                renvoi += " ; ";
+                renvoi += ";";
             }
         }
 
-        renvoi += " ]";
+        //renvoi += "}";
         return renvoi;
     }
 }
