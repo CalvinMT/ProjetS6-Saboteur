@@ -43,8 +43,8 @@ public class GameInteract {
 	private Moteur moteur;
 	private Hand hand;
 	private Card card;
-        
-      
+    
+    
 	
 	private int numberOfCardsInHand;
 	private ArrayList <GamePlayingCard> cardsInHand;
@@ -140,7 +140,7 @@ public class GameInteract {
 		viewDeck = new ImageView("ressources/dos_carte_jeu.png");
 		hboxDeckDiscard.getChildren().add(viewDeck);
 		deckEvents(viewDeck);
-		viewDiscard = new ImageView("ressources/dos_carte_jeu.png");
+		viewDiscard = new ImageView("ressources/defausse.png");
 		hboxDeckDiscard.getChildren().add(viewDiscard);
 		
 		// Player's info
@@ -307,8 +307,29 @@ public class GameInteract {
 						*/
 					}
 				}
-				// TODO - indicationDiscard
-				ImageView viewIndicationDiscard = new ImageView("ressources/carte_indication.png");
+				// Discard indication on
+				viewDiscard.setImage(new Image("ressources/defausse_indication.png"));
+				viewDiscard.setOnDragOver(new EventHandler <DragEvent>() {
+					@Override
+					public void handle(DragEvent dragEvent) {
+						if (dragEvent.getGestureSource() != viewDiscard  &&  dragEvent.getDragboard().hasImage()) {
+			            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+			            }
+			            dragEvent.consume();
+					}
+				});
+				viewDiscard.setOnDragDropped(new EventHandler <DragEvent>(){
+					@Override
+					public void handle(DragEvent dragEvent) {
+						Dragboard dragBoard = dragEvent.getDragboard();
+						boolean success = false;
+						if (dragBoard.hasImage()) {
+							success = true;
+						}
+						dragEvent.setDropCompleted(success);
+						dragEvent.consume();
+					}
+				});
 			}
 		});
 		// ---------- Mouse exits viewCard ----------
@@ -350,6 +371,8 @@ public class GameInteract {
 							*/
 						}
 					}
+					// Discard indication off
+					viewDiscard.setImage(new Image("ressources/defausse.png"));
 				}
 			}
 		});
@@ -384,7 +407,7 @@ public class GameInteract {
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
 				isDragged = true;
-				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.COPY_OR_MOVE);
+				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.ANY);
 				ClipboardContent content = new ClipboardContent();
 		        content.putImage(viewCard.snapshot(null, null));
 		        dragBoard.setContent(content);
@@ -438,6 +461,8 @@ public class GameInteract {
 					cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
 					hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 				}
+				// Discard indication off
+				viewDiscard.setImage(new Image("ressources/defausse.png"));
 				dragEvent.consume();
 			}
 		});
