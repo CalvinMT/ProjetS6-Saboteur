@@ -32,6 +32,31 @@ public class DeckGalleryAction extends Deck {
         return this.nbCardGallery_centered;
     }
 
+    public DeckGalleryAction(int nbCard, int nbcardcentered){
+        Random rand = new Random();
+        this.arrayCard = new ArrayList<>();
+        GalleryCard.Gallery_t type = GalleryCard.Gallery_t.tunnel;
+
+        int nb = 0;
+        GalleryCard c;
+        while(nb<nbcardcentered){
+            c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
+
+        nb = 0;
+        while(nb<nbCard-nbcardcentered){
+            c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
+    }
+
 
     public DeckGalleryAction(){
 
@@ -127,6 +152,16 @@ public class DeckGalleryAction extends Deck {
         return nbCardAction == (nbNegativPickaxe + nbNegativLantern + nbNegativWagon + nbPositivWagon + nbPositivPickaxe + nbPositivLantern +
          nbMap + nbCrash + nbWagonPickaxe + nbPickaxeLantern + nbWagonLantern);
 
+    }
+    
+    public String toString(){
+    	String me = "";
+    	for (int i=0; i<this.arrayCard.size(); i++) {
+    		me += this.arrayCard.get(i).toString();
+    		if (i < this.arrayCard.size()-1)
+    			me += ";";
+    	}
+    	return me;
     }
 
 

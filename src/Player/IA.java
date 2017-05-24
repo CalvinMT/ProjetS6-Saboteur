@@ -182,6 +182,12 @@ public class IA extends Player{
 
         return true;
     }
+    
+    @Override
+    public void setGoldPoints(int gp){
+    	if (gp >= 0)
+    		this.goldPoints += gp;
+    }
 
 
     @Override

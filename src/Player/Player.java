@@ -216,6 +216,8 @@ public abstract class Player {
     public int nbCardHand(){
         return this.playableCards.nbCard();
     }
+    
+    public abstract void setGoldPoints(int gp);
 
     public abstract String toString();
 
