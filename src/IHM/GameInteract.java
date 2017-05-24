@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Board.Couple;
 import Cards.*;
 import Cards.Card.Card_t;
+import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
@@ -51,8 +52,13 @@ public class GameInteract {
 	private ArrayList <GamePlayingCard> cardsInHand;
 	
 	private int numberOfPlayers;
-	private int listAvatarSize = 75;
-	private int listConstraintSize = 40;
+	private final int listAvatarSize = 75;
+	private final int listConstraintSize = 40;
+	private final Couple listAvatarPos = new Couple(0, 0);
+	private final Couple listPseudoPos = new Couple(0, 2);
+	private final Couple listConstraintLanternPos = new Couple(1, 2);
+	private final Couple listConstraintPickaxePos = new Couple(1, 3);
+	private final Couple listConstraintWagonPos = new Couple(1, 4);
 	
 	private int numberOfCardsInDeck;
 	private ImageView viewDeck;
@@ -64,6 +70,8 @@ public class GameInteract {
 	HBox hboxGameCardsInHand;
 	@FXML
 	VBox vboxPlayerList;
+	@FXML
+	VBox vboxPlayerListIndications;
 	@FXML
 	HBox hboxTop;
 	@FXML
@@ -127,11 +135,11 @@ public class GameInteract {
 			viewConstraintWagon.setFitWidth(listConstraintSize);
 			viewConstraintWagon.setFitHeight(listConstraintSize);
 			// Puts everything into the grid list
-			gridPanePlayer.add(viewAvatar, 0, 0); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
-			gridPanePlayer.add(textPseudo, 2, 0); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
-			gridPanePlayer.add(viewConstraintLantern, 2, 1);
-			gridPanePlayer.add(viewConstraintPickaxe, 3, 1);
-			gridPanePlayer.add(viewConstraintWagon, 4, 1);
+			gridPanePlayer.add(viewAvatar, listAvatarPos.getColumn(), listAvatarPos.getLine()); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
+			gridPanePlayer.add(textPseudo, listPseudoPos.getColumn(), listPseudoPos.getLine()); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
+			gridPanePlayer.add(viewConstraintLantern, listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+			gridPanePlayer.add(viewConstraintPickaxe, listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+			gridPanePlayer.add(viewConstraintWagon, listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 			vboxPlayerList.getChildren().add(gridPanePlayer);
 		}
 		// TODO - bring forward first player
@@ -301,16 +309,54 @@ public class GameInteract {
 							GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
 						});
 					}
-					// Turns on sabotage indications
+					// Turns on constraints indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
-						// TODO
-						/*moteur.getAllPlayers().stream().forEach(player -> {
-							if (((SabotageCard)card).getTool().equals(SabotageCard.Tools.Lantern)  &&  ) {
-								player.getAttributeCards().canBreakTool(t)
+						moteur.getAllPlayers().stream().forEach(player -> {
+							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
+								ImageView viewIndicationConstraints = new ImageView("ressources/carte_indication.png");
+								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationConstraints);
+								// Drag over viewIndicationConstraints
+								viewIndicationConstraints.setOnDragOver(new EventHandler <DragEvent>() {
+									@Override
+									public void handle(DragEvent dragEvent) {
+							            if (dragEvent.getGestureSource() != viewIndicationConstraints  &&  dragEvent.getDragboard().hasImage()) {
+							            	dragEvent.acceptTransferModes(TransferMode.COPY);
+							            }
+							            dragEvent.consume();
+									}
+								});
+								// Drag dropped viewIndicationConstraints
+								viewIndicationConstraints.setOnDragDropped(new EventHandler <DragEvent>(){
+									@Override
+									public void handle(DragEvent dragEvent) {
+										Dragboard dragBoard = dragEvent.getDragboard();
+										boolean success = false;
+										if (dragBoard.hasImage()) {
+											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
+												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+											}
+											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+												viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
+												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+											}
+											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
+												((GridPane)vboxPlayerList.getChildren().get(player.getNum())).add(viewConstraint, listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+											}
+											success = true;
+										}
+										dragEvent.setDropCompleted(success);
+										dragEvent.consume();
+									}
+								});
 							}
-						});*/
-						/*turn_on_indications_on_player_list
-						*/
+						});
 					}
 					// Turns on repare indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
@@ -382,11 +428,9 @@ public class GameInteract {
 								GameBoard.gridPaneBoard.getChildren().remove(node);
 							});
 						}
-						// Turns off sabotage indications
+						// Turns off constraints indications
 						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
-							// TODO
-							/*turn_off_indications_on_player_list
-							*/
+							vboxPlayerListIndications.getChildren().clear();
 						}
 						// Turns off repare indications
 						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
@@ -458,7 +502,6 @@ public class GameInteract {
                         });
 
                     }
-
                     // Turns off end card's indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
                         GameBoard.endCards.stream().forEach(endCard -> {
@@ -471,6 +514,26 @@ public class GameInteract {
                         });
                         // TODO - add delay
                     }
+                    // Turns off crumbling indication
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+						// FIXME - bug when double click-drag
+						Node nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
+						nodeStart.toFront();
+						nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
+						GameBoard.gridPaneBoard.getChildren().remove(nodeStart);
+						GameBoard.endCards.stream().forEach(endCard -> {
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+							node.toFront();
+							node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+							GameBoard.gridPaneBoard.getChildren().remove(node);
+						});
+                    }
+                    // Turns off constraints indications
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+                    	vboxPlayerListIndications.getChildren().clear();
+                    }
+                    
+                    
                     if (dragEvent.getTransferMode() == TransferMode.MOVE) {
                         cardsInHand.remove(playingCard);
                         moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
@@ -481,6 +544,8 @@ public class GameInteract {
                         moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                     }
+                    
+                    
                     // Draws the first card from the deck
                     if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
                         moteur.getCurrentPlayer().drawCard(moteur.getDeck());
