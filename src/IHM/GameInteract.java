@@ -795,7 +795,7 @@ public class GameInteract {
 	void handleButtonAideInGame(ActionEvent event){
             Stage stage = new Stage();
             TransparentStage tspStage= new TransparentStage();
-            tspStage.start(stage);
+            tspStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight());
 	}
 
 	@FXML

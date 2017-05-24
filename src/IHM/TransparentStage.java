@@ -17,8 +17,7 @@ import javafx.stage.StageStyle;
 
 public class TransparentStage extends Application {
 
-    @Override
-    public void start(Stage stage) {
+    public void start(Stage stage, double width, double height) {
         stage.initStyle(StageStyle.TRANSPARENT);
         ImageView imageview =new ImageView("ressources/calqueaide.png");
         AnchorPane pane = new AnchorPane();
@@ -34,16 +33,19 @@ public class TransparentStage extends Application {
              });
         pane.getChildren().add(button);
         //pane.getChildren().add(imageview);
-        final Scene scene = new Scene(pane,1920, 1080);
+        final Scene scene = new Scene(pane,width, height);
         scene.setFill(null);
         stage.setScene(scene);
         stage.show();
     }
     
-    public void handlerQuitterAide() throws IOException {
-    }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
