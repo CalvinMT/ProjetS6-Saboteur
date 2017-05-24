@@ -32,6 +32,31 @@ public class DeckGalleryAction extends Deck {
         return this.nbCardGallery_centered;
     }
 
+    public DeckGalleryAction(int nbCard, int nbcardcentered){
+        Random rand = new Random();
+        this.arrayCard = new ArrayList<>();
+        GalleryCard.Gallery_t type = GalleryCard.Gallery_t.tunnel;
+
+        int nb = 0;
+        GalleryCard c;
+        while(nb<nbcardcentered){
+            c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
+
+        nb = 0;
+        while(nb<nbCard-nbcardcentered){
+            c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
+    }
+
 
     public DeckGalleryAction(){
 

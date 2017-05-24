@@ -262,10 +262,6 @@ public class Moteur {
     	return false;
     	
     }
-    
-    
-    
-    
 
     // ligne nbJoueur colonne Nb carte de 0 à 7 contenant le nombre de cartes en début de partie
     final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
@@ -296,7 +292,7 @@ public class Moteur {
             if(option.equals("--debugMoteur")){
                 this.pile = new DeckGalleryAction();
             } else {
-                this.pile = new DeckGalleryAction();
+                this.pile = new DeckGalleryAction(80, 60);
             }
             currentPlayer = 0;
 
