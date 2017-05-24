@@ -74,6 +74,17 @@ public class Board {
         mine.add(n);
     }
 
+    public void putCard(GalleryCard c, int line, int column){
+        Couple cou = new Couple(line, column);
+
+        c.setLine(line);
+        c.setColumn(column);
+
+        addCard(c);
+
+        computeAccessCards();
+    }
+    
     public void removeCard(Couple coord) {
         int idx = 0;
         for (int i = 0; i < mine.size(); i++) {
@@ -154,16 +165,6 @@ public class Board {
         }
     }
 
-    public void putCard(GalleryCard c, int line, int column){
-        Couple cou = new Couple(line, column);
-
-        c.setLine(line);
-        c.setColumn(column);
-
-        addCard(c);
-
-        computeAccessCards();
-    }
 
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
