@@ -290,9 +290,9 @@ public class Moteur {
         if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
             this.arrayPlayer = arrayPlayer;
             if(option.equals("--debugMoteur")){
-                this.pile = new DeckGalleryAction();
-            } else {
                 this.pile = new DeckGalleryAction(80, 60);
+            } else {
+                this.pile = new DeckGalleryAction();
             }
             currentPlayer = 0;
 
