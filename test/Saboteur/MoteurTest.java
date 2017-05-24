@@ -1,13 +1,11 @@
 package Saboteur;
 
-import Player.*;
+import Player.Player;
+import Player.PlayerHuman;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-
 
 public class MoteurTest {
 

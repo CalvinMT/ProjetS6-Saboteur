@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Saboteur;
+
 import Cards.*;
 import Cards.GalleryCard.Gallery_t;
 import Cards.RepareSabotageCard.Tools;
@@ -21,8 +22,7 @@ import Board.Couple;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
-import javax.management.relation.Role;
-import javax.swing.*;
+
 import java.util.ArrayList;
 
 /**

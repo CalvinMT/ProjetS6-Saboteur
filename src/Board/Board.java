@@ -3,6 +3,7 @@ package Board;
 
 import Cards.GalleryCard;
 import Cards.GoalCard;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -112,6 +113,46 @@ public class Board {
             }
         }
     }
+    
+    // Compute pathResistance
+    public void computePathRes(Node start, LinkedList<Node> path, int res) {
+        Node curr;
+
+        path.add(start);
+
+        res += start.card.getResist();
+
+        if (res > start.getPathRes()) {
+            start.setPathRes(res); // Garde la resistance max
+            start.setPathLength(path.size());
+        }
+
+        if (start.getNorth() != -1) { // Si il y a un élément au nord
+            curr = mine.get(start.getNorth());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément nord n'a pas déjà été visité
+            }
+        }
+        if (start.getSouth() != -1) { // Si il y a un élément au sud
+
+            curr = mine.get(start.getSouth());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément sud n'a pas déjà été visité
+            }
+        }
+        if (start.getEast() != -1) { // Si il y a un élément à l'est
+            curr = mine.get(start.getEast());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément à l'est n'a pas déjà été visité
+            }
+        }
+        if (start.getWest() != -1) { // Si il y a un élément à l'ouest
+            curr = mine.get(start.getWest());
+            if (!path.contains(curr)) {
+                computePathRes(curr, path, res); // Si l'élément ouest n'a pas déjà été visité
+            }
+        }
+    }
 
     public void putCard(GalleryCard c, int line, int column){
         Couple cou = new Couple(line, column);
@@ -124,8 +165,6 @@ public class Board {
         computeAccessCards();
     }
 
-
-    // Computations
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
                 visited = new LinkedList<Node>();
@@ -137,12 +176,11 @@ public class Board {
         try {
             queue.add(mine.get(0));
             while (!queue.isEmpty()) { // Tant qu'il y a des cartes à parcourir
-                // System.out.println(mine);
 
+                // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
                 accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
-
                 if (currentNode.card.canHasNorth()) {
                     if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
                         newNode = mine.get(currentNode.getNorth());
@@ -174,7 +212,7 @@ public class Board {
                 if (currentNode.card.canHasEast()) {
                     if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
                         newNode = mine.get(currentNode.getEast());
-                        if (!visited.contains(newNode)) { // Si la à l'est carte n'a pas été visitée
+                        if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
                             queue.add(newNode);
                         }
                     }
@@ -207,7 +245,6 @@ public class Board {
         }
     }
 
-    // TODO : Tests
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
         Node currNode;
         currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
@@ -238,7 +275,7 @@ public class Board {
         return true;
     }
 
-    public void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
+    private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
 
         this.computeAccessCards();
         for (int i = 0; i < possiblePositions.size(); i++) {
@@ -309,12 +346,11 @@ public class Board {
 
 
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
-
     public Node getMineElement(int i) {
         return mine.get(i);
     }
 
-    public Node getAccessCardElement(String k) {
+    public Node getAccessCardElement(Couple k) {
         return accessCard.get(k);
     }
 
