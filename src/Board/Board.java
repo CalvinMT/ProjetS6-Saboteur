@@ -182,61 +182,62 @@ public class Board {
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
                 if (currentNode.card.canHasCenter()) {
+                    
                     accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
-                }
-                if (currentNode.card.canHasNorth()) {
-                    if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
-                        newNode = mine.get(currentNode.getNorth());
-                        if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
-                            queue.add(newNode); // On l'ajoute dans la queue
+                    if (currentNode.card.canHasNorth()) {
+                        if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
+                            newNode = mine.get(currentNode.getNorth());
+                            if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
+                                queue.add(newNode); // On l'ajoute dans la queue
+                            }
+                        }
+                        else { // Si il n'y a pas de carte au nord (case vide)
+                            cpl = new Couple(currentNode.card.getLine() - 1, currentNode.card.getColumn());
+                            if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                                positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                            }
                         }
                     }
-                    else { // Si il n'y a pas de carte au nord (case vide)
-                        cpl = new Couple(currentNode.card.getLine() - 1, currentNode.card.getColumn());
-                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                    if (currentNode.card.canHasSouth()) {
+                        if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
+                            newNode = mine.get(currentNode.getSouth());
+                            if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
+                                queue.add(newNode); // On l'ajoute dans la queue
+                            }
+                        }
+                        else { // Si il n'y a pas de carte au sud (case vide)
+                            cpl = new Couple(currentNode.card.getLine() + 1, currentNode.card.getColumn());
+                            if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                                positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                            }
                         }
                     }
-                }
-                if (currentNode.card.canHasSouth()) {
-                    if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
-                        newNode = mine.get(currentNode.getSouth());
-                        if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
-                            queue.add(newNode); // On l'ajoute dans la queue
+                    if (currentNode.card.canHasEast()) {
+                        if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
+                            newNode = mine.get(currentNode.getEast());
+                            if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
+                                queue.add(newNode);
+                            }
+                        }
+                        else {
+                            cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() + 1);
+                            if (!positionCandidates.contains(cpl)) {
+                                positionCandidates.add(cpl);
+                            }
                         }
                     }
-                    else { // Si il n'y a pas de carte au sud (case vide)
-                        cpl = new Couple(currentNode.card.getLine() + 1, currentNode.card.getColumn());
-                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                    if (currentNode.card.canHasWest()) {
+                        if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
+                            newNode = mine.get(currentNode.getWest());
+                            if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
+                                queue.add(newNode);
+                            }
                         }
-                    }
-                }
-                if (currentNode.card.canHasEast()) {
-                    if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
-                        newNode = mine.get(currentNode.getEast());
-                        if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
-                            queue.add(newNode);
-                        }
-                    }
-                    else {
-                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() + 1);
-                        if (!positionCandidates.contains(cpl)) {
-                            positionCandidates.add(cpl);
-                        }
-                    }
-                }
-                if (currentNode.card.canHasWest()) {
-                    if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
-                        newNode = mine.get(currentNode.getWest());
-                        if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
-                            queue.add(newNode);
-                        }
-                    }
-                    else {
-                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() - 1);
-                        if (!positionCandidates.contains(cpl)) {
-                            positionCandidates.add(cpl);
+                        else {
+                            cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() - 1);
+                            if (!positionCandidates.contains(cpl)) {
+                                positionCandidates.add(cpl);
+                            }
                         }
                     }
                 }
