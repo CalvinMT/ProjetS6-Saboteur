@@ -8,6 +8,7 @@ import Cards.Card.Card_t;
 import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,12 +39,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 
 public class GameInteract {
 	
 	private Moteur moteur;
 	private Hand hand;
-	private Card card;
+	protected Card card;
     
     
 	
@@ -237,10 +239,15 @@ public class GameInteract {
 									droppedLine = (position.getLine() + GameBoard.startCardY);
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 
-									if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) card, new Couple(position.getLine(), position.getColumn()))){
-										cardToPut = ((GalleryCard) card).rotate();
-									} else {
-										cardToPut = (GalleryCard) card;
+                                    int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                                    Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
+
+                                    System.err.println("Index: "+index+" Card: "+((GalleryCard) cardBefore).simplified());
+
+                                    if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) cardBefore, new Couple(position.getLine(), position.getColumn()))){
+										cardToPut = ((GalleryCard) cardBefore).rotate();
+                                    } else {
+										cardToPut = (GalleryCard) cardBefore;
 									}
 
 									moteur.getBoard().putCard(cardToPut, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
@@ -390,15 +397,15 @@ public class GameInteract {
 				}*/
 
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
-					System.out.println(moteur.getCurrentPlayer());
 					viewCard.setRotate(viewCard.getRotate() + 180);
 
-					GalleryCard cardChanged = ((GalleryCard) card).rotate();
 
-					int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
-					((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
+                    int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                    Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
+                    GalleryCard cardChanged = ((GalleryCard) cardBefore).rotate();
 
-					System.out.println(moteur.getCurrentPlayer());
+                    ((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
+
 				}
 			}
 		});
@@ -459,10 +466,11 @@ public class GameInteract {
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                         // TODO
                     }
+
+
                     // Draws the first card from the deck
                     if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
-                        moteur.getCurrentPlayer().drawCard(moteur.getDeck());
-                        Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
+                        Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
                         cardsInHand.add(getImageCard(cardDraw));
                         cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                         hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
@@ -470,6 +478,9 @@ public class GameInteract {
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
                     dragEvent.consume();
+
+
+                    System.out.println(moteur.getCurrentPlayer().getPlayableCards());
                 } else {
                     System.out.println("Ce n'est pas ton tour");
                 }
@@ -601,6 +612,9 @@ public class GameInteract {
                     	playingCard = new GamePlayingCard("carte_test_118_181");
                 }
                 break;
+
+            /// VERIFIED BY THESPYGEEK
+
             case gallery:
                 if(((GalleryCard)c).canHasCenter()){
                     if(((GalleryCard)c).canHasNorth()){
@@ -701,6 +715,7 @@ public class GameInteract {
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("SO_NC");
+                                    playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//N
                                 	playingCard.getImageView().setRotate(180);
@@ -715,14 +730,12 @@ public class GameInteract {
                                 	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("SO_NC");//SO
-                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_NC");
                                 }else{//Sans East
-                                	playingCard = new GamePlayingCard("O_NC");//O
-                                	playingCard.getImageView().setRotate(180);
+                                	playingCard = new GamePlayingCard("O_NC");
                                 }
                             }
                         }else{//Sans West

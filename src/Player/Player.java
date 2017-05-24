@@ -63,9 +63,13 @@ public abstract class Player {
     }
 
     // le joueur pioche
-    public void drawCard(Deck d) {
+    public Card drawCard(Deck d) {
         if(playableCards.nbCard() < 6 && !d.isEmpty()){
-            playableCards.addCard(d.getTopDeck());
+            Card c = d.getTopDeck();
+            playableCards.addCard(c);
+            return c;
+        } else {
+            return null;
         }
     }
 
