@@ -1,12 +1,8 @@
 package Player;
 
 
-import Cards.*;
 import Board.Board;
-import Board.Couple;
-
-import javax.print.attribute.standard.PrinterLocation;
-import javax.tools.Tool;
+import Cards.*;
 
 public abstract class Player {
 
