@@ -239,7 +239,7 @@ public class GameInteract {
 				// Brings card forward
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
 				// Turns on gallery card's indications
-				if (card.getType().equals(Card_t.gallery) && moteur.getCurrentPlayer().canPlayGalleryCard()) {
+				if (card.getType().equals(Card_t.gallery)  &&  moteur.getCurrentPlayer().canPlayGalleryCard()) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
@@ -405,12 +405,12 @@ public class GameInteract {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
 											}
-											
-											updateCurrentPlayerConstraints();
 
                                             // maj moteur Sabotage
                                             player.setSabotage((RepareSabotageCard) card);
                                             System.out.println(player.debugString());
+											
+											updateCurrentPlayerConstraints();
 
                                             success = true;
 										}
@@ -465,12 +465,12 @@ public class GameInteract {
 												viewConstraint.setImage(new Image("ressources/wagon.png"));
 											}
 
-											updateCurrentPlayerConstraints();
-
                                             // maj moteur Repare
                                             player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
                                             System.out.println(player.debugString());
 
+											updateCurrentPlayerConstraints();
+											
 											success = true;
 										}
 										dragEvent.setDropCompleted(success);
