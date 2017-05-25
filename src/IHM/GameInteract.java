@@ -44,6 +44,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import static IHM.ImageCard.getImageCard;
+
 public class GameInteract {
 	
 	private Moteur moteur;
@@ -83,6 +85,9 @@ public class GameInteract {
 	private final Couple playerInfoPseudoPos = new Couple(1, 3);
 	private final Couple playerInfoRolePos = new Couple(2, 3);
 	private final Couple playerInfoGoldPos = new Couple(3, 3);
+
+//	private ArrayList<>
+
 	
 	@FXML
 	BorderPane borderPaneInteract;
@@ -119,8 +124,6 @@ public class GameInteract {
 	public void initialize () throws IOException {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
-		moteur.getBoard().computeAccessCards();
-
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
@@ -293,7 +296,8 @@ public class GameInteract {
                                     int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
                                     Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
 
-                                    System.err.println("Index: "+index+" Card: "+((GalleryCard) cardBefore).simplified());
+                                    // DEBUG INDEX
+//                                    System.err.println("Index: "+index+" Card: "+((GalleryCard) cardBefore).simplified());
 
                                     if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) cardBefore, new Couple(position.getLine(), position.getColumn()))){
 										cardToPut = ((GalleryCard) cardBefore).rotate();
@@ -305,7 +309,33 @@ public class GameInteract {
 
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 									GameBoard.gridPaneBoard.add(getImageCard(cardToPut).getImageView(), droppedColumn, droppedLine);
-									
+
+
+									// Check if a GoalCard has been reached
+
+                                    Board.Node goal;
+
+                                    for(int i=1; i<=3; i++){
+                                        goal = moteur.getBoard().getMine().get(i);
+
+                                        if(goal.reached()){
+
+                                            Couple coupleMoteur = goal.getCard().getCoord();
+                                            Couple coupleInterface = new Couple(coupleMoteur.getLine()+GameBoard.startCardY, coupleMoteur.getColumn()+GameBoard.startCardX);
+
+                                            // DEBUG GOAL
+                                            System.out.println("Le but à "+coupleMoteur+" a ete atteint");
+
+                                            ImageView viewChosenEndCard = getImageCard(goal.getCard()).getImageView();
+                                            GameBoard.gridPaneBoard.add(viewChosenEndCard, coupleInterface.getColumn(), coupleInterface.getLine());
+
+                                            if(goal.getCard().isGold()){
+                                                System.out.println("Fin de manche les mineurs ont gagné !!!");
+                                            }
+
+                                        }
+                                    }
+
 									success = true;
 								}
 								dragEvent.setDropCompleted(success);
@@ -660,8 +690,7 @@ public class GameInteract {
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
                     	vboxPlayerListIndications.getChildren().clear();
                     }
-                    
-                    
+
                     // Removes card from hand
                     if (dragEvent.getTransferMode() == TransferMode.MOVE) {
                         cardsInHand.remove(playingCard);
@@ -670,17 +699,23 @@ public class GameInteract {
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                     }
                     
-                    
+
+                    // TODO @TheSpyGeek fin de manche ici
+                    // TODO if(moteur.endGame()){
+
                     // Draws the first card from the deck
                     if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
                         Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
-                        System.out.println("Carte piochée: "+cardDraw);
+
+                        // DEBUT CARTE PIOCHEE
+//                        System.out.println("Carte piochée: "+cardDraw);
+
                         cardsInHand.add(getImageCard(cardDraw));
                         cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                         hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 
                         // DEBUG BOARD
-                        System.out.println(moteur.getBoard().mine());
+//                        System.out.println(moteur.getBoard().mine());
                     }
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
@@ -816,249 +851,7 @@ public class GameInteract {
 	    return null;
 	}
 	
-	// TODO FACTORISER @Copyright G - Huard 2017
-	// TODO getConfig
-	
-	private GamePlayingCard getImageCard (Card c) {
-		GamePlayingCard playingCard = null;
-        switch(c.getType()) {
-            case action:
-                switch(((ActionCard)c).getAction()){
-                    case Sabotage:
-                        switch(((RepareSabotageCard)c).getTool()){
-                            case Pickaxe:
-                            	playingCard = new GamePlayingCard("carte_brise_pioche");
-                                break;
-                            case Lantern:
-                            	playingCard = new GamePlayingCard("carte_brise_lanterne");
-                                break;
-                            case Wagon:
-                            	playingCard = new GamePlayingCard("carte_brise_chariot");
-                                break;
-                        }
-                        break;
-                    case Map:
-                    	playingCard = new GamePlayingCard("carte_plan_secret");
-                        break;
-                    case Repare:
-                        switch(((RepareSabotageCard)c).nbTools()){
-                            case 1 :
-                                switch(((RepareSabotageCard)c).getTool()){
-                                    case Pickaxe:
-                                    	playingCard = new GamePlayingCard("carte_repare_pioche");
-                                        break;
-                                    case Lantern:
-                                    	playingCard = new GamePlayingCard("carte_repare_lanterne");
-                                        break;
-                                    case Wagon:
-                                    	playingCard = new GamePlayingCard("carte_repare_chariot");
-                                        break; 
-                                }
-                            break;
-                            case 2 :
-                                switch(((RepareSabotageCard)c).getTool()){
-                                    case Pickaxe:
-                                    	playingCard = new GamePlayingCard("carte_repare_pioche_lanterne");
-                                        break;
-                                    case Lantern:
-                                    	playingCard = new GamePlayingCard("carte_repare_lanterne_chariot");
-                                        break;
-                                    case Wagon:
-                                    	playingCard = new GamePlayingCard("carte_repare_chariot_pioche");
-                                        break;
-                                }
-                            break;
-                            default:
-                            	playingCard = new GamePlayingCard("carte_test_118_181");
-                        }
-                        break;
-                    case Crumbing:
-                    	playingCard = new GamePlayingCard("carte_eboulement");
-                        break;
-                    default:
-                    	playingCard = new GamePlayingCard("carte_test_118_181");
-                }
-                break;
 
-            /// VERIFIED BY THESPYGEEK
-
-            case gallery:
-
-                // carte start
-                if(((GalleryCard)c).getGalleryType() == GalleryCard.Gallery_t.start){
-                    playingCard = new GamePlayingCard("carte_depart");
-
-                // carte But
-                } else if(((GalleryCard)c).getGalleryType() == GalleryCard.Gallery_t.but){
-                    if(((GalleryCard)c).isGold()){
-                        playingCard = new GamePlayingCard("carte_arrivee_0");
-                    } else {
-
-                        if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasWest() || ((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasEast() ){
-                            playingCard = new GamePlayingCard("carte_arrivee_1");
-                        } else if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasEast() || ((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasWest() ){
-                            playingCard = new GamePlayingCard("carte_arrivee_2");
-                        } else {
-                            playingCard = new GamePlayingCard("carte_test_118_18");
-                        }
-
-                    }
-
-
-                // carte tunnel
-                } else {
-
-                    if(((GalleryCard)c).canHasCenter()){
-                        if(((GalleryCard)c).canHasNorth()){
-                            if(((GalleryCard)c).canHasWest()){
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NSEO_C");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NSO_C");
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NEO_C");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NO_C");
-                                    }
-                                }
-                            }else{//Sans West
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NSO_C");//NSE
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NS_C");
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NE_C");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//N
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }
-                            }
-                        }else{//Sans North
-                            if(((GalleryCard)c).canHasWest()){
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NEO_C");//SEO
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NE_C");//SO
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("EO_C");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//O
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }
-                            }else{//Sans West
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NO_C");//SE
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East carte_test_118_181
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//S
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//E
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//rien
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }
-                            }
-
-                        }
-                    }else{//Sans Center
-                        if(((GalleryCard)c).canHasNorth()){
-                            if(((GalleryCard)c).canHasWest()){
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NSEO_NC");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NSO_NC");
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NEO_NC");
-                                    }else{
-                                        playingCard = new GamePlayingCard("NO_NC");
-                                    }
-                                }
-                            }else{//Sans West
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NSO_NC");//NSE
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("NS_NC");
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("SO_NC");
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("N_NC");//N
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }
-                            }
-                        }else{//Sans North
-                            if(((GalleryCard)c).canHasWest()){
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NEO_NC");//SEO
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("SO_NC");//SO
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("EO_NC");
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("O_NC");
-                                    }
-                                }
-                            }else{//Sans West
-                                if(((GalleryCard)c).canHasSouth()){
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("NO_NC");//SE
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("N_NC");//S
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }else{//Sans South
-                                    if(((GalleryCard)c).canHasEast()){
-                                        playingCard = new GamePlayingCard("O_NC");//E
-                                        playingCard.getImageView().setRotate(180);
-                                    }else{//Sans East
-                                        playingCard = new GamePlayingCard("carte_test_118_181");//rien
-                                        playingCard.getImageView().setRotate(180);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                break;
-            default:
-            	playingCard = new GamePlayingCard("carte_test_118_181");
-        }
-        return playingCard;
-    }
 	
 	
 	

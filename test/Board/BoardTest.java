@@ -279,10 +279,21 @@ public class BoardTest {
         Assert.assertTrue(!mine.get(2).getCard().equals(mine.get(3).getCard()));
         Assert.assertTrue(!mine.get(3).getCard().equals(mine.get(1).getCard()));
 
-        for(int i=0; i<mine.size(); i++){
+    }
 
-            System.out.println(mine.get(i).getCard());
-        }
+    @Test
+    public void testNeighbors1(){
+        Board board = new Board();
+        board.computeAccessCards();
+        GalleryCard card;
+
+        card = new GalleryCard(tunnel, false, true, true, true, false);
+        Assert.assertFalse(board.isCompatibleWithNeighbors(card, new Couple(0, 1)));
+        card = card.rotate();
+        Assert.assertTrue(board.isCompatibleWithNeighbors(card, new Couple(0, 1)));
+
+        board.putCard(card, 0, 1);
+        Assert.assertTrue(board.getMine().size() == 5);
 
     }
 }

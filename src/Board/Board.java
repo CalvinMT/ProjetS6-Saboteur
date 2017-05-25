@@ -36,23 +36,7 @@ public class Board {
         x = tab.remove(r.nextInt(tab.size()));
         mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false)));
 
-
-        /*
-        for (int i = -1; i < 2; i++) {
-            x = 2*i;
-            if (i == gold) {
-                mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true))); // Minerai
-            }
-            else {
-                if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false))); // Sans minerai droit
-                }
-                else {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false))); // Sans minerai gauche
-                }
-            }
-        }*/
-
+        computeAccessCards();
     }
 
     // Debug
@@ -337,19 +321,13 @@ public class Board {
         return n;
     }
 
-    public boolean goalReached(){
+    public boolean goldReached(){
 
-        final Couple goal1 = new Couple(-2, 8);
-        final Couple goal2 = new Couple(0, 8);
-        final Couple goal3 = new Couple(2, 8);
+        final Node goal1 = mine.get(1);
+        final Node goal2 = mine.get(2);
+        final Node goal3 = mine.get(3);
 
-        if(accessCard.contains(goal1) && accessCard.get(goal1).getCard().isGold() || accessCard.contains(goal2) && accessCard.get(goal2).getCard().isGold() || accessCard.contains(goal3) && accessCard.get(goal3).getCard().isGold()){
-            // fin de la manche
-            return true;
-        } else {
-            return false;
-        }
-
+        return (goal1.reached() && goal1.getCard().isGold() || goal2.reached() && goal2.getCard().isGold() || goal3.reached() && goal3.getCard().isGold());
         //TODO à changer car la carte gold peut etre bloquer et inacessible
     }
 
@@ -377,6 +355,5 @@ public class Board {
     public int getMineSize() {
         return mine.size();
     }
-
 
 }
