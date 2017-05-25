@@ -3,11 +3,7 @@ package Player;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
-import Cards.Card;
-import Cards.Card.Card_t;
-import Cards.GalleryCard;
-import Cards.HandPlayer;
-import Cards.PlayerAttribute;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -62,9 +58,9 @@ public class IA extends Player{
         Random r = new Random();
         int range = 1;
         if (nbCardHand() > 1)
-        	range = r.nextInt(nbCardHand() - 1);
+            range = r.nextInt(nbCardHand() - 1);
         else if (nbCardHand() == 1)
-        	range = r.nextInt(1);
+            range = r.nextInt(1);
         if (range < 1) {
             range = 1;
         }
@@ -73,32 +69,32 @@ public class IA extends Player{
             this.board.computeAccessCards();
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
             if (p.size() > 1) {
-            	range = r.nextInt(p.size() - 1);
-            	if (range < 1)
+                range = r.nextInt(p.size() - 1);
+                if (range < 1)
                     range = 1;
-            	this.posToPlay = p.get(r.nextInt(range));
+                this.posToPlay = p.get(r.nextInt(range));
             }
             else if (p.size() == 1) {
-            	range = 1;
-            	this.posToPlay = p.get(r.nextInt(range));
+                range = 1;
+                this.posToPlay = p.get(r.nextInt(range));
             }
             else
-            	System.out.println("Il n'y a aucune case ou placer la carte.");
+                System.out.println("Il n'y a aucune case ou placer la carte.");
         }
         else if (cardToPlay.getType() == Card.Card_t.action ){
-        	ActionCard actioncard = (ActionCard) cardToPlay;
-        	if (actioncard.getAction() == Action.Map) {
-        		// TO DO
-        	}
-        	else if (actioncard.getAction() == Action.Crumbing) {
-        		// TO DO
-        	}
-        	else if (actioncard.getAction() == Action.Repare) {
-        		// TO DO
-        	}
-        	else if (actioncard.getAction() == Action.Sabotage) {
-        		// TO DO
-        	}
+            ActionCard actioncard = (ActionCard) cardToPlay;
+            if (actioncard.getAction() == Action.Map) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Crumbing) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Repare) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Sabotage) {
+                // TODO
+            }
         }
     }
 
@@ -215,50 +211,50 @@ public class IA extends Player{
     
     // Retourne un joueur quelconque, différent de lui-meme & ayant un role opposé, au quel l'IA mettra un malus
     public Player choosePlayerToSabotage(RepareSabotageCard card, RoleCard roleIA){
-    	Player currentplayer, p = null;
-    	if (roleIA.isSaboteur()) {
-    		for (int i=0; i<this.allPlayers.size(); i++) {
-        		currentplayer = this.allPlayers.get(i);
-        		if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
-        			p = this.allPlayers.get(i);
-        		}
-        	}
-    	}
-    	else if (roleIA.isMinor()) {
-    		for (int i=0; i<this.allPlayers.size(); i++) {
-        		currentplayer = this.allPlayers.get(i);
-        		if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
-        			p = this.allPlayers.get(i);
-        		}
-        	}
-    	}
-    	else 
-    		System.err.println("Role incorrecte.");
-    	return p;
+        Player currentplayer, p = null;
+        if (roleIA.isSaboteur()) {
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else if (roleIA.isMiner()) {
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else
+            System.err.println("Role incorrecte.");
+        return p;
     }
     
     // Retourne un joueur quelconque, lui-meme inclus & ayant le meme role, au quel l'IA mettra une carte pour enlever un malus
     public Player choosePlayerToRepair(RepareSabotageCard card, RoleCard roleIA){
-    	Player currentplayer, p = null;
-    	if (roleIA.isMinor()){
-    		for (int i=0; i<this.allPlayers.size(); i++) {
-        		currentplayer = this.allPlayers.get(i);
-        		if (currentplayer.getRole().equals(new RoleCard("Mineur")) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
-        			p = currentplayer;    			
-        		}
-        	}
-    	}
-    	else if (roleIA.isSaboteur()){
-    		for (int i=0; i<this.allPlayers.size(); i++) {
-        		currentplayer = this.allPlayers.get(i);
-    	 		if (currentplayer.getRole().equals(new RoleCard("Saboteur")) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
-        			p = this.allPlayers.get(i);    			
-        		}
-        	}
-    	}
-    	else
-    		System.err.println("Role incorrecte.");
-    	return p;
+        Player currentplayer, p = null;
+        if (roleIA.isMiner()){
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer.getRole().equals(new RoleCard("Mineur")) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                    p = currentplayer;
+                }
+            }
+        }
+        else if (roleIA.isSaboteur()){
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer.getRole().equals(new RoleCard("Saboteur")) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else
+            System.err.println("Role incorrecte.");
+        return p;
     }
     
 
