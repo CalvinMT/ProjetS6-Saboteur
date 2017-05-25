@@ -108,6 +108,10 @@ public class GalleryCard extends Card {
         this.type_g = type_g;
     }
 
+    public boolean isGoal(){
+        return false;
+    }
+
     public void setResist() {
         int res = 0;
         if (this.center) {

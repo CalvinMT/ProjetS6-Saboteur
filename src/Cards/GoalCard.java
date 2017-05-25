@@ -19,6 +19,11 @@ public class GoalCard extends GalleryCard {
         this.gold = g;
     }
 
+    @Override
+    public boolean isGoal(){
+        return true;
+    }
+
 
 
     @Override

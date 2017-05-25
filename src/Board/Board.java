@@ -181,6 +181,7 @@ public class Board {
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
+
                 if (currentNode.card.canHasCenter()) {
                     
                     accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
@@ -249,33 +250,79 @@ public class Board {
         }
     }
 
+    //TODO Factoriser
+
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
+
         Node currNode;
+
+        // nord
         currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
-                return false;
+            if ((c.canHasNorth() && !currNode.card.canHasSouth()) || (!c.canHasNorth() && currNode.card.canHasSouth())) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if ((c.canHasNorth() && !card.canHasSouth()) || (!c.canHasNorth() && card.canHasSouth())) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
+        // sud
         currNode = getNodeFromMine(new Couple(currPos.getLine() + 1, currPos.getColumn()));
         if (currNode != null) {
             if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
-                return false;
-            }
-        }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() + 1));
-        if (currNode != null) {
-            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
-                return false;
-            }
-        }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() - 1));
-        if (currNode != null) {
-            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
-                return false;
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if ((c.canHasSouth() && !card.canHasNorth()) || (!c.canHasSouth() && card.canHasNorth())) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
+        //est
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()+1) );
+        if (currNode != null) {
+            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if ((c.canHasEast() && !card.canHasWest()) || (!c.canHasEast() && card.canHasWest())) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        //ouest
+
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()-1 ));
+        if (currNode != null) {
+            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if ((c.canHasWest() && !card.canHasEast()) || (!c.canHasWest() && card.canHasEast())) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
