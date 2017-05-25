@@ -132,20 +132,12 @@ public class GameInteract {
 			gridPanePlayer.setPrefSize(hboxGameCardsInHand.getPrefWidth(), (hboxGameCardsInHand.getPrefHeight()/numberOfPlayers));
 			// Avatar
 			ImageView viewAvatar = new ImageView("ressources/" + moteur.getPlayer(i).getAvatar() + ".png");
-			viewAvatar.setFitWidth(listAvatarSize);
-			viewAvatar.setFitHeight(listAvatarSize);
 			// Pseudo
 			Text textPseudo = new Text(moteur.getPlayer(i).getPlayerName());
 			// Constraints
 			ImageView viewConstraintLantern = new ImageView("ressources/lanterne.png");
 			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
 			ImageView viewConstraintWagon = new ImageView("ressources/wagon.png");
-			viewConstraintLantern.setFitWidth(listConstraintSize);
-			viewConstraintLantern.setFitHeight(listConstraintSize);
-			viewConstraintPickaxe.setFitWidth(listConstraintSize);
-			viewConstraintPickaxe.setFitHeight(listConstraintSize);
-			viewConstraintWagon.setFitWidth(listConstraintSize);
-			viewConstraintWagon.setFitHeight(listConstraintSize);
 			// Puts everything into the grid list
 			gridPanePlayer.add(viewAvatar, listAvatarPos.getColumn(), listAvatarPos.getLine()); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
 			gridPanePlayer.add(textPseudo, listPseudoPos.getColumn(), listPseudoPos.getLine()); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
@@ -154,7 +146,6 @@ public class GameInteract {
 			gridPanePlayer.add(viewConstraintWagon, listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 			vboxPlayerList.getChildren().add(gridPanePlayer);
 		}
-		// TODO - bring forward first player
 		
 		// Deck and Discard configuration
 		viewDeck = new ImageView("ressources/dos_carte_jeu.png");
@@ -202,7 +193,7 @@ public class GameInteract {
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen, and player's infos
-		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, 0));
+		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()-50), 0, 0, 0));
 		StackPane.setMargin(hboxGameCardsInHand, new Insets(0, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 		StackPane.setMargin(hboxDeckDiscard, new Insets(0, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
 		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(0, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
@@ -380,8 +371,8 @@ public class GameInteract {
 						moteur.getAllPlayers().stream().forEach(player -> {
 							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationConstraints = new ImageView("ressources/carte_indication.png");
-								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
-								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								viewIndicationConstraints.setFitWidth(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getWidth());
+								viewIndicationConstraints.setFitHeight(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getHeight());
 								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationConstraints);
 								// Drag over viewIndicationConstraints
 								viewIndicationConstraints.setOnDragOver(new EventHandler <DragEvent>() {
@@ -428,8 +419,8 @@ public class GameInteract {
 							}
 							else {
 								ImageView viewIndicationConstraints = new ImageView("ressources/carte_non_indication.png");
-								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
-								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								viewIndicationConstraints.setFitWidth(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getWidth());
+								viewIndicationConstraints.setFitHeight(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getHeight());
 								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationConstraints);
 							}
 						});
@@ -439,8 +430,8 @@ public class GameInteract {
 						moteur.getAllPlayers().stream().forEach(player -> {
 							if (player.getAttributeCards().canRepareTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationRepare = new ImageView("ressources/carte_indication.png");
-								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
-								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								viewIndicationRepare.setFitWidth(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getWidth());
+								viewIndicationRepare.setFitHeight(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getHeight());
 								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationRepare);
 								// Drag over viewIndicationRepare
 								viewIndicationRepare.setOnDragOver(new EventHandler <DragEvent>() {
@@ -484,8 +475,8 @@ public class GameInteract {
 							}
 							else {
 								ImageView viewIndicationRepare = new ImageView("ressources/carte_non_indication.png");
-								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
-								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								viewIndicationRepare.setFitWidth(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getWidth());
+								viewIndicationRepare.setFitHeight(((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getHeight());
 								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationRepare);
 							}
 						});
@@ -523,48 +514,52 @@ public class GameInteract {
 				if (!isDragged) {
 					// Puts back card into place
 					viewCard.setTranslateY(viewCard.getTranslateY()+25);
-					// Turns off indications
-					if (card.getType().equals(Card_t.gallery)) {
-						possiblePositions.stream().forEach(position -> {
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-							GameBoard.gridPaneBoard.getChildren().remove(node);
-						});
-					}
-					else if (card.getType().equals(Card_t.action)) {
-						if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
-							// FIXME - bug when double click-drag
-							GameBoard.endCards.stream().forEach(endCard -> {
-								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-								node.toFront();
-								node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+
+					if(moteur.getCurrentPlayer().getDifficulty() == Player.Difficulty.Player){
+						
+						// Turns off indications
+						if (card.getType().equals(Card_t.gallery)) {
+							possiblePositions.stream().forEach(position -> {
+								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 								GameBoard.gridPaneBoard.getChildren().remove(node);
 							});
 						}
-						// Turns off crumbling indications
-						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
-							// FIXME - bug when double click-drag
-							Node nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-							nodeStart.toFront();
-							nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-							GameBoard.gridPaneBoard.getChildren().remove(nodeStart);
-							GameBoard.endCards.stream().forEach(endCard -> {
-								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-								node.toFront();
-								node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-								GameBoard.gridPaneBoard.getChildren().remove(node);
-							});
+						else if (card.getType().equals(Card_t.action)) {
+							if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
+								// FIXME - bug when double click-drag
+								GameBoard.endCards.stream().forEach(endCard -> {
+									Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+									node.toFront();
+									node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+									GameBoard.gridPaneBoard.getChildren().remove(node);
+								});
+							}
+							// Turns off crumbling indications
+							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+								// FIXME - bug when double click-drag
+								Node nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
+								nodeStart.toFront();
+								nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
+								GameBoard.gridPaneBoard.getChildren().remove(nodeStart);
+								GameBoard.endCards.stream().forEach(endCard -> {
+									Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+									node.toFront();
+									node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+									GameBoard.gridPaneBoard.getChildren().remove(node);
+								});
+							}
+							// Turns off constraints indications
+							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+								vboxPlayerListIndications.getChildren().clear();
+							}
+							// Turns off repare indications
+							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
+								vboxPlayerListIndications.getChildren().clear();
+							}
 						}
-						// Turns off constraints indications
-						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
-							vboxPlayerListIndications.getChildren().clear();
-						}
-						// Turns off repare indications
-						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
-							vboxPlayerListIndications.getChildren().clear();
-						}
+						// Discard indication off
+						viewDiscard.setImage(new Image("ressources/defausse.png"));
 					}
-					// Discard indication off
-					viewDiscard.setImage(new Image("ressources/defausse.png"));
 				}
 			}
 		});
@@ -770,7 +765,6 @@ public class GameInteract {
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ArrayList <GamePlayingCard> ();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
-		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
 			cardsInHand.add(getImageCard(card));
@@ -778,7 +772,27 @@ public class GameInteract {
 			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
 		}
 		
-		
+		// Brings forward current player in list
+		moteur.getAllPlayers().stream().forEach(player -> {
+			((GridPane)vboxPlayerList.getChildren().get(player.getNum())).setPrefSize(vboxPlayerList.getPrefWidth(), vboxPlayerList.getPrefHeight());
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(0)).setFitWidth(listAvatarSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(0)).setFitHeight(listAvatarSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(2)).setFitWidth(listConstraintSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(2)).setFitHeight(listConstraintSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(3)).setFitWidth(listConstraintSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(3)).setFitHeight(listConstraintSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(4)).setFitWidth(listConstraintSize);
+			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(4)).setFitHeight(listConstraintSize);
+		});
+		((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).setPrefSize(vboxPlayerList.getPrefWidth()+30, vboxPlayerList.getPrefHeight()+50);
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(0)).setFitWidth(listAvatarSize+30);
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(0)).setFitHeight(listAvatarSize+30);
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(2)).setFitWidth(listConstraintSize+(20/3));
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(2)).setFitHeight(listConstraintSize+(20/3));
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(3)).setFitWidth(listConstraintSize+(20/3));
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(3)).setFitHeight(listConstraintSize+(20/3));
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(4)).setFitWidth(listConstraintSize+(20/3));
+		((ImageView)((GridPane)vboxPlayerList.getChildren().get(moteur.getCurrentPlayer().getNum())).getChildren().get(4)).setFitHeight(listConstraintSize+(20/3));
 	}
 	
 	
