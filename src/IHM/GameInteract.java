@@ -64,6 +64,15 @@ public class GameInteract {
 	private ImageView viewDeck;
 	private ImageView viewDiscard;
 	
+	private GridPane gridPanePlayerInfos;
+	private final Couple playerInfoConstraintLanternPos = new Couple(0, 0);
+	private final Couple playerInfoConstraintPickaxePos = new Couple(0, 1);
+	private final Couple playerInfoConstraintWagonPos = new Couple(0, 2);
+	private final Couple playerInfoAvatarPos = new Couple(1, 0);
+	private final Couple playerInfoPseudoPos = new Couple(1, 3);
+	private final Couple playerInfoRolePos = new Couple(2, 3);
+	private final Couple playerInfoGoldPos = new Couple(3, 3);
+	
 	@FXML
 	BorderPane borderPaneInteract;
 	@FXML
@@ -156,7 +165,7 @@ public class GameInteract {
 		
 		// Player's info
 		hboxPlayerInfos.setPrefSize(300.0, (150.0+(150.0/3.0))); // avatar 150*150  ;  constraints (150/3)*(150/3)  ;  texts 150*?
-		GridPane gridPanePlayerInfos = new GridPane();
+		gridPanePlayerInfos = new GridPane();
 		// Player's info constraints
 		ImageView viewPlayerInfoConstraintLantern = new ImageView("ressources/lanterne.png");
 		ImageView viewPlayerInfoConstraintPickaxe = new ImageView("ressources/pioche.png");
@@ -177,13 +186,13 @@ public class GameInteract {
 		Text textPlayerInfoGold = new Text(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
 		// Puts everything into the player info grid
 		gridPanePlayerInfos.setPrefSize(hboxPlayerInfos.getPrefWidth(), hboxPlayerInfos.getPrefHeight());
-		gridPanePlayerInfos.add(viewPlayerInfoConstraintLantern, 0, 0);
-		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, 1, 0);
-		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, 2, 0);
-		gridPanePlayerInfos.add(viewPlayerInfoAvatar, 0, 1); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
-		gridPanePlayerInfos.add(textPlayerInfoPseudo, 3, 1);
-		gridPanePlayerInfos.add(textPlayerInfoRole, 3, 2);
-		gridPanePlayerInfos.add(textPlayerInfoGold, 3, 3);
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintLantern, playerInfoConstraintLanternPos.getColumn(), playerInfoConstraintLanternPos.getLine());
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, playerInfoConstraintPickaxePos.getColumn(), playerInfoConstraintPickaxePos.getLine());
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, playerInfoConstraintWagonPos.getColumn(), playerInfoConstraintWagonPos.getLine());
+		gridPanePlayerInfos.add(viewPlayerInfoAvatar, playerInfoAvatarPos.getColumn(), playerInfoAvatarPos.getLine()); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
 		
 		// Center player list on center-left of the screen
