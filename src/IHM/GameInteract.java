@@ -720,9 +720,7 @@ public class GameInteract {
 	// Next player
 	private void nextPlayer () {
 		// Player's info constraints
-		viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne.png"));
-		viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche.png"));
-		viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon.png"));
+		updateCurrentPlayerConstraints();
 		// Player's info avatar
 		viewPlayerInfoAvatar.setImage(new Image("ressources/" + moteur.getCurrentPlayer().getAvatar() + ".png"));
 		// Player's info texts
@@ -744,6 +742,23 @@ public class GameInteract {
 		}
 		
 		
+	}
+	
+	
+	
+	private void updateCurrentPlayerConstraints () {
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Lantern))
+			viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne.png"));
+		else
+			viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne_detruite.png"));
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Pickaxe))
+			viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche.png"));
+		else
+			viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche_detruite.png"));
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Wagon))
+			viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon.png"));
+		else
+			viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon_detruit.png"));
 	}
 	
 	
