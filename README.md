@@ -27,3 +27,12 @@
     - **15h15-15h45** : groupe 4
 
 - **lundi 29/05** : pour tous les groupes, rendu du code en F208 à **14h**
+
+### Soutenances en F208 :
+
+- **mardi 30/05/2017** : 
+    - **16h - 17h** Groupe 4 (Saboteur, Anne Rasse)
+
+- **mercredi 31/05/2017** :
+  - **15h** : Démos ouvertes des projets
+  - **16h30** : Pot
