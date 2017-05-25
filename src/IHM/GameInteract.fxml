@@ -50,6 +50,7 @@
                <children>
                   <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" />
                   <HBox fx:id="hboxDeckDiscard" maxHeight="181.0" maxWidth="236.0" prefHeight="181.0" prefWidth="236.0" />
+                  <HBox fx:id="hboxPlayerInfos" pickOnBounds="false" />
                </children>
             </StackPane>
          </bottom>

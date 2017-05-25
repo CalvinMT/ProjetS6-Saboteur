@@ -78,6 +78,8 @@ public class GameInteract {
 	HBox hboxDeckDiscard;
 	@FXML
 	StackPane stackPaneBottom;
+	@FXML
+	HBox hboxPlayerInfos;
 	
 	@FXML
 	private void handleHBoxMouseEntered () {
@@ -153,12 +155,42 @@ public class GameInteract {
 		hboxDeckDiscard.getChildren().add(viewDiscard);
 		
 		// Player's info
-		// TODO - show avatar, pseudo, role and gold
+		hboxPlayerInfos.setPrefSize(300.0, (150.0+(150.0/3.0))); // avatar 150*150  ;  constraints (150/3)*(150/3)  ;  texts 150*?
+		GridPane gridPanePlayerInfos = new GridPane();
+		// Player's info constraints
+		ImageView viewPlayerInfoConstraintLantern = new ImageView("ressources/lanterne.png");
+		ImageView viewPlayerInfoConstraintPickaxe = new ImageView("ressources/pioche.png");
+		ImageView viewPlayerInfoConstraintWagon = new ImageView("ressources/wagon.png");
+		viewPlayerInfoConstraintLantern.setFitWidth(150.0 / 3.0);
+		viewPlayerInfoConstraintLantern.setFitHeight(150.0 / 3.0);
+		viewPlayerInfoConstraintPickaxe.setFitWidth(150.0 / 3.0);
+		viewPlayerInfoConstraintPickaxe.setFitHeight(150.0 / 3.0);
+		viewPlayerInfoConstraintWagon.setFitWidth(150.0 / 3.0);
+		viewPlayerInfoConstraintWagon.setFitHeight(150.0 / 3.0);
+		// Player's info avatar
+		ImageView viewPlayerInfoAvatar = new ImageView("ressources/" + moteur.getCurrentPlayer().getAvatar() + ".png");
+		viewPlayerInfoAvatar.setFitWidth(150.0);
+		viewPlayerInfoAvatar.setFitHeight(150.0);
+		// Player's info texts
+		Text textPlayerInfoPseudo = new Text(moteur.getCurrentPlayer().getPlayerName());
+		Text textPlayerInfoRole = new Text(moteur.getCurrentPlayer().getRole().toString());
+		Text textPlayerInfoGold = new Text(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
+		// Puts everything into the player info grid
+		gridPanePlayerInfos.setPrefSize(hboxPlayerInfos.getPrefWidth(), hboxPlayerInfos.getPrefHeight());
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintLantern, 0, 0);
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, 1, 0);
+		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, 2, 0);
+		gridPanePlayerInfos.add(viewPlayerInfoAvatar, 0, 1); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, 3, 1);
+		gridPanePlayerInfos.add(textPlayerInfoRole, 3, 2);
+		gridPanePlayerInfos.add(textPlayerInfoGold, 3, 3);
+		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
-		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen
-		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen, and player's infos
+		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, 0));
+		StackPane.setMargin(hboxGameCardsInHand, new Insets(0, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 		StackPane.setMargin(hboxDeckDiscard, new Insets(0, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
@@ -312,7 +344,7 @@ public class GameInteract {
 					// Turns on constraints indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
 						moteur.getAllPlayers().stream().forEach(player -> {
-							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
+							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) { // FIXME - la condition semble ne pas donctionnée
 								ImageView viewIndicationConstraints = new ImageView("ressources/carte_indication.png");
 								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
 								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
