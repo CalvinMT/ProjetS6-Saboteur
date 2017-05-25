@@ -766,6 +766,13 @@ public class GameInteract {
 				textNumberOfCardsInDeck.setText(moteur.getDeck().nbCard() + "Cartes");
 				vboxNumberOfCardsInDeck.setVisible(true);
 				textNumberOfCardsInDeck.setVisible(true);
+				textNumberOfCardsInDeck.setOnMouseEntered(new EventHandler <MouseEvent>() {
+					@Override
+					public void handle(MouseEvent mouseEvent) {
+						vboxNumberOfCardsInDeck.setVisible(true);
+						textNumberOfCardsInDeck.setVisible(true);
+					}
+				});
 			}
 		});
 		viewDeck.setOnMouseExited(new EventHandler <MouseEvent>() {
