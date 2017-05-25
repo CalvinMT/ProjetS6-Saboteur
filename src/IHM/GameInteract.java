@@ -48,7 +48,7 @@ public class GameInteract {
 	
 	private Moteur moteur;
 	private Hand hand;
-	private Card card;
+	protected Card card;
     
     
 	
@@ -290,10 +290,15 @@ public class GameInteract {
 									droppedLine = (position.getLine() + GameBoard.startCardY);
 									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 
-									if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) card, new Couple(position.getLine(), position.getColumn()))){
-										cardToPut = ((GalleryCard) card).rotate();
-									} else {
-										cardToPut = (GalleryCard) card;
+                                    int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                                    Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
+
+                                    System.err.println("Index: "+index+" Card: "+((GalleryCard) cardBefore).simplified());
+
+                                    if(!moteur.getBoard().isCompatibleWithNeighbors((GalleryCard) cardBefore, new Couple(position.getLine(), position.getColumn()))){
+										cardToPut = ((GalleryCard) cardBefore).rotate();
+                                    } else {
+										cardToPut = (GalleryCard) cardBefore;
 									}
 
 									moteur.getBoard().putCard(cardToPut, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
@@ -452,22 +457,19 @@ public class GameInteract {
 										Dragboard dragBoard = dragEvent.getDragboard();
 										boolean success = false;
 										if (dragBoard.hasImage()) {
-											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
-												viewConstraint.setImage(new Image("ressources/lanterne.png"));
-											}
-											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
-												viewConstraint.setImage(new Image("ressources/pioche.png"));
-											}
-											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
-												viewConstraint.setImage(new Image("ressources/wagon.png"));
-											}
-
-                                            // maj moteur Repare
-                                            player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
-                                            System.out.println(player.debugString());
+                                            Tools tool = player.setRepare((RepareSabotageCard) card);
+                                            if (tool.equals(Tools.Lantern)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/lanterne.png"));
+                                            }
+											else if (tool.equals(Tools.Pickaxe)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/pioche.png"));
+                                            }
+											else if (tool.equals(Tools.Wagon)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/wagon.png"));
+                                            }
 
 											updateCurrentPlayerConstraints();
 											
@@ -577,15 +579,15 @@ public class GameInteract {
 				}*/
 
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
-					System.out.println(moteur.getCurrentPlayer());
 					viewCard.setRotate(viewCard.getRotate() + 180);
 
-					GalleryCard cardChanged = ((GalleryCard) card).rotate();
 
-					int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
-					((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
+                    int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                    Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
+                    GalleryCard cardChanged = ((GalleryCard) cardBefore).rotate();
 
-					System.out.println(moteur.getCurrentPlayer());
+                    ((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
+
 				}
 			}
 		});
@@ -622,6 +624,7 @@ public class GameInteract {
                         });
 
                     }
+
                     // Turns off end card's indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
                         GameBoard.endCards.stream().forEach(endCard -> {
@@ -660,15 +663,16 @@ public class GameInteract {
                     // Removes card from hand
                     if (dragEvent.getTransferMode() == TransferMode.MOVE) {
                         cardsInHand.remove(playingCard);
-                        moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
+                        int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                        moteur.getCurrentPlayer().getPlayableCards().chooseOne_with_remove(index);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                     }
                     
                     
                     // Draws the first card from the deck
                     if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
-                        moteur.getCurrentPlayer().drawCard(moteur.getDeck());
-                        Card cardDraw = hand.chooseOne_without_remove(cardsInHand.size()-1);
+                        Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+                        System.out.println("Carte piochée: "+cardDraw);
                         cardsInHand.add(getImageCard(cardDraw));
                         cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                         hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
@@ -870,6 +874,9 @@ public class GameInteract {
                     	playingCard = new GamePlayingCard("carte_test_118_181");
                 }
                 break;
+
+            /// VERIFIED BY THESPYGEEK
+
             case gallery:
                 if(((GalleryCard)c).canHasCenter()){
                     if(((GalleryCard)c).canHasNorth()){
@@ -970,6 +977,7 @@ public class GameInteract {
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("SO_NC");
+                                    playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("N_NC");//N
                                 	playingCard.getImageView().setRotate(180);
@@ -984,14 +992,12 @@ public class GameInteract {
                                 	playingCard.getImageView().setRotate(180);
                                 }else{//Sans East
                                 	playingCard = new GamePlayingCard("SO_NC");//SO
-                                	playingCard.getImageView().setRotate(180);
                                 }
                             }else{//Sans South
                                 if(((GalleryCard)c).canHasEast()){
                                 	playingCard = new GamePlayingCard("EO_NC");
                                 }else{//Sans East
-                                	playingCard = new GamePlayingCard("O_NC");//O
-                                	playingCard.getImageView().setRotate(180);
+                                	playingCard = new GamePlayingCard("O_NC");
                                 }
                             }
                         }else{//Sans West

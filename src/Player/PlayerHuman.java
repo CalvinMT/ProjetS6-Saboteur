@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 package Player;
-import Cards.*;
 import Board.Board;
-
-import java.util.Random;
+import Cards.HandPlayer;
+import Cards.PlayerAttribute;
 
 /**
  *

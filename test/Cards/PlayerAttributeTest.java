@@ -69,4 +69,22 @@ public class PlayerAttributeTest {
         Assert.assertTrue(p.canRepareTool(card2));
     }
 
+    @Test
+    public void TestremoveAttribute1(){
+
+
+        PlayerAttribute p = new PlayerAttribute();
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+
+        p.removeAttribute(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern));
+        Assert.assertTrue(p.nbCard() == 0);
+
+
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+
+        p.removeAttribute(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern, RepareSabotageCard.Tools.Wagon));
+        Assert.assertTrue(p.nbCard() == 1);
+    }
+
 }
