@@ -378,19 +378,23 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
-												// @TheSpyGeek TODO - ajouter la contrainte "lanterne cassée" au joueur ('player')
+
+
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
 												viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
-												// @TheSpyGeek TODO - ajouter la contrainte "piohe cassée" au joueur ('player')
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
-												// @TheSpyGeek TODO - ajouter la contrainte "wagon cassé" au joueur ('player')
 											}
-											success = true;
+
+                                            // maj moteur Sabotage
+                                            player.setSabotage((RepareSabotageCard) card);
+                                            System.out.println(player.debugString());
+
+                                            success = true;
 										}
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
@@ -401,9 +405,10 @@ public class GameInteract {
 					}
 					// Turns on repare indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
-						// TODO
+					    // TODO regarder si un outil peut etre rÃ©parÃ©
+
 						moteur.getAllPlayers().stream().forEach(player -> {
-							if (!player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
+							if (player.getAttributeCards().canRepareTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationRepare = new ImageView("ressources/carte_indication.png");
 								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
 								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
@@ -428,18 +433,20 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne.png"));
-												// @TheSpyGeek TODO - enlever la contrainte "lanterne cassée" au joueur ('player')
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
 												viewConstraint.setImage(new Image("ressources/pioche.png"));
-												// @TheSpyGeek TODO - enlever la contrainte "piohe cassée" au joueur ('player')
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon.png"));
-												// @TheSpyGeek TODO - enlever la contrainte "wagon cassé" au joueur ('player')
 											}
+
+                                            // maj moteur Repare
+                                            player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
+                                            System.out.println(player.debugString());
+
 											success = true;
 										}
 										dragEvent.setDropCompleted(success);
@@ -490,7 +497,9 @@ public class GameInteract {
 						});
 					}
 					else if (card.getType().equals(Card_t.action)) {
-						if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
+
+
+                        if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 							// FIXME - bug when double click-drag
 							GameBoard.endCards.stream().forEach(endCard -> {
 								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
@@ -514,11 +523,11 @@ public class GameInteract {
 							});
 						}
 						// Turns off constraints indications
-						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+						else if (((ActionCard)card).getAction() == (ActionCard.Action.Sabotage)) {
 							vboxPlayerListIndications.getChildren().clear();
 						}
 						// Turns off repare indications
-						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
+						else if (((ActionCard)card).getAction() == (ActionCard.Action.Repare)) {
 							vboxPlayerListIndications.getChildren().clear();
 						}
 					}
@@ -612,11 +621,11 @@ public class GameInteract {
 						});
                     }
                     // Turns off constraints indications
-                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction() == (ActionCard.Action.Sabotage)) {
                     	vboxPlayerListIndications.getChildren().clear();
                     }
                     // Turns off repare indications
-                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction() == (ActionCard.Action.Repare)) {
                     	vboxPlayerListIndications.getChildren().clear();
                     }
                     

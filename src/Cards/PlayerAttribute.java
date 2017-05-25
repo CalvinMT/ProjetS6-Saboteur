@@ -2,6 +2,7 @@ package Cards;
 
 
 import Saboteur.Saboteur;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,24 @@ public class PlayerAttribute extends Hand {
         } else {
             System.err.println("Erreur mauvaise carte");
         }
+    }
+
+    // si une carte peut réparer des outils présents dans le playerAttribute
+    public boolean canRepareTool(RepareSabotageCard card){
+
+        if(card.getAction() == ActionCard.Action.Repare){
+
+            for(int i=0; i<this.nbCard(); i++){
+                if(this.arrayCard.get(i).canBeRepareBy(card)){
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            System.err.println("[PlayerAttribute] Ceci n'est pas une carte Repare");
+            return false;
+        }
+
     }
 
     public int getNbAttribute(){
