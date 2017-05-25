@@ -239,7 +239,7 @@ public class GameInteract {
 				// Brings card forward
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
 				// Turns on gallery card's indications
-				if (card.getType().equals(Card_t.gallery)) {
+				if (card.getType().equals(Card_t.gallery) && moteur.getCurrentPlayer().canPlayGalleryCard()) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
