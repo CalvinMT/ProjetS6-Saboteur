@@ -50,7 +50,8 @@ public class GameInteract {
 	
 	private int numberOfCardsInHand;
 	private ArrayList <GamePlayingCard> cardsInHand;
-	
+
+	private GridPane gridPanePlayer;
 	private int numberOfPlayers;
 	private final int listAvatarSize = 75;
 	private final int listConstraintSize = 40;
@@ -125,7 +126,6 @@ public class GameInteract {
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
 		vboxPlayerList.setPrefHeight(vboxPlayerList.getPrefHeight()*numberOfPlayers);
-		GridPane gridPanePlayer;
 		for (int i=0; i < numberOfPlayers; i++) {
 			gridPanePlayer = new GridPane();
 			gridPanePlayer.setPrefSize(hboxGameCardsInHand.getPrefWidth(), (hboxGameCardsInHand.getPrefHeight()/numberOfPlayers));
@@ -353,7 +353,7 @@ public class GameInteract {
 					// Turns on constraints indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
 						moteur.getAllPlayers().stream().forEach(player -> {
-							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) { // FIXME - la condition semble ne pas donctionnée
+							if (player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationConstraints = new ImageView("ressources/carte_indication.png");
 								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
 								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
@@ -378,17 +378,17 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
-												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Lantern);
+												// @TheSpyGeek TODO - ajouter la contrainte "lanterne cassée" au joueur ('player')
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
 												viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
-												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Pickaxe);
+												// @TheSpyGeek TODO - ajouter la contrainte "piohe cassée" au joueur ('player')
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
-												player.getAttributeCards().removeAttribute((RepareSabotageCard)card, Tools.Wagon);
+												// @TheSpyGeek TODO - ajouter la contrainte "wagon cassé" au joueur ('player')
 											}
 											success = true;
 										}
