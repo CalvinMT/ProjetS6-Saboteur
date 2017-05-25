@@ -116,19 +116,6 @@ public class GameInteract {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
 		moteur.getBoard().computeAccessCards();
-		
-		// Hand configuration
-		hand = moteur.getCurrentPlayer().getPlayableCards();
-        numberOfCardsInHand = hand.nbCard();
-		cardsInHand = new ArrayList <GamePlayingCard> ();
-		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
-		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
-		for (int i=0; i < numberOfCardsInHand; i++) {
-			card = hand.chooseOne_without_remove(i);
-			cardsInHand.add(getImageCard(card));
-			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
-			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
-		}
 
 		
 		// Player list configuration
@@ -201,7 +188,10 @@ public class GameInteract {
 		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
 		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
+		
+		
 		nextPlayer();
+		
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
@@ -731,6 +721,21 @@ public class GameInteract {
 		textPlayerInfoPseudo.setText(moteur.getCurrentPlayer().getPlayerName());
 		textPlayerInfoRole.setText(moteur.getCurrentPlayer().getRole().toString());
 		textPlayerInfoGold.setText(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
+		
+		// Hand configuration
+		hand = moteur.getCurrentPlayer().getPlayableCards();
+        numberOfCardsInHand = hand.nbCard();
+		cardsInHand = new ArrayList <GamePlayingCard> ();
+		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
+		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
+		for (int i=0; i < numberOfCardsInHand; i++) {
+			card = hand.chooseOne_without_remove(i);
+			cardsInHand.add(getImageCard(card));
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
+			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
+		}
+		
+		
 	}
 	
 	
