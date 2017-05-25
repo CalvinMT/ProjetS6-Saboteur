@@ -247,19 +247,21 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
-        //if (type_g == start) return "Start";
-        return "GalleryCard{" +
-                "type=" + type +
-                ", x=" + coord.getLine() +
-                ", y=" + coord.getColumn() +
-                ", center=" + center +
-                ", north=" + north +
-                ", south=" + south +
-                ", east=" + east +
-                ", west=" + west +
-                // TODO : Ne pas utiliser avant implémentation du save/load
-                ", resist=" + resist +
-                '}';
+        if (type_g == start)
+            return "Start";
+        else
+            return "GalleryCard{" +
+                    "type=" + type +
+                    ", x=" + coord.getLine() +
+                    ", y=" + coord.getColumn() +
+                    ", center=" + center +
+                    ", north=" + north +
+                    ", south=" + south +
+                    ", east=" + east +
+                    ", west=" + west +
+                    // TODO : Ne pas utiliser avant implémentation du save/load
+                    ", resist=" + resist +
+                    '}';
     }
 
     public String debugString() {

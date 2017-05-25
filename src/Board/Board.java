@@ -20,8 +20,24 @@ public class Board {
         int gold = r.nextInt(3) -1;
         int x;
 
+        ArrayList<Integer> tab =  new ArrayList<>();
+        tab.add(-2);
+        tab.add(0);
+        tab.add(2);
+
+        // start
         mine.add(new Node());
 
+
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true)));
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false)));
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false)));
+
+
+        /*
         for (int i = -1; i < 2; i++) {
             x = 2*i;
             if (i == gold) {
@@ -35,7 +51,7 @@ public class Board {
                     mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false))); // Sans minerai gauche
                 }
             }
-        }
+        }*/
 
     }
 

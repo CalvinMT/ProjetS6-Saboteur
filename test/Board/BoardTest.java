@@ -261,4 +261,28 @@ public class BoardTest {
         if (res != 7) System.out.println("\nExpected 7 found " + res);
         Assert.assertTrue(res == 7);
     }
+
+
+    @Test
+    public void testType(){
+        Board b = new Board();
+
+        ArrayList<Node> mine = b.getMine();
+
+        Assert.assertTrue(mine.size() == 4);
+        Assert.assertTrue(((GalleryCard) mine.get(0).getCard()).getGalleryType() == start);
+        Assert.assertTrue(((GalleryCard) mine.get(1).getCard()).getGalleryType() == but);
+        Assert.assertTrue(((GalleryCard) mine.get(2).getCard()).getGalleryType() == but);
+        Assert.assertTrue(((GalleryCard) mine.get(3).getCard()).getGalleryType() == but);
+
+        Assert.assertTrue(!mine.get(1).getCard().equals(mine.get(2).getCard()));
+        Assert.assertTrue(!mine.get(2).getCard().equals(mine.get(3).getCard()));
+        Assert.assertTrue(!mine.get(3).getCard().equals(mine.get(1).getCard()));
+
+        for(int i=0; i<mine.size(); i++){
+
+            System.out.println(mine.get(i).getCard());
+        }
+
+    }
 }
