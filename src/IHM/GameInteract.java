@@ -97,6 +97,8 @@ public class GameInteract {
 	@FXML
 	HBox hboxDeckDiscard;
 	@FXML
+	VBox vboxNumberOfCardsInDeck;
+	@FXML
 	Text textNumberOfCardsInDeck;
 	@FXML
 	StackPane stackPaneBottom;
@@ -203,7 +205,7 @@ public class GameInteract {
 		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()), 0, 0, 0));
 		StackPane.setMargin(hboxGameCardsInHand, new Insets(0, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
 		StackPane.setMargin(hboxDeckDiscard, new Insets(0, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
-		StackPane.setMargin(textNumberOfCardsInDeck, new Insets(0, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
+		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(0, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
 
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
@@ -727,18 +729,20 @@ public class GameInteract {
 	// -------------------- ---------- --------------------
 	
 	
-	// FIXME
+	
 	private void deckEvents (ImageView viewDeck) {
 		viewDeck.setOnMouseEntered(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
-				textNumberOfCardsInDeck = new Text(new String(moteur.getDeck().nbCard() + "Cartes"));
+				textNumberOfCardsInDeck.setText(moteur.getDeck().nbCard() + "Cartes");
+				vboxNumberOfCardsInDeck.setVisible(true);
 				textNumberOfCardsInDeck.setVisible(true);
 			}
 		});
 		viewDeck.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
+				vboxNumberOfCardsInDeck.setVisible(false);
 				textNumberOfCardsInDeck.setVisible(false);
 			}
 		});

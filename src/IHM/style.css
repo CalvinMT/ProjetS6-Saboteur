@@ -5,3 +5,7 @@
 .anchorMenuMain {
     -fx-background-color: #2f4f4f;
 }
+
+.deckText {
+    -fx-background-color: #eeeeee;
+}
