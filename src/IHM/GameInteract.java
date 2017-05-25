@@ -378,8 +378,6 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
-
-
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
@@ -389,6 +387,8 @@ public class GameInteract {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
 											}
+											
+											updateCurrentPlayerConstraints();
 
                                             // maj moteur Sabotage
                                             player.setSabotage((RepareSabotageCard) card);
@@ -401,12 +401,16 @@ public class GameInteract {
 									}
 								});
 							}
+							else {
+								ImageView viewIndicationConstraints = new ImageView("ressources/carte_non_indication.png");
+								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationConstraints);
+							}
 						});
 					}
 					// Turns on repare indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
-					    // TODO regarder si un outil peut etre réparé
-
 						moteur.getAllPlayers().stream().forEach(player -> {
 							if (player.getAttributeCards().canRepareTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationRepare = new ImageView("ressources/carte_indication.png");
@@ -443,6 +447,8 @@ public class GameInteract {
 												viewConstraint.setImage(new Image("ressources/wagon.png"));
 											}
 
+											updateCurrentPlayerConstraints();
+
                                             // maj moteur Repare
                                             player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
                                             System.out.println(player.debugString());
@@ -453,6 +459,12 @@ public class GameInteract {
 										dragEvent.consume();
 									}
 								});
+							}
+							else {
+								ImageView viewIndicationRepare = new ImageView("ressources/carte_non_indication.png");
+								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationRepare);
 							}
 						});
 					}
