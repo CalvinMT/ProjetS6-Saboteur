@@ -132,6 +132,10 @@ public class MenuCreationPartie {
             BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
             BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
             borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
+            /*Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            Stage stage = (Stage) buttonPlay.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();*/
         }
 
 
@@ -208,3 +212,4 @@ public class MenuCreationPartie {
 	}
     
 }
+

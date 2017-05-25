@@ -227,4 +227,22 @@ public abstract class Player {
         return false;
     }
 
+    public String debugString(){
+
+        String renvoi = "";
+
+        renvoi += "Pseudo: "+this.playerName + "\n";
+        renvoi += "Difficulté: "+this.difficulty+"\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += "Role: "+ this.role + "\n";
+        }
+        renvoi += "Point Or: "+this.goldPoints + "\n";
+        renvoi += "Cartes attributs: "+this.attributeCards + "\n";
+        renvoi += "Cartes en main: "+this.playableCards + "\n";
+
+        return renvoi;
+    }
+
 }
