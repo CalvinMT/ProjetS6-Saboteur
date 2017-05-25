@@ -397,7 +397,6 @@ public class GameInteract {
 
                                             // maj moteur Sabotage
                                             player.setSabotage((RepareSabotageCard) card);
-                                            System.out.println(player.debugString());
 
                                             success = true;
 										}
@@ -439,24 +438,25 @@ public class GameInteract {
 										Dragboard dragBoard = dragEvent.getDragboard();
 										boolean success = false;
 										if (dragBoard.hasImage()) {
-											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
-												viewConstraint.setImage(new Image("ressources/lanterne.png"));
-											}
-											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
-												viewConstraint.setImage(new Image("ressources/pioche.png"));
-											}
-											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
-												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
-												viewConstraint.setImage(new Image("ressources/wagon.png"));
-											}
 
-											updateCurrentPlayerConstraints();
-
+                                            Tools tool = player.setRepare((RepareSabotageCard) card);
                                             // maj moteur Repare
-                                            player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
-                                            System.out.println(player.debugString());
+
+                                            if (tool.equals(Tools.Lantern)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/lanterne.png"));
+                                            }
+											else if (tool.equals(Tools.Pickaxe)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/pioche.png"));
+                                            }
+											else if (tool.equals(Tools.Wagon)) {
+                                                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+                                                viewConstraint.setImage(new Image("ressources/wagon.png"));
+                                            }
+
+                                            updateCurrentPlayerConstraints();
+
 
 											success = true;
 										}
@@ -649,7 +649,8 @@ public class GameInteract {
                     // Removes card from hand
                     if (dragEvent.getTransferMode() == TransferMode.MOVE) {
                         cardsInHand.remove(playingCard);
-                        moteur.getCurrentPlayer().getPlayableCards().removeCard(card);
+                        int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
+                        moteur.getCurrentPlayer().getPlayableCards().chooseOne_with_remove(index);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                     }
                     
@@ -657,6 +658,7 @@ public class GameInteract {
                     // Draws the first card from the deck
                     if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
                         Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+                        System.out.println("Carte piochée: "+cardDraw);
                         cardsInHand.add(getImageCard(cardDraw));
                         cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                         hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());

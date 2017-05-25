@@ -136,6 +136,13 @@ public abstract class Player {
         this.attributeCards.putRepare(c, t);
     }
 
+    // ajout d'une carte Repare
+    public RepareSabotageCard.Tools setRepare(RepareSabotageCard c){
+        return this.attributeCards.removeAttribute(c);
+    }
+
+
+
     // ajout d'une carte Sabotage
     public void setSabotage(RepareSabotageCard c){
         this.attributeCards.putSabotage(c);
@@ -153,7 +160,7 @@ public abstract class Player {
 
     public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
         if(c.containsTools(t)){
-            this.attributeCards.removeAttribute(c, t);
+            this.attributeCards.removeAttribute(c);
         }
     }
 

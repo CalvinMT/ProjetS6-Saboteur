@@ -16,12 +16,6 @@ public class PlayerAttribute extends Hand {
     }
 
 
-    // enlever un attribut avec une carte repare
-    public void removeAttribute(int i){
-        if(i >= 0 && i < this.nbCard()){
-            this.arrayCard.remove(i);
-        }
-    }
 
     public boolean containsTools(RepareSabotageCard.Tools t){
         for(int i=0; i<nbCard(); i++){
@@ -47,18 +41,39 @@ public class PlayerAttribute extends Hand {
         }
     }
 
+    // enlever un attribut avec une carte repare
+    public void removeAttribute(int i){
+        if(i >= 0 && i < this.nbCard()){
+            this.arrayCard.remove(i);
+        }
+    }
+
+
     // enleve un carte de sabotage
-    public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
+    public RepareSabotageCard.Tools removeAttribute(RepareSabotageCard c){
 
         if(c.getType() == Card.Card_t.action && c.getAction() == ActionCard.Action.Repare && c.nbTools() <= 2 && c.nbTools() > 0){
-            RepareSabotageCard card = new RepareSabotageCard("Repare", t);
+
+            RepareSabotageCard.Tools re = null;
+            ArrayList<RepareSabotageCard.Tools> tools = c.getAlltools();
+
             int nbRepare = 1;
-            for(int i=0; i<getNbAttribute() && nbRepare > 0; i++){
-                if(arrayCard.get(i).canBeRepareBy(card)){
-                    nbRepare--;
-                    arrayCard.remove(i);
+
+            for(int j=0; j<tools.size(); j++){
+
+                RepareSabotageCard card = new RepareSabotageCard("Repare", tools.get(j));
+                for(int i=0; i<getNbAttribute() && nbRepare > 0; i++){
+                    if(arrayCard.get(i).canBeRepareBy(card)){
+                        nbRepare--;
+                        re = ((RepareSabotageCard)arrayCard.get(i)).getTool();
+                        arrayCard.remove(i);
+                    }
                 }
             }
+
+            return re;
+        } else {
+            return null;
         }
     }
 
@@ -77,7 +92,7 @@ public class PlayerAttribute extends Hand {
     public void putRepare(RepareSabotageCard c, RepareSabotageCard.Tools t){
         if (c.getType() == Card.Card_t.action){
             if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
-                removeAttribute(c, t);
+                removeAttribute(c);
             }
         }
     }
@@ -90,7 +105,7 @@ public class PlayerAttribute extends Hand {
                     this.arrayCard.add(c);
                 }
             } else if(c.getAction() == ActionCard.Action.Repare && t != null && c.containsTools(t)){
-                removeAttribute(c, t);
+                removeAttribute(c);
             }
         } else {
             System.err.println("Erreur mauvaise carte");
