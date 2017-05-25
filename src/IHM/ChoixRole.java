@@ -86,7 +86,10 @@ public class ChoixRole {
     private Button buttonJoueurSuivant;
     @FXML
     private GridPane gridPaneChoixRole;
-
+    
+    @FXML
+    private GridPane mainGridPane;
+    
     @FXML
     private BorderPane borderPaneChoixRole;
 
@@ -230,6 +233,7 @@ public class ChoixRole {
 
         m.setState(State.ChooseRole);
         m.setChoixroleControler(this);
+
     }
 
     // getImageCard(Card c) gameInteractive

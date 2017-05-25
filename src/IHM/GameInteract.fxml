@@ -14,9 +14,6 @@
 <AnchorPane pickOnBounds="false" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.GameInteract">
    <children>
       <BorderPane fx:id="borderPaneInteract" pickOnBounds="false">
-         <right>
-            <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="200.0" styleClass="anchorMainLoader" stylesheets="@style.css" BorderPane.alignment="CENTER" />
-         </right>
          <top>
             <HBox fx:id="hboxTop" prefHeight="57.0" BorderPane.alignment="CENTER">
                <children>
@@ -51,11 +48,29 @@
          <bottom>
             <StackPane fx:id="stackPaneBottom" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" prefHeight="181.0" prefWidth="118.0" />
-                  <HBox fx:id="hboxDeckDiscard" maxHeight="181.0" maxWidth="236.0" prefHeight="181.0" prefWidth="236.0" />
+                  <HBox fx:id="hboxPlayerInfos" pickOnBounds="false" />
+                  <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" pickOnBounds="false" prefHeight="181.0" prefWidth="118.0" />
+                  <StackPane pickOnBounds="false" prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <HBox fx:id="hboxDeckDiscard" maxHeight="181.0" maxWidth="236.0" prefHeight="181.0" prefWidth="236.0" />
+                        <Text fx:id="textNumberOfCardsInDeck" strokeType="OUTSIDE" strokeWidth="0.0" text="XX Cartes" visible="false" StackPane.alignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
                </children>
             </StackPane>
          </bottom>
+         <right>
+            <StackPane BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="vboxPlayerList" maxWidth="708.0" prefHeight="75.0" prefWidth="200.0" styleClass="anchorMenuMain" stylesheets="@style.css" />
+                  <VBox fx:id="vboxPlayerListIndications" maxWidth="708.0" prefHeight="75.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
+         </right>
       </BorderPane>     
    </children>
 </AnchorPane>
