@@ -402,8 +402,52 @@ public class GameInteract {
 					// Turns on repare indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
 						// TODO
-						/*turn_on_indications_on_player_list
-						*/
+						moteur.getAllPlayers().stream().forEach(player -> {
+							if (!player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
+								ImageView viewIndicationRepare = new ImageView("ressources/carte_indication.png");
+								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationRepare);
+								// Drag over viewIndicationRepare
+								viewIndicationRepare.setOnDragOver(new EventHandler <DragEvent>() {
+									@Override
+									public void handle(DragEvent dragEvent) {
+							            if (dragEvent.getGestureSource() != viewIndicationRepare  &&  dragEvent.getDragboard().hasImage()) {
+							            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+							            }
+							            dragEvent.consume();
+									}
+								});
+								// Drag dropped viewIndicationConstraints
+								viewIndicationRepare.setOnDragDropped(new EventHandler <DragEvent>(){
+									@Override
+									public void handle(DragEvent dragEvent) {
+										Dragboard dragBoard = dragEvent.getDragboard();
+										boolean success = false;
+										if (dragBoard.hasImage()) {
+											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+												viewConstraint.setImage(new Image("ressources/lanterne.png"));
+												// @TheSpyGeek TODO - enlever la contrainte "lanterne cassée" au joueur ('player')
+											}
+											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+												viewConstraint.setImage(new Image("ressources/pioche.png"));
+												// @TheSpyGeek TODO - enlever la contrainte "piohe cassée" au joueur ('player')
+											}
+											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
+												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+												viewConstraint.setImage(new Image("ressources/wagon.png"));
+												// @TheSpyGeek TODO - enlever la contrainte "wagon cassé" au joueur ('player')
+											}
+											success = true;
+										}
+										dragEvent.setDropCompleted(success);
+										dragEvent.consume();
+									}
+								});
+							}
+						});
 					}
 				}
 				// Turns on discard indications
@@ -475,9 +519,7 @@ public class GameInteract {
 						}
 						// Turns off repare indications
 						else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
-							// TODO
-							/*turn_off_indications_on_player_list
-							*/
+							vboxPlayerListIndications.getChildren().clear();
 						}
 					}
 					// Discard indication off
@@ -571,6 +613,10 @@ public class GameInteract {
                     }
                     // Turns off constraints indications
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
+                    	vboxPlayerListIndications.getChildren().clear();
+                    }
+                    // Turns off repare indications
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
                     	vboxPlayerListIndications.getChildren().clear();
                     }
                     
