@@ -6,14 +6,9 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import Board.Couple;
-import Cards.ActionCard;
-import Cards.Card;
+import Cards.*;
 import Cards.Card.Card_t;
-import Cards.GalleryCard;
 import Cards.GalleryCard.Gallery_t;
-import Cards.Hand;
-import Cards.HandPlayer;
-import Cards.RepareSabotageCard;
 import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
@@ -190,9 +185,9 @@ public class GameInteract {
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, playerInfoConstraintPickaxePos.getColumn(), playerInfoConstraintPickaxePos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, playerInfoConstraintWagonPos.getColumn(), playerInfoConstraintWagonPos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoAvatar, playerInfoAvatarPos.getColumn(), playerInfoAvatarPos.getLine()); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
-		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine());
-		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
-		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine()); GridPane.setMargin(textPlayerInfoPseudo, new Insets(50, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine()); GridPane.setMargin(textPlayerInfoRole, new Insets(5, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine()); GridPane.setMargin(textPlayerInfoGold, new Insets(0, 0, 0, 10));
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
 		
 		
@@ -312,7 +307,7 @@ public class GameInteract {
                                     for(int i=1; i<=3; i++){
                                         goal = moteur.getBoard().getMine().get(i);
 
-                                        if(goal.reached()){
+                                        if(goal.reached() && !((GoalCard)goal.getCard()).isVisible()){
 
                                             Couple coupleMoteur = goal.getCard().getCoord();
                                             Couple coupleInterface = new Couple(coupleMoteur.getLine()+GameBoard.startCardY, coupleMoteur.getColumn()+GameBoard.startCardX);
@@ -322,6 +317,8 @@ public class GameInteract {
 
                                             ImageView viewChosenEndCard = getImageCard(goal.getCard()).getImageView();
                                             GameBoard.gridPaneBoard.add(viewChosenEndCard, coupleInterface.getColumn(), coupleInterface.getLine());
+
+                                            ((GoalCard)goal.getCard()).setVisible(true);
 
                                             if(goal.getCard().isGold()){
                                                 System.out.println("Fin de manche les mineurs ont gagné !!!");
@@ -424,9 +421,7 @@ public class GameInteract {
 											droppedLine = galleryCardOnBoardPos.getLine();
 											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-			                            	
-											// @TheSpyGeek TODO - MAJ du moteur
-											
+
 											success = true;
 										}
 										dragEvent.setDropCompleted(success);
@@ -648,12 +643,14 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
-				isDragged = true;
-				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.MOVE);
-				ClipboardContent content = new ClipboardContent();
-		        content.putImage(viewCard.snapshot(null, null));
-		        dragBoard.setContent(content);
-		        mouseEvent.consume();
+				if (mouseEvent.isPrimaryButtonDown()) {
+					isDragged = true;
+					Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.MOVE);
+					ClipboardContent content = new ClipboardContent();
+			        content.putImage(viewCard.snapshot(null, null));
+			        dragBoard.setContent(content);
+			        mouseEvent.consume();
+				}
 			}
 		});
 		// ---------- Drag finished on viewCard ----------
@@ -697,7 +694,13 @@ public class GameInteract {
 							node.toFront();
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
-						});
+                        });
+
+                        // MAJ CRUMBLING
+
+                        moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
+                        System.out.println(moteur.getBoard().mine());
+                        System.out.println(moteur.getBoard().debugAccessible());
                     }
                     // Turns off constraints indications
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
@@ -734,6 +737,8 @@ public class GameInteract {
                         // DEBUG BOARD
 //                        System.out.println(moteur.getBoard().mine());
                     }
+                    
+                    
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
                 } else {

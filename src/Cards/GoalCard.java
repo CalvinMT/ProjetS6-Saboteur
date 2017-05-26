@@ -5,6 +5,8 @@ import Board.Couple;
 public class GoalCard extends GalleryCard {
     private boolean gold = false;
 
+    private boolean visible = false;
+
     public GoalCard() {
         super(Gallery_t.but, 0, 8, true, true, true, true, true);
     }
@@ -17,6 +19,11 @@ public class GoalCard extends GalleryCard {
     public GoalCard(Couple c, boolean n, boolean s, boolean e, boolean w, boolean g) {
         super(Gallery_t.but, c.getLine(), c.getColumn(), true, n, s, e, w);
         this.gold = g;
+    }
+
+    @Override
+    public boolean isGoal(){
+        return true;
     }
 
 
@@ -60,5 +67,13 @@ public class GoalCard extends GalleryCard {
         return "GoalCard{" +
                 "gold=" + gold +
                 "} " + super.toString();
+    }
+
+    public void setVisible(boolean b){
+        this.visible = b;
+    }
+
+    public boolean isVisible(){
+        return this.visible;
     }
 }
