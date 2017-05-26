@@ -228,11 +228,6 @@ public class GameInteract {
 	
 	private boolean isDragged = false;
 	
-	private double mouseX;
-	private double mouseY;
-	private double viewCardX;
-	private double viewCardY;
-	
 	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
