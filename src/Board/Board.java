@@ -87,6 +87,7 @@ public class Board {
 
     public void removeCard(Couple coord) {
         int idx = 0;
+        // suppression dans la mine
         for (int i = 0; i < mine.size(); i++) {
             if (mine.get(i).card.getLine() == coord.getLine() && mine.get(i).card.getColumn() == coord.getColumn()) {
                 idx = i;
@@ -105,7 +106,7 @@ public class Board {
             if(mine.get(i).getSouth() == idx) {
                 mine.get(i).setSouth(-1);
             }
-            else if(mine.get(i).getNorth() > idx) {
+            else if(mine.get(i).getSouth() > idx) {
                 mine.get(i).setSouth(mine.get(i).getSouth() - 1);
             }
 
@@ -382,12 +383,15 @@ public class Board {
         String renvoi = "Mine:\n";
 
         for(int i=0; i<mine.size(); i++){
+            renvoi += "Index: "+i+"\n";
             renvoi +=  mine.get(i) + "\n";
         }
 
 
         return renvoi;
     }
+
+    public String debugAccessible
 
 
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée

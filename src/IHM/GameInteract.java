@@ -426,6 +426,9 @@ public class GameInteract {
 											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 			                            	
 											// @TheSpyGeek TODO - MAJ du moteur
+
+											moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
+											System.out.println(moteur.getBoard().mine());
 											
 											success = true;
 										}

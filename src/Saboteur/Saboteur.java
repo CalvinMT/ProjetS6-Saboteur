@@ -24,6 +24,7 @@ public class Saboteur {
 
     // init du moteur a partir d'un tableau de joueur
     static public void initMoteur(ArrayList<Player> arrayPlayer){
+//        engine = new Moteur(arrayPlayer, "--debugBoard");
         engine = new Moteur(arrayPlayer, "");
     }
 
