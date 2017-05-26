@@ -52,12 +52,16 @@
                   <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" pickOnBounds="false" prefHeight="181.0" prefWidth="118.0" />
                   <StackPane pickOnBounds="false" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <HBox fx:id="hboxDeckDiscard" maxHeight="181.0" maxWidth="236.0" prefHeight="181.0" prefWidth="236.0" />
-                        <Text fx:id="textNumberOfCardsInDeck" strokeType="OUTSIDE" strokeWidth="0.0" text="XX Cartes" visible="false" StackPane.alignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
+                        <HBox fx:id="hboxDeckDiscard" maxHeight="181.0" maxWidth="236.0" pickOnBounds="false" prefHeight="181.0" prefWidth="236.0" />
+                        <VBox fx:id="vboxNumberOfCardsInDeck" alignment="CENTER" maxHeight="20.0" maxWidth="100.0" styleClass="deckText" stylesheets="@style.css" visible="false">
+                           <children>
+                              <Text fx:id="textNumberOfCardsInDeck" strokeType="OUTSIDE" strokeWidth="0.0" text="XX Cartes" visible="false">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
                      </children>
                   </StackPane>
                </children>

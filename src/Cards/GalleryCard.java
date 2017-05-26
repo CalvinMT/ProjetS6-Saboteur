@@ -2,41 +2,31 @@ package Cards;
 
 import Board.Couple;
 import static Cards.GalleryCard.Gallery_t.start;
+import static Cards.GalleryCard.Gallery_t.tunnel;
 
 public class GalleryCard extends Card {
     public enum Gallery_t {start, but, tunnel};
     private Gallery_t type_g;
     private Couple coord = new Couple();
+    private int resist;
 
-    private boolean center = true,
-                    north = true,
-                    south = true,
-                    east = true,
-                    west = true;
+    private boolean center,
+                    north,
+                    south,
+                    east,
+                    west;
+
 
     public GalleryCard() { // Init start card
-        this.type = Card_t.gallery;
-        this.type_g = start;
+        this(start, 0, 0, true, true, true, true, true);
     }
 
     public GalleryCard(Gallery_t t, boolean c, boolean n, boolean s, boolean e, boolean w) {
-        this.type = Card_t.gallery;
-        this.type_g = t;
-        this.center = c;
-        this.north = n;
-        this.south = s;
-        this.east = e;
-        this.west = w;
+        this(t, 0, 0, c, n, s, e, w);
     }
     
     public GalleryCard(boolean c, boolean n, boolean s, boolean e, boolean w){
-        this.type = Card_t.gallery;
-        this.type_g = Gallery_t.tunnel;
-        this.center = c;
-        this.north = n;
-        this.south = s;
-        this.east = e;
-        this.west = w;
+        this(tunnel, 0, 0, c, n, s, e, w);
     }
 
     // Pour debug
@@ -50,6 +40,7 @@ public class GalleryCard extends Card {
         this.south = s;
         this.east = e;
         this.west = w;
+        setResist();
     }
 
     public int getLine() {
@@ -115,6 +106,49 @@ public class GalleryCard extends Card {
 
     public void setType_g(Gallery_t type_g) {
         this.type_g = type_g;
+    }
+
+    public void setResist() {
+        int res = 0;
+        if (this.center) {
+            if (this.north) {
+                res += 1;
+            }
+            if (this.south) {
+                res += 1;
+            }
+            if (this.east) {
+                res += 1;
+            }
+            if (this.west) {
+                res += 1;
+            }
+        }
+        // Valeur négative pour les saboteurs ?
+        /*else {
+            if (this.north) {
+                res -= 1;
+            }
+            if (this.south) {
+                res -= 1;
+            }
+            if (this.east) {
+                res -= 1;
+            }
+            if (this.west) {
+                res -= 1;
+            }
+        }*/
+
+        this.resist = res;
+    }
+
+    public int getResist() {
+        return resist;
+    }
+
+    public Couple getCoord() {
+        return coord;
     }
 
     public boolean equals(GalleryCard c) {
@@ -213,17 +247,21 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
-        if (type_g == start) return "Start";
-        return "GalleryCard{" +
-                "type=" + type +
-                ", x=" + coord.getLine() +
-                ", y=" + coord.getColumn() +
-                ", center=" + center +
-                ", north=" + north +
-                ", south=" + south +
-                ", east=" + east +
-                ", west=" + west +
-                '}';
+        if (type_g == start)
+            return "Start";
+        else
+            return "GalleryCard{" +
+                    "type=" + type +
+                    ", x=" + coord.getLine() +
+                    ", y=" + coord.getColumn() +
+                    ", center=" + center +
+                    ", north=" + north +
+                    ", south=" + south +
+                    ", east=" + east +
+                    ", west=" + west +
+                    // TODO : Ne pas utiliser avant implémentation du save/load
+                    ", resist=" + resist +
+                    '}';
     }
 
     public String debugString() {

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Saboteur;
+
 import Cards.*;
 import Cards.GalleryCard.Gallery_t;
 import Cards.RepareSabotageCard.Tools;
@@ -21,8 +22,7 @@ import Board.Couple;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
-import javax.management.relation.Role;
-import javax.swing.*;
+
 import java.util.ArrayList;
 
 /**
@@ -289,7 +289,7 @@ public class Moteur {
     public Moteur(ArrayList<Player> arrayPlayer, String option){
         if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
             this.arrayPlayer = arrayPlayer;
-            if(option.equals("--debugMoteur")){
+            if(option.equals("--debugBoard")){
                 this.pile = new DeckGalleryAction(80, 60);
             } else {
                 this.pile = new DeckGalleryAction();
@@ -569,7 +569,7 @@ public class Moteur {
 
     // si la manche est terminée
     public boolean endGame(){
-        return this.board.goalReached();
+        return this.board.goldReached();
     }
 
     // renvoie le numero du joueur courant

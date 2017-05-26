@@ -1,10 +1,7 @@
 package Player;
 
 import Board.Couple;
-import Cards.Card;
-import Cards.GalleryCard;
-import Cards.HandPlayer;
-import Cards.PlayerAttribute;
+import Cards.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,37 +13,25 @@ import static java.lang.Math.abs;
  * Created by thespygeek on 11/05/17.
  */
 public class IA extends Player{
-
-
-
     private ArrayList<Couple> goalsToTest;
 
     private Card cardToPlay;
     private Couple posToPlay;
+    private ArrayList<Player> allPlayers;
 
-    public IA(int index){
-        this.playerName = "IA " + index;
-        this.num = index;
-        this.difficulty = Difficulty.Easy;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
-        setUpGoals();
+    public IA(int index) {
+        this(index, "IA", Difficulty.Easy, new ArrayList<>());
     }
 
-    public IA(int index, String name){
-        this.playerName = name;
-        this.num = index;
-        this.difficulty = Difficulty.Easy;
-        this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
-        setUpGoals();
+    public IA(int index, String name) {
+        this(index, name, Difficulty.Easy, new ArrayList<>());
     }
 
     public IA(int index, String name, Difficulty d){
+        this(index, name, d, new ArrayList<>());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p){
         this.playerName = name;
         this.num = index;
         this.difficulty = d;
@@ -54,6 +39,7 @@ public class IA extends Player{
         attributeCards = new PlayerAttribute();
         this.playableCards = new HandPlayer();
         this.avatar = "robot_miner";
+        this.allPlayers = p;
         setUpGoals();
     }
 
@@ -63,7 +49,6 @@ public class IA extends Player{
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
     }
-
 
 
     // IA Random
@@ -87,13 +72,28 @@ public class IA extends Player{
     }
 
 
-    // IA Medium + Hard
+    // Computing
 
-    // Calcul de l'heuristique
+    // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
+    // Faux sinon
+    public boolean isInSwitchZone() {
+        for (int c = 6; c < 11; c++) {
+            for (int l = -4; l < 5; l++) {
+                if (c != 8 || (l != -2 && l != 0 && l != 2)) {
+                    if (null != board.getNodeFromMine(new Couple(l, c))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // Calcul de l'heuristique (distance)
     // Soit p une position
     // h(p) = max ( distance(p, but1), distance(p, but2), distance(p, but3) )
     // avec distance(p, but) = |(but.x - p.x)| + |(but.y - p.y)|
-    public float getDistanceToGoal(Couple goal, Couple cpl) {
+    public int getDistanceToGoal(Couple goal, Couple cpl) {
         return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
@@ -101,31 +101,34 @@ public class IA extends Player{
     // TODO : Choisir les cartes
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void choosePosition() {
-        float h, hMax = 0;
-        Card currCard, bestCard;
+        int h, hMin = -1;
+        Card c, bestCard;
+        GalleryCard currCard;
         Couple bestCpl = new Couple(0, 0);
         ArrayList<Couple> p;
 
         bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
-            currCard = lookAtCard(cardIdx);
-            if (currCard.getType() == gallery) { // Si la carte est une gallerie
-                p = this.board.getPossiblePositions((GalleryCard) currCard); // On calcule les positions possibles pour cette carte
+            c = lookAtCard(cardIdx);
+            if (c.getType() == gallery) { // Si la carte est une gallerie
+                currCard = (GalleryCard) c;
+                p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
 
-                if(p.size() > 0){
+                for (Couple currCpl : p) { // Pour chaque position possible
+                    for (Couple goal : goalsToTest) { // Et pour chaque but
+                        h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
 
-                    bestCpl = p.get(0);
-                    for (Couple currCpl : p) { // Pour chaque position possible
-                        for (Couple goal : goalsToTest) { // Et pour chaque but
-                            h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+                        // TODO : Verifier si on peut finir le chemin
+                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
 
-                            // TODO : Verifier si on peut finir le chemin
-                            if (h > hMax) { // Si l'heuristique est maximale
-                                hMax = h; // On met à jour l'heuristique max
-                                bestCpl = currCpl; // On garde la position
-                                bestCard = currCard; // et la carte associée
-                            }
+                        if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
+                            //System.out.printf(" True");
+                            hMin = h; // On met à jour l'heuristique max
+                            bestCpl = currCpl; // On garde la position
+                            bestCard = currCard; // et la carte associée
                         }
+                        //System.out.printf("\n");
                     }
                 }
             }
@@ -133,6 +136,14 @@ public class IA extends Player{
         this.posToPlay = bestCpl;
         this.cardToPlay = bestCard;
     }
+
+
+    public void mediumPlay() {
+            System.out.println("TODO : IA Medium");
+    }
+
+
+    // Utils
 
     // Supprime un but des buts à tester
     // cpl : couple de coordonnée du but
@@ -160,15 +171,16 @@ public class IA extends Player{
         return goalsToTest;
     }
 
+    // Retroune la carte à jouer
     public Card getCardToPlay() {
         return cardToPlay;
     }
 
+    // Retourne la position où jouer la carte
+    // getPosPlay n'est affectée/mise à jour que si la carte à jouer est une gallerie
     public Couple getPosToPlay() {
         return posToPlay;
     }
-
-
 
     @Override
     public boolean iaPlayCard() {
@@ -176,6 +188,11 @@ public class IA extends Player{
             case Easy:
                 randomPlay();
                 break;
+            case Medium:
+                //playMedium();
+                break;
+            case Player:
+                System.err.println("Pas une IA");
             default:
                 System.out.println("TODO : IA " + this.difficulty);
         }
@@ -185,8 +202,8 @@ public class IA extends Player{
     
     @Override
     public void setGoldPoints(int gp){
-    	if (gp >= 0)
-    		this.goldPoints += gp;
+        if (gp >= 0)
+            this.goldPoints += gp;
     }
 
 
