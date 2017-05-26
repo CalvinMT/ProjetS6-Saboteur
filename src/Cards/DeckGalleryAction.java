@@ -134,7 +134,7 @@ public class DeckGalleryAction extends Deck {
 
         // Carte effondrement
         for(int i=0; i<nbCrash; i++){
-            this.arrayCard.add(new ActionCard("Crumbing"));
+            this.arrayCard.add(new ActionCard("Crumbling"));
         }
 
 
