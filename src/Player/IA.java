@@ -3,6 +3,7 @@ package Player;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
+import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,12 +15,15 @@ import static java.lang.Math.abs;
  * Created by thespygeek on 11/05/17.
  */
 public class IA extends Player {
-    private ArrayList<Couple> goalsToTest;
+    final int SABOTAGE_VALUE
+    final int GALLERY_VALUE
+    final int ACTION_VALUE
 
     private Card cardToPlay;
     private Couple posToPlay;
     private ArrayList<Move> moves;
     private ArrayList<Player> allPlayers;
+    private ArrayList<Couple> goalsToTest;
 
     public IA(int index) {
         this(index, "IA", Difficulty.Easy, new ArrayList<>());
@@ -180,7 +184,7 @@ public class IA extends Player {
         int idx = 0,
             vMax = 0;
         for (int i = 0; i < moves.size(); i++) {
-            if (moves.get(i).getValue() > vMax) {
+            if(moves.get(i).getValue() > vMax) {
                 vMax = moves.get(i).getValue();
                 idx = i;
             }
@@ -188,6 +192,20 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    public void computeMovesValue() {
+        if (((RoleCard) this.getRole()).isSaboteur()) {
+            if (isInSwitchZone()) {
+                // TODO : bloquer la progression / saboter
+            }
+            else {
+                // TODO : se rapprocher des buts avec des cartes de res faible
+            }
+        }
+        else {
+            // TODO : plus on est proche des but plus il est important de placer des cartes forte
+            // Aussi Saboter les saboteur
+        }
+    }
 
     public void mediumPlay() {
             System.out.println("TODO : IA Medium");
