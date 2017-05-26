@@ -215,9 +215,42 @@ public abstract class Player {
     
     public abstract void setGoldPoints(int gp);
 
-    public abstract String toString();
 
 
+
+    public String toString(){
+        String renvoi = "";
+
+        renvoi += "Pseudo: "+this.playerName + "\n";
+        renvoi += "Difficulté: " +this.difficulty+"\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += "Role: "+this.role + "\n";
+        }
+        renvoi += "GoldPoints: "+this.goldPoints + "\n";
+        renvoi += "AttributeCards: \n"+this.attributeCards + "\n";
+        renvoi += "Cartes dans la main: \n"+this.playableCards + "\n";
+
+        return renvoi;
+    }
+
+    public String toFile(){
+        String renvoi = "";
+
+        renvoi += this.playerName + "\n";
+        renvoi += this.difficulty+"\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += this.role + "\n";
+        }
+        renvoi += this.goldPoints + "\n";
+        renvoi += this.attributeCards + "\n";
+        renvoi += this.playableCards + "\n";
+
+        return renvoi;
+    }
 
     public boolean iaPlayCard() {
         return false;

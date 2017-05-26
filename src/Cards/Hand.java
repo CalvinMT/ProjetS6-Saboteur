@@ -64,7 +64,7 @@ public class Hand extends Deck {
                 }
             }
         }
-        //renvoi += " ]";
+//        renvoi += " ]";
         return renvoi;
     }
 

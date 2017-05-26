@@ -189,25 +189,4 @@ public class IA extends Player{
     		this.goldPoints += gp;
     }
 
-
-    @Override
-    public String toString(){
-        String renvoi = "";
-
-        renvoi += this.playerName + "\n";
-        renvoi += "IA\n";
-        renvoi += this.difficulty + "\n";
-        if(this.role == null){
-            renvoi += "Aucun role pour l'instant\n";
-        } else {
-            renvoi += this.role + "\n";
-        }
-        renvoi += this.goldPoints + "\n";
-        renvoi += this.attributeCards + "\n";
-        renvoi += this.playableCards + "\n";
-        if (this.cardToPlay != null) renvoi += this.cardToPlay + "\n";
-        if (this.posToPlay != null) renvoi += this.posToPlay + "\n";
-
-        return renvoi;
-    }
 }

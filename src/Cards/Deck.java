@@ -63,4 +63,19 @@ public class Deck {
     }
 
 
+    public String toFile(){
+        String renvoi = "Deck : ";
+        renvoi += "[ ";
+        for(int i=0; i<this.arrayCard.size(); i++){
+            renvoi += this.arrayCard.get(i).toString();
+
+            if(i<this.arrayCard.size()-1){
+                renvoi += " ; ";
+            }
+        }
+        renvoi += " ]";
+        return renvoi;
+    }
+
+
 }

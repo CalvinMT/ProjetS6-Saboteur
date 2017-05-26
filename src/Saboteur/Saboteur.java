@@ -34,4 +34,16 @@ public class Saboteur {
     }
 
 
+    static public void main(String [] args){
+
+        Moteur m = new Moteur("loadfile");
+
+        System.out.println(m);
+
+
+
+
+    }
+
+
 }

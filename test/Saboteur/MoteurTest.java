@@ -3,6 +3,7 @@ package Saboteur;
 import Player.*;
 import org.junit.Assert;
 import org.junit.Test;
+import Player.Player.Difficulty;
 
 import java.util.ArrayList;
 
@@ -89,6 +90,51 @@ public class MoteurTest {
         }
 
         Assert.assertTrue(m.nbPlayer() > 0);
+    }
+
+
+    @Test
+    public void testSaveLoad1(){
+
+        Load l = new Load("loadfile");
+
+        Boolean success = l.load();
+        System.out.println(l.loadString());
+
+        Assert.assertTrue(success);
+
+    }
+
+    @Test
+    public void testSaveLoad2(){
+
+        ArrayList<Player> arrayPlayer = new ArrayList<Player>();
+        arrayPlayer.add(new PlayerHuman(0, "Thespygeek"));
+        arrayPlayer.add(new PlayerHuman(1, "DrZed"));
+        arrayPlayer.add(new PlayerHuman(2, "Ekalkas"));
+        arrayPlayer.add(new IA(3, "IA 1" ,Difficulty.Easy));
+        arrayPlayer.add(new IA(4, "IA 1" ,Difficulty.Medium));
+
+        Moteur engine = new Moteur(arrayPlayer, "");
+
+        while(!engine.allRoleAreSet()){
+            try {
+                engine.chooseRole(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        engine.save("Test1");
+
+        Load l = new Load("Test1");
+        Assert.assertTrue(l.load());
+
+
+
+
     }
 
 }
