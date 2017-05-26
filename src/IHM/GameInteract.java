@@ -424,8 +424,10 @@ public class GameInteract {
 											droppedLine = galleryCardOnBoardPos.getLine();
 											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-
-											success = true;
+					                        
+											moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
+											
+					                        success = true;
 										}
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
@@ -678,7 +680,6 @@ public class GameInteract {
                                 GameBoard.gridPaneBoard.getChildren().remove(node);
                             }
                         });
-
                     }
                     // Turns off end card's indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
@@ -705,7 +706,6 @@ public class GameInteract {
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
                         });
-                        moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
                         System.out.println(moteur.getBoard().mine());
                         System.out.println(moteur.getBoard().debugAccessible());
                     }
