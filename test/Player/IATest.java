@@ -49,9 +49,8 @@ public class IATest {
 
     }
 
-    // TODO
-    @Test
-    public void choosePosition() throws Exception {
+/*     @Test
+   public void choosePosition() throws Exception {
         IA ia = new IA(0, "IA", Medium);
         Couple cpl, expected;
         Board b = new Board();
@@ -151,7 +150,7 @@ public class IATest {
         }
 
     }
-
+*/
     @Test
     public void goalsAction() throws Exception {
         ArrayList<Couple> goals = ia.getGoalsToTest();
@@ -236,10 +235,6 @@ public class IATest {
         }
     }
 
-    @Test
-    public void getGoalsToTest() throws Exception {
-        System.out.println("TODO : IATest.java getGoalsToTest()");
-    }
 
     @Test
     public void iaPlayCard() throws Exception {
@@ -247,12 +242,11 @@ public class IATest {
     }
 
     @Test
-    public void getClosestCoordToGoal() throws Exception {
+    public void isInSwitchZone() throws Exception {
         IA ia = new IA(0, "IA", Medium);
         ia.setBoard(new Board());
         Assert.assertFalse(ia.isInSwitchZone());
         ia.board.addCard(new GalleryCard(tunnel, 4, 6, true, false, true, true, true));
         Assert.assertTrue(ia.isInSwitchZone());
-
     }
 }

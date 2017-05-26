@@ -2,6 +2,7 @@ package Player;
 
 import Board.Couple;
 import Cards.*;
+import Cards.ActionCard.Action;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,11 +13,12 @@ import static java.lang.Math.abs;
 /**
  * Created by thespygeek on 11/05/17.
  */
-public class IA extends Player{
+public class IA extends Player {
     private ArrayList<Couple> goalsToTest;
 
     private Card cardToPlay;
     private Couple posToPlay;
+    private ArrayList<Move> moves;
     private ArrayList<Player> allPlayers;
 
     public IA(int index) {
@@ -41,6 +43,7 @@ public class IA extends Player{
         this.avatar = "robot_miner";
         this.allPlayers = p;
         setUpGoals();
+        moves = new ArrayList<Move>();
     }
 
     private void setUpGoals() {
@@ -55,7 +58,11 @@ public class IA extends Player{
     public void randomPlay() {
         ArrayList<Couple> p;
         Random r = new Random();
-        int range = r.nextInt(nbCardHand() - 1);
+        int range = 1;
+        if (nbCardHand() > 1)
+            range = r.nextInt(nbCardHand() - 1);
+        else if (nbCardHand() == 1)
+            range = r.nextInt(1);
         if (range < 1) {
             range = 1;
         }
@@ -63,11 +70,33 @@ public class IA extends Player{
         if (cardToPlay.getType() == gallery) {
             this.board.computeAccessCards();
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
-            range = r.nextInt(p.size() - 1);
-            if (range < 1) {
-                range = 1;
+            if (p.size() > 1) {
+                range = r.nextInt(p.size() - 1);
+                if (range < 1)
+                    range = 1;
+                this.posToPlay = p.get(r.nextInt(range));
             }
-            this.posToPlay = p.get(r.nextInt(range));
+            else if (p.size() == 1) {
+                range = 1;
+                this.posToPlay = p.get(r.nextInt(range));
+            }
+            else
+                System.out.println("Il n'y a aucune case ou placer la carte.");
+        }
+        else if (cardToPlay.getType() == Card.Card_t.action ){
+            ActionCard actioncard = (ActionCard) cardToPlay;
+            if (actioncard.getAction() == Action.Map) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Crumbing) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Repare) {
+                // TODO
+            }
+            else if (actioncard.getAction() == Action.Sabotage) {
+                // TODO
+            }
         }
     }
 
@@ -97,44 +126,66 @@ public class IA extends Player{
         return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
+    public Move whereToPlaceCard(GalleryCard card) {
+        int h, hMin = -1;
+        ArrayList<Couple> p;
+
+        p = this.board.getPossiblePositions(card); // On calcule les positions possibles pour cette carte
+
+        for (Couple currCpl : p) { // Pour chaque position possible
+            for (Couple goal : goalsToTest) { // Et pour chaque but
+                h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+
+                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
+
+                // TODO : Verifier si on peut finir le chemin
+                // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
+
+                if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
+                    hMin = h; // On met à jour l'heuristique max
+                    card.setLine(currCpl.getLine());
+                    card.setColumn(currCpl.getColumn());
+                }
+                //System.out.printf("\n");
+            }
+        }
+        return new Move(card, card.getCoord(), hMin);
+    }
+
     // TODO : Tests
     // TODO : Choisir les cartes
     // Determine la position la plus proche d'un but et retourne ses coordonnées
-    public void choosePosition() {
-        int h, hMin = -1;
-        Card c, bestCard;
-        GalleryCard currCard;
-        Couple bestCpl = new Couple(0, 0);
-        ArrayList<Couple> p;
+    public void getGalleryMoves() {
+        Card c;
+        //GalleryCard currCard;
+        //Couple bestCpl = new Couple(0, 0);
+        //ArrayList<Move> m;
 
-        bestCard = lookAtCard(0);
+        //bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
             c = lookAtCard(cardIdx);
             if (c.getType() == gallery) { // Si la carte est une gallerie
-                currCard = (GalleryCard) c;
-                p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
-
-                for (Couple currCpl : p) { // Pour chaque position possible
-                    for (Couple goal : goalsToTest) { // Et pour chaque but
-                        h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
-                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
-
-                        // TODO : Verifier si on peut finir le chemin
-                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
-
-                        if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
-                            //System.out.printf(" True");
-                            hMin = h; // On met à jour l'heuristique max
-                            bestCpl = currCpl; // On garde la position
-                            bestCard = currCard; // et la carte associée
-                        }
-                        //System.out.printf("\n");
-                    }
-                }
+                moves.add(whereToPlaceCard((GalleryCard) c));
             }
         }
-        this.posToPlay = bestCpl;
-        this.cardToPlay = bestCard;
+
+        getBestValueMove();
+    }
+
+    public void choosePosition() {
+        return;
+    }
+
+    private Move getBestValueMove() {
+        int idx = 0,
+            vMax = 0;
+        for (int i = 0; i < moves.size(); i++) {
+            if (moves.get(i).getValue() > vMax) {
+                vMax = moves.get(i).getValue();
+                idx = i;
+            }
+        }
+        return moves.get(idx);
     }
 
 
@@ -181,6 +232,55 @@ public class IA extends Player{
     public Couple getPosToPlay() {
         return posToPlay;
     }
+    
+    // Retourne un joueur quelconque, différent de lui-meme & ayant un role opposé, au quel l'IA mettra un malus
+    public Player choosePlayerToSabotage(RepareSabotageCard card, RoleCard roleIA){
+        Player currentplayer, p = null;
+        if (roleIA.isSaboteur()) {
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else if (roleIA.isMiner()) {
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else
+            System.err.println("Role incorrecte.");
+        return p;
+    }
+    
+    // Retourne un joueur quelconque, lui-meme inclus & ayant le meme role, au quel l'IA mettra une carte pour enlever un malus
+    public Player choosePlayerToRepair(RepareSabotageCard card, RoleCard roleIA){
+        Player currentplayer, p = null;
+        if (roleIA.isMiner()){
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer.getRole().equals(new RoleCard("Mineur")) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                    p = currentplayer;
+                }
+            }
+        }
+        else if (roleIA.isSaboteur()){
+            for (int i=0; i<this.allPlayers.size(); i++) {
+                currentplayer = this.allPlayers.get(i);
+                if (currentplayer.getRole().equals(new RoleCard("Saboteur")) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
+                    p = this.allPlayers.get(i);
+                }
+            }
+        }
+        else
+            System.err.println("Role incorrecte.");
+        return p;
+    }
+    
 
     @Override
     public boolean iaPlayCard() {
