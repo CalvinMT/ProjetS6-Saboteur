@@ -307,14 +307,21 @@ public class GameInteract {
                                     for(int i=1; i<=3; i++){
                                         goal = moteur.getBoard().getMine().get(i);
 
-                                        if(goal.reached() && !((GoalCard)goal.getCard()).isVisible()){
+                                        if(moteur.getBoard().nodeReached(goal) && !((GoalCard)goal.getCard()).isVisible()){
 
                                             Couple coupleMoteur = goal.getCard().getCoord();
+                                            GalleryCard goalCard = moteur.getBoard().getNodeFromMine(coupleMoteur).getCard();
                                             Couple coupleInterface = new Couple(coupleMoteur.getLine()+GameBoard.startCardY, coupleMoteur.getColumn()+GameBoard.startCardX);
+
+                                            if(!moteur.getBoard().isCompatibleWithNeighbors(goalCard, coupleMoteur)){
+                                                moteur.getBoard().setCardInMine(i, goalCard.rotate());
+                                                goal = moteur.getBoard().getMine().get(i);
+                                            }
+
 
                                             // DEBUG GOAL
                                             System.out.println("Le but à "+coupleMoteur+" a ete atteint");
-                                            System.out.println(moteur.getBoard().mine());
+//                                            System.out.println(moteur.getBoard().mine());
 
                                             ImageView viewChosenEndCard = getImageCard(goal.getCard()).getImageView();
                                             GameBoard.gridPaneBoard.add(viewChosenEndCard, coupleInterface.getColumn(), coupleInterface.getLine());

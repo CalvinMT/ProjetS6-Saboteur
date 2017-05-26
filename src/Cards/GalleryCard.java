@@ -10,7 +10,7 @@ public class GalleryCard extends Card {
     private Couple coord = new Couple();
     private int resist;
 
-    private boolean center,
+    protected boolean center,
                     north,
                     south,
                     east,

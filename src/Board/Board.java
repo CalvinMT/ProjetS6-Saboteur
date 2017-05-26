@@ -288,7 +288,6 @@ public class Board {
                 }
             }
         }
-
         //est
         currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()+1) );
         if (currNode != null) {
@@ -324,6 +323,13 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public boolean nodeReached(Node n){
+        computeAccessCards();
+        Couple c = n.getCard().getCoord();
+
+        return accessCard.containsKey(c);
     }
 
     private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
@@ -366,6 +372,10 @@ public class Board {
             n = null;
         }
         return n;
+    }
+
+    public void setCardInMine(int index, GalleryCard c){
+        this.mine.set(index, new Node(c));
     }
 
     public boolean goldReached(){

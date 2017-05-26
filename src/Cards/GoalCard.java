@@ -43,6 +43,20 @@ public class GoalCard extends GalleryCard {
         return this.gold;
     }
 
+    @Override
+    public GoalCard rotate(){
+        boolean tmp;
+
+        tmp = this.north;
+        this.north = this.south;
+        this.south = tmp;
+
+        tmp = this.east;
+        this.east = this.west;
+        this.west = tmp;
+
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
