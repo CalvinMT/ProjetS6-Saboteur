@@ -314,6 +314,7 @@ public class GameInteract {
 
                                             // DEBUG GOAL
                                             System.out.println("Le but à "+coupleMoteur+" a ete atteint");
+                                            System.out.println(moteur.getBoard().mine());
 
                                             ImageView viewChosenEndCard = getImageCard(goal.getCard()).getImageView();
                                             GameBoard.gridPaneBoard.add(viewChosenEndCard, coupleInterface.getColumn(), coupleInterface.getLine());
