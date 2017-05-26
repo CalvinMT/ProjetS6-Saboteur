@@ -228,11 +228,6 @@ public class GameInteract {
 	
 	private boolean isDragged = false;
 	
-	private double mouseX;
-	private double mouseY;
-	private double viewCardX;
-	private double viewCardY;
-	
 	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
@@ -637,24 +632,14 @@ public class GameInteract {
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				/*if (event.isPrimaryButtonDown()  &&  !event.isSecondaryButtonDown()) {
-					hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
-					mouseX = event.getSceneX();
-					mouseY = event.getSceneY();
-					viewCardX = ((ImageView)(event.getSource())).getTranslateX();
-					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
-				}*/
-
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
 					viewCard.setRotate(viewCard.getRotate() + 180);
-
 
                     int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
                     Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
                     GalleryCard cardChanged = ((GalleryCard) cardBefore).rotate();
 
                     ((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
-
 				}
 			}
 		});
@@ -758,40 +743,6 @@ public class GameInteract {
                 dragEvent.consume();
 			}
 		});
-		// ---------- Mouse drags viewCard ----------
-		/*viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()) {
-					double mouseOffSetX = event.getSceneX() - mouseX;
-					double mouseOffSetY = event.getSceneY() - mouseY;
-					viewCard.setTranslateX(viewCardX + mouseOffSetX);
-					viewCard.setTranslateY(viewCardY + mouseOffSetY);
-					// todo
-					if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
-						card_sticks_to_grid
-					}
-				}
-		}
-		});*/
-		// ---------- Mouse releases viewCard ----------
-		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
-				// Turns off indications
-				if (!event.isPrimaryButtonDown()) {
-					hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
-					if (card.getType().equals(Card_t.gallery)) {
-						possiblePositions.stream().forEach(position -> {
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-							GameBoard.gridPaneBoard.getChildren().remove(node);
-						});
-					}
-				}
-			}
-		});*/
 	}
 	
 	
