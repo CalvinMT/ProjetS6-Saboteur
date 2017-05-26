@@ -425,11 +425,12 @@ public class GameInteract {
 											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
 			                            	
-											// @TheSpyGeek TODO - MAJ du moteur
+											// MAJ CRUMBLING
 
 											moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
-											System.out.println(moteur.getBoard().mine());
-											
+//											System.out.println(moteur.getBoard().mine());
+                                            System.out.println(moteur.getBoard().debugAccessible());
+
 											success = true;
 										}
 										dragEvent.setDropCompleted(success);

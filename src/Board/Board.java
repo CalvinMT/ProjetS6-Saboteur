@@ -4,10 +4,7 @@ package Board;
 import Cards.GalleryCard;
 import Cards.GoalCard;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
@@ -391,7 +388,22 @@ public class Board {
         return renvoi;
     }
 
-    public String debugAccessible
+    public String debugAccessible(){
+        String renvoi = "Accessible: \n";
+        computeAccessCards();
+        Node node;
+
+        Set<Couple> hash = accessCard.keySet();
+
+        Iterator<Couple> it = hash.iterator();
+
+        while(it.hasNext()){
+            node = accessCard.get(it.next());
+            renvoi += node + "\n";
+        }
+
+        return renvoi;
+    }
 
 
     // Debug: Les fonctions ci-après sont prévues pour les uniquement, aucune verification n'est effectuée
