@@ -31,8 +31,6 @@ public class MenuOptions {
 	@FXML
 	private ChoiceBox<String> choiceBox;
 	@FXML
-	private Text textRestart;
-	@FXML
 	private Text textApplied;
 	@FXML
 	private CheckBox checkBoxFullscreen;
@@ -85,17 +83,11 @@ public class MenuOptions {
 		    	MainLoader.autoResizeToResolution(anchorPaneOptions);
 		    }
 		    writer.close();
-			textRestart.setVisible(true);
-		    FadeTransition fadeTextRestart = new FadeTransition(Duration.millis(5000), textRestart);
-		    fadeTextRestart.setFromValue(1.0);
-		    fadeTextRestart.setToValue(0.0);
-		    fadeTextRestart.setCycleCount(1);
 			textApplied.setVisible(true);
 		    FadeTransition fadeTextApplied = new FadeTransition(Duration.millis(5000), textApplied);
 		    fadeTextApplied.setFromValue(1.0);
 		    fadeTextApplied.setToValue(0.0);
 		    fadeTextApplied.setCycleCount(1);
-		    fadeTextRestart.play();
 		    fadeTextApplied.play();
 
 		} catch (IOException e) {
@@ -109,7 +101,6 @@ public class MenuOptions {
 	@FXML
 	public void initialize () {
 		String string;
-		textRestart.setVisible(false);
 		textApplied.setVisible(false);
 		choiceBox.setItems(resolutionList);
 		try {
