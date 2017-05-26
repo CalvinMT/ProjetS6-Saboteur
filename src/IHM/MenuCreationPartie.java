@@ -114,9 +114,6 @@ public class MenuCreationPartie {
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
-
-        System.out.println(lobby);
-
     }
 
     @FXML
@@ -124,6 +121,8 @@ public class MenuCreationPartie {
 
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
+        	((ImageView)((BorderPane)MainLoader.anchorPaneMainLoader.getParent()).getRight()).setVisible(true);
+        	
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
 
             System.out.println(Saboteur.getMoteur());
@@ -180,6 +179,9 @@ public class MenuCreationPartie {
         columnType.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Type"));
         columnDifficulte.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ComboBox<String>>("Difficulte"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
+        if (MainLoader.anchorPaneMainLoader.getScene().getWindow().getWidth() < 1600.0) {
+        	((ImageView)((BorderPane)MainLoader.anchorPaneMainLoader.getParent()).getRight()).setVisible(false);
+        }
     }
 
 	// A custom ListCell that displays an ImageView

@@ -190,9 +190,9 @@ public class GameInteract {
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, playerInfoConstraintPickaxePos.getColumn(), playerInfoConstraintPickaxePos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, playerInfoConstraintWagonPos.getColumn(), playerInfoConstraintWagonPos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoAvatar, playerInfoAvatarPos.getColumn(), playerInfoAvatarPos.getLine()); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
-		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine());
-		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
-		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine()); GridPane.setMargin(textPlayerInfoPseudo, new Insets(50, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine()); GridPane.setMargin(textPlayerInfoRole, new Insets(5, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine()); GridPane.setMargin(textPlayerInfoGold, new Insets(0, 0, 0, 10));
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
 		
 		
@@ -734,6 +734,8 @@ public class GameInteract {
                         // DEBUG BOARD
 //                        System.out.println(moteur.getBoard().mine());
                     }
+                    
+                    
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
                 } else {

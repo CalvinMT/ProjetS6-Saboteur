@@ -18,10 +18,13 @@
       </ImageView>
    </top>
    <left>
-      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="anchorPaneMainLoader" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></AnchorPane>
    </left>
    <right>
-      <ImageView fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">
+      <ImageView fx:id="viewDwarf" fitHeight="372.0" fitWidth="372.0" BorderPane.alignment="CENTER">
          <image>
             <Image url="@../ressources/nain_mineurs.png" />
          </image>

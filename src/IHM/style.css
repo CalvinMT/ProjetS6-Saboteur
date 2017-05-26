@@ -9,3 +9,9 @@
 .deckText {
     -fx-background-color: #eeeeee;
 }
+
+.cardHolder {
+	-fx-background-image: url("../ressources/repose_carte.png");
+	/*-fx-background-size: 96, 205;
+	-fx-background-repeat: no-repeat;*/
+}

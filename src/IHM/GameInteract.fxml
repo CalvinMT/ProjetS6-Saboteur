@@ -48,7 +48,7 @@
          <bottom>
             <StackPane fx:id="stackPaneBottom" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox fx:id="hboxPlayerInfos" pickOnBounds="false" />
+                  <HBox fx:id="hboxPlayerInfos" pickOnBounds="false" styleClass="cardHolder" stylesheets="@style.css" />
                   <HBox fx:id="hboxGameCardsInHand" onMouseEntered="#handleHBoxMouseEntered" onMouseExited="#handleHBoxMouseExited" pickOnBounds="false" prefHeight="181.0" prefWidth="118.0" />
                   <StackPane pickOnBounds="false" prefHeight="150.0" prefWidth="200.0">
                      <children>
