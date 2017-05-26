@@ -339,50 +339,53 @@ public class GameInteract {
 					// Turns on end card's indications
 					if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 						GameBoard.endCards.stream().forEach(endCard -> {
-							ImageView viewIndicationEndCard = new ImageView("ressources/carte_indication.png");
-							GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
-							// Drag over viewIndicationEndCard
-							viewIndicationEndCard.setOnDragOver(new EventHandler <DragEvent>() {
-								@Override
-								public void handle(DragEvent dragEvent) {
-						            if (dragEvent.getGestureSource() != viewIndicationEndCard  &&  dragEvent.getDragboard().hasImage()) {
-						            	dragEvent.acceptTransferModes(TransferMode.MOVE);
-						            }
-						            dragEvent.consume();
-								}
-							});
-							// Drag dropped viewIndicationEndCard
-							viewIndicationEndCard.setOnDragDropped(new EventHandler <DragEvent>(){
-								@Override
-								public void handle(DragEvent dragEvent) {
-									Dragboard dragBoard = dragEvent.getDragboard();
-									boolean success = false;
-									if (dragBoard.hasImage()) {
-										droppedColumn = endCard.getColumn();
-										droppedLine = endCard.getLine();
-										Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
-										GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-										ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
-										GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
-										
-										// Delai retournement de carte but
-		                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
-		                            	if (viewChosenEndCard.getRotate() != 0.0) {
-		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
-												@Override
-												public void handle(ActionEvent event) {
-													viewChosenEndCard.setRotate(0.0);
-												}
-											});
-		                            	}
-		                            	timeChosenEndCard.play();
-		                            	
-										success = true;
+							Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
+							if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
+								ImageView viewIndicationEndCard = new ImageView("ressources/carte_indication.png");
+								GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
+								// Drag over viewIndicationEndCard
+								viewIndicationEndCard.setOnDragOver(new EventHandler <DragEvent>() {
+									@Override
+									public void handle(DragEvent dragEvent) {
+							            if (dragEvent.getGestureSource() != viewIndicationEndCard  &&  dragEvent.getDragboard().hasImage()) {
+							            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+							            }
+							            dragEvent.consume();
 									}
-									dragEvent.setDropCompleted(success);
-									dragEvent.consume();
-								}
-							});
+								});
+								// Drag dropped viewIndicationEndCard
+								viewIndicationEndCard.setOnDragDropped(new EventHandler <DragEvent>(){
+									@Override
+									public void handle(DragEvent dragEvent) {
+										Dragboard dragBoard = dragEvent.getDragboard();
+										boolean success = false;
+										if (dragBoard.hasImage()) {
+											droppedColumn = endCard.getColumn();
+											droppedLine = endCard.getLine();
+											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+											ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
+											GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
+											
+											// Delai retournement de carte but
+			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
+			                            	if (viewChosenEndCard.getRotate() != 0.0) {
+			                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
+													@Override
+													public void handle(ActionEvent event) {
+														viewChosenEndCard.setRotate(0.0);
+													}
+												});
+			                            	}
+			                            	timeChosenEndCard.play();
+			                            	
+											success = true;
+										}
+										dragEvent.setDropCompleted(success);
+										dragEvent.consume();
+									}
+								});
+							}
 						});
 					}
 					// Turns on crumbling indications
@@ -587,13 +590,17 @@ public class GameInteract {
 							});
 						}
 						else if (card.getType().equals(Card_t.action)) {
+							// Turns off end card's indication
 							if (((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
 								// FIXME - bug when double click-drag
 								GameBoard.endCards.stream().forEach(endCard -> {
-									Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-									node.toFront();
-									node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-									GameBoard.gridPaneBoard.getChildren().remove(node);
+									Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
+									if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
+										Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+										node.toFront();
+										node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+										GameBoard.gridPaneBoard.getChildren().remove(node);
+									}
 								});
 							}
 							// Turns off crumbling indications
@@ -676,12 +683,15 @@ public class GameInteract {
                     // Turns off end card's indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Map)) {
                         GameBoard.endCards.stream().forEach(endCard -> {
-                            Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-                            if (endCard.getColumn() != droppedColumn  ||  endCard.getLine() != droppedLine) {
-                                node.toFront();
-                                node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-                            }
-                            GameBoard.gridPaneBoard.getChildren().remove(node);
+							Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
+							if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
+	                            Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+	                            if (endCard.getColumn() != droppedColumn  ||  endCard.getLine() != droppedLine) {
+	                                node.toFront();
+	                                node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+	                            }
+	                            GameBoard.gridPaneBoard.getChildren().remove(node);
+                        	}
                         });
                     }
                     // Turns off crumbling indication
@@ -695,9 +705,6 @@ public class GameInteract {
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
                         });
-
-                        // MAJ CRUMBLING
-
                         moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
                         System.out.println(moteur.getBoard().mine());
                         System.out.println(moteur.getBoard().debugAccessible());
