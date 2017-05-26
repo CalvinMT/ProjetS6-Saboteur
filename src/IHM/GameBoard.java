@@ -110,7 +110,6 @@ public class GameBoard {
 		gridPaneBoard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println(gridPaneBoard.getTranslateX() + "   :   " + gridPaneBoard.getTranslateY());
 				if (event.isPrimaryButtonDown()) {
 					anchorPaneGameBoard.getScene().setCursor(Cursor.CLOSED_HAND);
 					pressedX = event.getSceneX();
