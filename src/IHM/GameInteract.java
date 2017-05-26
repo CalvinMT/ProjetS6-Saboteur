@@ -1,10 +1,19 @@
 package IHM;
 
+import static IHM.ImageCard.getImageCard;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
+
 import Board.Couple;
-import Cards.*;
+import Cards.ActionCard;
+import Cards.Card;
 import Cards.Card.Card_t;
+import Cards.GalleryCard;
+import Cards.GalleryCard.Gallery_t;
+import Cards.Hand;
+import Cards.HandPlayer;
+import Cards.RepareSabotageCard;
 import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
@@ -31,19 +40,16 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import static IHM.ImageCard.getImageCard;
 
 
 public class GameInteract {
@@ -222,11 +228,6 @@ public class GameInteract {
 	
 	private boolean isDragged = false;
 	
-	private double mouseX;
-	private double mouseY;
-	private double viewCardX;
-	private double viewCardY;
-	
 	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
 		viewCard.setOnMouseEntered(new EventHandler <MouseEvent>() {
@@ -394,6 +395,45 @@ public class GameInteract {
 						GameBoard.endCards.stream().forEach(endCard -> {
 							ImageView viewIndicationEndCard = new ImageView("ressources/carte_non_indication.png");
 							GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
+						});
+						
+						moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)node -> {
+							GalleryCard galleryCardOnBoard = node.getCard();
+							Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
+							if (!galleryCardOnBoard.getGalleryType().equals(Gallery_t.start)  &&  !galleryCardOnBoard.getGalleryType().equals(Gallery_t.but)) {
+								ImageView viewIndicationCrumbling = new ImageView("ressources/carte_indication.png");
+								GameBoard.gridPaneBoard.add(viewIndicationCrumbling, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
+								// Drag over viewIndicationCrumbling
+								viewIndicationCrumbling.setOnDragOver(new EventHandler <DragEvent>() {
+									@Override
+									public void handle(DragEvent dragEvent) {
+							            if (dragEvent.getGestureSource() != viewIndicationCrumbling  &&  dragEvent.getDragboard().hasImage()) {
+							            	dragEvent.acceptTransferModes(TransferMode.MOVE);
+							            }
+							            dragEvent.consume();
+									}
+								});
+								// Drag dropped viewIndicationCrumbling
+								viewIndicationCrumbling.setOnDragDropped(new EventHandler <DragEvent>(){
+									@Override
+									public void handle(DragEvent dragEvent) {
+										Dragboard dragBoard = dragEvent.getDragboard();
+										boolean success = false;
+										if (dragBoard.hasImage()) {
+											droppedColumn = galleryCardOnBoardPos.getColumn();
+											droppedLine = galleryCardOnBoardPos.getLine();
+											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+			                            	
+											// @TheSpyGeek TODO - MAJ du moteur
+											
+											success = true;
+										}
+										dragEvent.setDropCompleted(success);
+										dragEvent.consume();
+									}
+								});
+							}
 						});
 					}
 					// Turns on constraints indications
@@ -564,14 +604,12 @@ public class GameInteract {
 							// Turns off crumbling indications
 							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
 								// FIXME - bug when double click-drag
-								Node nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-								nodeStart.toFront();
-								nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-								GameBoard.gridPaneBoard.getChildren().remove(nodeStart);
-								GameBoard.endCards.stream().forEach(endCard -> {
-									Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+								moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)nodeOnBoard -> {
+									GalleryCard galleryCardOnBoard = nodeOnBoard.getCard();
+									Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
+									Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 									node.toFront();
-									node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+									node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 									GameBoard.gridPaneBoard.getChildren().remove(node);
 								});
 							}
@@ -594,24 +632,14 @@ public class GameInteract {
 		viewCard.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				/*if (event.isPrimaryButtonDown()  &&  !event.isSecondaryButtonDown()) {
-					hboxGameCardsInHand.getScene().setCursor(Cursor.CLOSED_HAND);
-					mouseX = event.getSceneX();
-					mouseY = event.getSceneY();
-					viewCardX = ((ImageView)(event.getSource())).getTranslateX();
-					viewCardY = ((ImageView)(event.getSource())).getTranslateY();
-				}*/
-
 				if (event.isSecondaryButtonDown()  &&  card.getType().equals(Card_t.gallery)) {
 					viewCard.setRotate(viewCard.getRotate() + 180);
-
 
                     int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
                     Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
                     GalleryCard cardChanged = ((GalleryCard) cardBefore).rotate();
 
                     ((HandPlayer)moteur.getCurrentPlayer().getPlayableCards()).setGalleryCard(index, cardChanged);
-
 				}
 			}
 		});
@@ -662,14 +690,12 @@ public class GameInteract {
                     // Turns off crumbling indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
 						// FIXME - bug when double click-drag
-						Node nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-						nodeStart.toFront();
-						nodeStart = getNodeFromGridPane(GameBoard.gridPaneBoard, GameBoard.startCardX, GameBoard.startCardY);
-						GameBoard.gridPaneBoard.getChildren().remove(nodeStart);
-						GameBoard.endCards.stream().forEach(endCard -> {
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+						moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)nodeOnBoard -> {
+							GalleryCard galleryCardOnBoard = nodeOnBoard.getCard();
+							Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							node.toFront();
-							node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
 						});
                     }
@@ -717,40 +743,6 @@ public class GameInteract {
                 dragEvent.consume();
 			}
 		});
-		// ---------- Mouse drags viewCard ----------
-		/*viewCard.setOnMouseDragged(new EventHandler <MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()) {
-					double mouseOffSetX = event.getSceneX() - mouseX;
-					double mouseOffSetY = event.getSceneY() - mouseY;
-					viewCard.setTranslateX(viewCardX + mouseOffSetX);
-					viewCard.setTranslateY(viewCardY + mouseOffSetY);
-					// todo
-					if (card.getType().equals(Card_t.gallery)  &&  card_can_go_into_grid) {
-						card_sticks_to_grid
-					}
-				}
-		}
-		});*/
-		// ---------- Mouse releases viewCard ----------
-		/*viewCard.setOnMouseReleased(new EventHandler <MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
-				// Turns off indications
-				if (!event.isPrimaryButtonDown()) {
-					hboxGameCardsInHand.getScene().setCursor(Cursor.DEFAULT);
-					if (card.getType().equals(Card_t.gallery)) {
-						possiblePositions.stream().forEach(position -> {
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-							GameBoard.gridPaneBoard.getChildren().remove(node);
-						});
-					}
-				}
-			}
-		});*/
 	}
 	
 	
@@ -766,6 +758,13 @@ public class GameInteract {
 				textNumberOfCardsInDeck.setText(moteur.getDeck().nbCard() + "Cartes");
 				vboxNumberOfCardsInDeck.setVisible(true);
 				textNumberOfCardsInDeck.setVisible(true);
+				textNumberOfCardsInDeck.setOnMouseEntered(new EventHandler <MouseEvent>() {
+					@Override
+					public void handle(MouseEvent mouseEvent) {
+						vboxNumberOfCardsInDeck.setVisible(true);
+						textNumberOfCardsInDeck.setVisible(true);
+					}
+				});
 			}
 		});
 		viewDeck.setOnMouseExited(new EventHandler <MouseEvent>() {
