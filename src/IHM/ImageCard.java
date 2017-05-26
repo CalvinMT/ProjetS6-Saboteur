@@ -64,7 +64,7 @@ public class ImageCard {
                                 playingCard = new GamePlayingCard("carte_test_118_181");
                         }
                         break;
-                    case Crumbing:
+                    case Crumbling:
                         playingCard = new GamePlayingCard("carte_eboulement");
                         break;
                     default:

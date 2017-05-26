@@ -387,7 +387,7 @@ public class GameInteract {
 						});
 					}
 					// Turns on crumbling indications
-					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbling)) {
 						ImageView viewIndicationStartCard = new ImageView("ressources/carte_non_indication.png");
 						GameBoard.gridPaneBoard.add(viewIndicationStartCard, GameBoard.startCardX, GameBoard.startCardY);
 						GameBoard.endCards.stream().forEach(endCard -> {
@@ -598,7 +598,7 @@ public class GameInteract {
 								});
 							}
 							// Turns off crumbling indications
-							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+							else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbling)) {
 								// FIXME - bug when double click-drag
 								moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)nodeOnBoard -> {
 									GalleryCard galleryCardOnBoard = nodeOnBoard.getCard();
@@ -684,7 +684,7 @@ public class GameInteract {
                         });
                     }
                     // Turns off crumbling indication
-                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
+                    if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Crumbling)) {
 						// FIXME - bug when double click-drag
 						moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)nodeOnBoard -> {
 							GalleryCard galleryCardOnBoard = nodeOnBoard.getCard();
