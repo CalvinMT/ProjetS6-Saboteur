@@ -222,6 +222,7 @@ public class GameInteract {
 	private int droppedLine;
 	
 	private boolean isDragged = false;
+	private boolean isCrumbling = false;
 	
 	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
@@ -429,6 +430,7 @@ public class GameInteract {
 											
 					                        success = true;
 										}
+										isCrumbling = success;
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
 									}
@@ -706,6 +708,12 @@ public class GameInteract {
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
                         });
+						if (isCrumbling) {
+							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+							node.toFront();
+							node = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+							GameBoard.gridPaneBoard.getChildren().remove(node);
+						}
                         System.out.println(moteur.getBoard().mine());
                         System.out.println(moteur.getBoard().debugAccessible());
                     }
