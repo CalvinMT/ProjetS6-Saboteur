@@ -751,18 +751,29 @@ public class GameInteract {
 
                         // DEBUG BOARD
 //                        System.out.println(moteur.getBoard().mine());
+
+
+
+
                     }
+
+                    if(dragEvent.getTransferMode() == TransferMode.MOVE){
+
+                        //Transition @Sanory
+                        Stage stage = new Stage();
+                        TransitionStage transStage= new TransitionStage();
+                        transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+                    }
+
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
+
+
+
                 } else {
                     System.out.println("Ce n'est pas ton tour");
                 }
-                //Transition @Sanory
-                Stage stage = new Stage();
-                TransitionStage transStage= new TransitionStage();
-                transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
-                                
-                                
+
 
                 dragEvent.consume();
 			}
