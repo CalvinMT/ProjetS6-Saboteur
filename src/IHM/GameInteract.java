@@ -424,12 +424,6 @@ public class GameInteract {
 											droppedLine = galleryCardOnBoardPos.getLine();
 											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-			                            	
-											// MAJ CRUMBLING
-
-											moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
-//											System.out.println(moteur.getBoard().mine());
-                                            System.out.println(moteur.getBoard().debugAccessible());
 
 											success = true;
 										}
@@ -701,7 +695,13 @@ public class GameInteract {
 							node.toFront();
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 							GameBoard.gridPaneBoard.getChildren().remove(node);
-						});
+                        });
+
+                        // MAJ CRUMBLING
+
+                        moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
+                        System.out.println(moteur.getBoard().mine());
+                        System.out.println(moteur.getBoard().debugAccessible());
                     }
                     // Turns off constraints indications
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {

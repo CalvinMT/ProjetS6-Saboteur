@@ -121,6 +121,8 @@ public class Board {
                 mine.get(i).setWest(mine.get(i).getWest() - 1);
             }
         }
+
+        computeAccessCards();
     }
     
     // Compute pathResistance
