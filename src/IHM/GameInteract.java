@@ -643,12 +643,14 @@ public class GameInteract {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// Drag & Drop
-				isDragged = true;
-				Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.MOVE);
-				ClipboardContent content = new ClipboardContent();
-		        content.putImage(viewCard.snapshot(null, null));
-		        dragBoard.setContent(content);
-		        mouseEvent.consume();
+				if (mouseEvent.isPrimaryButtonDown()) {
+					isDragged = true;
+					Dragboard dragBoard = viewCard.startDragAndDrop(TransferMode.MOVE);
+					ClipboardContent content = new ClipboardContent();
+			        content.putImage(viewCard.snapshot(null, null));
+			        dragBoard.setContent(content);
+			        mouseEvent.consume();
+				}
 			}
 		});
 		// ---------- Drag finished on viewCard ----------
