@@ -9,6 +9,9 @@ import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -39,6 +42,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class GameInteract {
 	
@@ -116,19 +120,6 @@ public class GameInteract {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
 		moteur.getBoard().computeAccessCards();
-		
-		// Hand configuration
-		hand = moteur.getCurrentPlayer().getPlayableCards();
-        numberOfCardsInHand = hand.nbCard();
-		cardsInHand = new ArrayList <GamePlayingCard> ();
-		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
-		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
-		for (int i=0; i < numberOfCardsInHand; i++) {
-			card = hand.chooseOne_without_remove(i);
-			cardsInHand.add(getImageCard(card));
-			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
-			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
-		}
 
 		
 		// Player list configuration
@@ -201,7 +192,10 @@ public class GameInteract {
 		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
 		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
+
 		nextPlayer();
+		
+
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
@@ -245,7 +239,7 @@ public class GameInteract {
 				// Brings card forward
 				viewCard.setTranslateY(viewCard.getTranslateY()-25);
 				// Turns on gallery card's indications
-				if (card.getType().equals(Card_t.gallery)) {
+				if (card.getType().equals(Card_t.gallery)  &&  moteur.getCurrentPlayer().canPlayGalleryCard()) {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
@@ -342,7 +336,21 @@ public class GameInteract {
 										droppedLine = endCard.getLine();
 										Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 										GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-										GameBoard.gridPaneBoard.add(getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView(), droppedColumn, droppedLine);
+										ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
+										GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
+										
+										// Delai retournement de carte but
+		                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
+		                            	if (viewChosenEndCard.getRotate() != 0.0) {
+		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
+												@Override
+												public void handle(ActionEvent event) {
+													viewChosenEndCard.setRotate(0.0);
+												}
+											});
+		                            	}
+		                            	timeChosenEndCard.play();
+		                            	
 										success = true;
 									}
 									dragEvent.setDropCompleted(success);
@@ -388,31 +396,50 @@ public class GameInteract {
 											if (((RepareSabotageCard)card).getTool().equals(Tools.Lantern)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
 												viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
+
 												// @TheSpyGeek TODO - ajouter la contrainte "lanterne cassée" au joueur ('player')
-											}
+					}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Pickaxe)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
 												viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
+
 												// @TheSpyGeek TODO - ajouter la contrainte "piohe cassée" au joueur ('player')
+
 											}
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
-												// @TheSpyGeek TODO - ajouter la contrainte "wagon cassé" au joueur ('player')
+
 											}
-											success = true;
+
+                                            // maj moteur Sabotage
+                                            player.setSabotage((RepareSabotageCard) card);
+                                            System.out.println(player.debugString());
+											
+											updateCurrentPlayerConstraints();
+
+                                            success = true;
+
 										}
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
 									}
 								});
 							}
+
+							else {
+								ImageView viewIndicationConstraints = new ImageView("ressources/carte_non_indication.png");
+								viewIndicationConstraints.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationConstraints.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationConstraints);
+							}
 						});
 					}
 					// Turns on repare indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Repare)) {
 						moteur.getAllPlayers().stream().forEach(player -> {
-							if (!player.getAttributeCards().canBreakTool((RepareSabotageCard)card)) {
+
+							if (player.getAttributeCards().canRepareTool((RepareSabotageCard)card)) {
 								ImageView viewIndicationRepare = new ImageView("ressources/carte_indication.png");
 								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
 								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
@@ -447,14 +474,28 @@ public class GameInteract {
 											else if (((RepareSabotageCard)card).getTool().equals(Tools.Wagon)) {
 												ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(player.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
 												viewConstraint.setImage(new Image("ressources/wagon.png"));
-												// @TheSpyGeek TODO - enlever la contrainte "wagon cassé" au joueur ('player')
+
 											}
+
+                                            // maj moteur Repare
+                                            player.setRepare((RepareSabotageCard) card, ((RepareSabotageCard) card).getTool());
+                                            System.out.println(player.debugString());
+
+											updateCurrentPlayerConstraints();
+											
 											success = true;
 										}
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
 									}
 								});
+							}
+
+							else {
+								ImageView viewIndicationRepare = new ImageView("ressources/carte_non_indication.png");
+								viewIndicationRepare.setFitWidth(vboxPlayerList.getPrefWidth());
+								viewIndicationRepare.setFitHeight(vboxPlayerList.getPrefHeight()/numberOfPlayers);
+								vboxPlayerListIndications.getChildren().add(player.getNum(), viewIndicationRepare);
 							}
 						});
 					}
@@ -605,6 +646,7 @@ public class GameInteract {
                             GameBoard.gridPaneBoard.getChildren().remove(node);
                         });
                         // TODO - add delay
+
                     }
                     // Turns off crumbling indication
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Crumbing)) {
@@ -657,6 +699,7 @@ public class GameInteract {
                 transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
                                 
                                 
+
                 dragEvent.consume();
 			}
 		});
@@ -730,12 +773,46 @@ public class GameInteract {
 		viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne.png"));
 		viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche.png"));
 		viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon.png"));
+		updateCurrentPlayerConstraints();
 		// Player's info avatar
 		viewPlayerInfoAvatar.setImage(new Image("ressources/" + moteur.getCurrentPlayer().getAvatar() + ".png"));
 		// Player's info texts
 		textPlayerInfoPseudo.setText(moteur.getCurrentPlayer().getPlayerName());
 		textPlayerInfoRole.setText(moteur.getCurrentPlayer().getRole().toString());
 		textPlayerInfoGold.setText(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
+
+		
+		// Hand configuration
+		hand = moteur.getCurrentPlayer().getPlayableCards();
+        numberOfCardsInHand = hand.nbCard();
+		cardsInHand = new ArrayList <GamePlayingCard> ();
+		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
+		//hboxGameCardsInHand.setPrefHeight(hboxGameCardsInHand.getPrefHeight()*numberOfCardsInHand);
+		for (int i=0; i < numberOfCardsInHand; i++) {
+			card = hand.chooseOne_without_remove(i);
+			cardsInHand.add(getImageCard(card));
+			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
+			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
+		}
+		
+		
+	}
+	
+	
+	
+	private void updateCurrentPlayerConstraints () {
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Lantern))
+			viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne.png"));
+		else
+			viewPlayerInfoConstraintLantern.setImage(new Image("ressources/lanterne_detruite.png"));
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Pickaxe))
+			viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche.png"));
+		else
+			viewPlayerInfoConstraintPickaxe.setImage(new Image("ressources/pioche_detruite.png"));
+		if (!moteur.getCurrentPlayer().getAttributeCards().containsTools(Tools.Wagon))
+			viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon.png"));
+		else
+			viewPlayerInfoConstraintWagon.setImage(new Image("ressources/wagon_detruit.png"));
 	}
 	
 	
