@@ -56,4 +56,35 @@ public class PlayerAttributeTest {
         Assert.assertTrue(p.nbCard() >= 0);
     }
 
+    @Test
+    public void TestCanBeRepare(){
+        PlayerAttribute p = new PlayerAttribute();
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+        p.putSabotage(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern));
+        Assert.assertTrue(p.nbCard() == 1);
+
+        RepareSabotageCard card1 = new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Wagon, RepareSabotageCard.Tools.Pickaxe);
+        Assert.assertFalse(p.canRepareTool(card1));
+        RepareSabotageCard card2 = new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern, RepareSabotageCard.Tools.Pickaxe);
+        Assert.assertTrue(p.canRepareTool(card2));
+    }
+
+    @Test
+    public void TestremoveAttribute1(){
+
+
+        PlayerAttribute p = new PlayerAttribute();
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+
+        p.removeAttribute(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern));
+        Assert.assertTrue(p.nbCard() == 0);
+
+
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+        p.putSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Lantern));
+
+        p.removeAttribute(new RepareSabotageCard("Repare", RepareSabotageCard.Tools.Lantern, RepareSabotageCard.Tools.Wagon));
+        Assert.assertTrue(p.nbCard() == 1);
+    }
+
 }

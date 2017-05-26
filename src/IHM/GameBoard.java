@@ -108,7 +108,7 @@ public class GameBoard {
 		for (int i=0; i < gridWidth; i++) {
 			for (int j=0; j < gridHeight; j++) {
 				if (i == startCardX  &&  j == startCardY) {
-					ImageView viewCard = new ImageView("ressources/NSEO_C.png");
+					ImageView viewCard = new ImageView("ressources/carte_depart.png");
 					gridPaneBoard.add(viewCard, i, j);
 				}
 				

@@ -59,6 +59,10 @@ public class Node {
         this.pathLength = pathLength;
     }
 
+    public boolean reached(){
+        return (north != -1 || south != -1 || east != -1 || west != -1);
+    }
+
     public int getNorth() {
         return north;
     }
