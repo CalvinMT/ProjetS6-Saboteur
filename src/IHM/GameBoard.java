@@ -2,12 +2,12 @@ package IHM;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import Board.Couple;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+
 
 public class GameBoard {
 	
@@ -52,32 +53,7 @@ public class GameBoard {
 	@FXML
 	private AnchorPane anchorPaneGameBoard;
 	
-	@FXML
-	public void handleClickGrid (MouseEvent event) {
-		int clickX = (int) (event.getX()/cardsWidth);
-		int clickY = (int) (event.getY()/cardsHeight);
-		gridPaneBoard.add(new ImageView(new Image("ressources/carte_test_118_181.png")), clickX, clickY);
-	}
 	
-	@FXML
-	public void handlePressedGrid (MouseEvent event) {
-		// FIXME
-		//stage = (Stage) gridPaneBoard.getScene().getWindow();
-		/*pressedX = event.getSceneX();
-		pressedY = event.getSceneY();
-		gridViewX = gridPaneBoard.getTranslateX();//((GridView)(event.getSource())).getTranslateX();
-		gridViewY = gridPaneBoard.getTranslateY();//((GridView)(event.getSource())).getTranslateY();*/
-	}
-	
-	@FXML
-	public void handleDragGrid (MouseEvent event) {
-		//FIXME
-		/*double mouseOffSetX = event.getSceneX() - pressedX;
-		double mouseOffSetY = event.getSceneY() - pressedY;
-		gridPaneBoard.setTranslateX(gridViewX + mouseOffSetX);
-		gridPaneBoard.setTranslateY(gridViewY + mouseOffSetY);*/
-		//gridPaneBoard.setPadding(new Insets(event.getScreenY() + pressedY, event.getScreenX() + pressedX, event.getScreenY() + pressedY, event.getScreenX() + pressedX));
-	}
 	
 	@FXML
 	public void initialize () throws IOException {
@@ -138,6 +114,41 @@ public class GameBoard {
 		//gridPaneBoard.setTranslateY(gridHeight);
 		gridPaneBoard.setPadding(new Insets(15444, 0, 0, 9622));
 		
+		gridPaneBoardEvents();
 	}
-
+	
+	
+	
+	// gridPaneBoard's events
+	public void gridPaneBoardEvents () {
+		gridPaneBoard.setOnMousePressed(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()) {
+					anchorPaneGameBoard.getScene().setCursor(Cursor.CLOSED_HAND);
+					pressedX = event.getSceneX();
+					pressedY = event.getSceneY();
+					gridViewX = ((GridPane)(event.getSource())).getTranslateX();
+					gridViewY = ((GridPane)(event.getSource())).getTranslateY();
+				}
+			}
+		});
+		gridPaneBoard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()) {
+					double mouseOffSetX = event.getSceneX() - pressedX;
+					double mouseOffSetY = event.getSceneY() - pressedY;
+					gridPaneBoard.setTranslateX(gridViewX + mouseOffSetX);
+					gridPaneBoard.setTranslateY(gridViewY + mouseOffSetY);
+				}
+			}
+		});
+		gridPaneBoard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				anchorPaneGameBoard.getScene().setCursor(Cursor.DEFAULT);
+			}
+		});
+	}
 }
