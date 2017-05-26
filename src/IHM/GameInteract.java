@@ -6,14 +6,9 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import Board.Couple;
-import Cards.ActionCard;
-import Cards.Card;
+import Cards.*;
 import Cards.Card.Card_t;
-import Cards.GalleryCard;
 import Cards.GalleryCard.Gallery_t;
-import Cards.Hand;
-import Cards.HandPlayer;
-import Cards.RepareSabotageCard;
 import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
@@ -312,7 +307,7 @@ public class GameInteract {
                                     for(int i=1; i<=3; i++){
                                         goal = moteur.getBoard().getMine().get(i);
 
-                                        if(goal.reached()){
+                                        if(goal.reached() && !((GoalCard)goal.getCard()).isVisible()){
 
                                             Couple coupleMoteur = goal.getCard().getCoord();
                                             Couple coupleInterface = new Couple(coupleMoteur.getLine()+GameBoard.startCardY, coupleMoteur.getColumn()+GameBoard.startCardX);
@@ -322,6 +317,8 @@ public class GameInteract {
 
                                             ImageView viewChosenEndCard = getImageCard(goal.getCard()).getImageView();
                                             GameBoard.gridPaneBoard.add(viewChosenEndCard, coupleInterface.getColumn(), coupleInterface.getLine());
+
+                                            ((GoalCard)goal.getCard()).setVisible(true);
 
                                             if(goal.getCard().isGold()){
                                                 System.out.println("Fin de manche les mineurs ont gagné !!!");
