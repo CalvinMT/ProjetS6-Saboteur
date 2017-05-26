@@ -19,8 +19,6 @@ import IHM.GameInteract;
 import Player.*;
 import Board.Board;
 import Board.Couple;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 
 
 import java.util.ArrayList;
@@ -194,7 +192,7 @@ public class Moteur {
 							break;
 							
 						case "Action": 
-							if (eachCard[1] == "Map" || eachCard[1] == "Crumbing") {
+							if (eachCard[1] == "Map" || eachCard[1] == "Crumbling") {
 								actionType = eachCard[1];
 								actioncard = new ActionCard(actionType);
 							}
@@ -473,7 +471,7 @@ public class Moteur {
                 Card goal = this.lookGoal(cou);
                 System.out.println("Carte goal: "+goal);
                 nextPlayer();
-            } else if(c.getAction() == ActionCard.Action.Crumbing){
+            } else if(c.getAction() == ActionCard.Action.Crumbling){
 
                 // TODO a test
                 this.board.removeCard(cou);
