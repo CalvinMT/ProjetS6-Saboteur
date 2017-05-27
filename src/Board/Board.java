@@ -259,12 +259,12 @@ public class Board {
         // nord
         currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasNorth() && !currNode.card.canHasSouth()) || (!c.canHasNorth() && currNode.card.canHasSouth())) {
+            if (c.canHasNorth() != currNode.card.canHasSouth()) {
 
                 // si c'est un carte but non fixe
                 if (currNode.getCard().isGoal() && !currNode.reached()) {
                     GalleryCard card = currNode.getCard().rotate();
-                    if ((c.canHasNorth() && !card.canHasSouth()) || (!c.canHasNorth() && card.canHasSouth())) {
+                    if (c.canHasNorth() != card.canHasSouth()){
                         return false;
                     }
                 } else {
@@ -275,12 +275,12 @@ public class Board {
         // sud
         currNode = getNodeFromMine(new Couple(currPos.getLine() + 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
+            if (c.canHasSouth() != currNode.card.canHasNorth()) {
 
                 // si c'est un carte but non fixe
                 if (currNode.getCard().isGoal() && !currNode.reached()) {
                     GalleryCard card = currNode.getCard().rotate();
-                    if ((c.canHasSouth() && !card.canHasNorth()) || (!c.canHasSouth() && card.canHasNorth())) {
+                    if (c.canHasSouth() != card.canHasNorth()) {
                         return false;
                     }
                 } else {
@@ -288,16 +288,15 @@ public class Board {
                 }
             }
         }
-
         //est
         currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()+1) );
         if (currNode != null) {
-            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
+            if (c.canHasEast() != currNode.card.canHasWest()) {
 
                 // si c'est un carte but non fixe
                 if (currNode.getCard().isGoal() && !currNode.reached()) {
                     GalleryCard card = currNode.getCard().rotate();
-                    if ((c.canHasEast() && !card.canHasWest()) || (!c.canHasEast() && card.canHasWest())) {
+                    if (c.canHasEast() != card.canHasWest()) {
                         return false;
                     }
                 } else {
@@ -310,12 +309,12 @@ public class Board {
 
         currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()-1 ));
         if (currNode != null) {
-            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
+            if (c.canHasWest() != currNode.card.canHasEast()) {
 
                 // si c'est un carte but non fixe
                 if (currNode.getCard().isGoal() && !currNode.reached()) {
                     GalleryCard card = currNode.getCard().rotate();
-                    if ((c.canHasWest() && !card.canHasEast()) || (!c.canHasWest() && card.canHasEast())) {
+                    if (c.canHasWest() != card.canHasEast()) {
                         return false;
                     }
                 } else {
@@ -324,6 +323,13 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public boolean nodeReached(Node n){
+        computeAccessCards();
+        Couple c = n.getCard().getCoord();
+
+        return accessCard.containsKey(c);
     }
 
     private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
@@ -366,6 +372,10 @@ public class Board {
             n = null;
         }
         return n;
+    }
+
+    public void setCardInMine(int index, GalleryCard c){
+        this.mine.set(index, new Node(c));
     }
 
     public boolean goldReached(){

@@ -193,7 +193,7 @@ public class Bottom {
                                 image = null;
                         }
                         break;
-                    case Crumbing:
+                    case Crumbling:
                         image = (new Image("ressources/carte_eboulement.jpg"));
                         break;
                     default:
