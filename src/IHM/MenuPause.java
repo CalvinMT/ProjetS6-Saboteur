@@ -8,9 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.File;
 import java.io.IOException;
 
 public class MenuPause {
@@ -57,7 +60,23 @@ public class MenuPause {
 
     @FXML
     void handleButtonSave(ActionEvent event){
-        System.out.println("Sauvegarde");    //TODO SAUVEGARDE
+        //TODO SAUVEGARDE
+        Stage stageJeux = (Stage)((Stage) buttonReprendre.getScene().getWindow()).getOwner();
+
+        final FileChooser fileChooser = new FileChooser();
+        configureFileChooser(fileChooser);
+        File file = fileChooser.showSaveDialog(stageJeux);
+
+        // file est le fichier dans lequel il y aura la seauvegarde à faire
+
+    }
+
+    private static void configureFileChooser(final FileChooser fc){
+        fc.setTitle("Sauvegarde");
+        fc.setInitialDirectory(
+                new File(System.getProperty("user.dir"))
+        );
+        fc.setInitialFileName("SaboteurSave.save");                 // juste un exemple
     }
 
     @FXML

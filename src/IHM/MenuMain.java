@@ -1,11 +1,14 @@
 package IHM;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
 public class MenuMain {
@@ -24,7 +27,19 @@ public class MenuMain {
 
     @FXML
 	public void handleButtonChargerPartie(){
-		System.out.println("Chargement d'une partie");
+		// TODO chargement de partie
+		Stage stageJeux = (Stage)((Stage) buttonChargerPartie.getScene().getWindow()).getOwner();
+
+		final FileChooser fileChooser = new FileChooser();
+		configureFileChooser(fileChooser);
+		File file = fileChooser.showOpenDialog(stageJeux);
+	}
+
+	private static void configureFileChooser(final FileChooser fc){
+		fc.setTitle("Chargement d'une partie");
+		fc.setInitialDirectory(
+				new File(System.getProperty("user.dir"))
+		);
 	}
 	
 	@FXML
