@@ -263,7 +263,7 @@ public class MainLoader extends Application {
 
 								if(cardToPlay.getType() == Card.Card_t.gallery){
 
-								    GalleryCard cardToPut;
+									GalleryCard cardToPut;
 
 									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
 										cardToPut = ((GalleryCard) cardToPlay).rotate();
@@ -271,13 +271,14 @@ public class MainLoader extends Application {
 										cardToPut = (GalleryCard) cardToPlay;
 									}
 
+									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
+
 									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
 
 									player.getPlayableCards().removeCard(cardToPlay);
+									engine.getGameInteractControler().checkEndGame();
 									System.out.println(player);
-									player.drawCard(engine.getDeck());
 
-									engine.getGameInteractControler().addGalleryCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
 
 									engine.nextPlayer();
 
