@@ -1,6 +1,5 @@
 package Player;
 
-import Board.Board;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
@@ -189,7 +188,40 @@ public class IA extends Player {
     }
 
     public void choosePosition() {
-        return;
+        int h, hMin = -1;
+        Card c, bestCard;
+        GalleryCard currCard;
+        Couple bestCpl = new Couple(0, 0);
+        ArrayList<Couple> p;
+
+        bestCard = lookAtCard(0);
+        for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
+            c = lookAtCard(cardIdx);
+            if (c.getType() == gallery) { // Si la carte est une gallerie
+                currCard = (GalleryCard) c;
+                p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
+
+                for (Couple currCpl : p) { // Pour chaque position possible
+                    for (Couple goal : goalsToTest) { // Et pour chaque but
+                        h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
+
+                        // TODO : Verifier si on peut finir le chemin
+                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
+
+                        if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
+                            //System.out.printf(" True");
+                            hMin = h; // On met à jour l'heuristique max
+                            bestCpl = currCpl; // On garde la position
+                            bestCard = currCard; // et la carte associée
+                        }
+                        //System.out.printf("\n");
+                    }
+                }
+            }
+        }
+        this.posToPlay = bestCpl;
+        this.cardToPlay = bestCard;
     }
 
     private Move getBestValueMove() {

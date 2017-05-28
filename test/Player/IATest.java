@@ -49,8 +49,8 @@ public class IATest {
 
     }
 
-/*     @Test
-   public void choosePosition() throws Exception {
+    @Test
+    public void choosePosition() throws Exception {
         IA ia = new IA(0, "IA", Medium);
         Couple cpl, expected;
         Board b = new Board();
