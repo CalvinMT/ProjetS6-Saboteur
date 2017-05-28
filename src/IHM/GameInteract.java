@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import Board.Couple;
-import Cards.*;
+import Cards.ActionCard;
+import Cards.GoalCard;
+import Cards.Card;
 import Cards.Card.Card_t;
+import Cards.GalleryCard;
 import Cards.GalleryCard.Gallery_t;
+import Cards.Hand;
+import Cards.HandPlayer;
+import Cards.RepareSabotageCard;
 import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
@@ -185,14 +191,14 @@ public class GameInteract {
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, playerInfoConstraintPickaxePos.getColumn(), playerInfoConstraintPickaxePos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, playerInfoConstraintWagonPos.getColumn(), playerInfoConstraintWagonPos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoAvatar, playerInfoAvatarPos.getColumn(), playerInfoAvatarPos.getLine()); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
-		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine()); GridPane.setMargin(textPlayerInfoPseudo, new Insets(50, 0, 0, 10));
-		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine()); GridPane.setMargin(textPlayerInfoRole, new Insets(5, 0, 0, 10));
-		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine()); GridPane.setMargin(textPlayerInfoGold, new Insets(0, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
-		
-		
+
 		nextPlayer();
 		
+
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
@@ -773,14 +779,29 @@ public class GameInteract {
 
                         // DEBUG BOARD
 //                        System.out.println(moteur.getBoard().mine());
+
+
+
+
                     }
-                    
-                    
+
+                    if(dragEvent.getTransferMode() == TransferMode.MOVE){
+
+                        //Transition @Sanory
+                        Stage stage = new Stage();
+                        TransitionStage transStage= new TransitionStage();
+                        transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+                    }
+
                     // Discard indication off
                     viewDiscard.setImage(new Image("ressources/defausse.png"));
+
+
+
                 } else {
                     System.out.println("Ce n'est pas ton tour");
                 }
+
 
                 dragEvent.consume();
 			}
@@ -981,7 +1002,8 @@ public class GameInteract {
 	void handleButtonAideInGame(ActionEvent event){
             Stage stage = new Stage();
             TransparentStage tspStage= new TransparentStage();
-            tspStage.start(stage);
+            tspStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight());
+
 	}
 
 	@FXML

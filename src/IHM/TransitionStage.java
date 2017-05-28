@@ -1,46 +1,42 @@
 package IHM;
 
-import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class TransparentStage extends Application {
+public class TransitionStage extends Application {
 
-    public void start(Stage stage, double width, double height) {
+    public void start(Stage stage, double width, double height,String pseudo ) {
         stage.initStyle(StageStyle.TRANSPARENT);
-        ImageView imageview =new ImageView("ressources/calqueaide.png");
-        imageview.setFitHeight(height);
-        imageview.setFitWidth(width);
         AnchorPane pane = new AnchorPane();
-        Button button = new Button();
-        button.setId("ButtonQuitterAide"); 
-        button.setGraphic(pane);
-        ImageView imageview2 =new ImageView("ressources/aideneg.png");
-        imageview2.setFitHeight(width/36);
-        imageview2.setFitWidth(width/36);
-        button.setGraphic(imageview2);
-        button.setMaxSize(width/32, width/32);
-        button.setTranslateX(width/32);
+        Button button = new Button("Passer au joueur suivant");
+        button.setPrefSize(width/6, height/16);
+        button.setTranslateX(width/2 - width/20);
+        button.setTranslateY(height/6);
+        button.setStyle("-fx-font: bold italic 16pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
+        Text text = new Text(30, 100,"Au tour de " + pseudo);
+        text.setTranslateX((width/2)-width/26);
+        text.setStyle("-fx-font: bold italic 16pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
+        System.out.println(pseudo);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                  ((Stage)button.getScene().getWindow()).close();
                 }
              });
         pane.getChildren().add(button);
-        pane.getChildren().add(imageview);
-        final Scene scene = new Scene(pane,width, height);
-        scene.setFill(null);
+        pane.getChildren().add(text);
+        final Scene scene = new Scene(pane,width, height/3);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }
