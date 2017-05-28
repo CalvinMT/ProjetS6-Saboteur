@@ -788,8 +788,8 @@ public class GameInteract {
             try {
                 Scene scene = (Scene) GameBoard.gridPaneBoard.getScene();
                 BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneGameLoader");
-                BorderPane borderPaneEnd = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
-                borderPaneGameLoader.getChildren().setAll(borderPaneEnd);
+                BorderPane borderPaneEndShaft = FXMLLoader.load(getClass().getResource("EndShaft.fxml"));
+                borderPaneGameLoader.getChildren().setAll(borderPaneEndShaft);
             } catch (IOException e) {
                 System.err.println("[GameInteract] Erreur changenement de scene");
                 e.printStackTrace();
