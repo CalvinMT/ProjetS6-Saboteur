@@ -376,17 +376,22 @@ public class GameInteract {
 											ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
 											GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
 											
+											Couple endCardsimplePos = new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
+											
 											// Delai retournement de carte but
 			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
-			                            	if (viewChosenEndCard.getRotate() != 0.0) {
-			                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
-													@Override
-													public void handle(ActionEvent event) {
+		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
+												@Override
+												public void handle(ActionEvent event) {
+													((GoalCard)moteur.getBoard().getNodeFromMine(endCardsimplePos).getCard()).setVisible(false);
+													if (viewChosenEndCard.getRotate() != 0.0) {
 														viewChosenEndCard.setRotate(0.0);
 													}
-												});
-			                            	}
+												}
+											});
 			                            	timeChosenEndCard.play();
+			                            	
+			                            	((GoalCard)moteur.getBoard().getNodeFromMine(endCardsimplePos).getCard()).setVisible(true);
 			                            	
 											success = true;
 										}
@@ -431,12 +436,14 @@ public class GameInteract {
 										if (dragBoard.hasImage()) {
 											droppedColumn = galleryCardOnBoardPos.getColumn();
 											droppedLine = galleryCardOnBoardPos.getLine();
-											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
-											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
-					                        
-											moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
-											
-					                        success = true;
+											if (getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine) != null) {
+												Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+												GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+						                        
+												moteur.getBoard().removeCard(new Couple(droppedLine-GameBoard.startCardY, droppedColumn-GameBoard.startCardX));
+												
+						                        success = true;
+											}
 										}
 										isCrumbling = success;
 										dragEvent.setDropCompleted(success);
@@ -722,8 +729,6 @@ public class GameInteract {
 							node = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
 							GameBoard.gridPaneBoard.getChildren().remove(node);
 						}
-                        System.out.println(moteur.getBoard().mine());
-                        System.out.println(moteur.getBoard().debugAccessible());
                     }
                     // Turns off constraints indications
                     if (card.getType().equals(Card_t.action)  &&  ((ActionCard)card).getAction().equals(ActionCard.Action.Sabotage)) {
@@ -957,7 +962,6 @@ public class GameInteract {
 	}
 
 	public void addGalleryCard(GalleryCard c, int line, int column){
-
 		GameBoard.gridPaneBoard.add(getImageCard(c).getImageView(), (column + GameBoard.startCardX), (line + GameBoard.startCardY));
 	}
 
