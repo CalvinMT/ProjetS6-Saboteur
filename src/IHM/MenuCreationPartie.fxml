@@ -46,7 +46,7 @@
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Pseudo :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -90,12 +90,12 @@
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin></Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="FFFFFF" text="Joueur :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ordinateur :" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Ordinateur :" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
@@ -105,7 +105,7 @@
                   <Image url="@../ressources/robot_miner.png" />
                </image>
             </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Difficulté :" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
