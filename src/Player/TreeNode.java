@@ -1,7 +1,6 @@
 package Player;
 
 import Board.Board;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.ArrayList;
 
@@ -23,8 +22,8 @@ public class TreeNode {
         this.next = next;
     }
 
-    public Board getElement() {
-        return e;
+    public Board getBoard() {
+        return this.board;
     }
 
     public ArrayList<TreeNode> getNext() {

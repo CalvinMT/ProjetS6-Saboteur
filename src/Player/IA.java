@@ -1,5 +1,6 @@
 package Player;
 
+import Board.Board;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
@@ -106,16 +107,16 @@ public class IA extends Player {
 
     // Computing
 
-
-    public void computeMoves_rec(int playerIdx, Board board, int depth, Player.TreeNode t) { // int maxDepth ?
+/*
+    public void computeMoves_rec(int playerIdx, Board board, int depth, TreeNode t) { // int maxDepth ?
         if (depth == MAXDEPTH) {
-            return t;
+            //return t;
         }
         else {
 
         }
     }
-
+*/
 
 
 
@@ -326,30 +327,6 @@ public class IA extends Player {
     }
 
 
-    /*
-
- (* the minimax value of n, searched to depth d.
- * If the value is less than min, returns min.
- * If greater than max, returns max. *)
-
- fun minimax(n: node, d: int, min: int, max: int): int =
-   if leaf(n) or depth=0 return evaluate(n)
-   if n is a max node
-      v := min
-      for each child of n
-         v' := minimax (child,d-1,v,max)
-         if v' > v, v:= v'
-         if v > max return max
-      return v
-   if n is a min node
-      v := max
-      for each child of n
-         v' := minimax (child,d-1,min,v)
-         if v' < v, v:= v'
-         if v < min return min
-      return v
-
- */
     public int minimax(TreeNode t, int depth, int min, int max) {
         int v, vPrim;
 
@@ -357,9 +334,9 @@ public class IA extends Player {
         if (t.isMaxNode()) {
             v = min;
             for (TreeNode n : t.getNext()) {
-                vPrim = minimax(n, depth - 1, v, max);
-                if (vPrim > v) v = vPrim;
-                if (v > max) return max;
+                vPrim = minimax(n, depth - 1, v, max); // Calcul recursif
+                if (vPrim > v) v = vPrim; // la meilleur branche
+                if (v > max) return max; // AB pruning
             }
             return v;
         }
@@ -370,6 +347,7 @@ public class IA extends Player {
                 if (vPrim < v) v = vPrim;
                 if (v < min) return min;
             }
+            return v;
         }
     }
 
