@@ -566,8 +566,25 @@ public class Moteur {
     }
 
     // si la manche est terminée
-    public boolean endGame(){
-        return this.board.goldReached();
+    public boolean endGame() {
+
+        boolean emptyHand = true;
+
+        for (int i = 0; i < arrayPlayer.size(); i++) {
+            if (arrayPlayer.get(i).nbCardHand() > 0) {
+                emptyHand = false;
+            }
+        }
+
+        if (this.board.goldReached()) {
+            return true;
+        } else if (this.board.goldBlocked() && pile.nbCard() == 0 && emptyHand) {
+            return true;
+        } else if (!this.board.goldReached() && pile.nbCard() == 0 && emptyHand){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // renvoie le numero du joueur courant
