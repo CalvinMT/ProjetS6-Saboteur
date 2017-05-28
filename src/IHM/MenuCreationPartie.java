@@ -138,7 +138,6 @@ public class MenuCreationPartie {
 
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
-        	((ImageView)((BorderPane)MainLoader.anchorPaneMainLoader.getParent()).getRight()).setVisible(true);
         	
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
 
@@ -204,9 +203,7 @@ public class MenuCreationPartie {
         GridPane.setValignment(textNumberOfPlayersLeft, VPos.TOP);
         GridPane.setMargin(textNumberOfPlayersLeft, new Insets(10, 0, 0, 0));
         
-        if (MainLoader.anchorPaneMainLoader.getScene().getWindow().getWidth() < 1600.0) {
-        	((ImageView)((BorderPane)MainLoader.anchorPaneMainLoader.getParent()).getRight()).setVisible(false);
-        }
+    
     }
 
 	// A custom ListCell that displays an ImageView

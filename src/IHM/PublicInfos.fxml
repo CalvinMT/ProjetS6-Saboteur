@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="AnchorPanePublicInfos" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
+<AnchorPane fx:id="AnchorPanePublicInfos" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.PublicInfos">
             <ImageView fitHeight="335.0" fitWidth="600.0" layoutY="65.0" GridPane.columnIndex="1">
       <image>
          <Image url="@../ressources/cadre.png" />
@@ -27,8 +27,8 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="193.0" prefWidth="292.0">
                   <children>
-                     <Text fx:id="textPseudo" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo" wrappingWidth="76.05517578125" />
-                     <Text fx:id="textCartesRestantes" strokeType="OUTSIDE" strokeWidth="0.0" text="Carte Restantes" />
+                     <Text fx:id="textPseudo" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo" wrappingWidth="76.05517578125" />
+                     <Text fx:id="textCartesRestantes" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Carte Restantes" />
                   </children>
                         </HBox>
                         <HBox fx:id="HboxStatus" alignment="CENTER" maxHeight="250.0" maxWidth="284.0" prefHeight="80.0" prefWidth="284.0">

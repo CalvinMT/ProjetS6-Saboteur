@@ -50,10 +50,6 @@ public class MainLoader extends Application {
 	// TOTO - private double volumeEffects;
 	
 	private File fileOptions = new File("saboteur.cfg");
-	
-	
-	@FXML
-	ImageView viewDwarf;
 
 	
 	private void initGameConfig () {
@@ -95,7 +91,6 @@ public class MainLoader extends Application {
 			}
 		}
 	}
-	
 	
 	
 	@Override

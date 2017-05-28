@@ -37,11 +37,11 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Musique :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Effets :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Résolution :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#handleApply" prefHeight="1000.0" prefWidth="1000.0" text="Appliquer" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <Button stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleApply" prefHeight="1000.0" prefWidth="1000.0" text="Appliquer" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin></Button>
-            <Button mnemonicParsing="false" onAction="#handleReturnMenu" prefHeight="1000.0" prefWidth="1000.0" text="Retour Menu" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <Button stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleReturnMenu" prefHeight="1000.0" prefWidth="1000.0" text="Retour Menu" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin></Button>

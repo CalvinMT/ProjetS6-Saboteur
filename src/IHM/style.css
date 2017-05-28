@@ -1,17 +1,45 @@
-.anchorMainLoader {
-    -fx-background-color: #ff0000;
+
+
+.background {
+    -fx-background-image: url("../ressources/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
 }
 
-.anchorMenuMain {
-    -fx-background-color: #2f4f4f;
+.button_menu {
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #8E8A5C;
+    -fx-padding: 15px;
+    -fx-border-radius: 0.5em;
+    -fx-color: #070500;
 }
 
-.deckText {
-    -fx-background-color: #eeeeee;
+.button_pause {
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #8E8A5C;
+    -fx-padding: 15px;
+    -fx-border-radius: 0.5em;
+    -fx-color: #070500;
+    -fx-font-size: 20px;
 }
 
-.cardHolder {
-	-fx-background-image: url("../ressources/repose_carte.png");
-	/*-fx-background-size: 96, 205;
-	-fx-background-repeat: no-repeat;*/
+.background_pause {
+    -fx-background-image: url("../ressources/parchemin.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-padding: 35px;
+    -fx-border-radius: 0.5em;
+}
+
+.button_conf {
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #8E8A5C;
+    -fx-padding: 15px;
+    -fx-border-radius: 0.5em;
+    -fx-color: #070500;
+    -fx-font-size: 20px;
+    -fx-end-margin: 100px;
 }

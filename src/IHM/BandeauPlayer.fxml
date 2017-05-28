@@ -40,7 +40,7 @@
                   <Font size="15.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onAction="#handleButtonSupprimer" text="Supprimer" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleButtonSupprimer" text="Supprimer" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
