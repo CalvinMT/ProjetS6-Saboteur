@@ -4,10 +4,7 @@ package Board;
 import Cards.GalleryCard;
 import Cards.GoalCard;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
@@ -87,6 +84,7 @@ public class Board {
 
     public void removeCard(Couple coord) {
         int idx = 0;
+        // suppression dans la mine
         for (int i = 0; i < mine.size(); i++) {
             if (mine.get(i).card.getLine() == coord.getLine() && mine.get(i).card.getColumn() == coord.getColumn()) {
                 idx = i;
@@ -105,7 +103,7 @@ public class Board {
             if(mine.get(i).getSouth() == idx) {
                 mine.get(i).setSouth(-1);
             }
-            else if(mine.get(i).getNorth() > idx) {
+            else if(mine.get(i).getSouth() > idx) {
                 mine.get(i).setSouth(mine.get(i).getSouth() - 1);
             }
 
@@ -123,6 +121,8 @@ public class Board {
                 mine.get(i).setWest(mine.get(i).getWest() - 1);
             }
         }
+
+        computeAccessCards();
     }
     
     // Compute pathResistance
@@ -181,6 +181,7 @@ public class Board {
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
+
                 if (currentNode.card.canHasCenter()) {
                     
                     accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
@@ -249,34 +250,86 @@ public class Board {
         }
     }
 
+    //TODO Factoriser
+
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
+
         Node currNode;
+
+        // nord
         currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
-                return false;
+            if (c.canHasNorth() != currNode.card.canHasSouth()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasNorth() != card.canHasSouth()){
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
+        // sud
         currNode = getNodeFromMine(new Couple(currPos.getLine() + 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
-                return false;
+            if (c.canHasSouth() != currNode.card.canHasNorth()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasSouth() != card.canHasNorth()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() + 1));
+        //est
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()+1) );
         if (currNode != null) {
-            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
-                return false;
-            }
-        }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() - 1));
-        if (currNode != null) {
-            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
-                return false;
+            if (c.canHasEast() != currNode.card.canHasWest()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasEast() != card.canHasWest()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
+        //ouest
+
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()-1 ));
+        if (currNode != null) {
+            if (c.canHasWest() != currNode.card.canHasEast()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasWest() != card.canHasEast()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
         return true;
+    }
+
+    public boolean nodeReached(Node n){
+        computeAccessCards();
+        Couple c = n.getCard().getCoord();
+
+        return accessCard.containsKey(c);
     }
 
     private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
@@ -321,6 +374,10 @@ public class Board {
         return n;
     }
 
+    public void setCardInMine(int index, GalleryCard c){
+        this.mine.set(index, new Node(c));
+    }
+
     public boolean goldReached(){
 
         final Node goal1 = mine.get(1);
@@ -335,9 +392,27 @@ public class Board {
         String renvoi = "Mine:\n";
 
         for(int i=0; i<mine.size(); i++){
+            renvoi += "Index: "+i+"\n";
             renvoi +=  mine.get(i) + "\n";
         }
 
+
+        return renvoi;
+    }
+
+    public String debugAccessible(){
+        String renvoi = "Accessible: \n";
+        computeAccessCards();
+        Node node;
+
+        Set<Couple> hash = accessCard.keySet();
+
+        Iterator<Couple> it = hash.iterator();
+
+        while(it.hasNext()){
+            node = accessCard.get(it.next());
+            renvoi += node + "\n";
+        }
 
         return renvoi;
     }

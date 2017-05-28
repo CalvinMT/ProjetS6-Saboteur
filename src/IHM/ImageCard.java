@@ -64,7 +64,7 @@ public class ImageCard {
                                 playingCard = new GamePlayingCard("carte_test_118_181");
                         }
                         break;
-                    case Crumbing:
+                    case Crumbling:
                         playingCard = new GamePlayingCard("carte_eboulement");
                         break;
                     default:
@@ -86,9 +86,15 @@ public class ImageCard {
                         playingCard = new GamePlayingCard("carte_arrivee_0");
                     } else {
 
-                        if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasWest() || ((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasEast() ){
+                        if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasWest()){
                             playingCard = new GamePlayingCard("carte_arrivee_1");
-                        } else if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasEast() || ((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasWest() ){
+                            playingCard.getImageView().setRotate(180);
+                        } else if(((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasEast() ){
+                            playingCard = new GamePlayingCard("carte_arrivee_1");
+                        } else if(((GalleryCard)c).canHasNorth() && ((GalleryCard)c).canHasEast()) {
+                            playingCard = new GamePlayingCard("carte_arrivee_2");
+                            playingCard.getImageView().setRotate(180);
+                        } else if (((GalleryCard)c).canHasSouth() && ((GalleryCard)c).canHasWest() ){
                             playingCard = new GamePlayingCard("carte_arrivee_2");
                         } else {
                             playingCard = new GamePlayingCard("carte_test_118_18");

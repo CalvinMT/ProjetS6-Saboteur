@@ -21,7 +21,7 @@ public class ExitComfirmation{  // RETOUR AU MENU
     }
 
     @FXML
-    void handleButtonOui(ActionEvent event) throws Exception { //FIXME - Fonctionne pour le menu de création de partie mais pas in game
+    void handleButtonOui(ActionEvent event) throws Exception {
 
         Stage stage = (Stage)((Stage)((Stage) buttonNon.getScene().getWindow()).getOwner()).getOwner();         //récupérer la fenêtre correspondante au jeu
         Parent root = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));

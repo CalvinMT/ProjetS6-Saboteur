@@ -10,7 +10,7 @@ public class GalleryCard extends Card {
     private Couple coord = new Couple();
     private int resist;
 
-    private boolean center,
+    protected boolean center,
                     north,
                     south,
                     east,
@@ -106,6 +106,10 @@ public class GalleryCard extends Card {
 
     public void setType_g(Gallery_t type_g) {
         this.type_g = type_g;
+    }
+
+    public boolean isGoal(){
+        return false;
     }
 
     public void setResist() {

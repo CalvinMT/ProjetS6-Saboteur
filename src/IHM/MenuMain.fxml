@@ -11,7 +11,7 @@
          <children>
             <Button fx:id="buttonLocal" maxWidth="400.0" mnemonicParsing="true" onAction="#handleLocalGame" prefHeight="60.0" text="Nouvelle partie" VBox.vgrow="ALWAYS" />
             <Button fx:id="buttonChargerPartie" maxWidth="400.0" mnemonicParsing="false" onAction="#handleButtonChargerPartie" prefHeight="60.0" text="Charger une partie" VBox.vgrow="ALWAYS" />
-            <Button fx:id="buttonTutorial" disable="true" maxWidth="400.0" mnemonicParsing="false" prefHeight="60.0" text="Didactitiel" VBox.vgrow="ALWAYS" />
+            <Button maxWidth="400.0" mnemonicParsing="false" onAction="#handleButtonTutorial" prefHeight="60.0" text="Fonctionnement du jeu" VBox.vgrow="ALWAYS" />
             <Button fx:id="buttonOptions" maxWidth="400.0" mnemonicParsing="false" onAction="#handleOptions" prefHeight="60.0" text="Options" VBox.vgrow="ALWAYS" />
             <Button disable="true" mnemonicParsing="false" text="NOT_TO_USE" visible="false" />
             <Button fx:id="buttonQuit" maxWidth="400.0" mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="60.0" text="Quitter" VBox.vgrow="ALWAYS" />
