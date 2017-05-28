@@ -384,8 +384,33 @@ public class Board {
         final Node goal2 = mine.get(2);
         final Node goal3 = mine.get(3);
 
-        return (goal1.reached() && goal1.getCard().isGold() || goal2.reached() && goal2.getCard().isGold() || goal3.reached() && goal3.getCard().isGold());
-        //TODO à changer car la carte gold peut etre bloquer et inacessible
+        return (nodeReached(goal1) && goal1.getCard().isGold() || nodeReached(goal2) && goal2.getCard().isGold() || nodeReached(goal3) && goal3.getCard().isGold());
+    }
+
+    public boolean goldBlocked(){
+
+        int i=1;
+        Node goal;
+        do {
+            goal = mine.get(i);
+            i++;
+        } while(!goal.getCard().isGold());
+
+        if(nodeReached(goal)){
+            return false;
+        } else {
+            int line = goal.getCard().getLine();
+            int column = goal.getCard().getColumn();
+
+            if(getNodeFromMine(new Couple(line-1, column)) != null && getNodeFromMine(new Couple(line+1, column)) != null && getNodeFromMine(new Couple(line, column-1)) != null && getNodeFromMine(new Couple(line, column+1)) != null){
+                System.out.println("Gold Blocked");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
     }
 
     public String mine(){
