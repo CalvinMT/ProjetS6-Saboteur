@@ -226,15 +226,12 @@ public abstract class Player {
     
     public abstract void setGoldPoints(int gp);
 
-    public abstract String toString();
-
-
 
     public boolean iaPlayCard() {
         return false;
     }
 
-    public String debugString(){
+    public String toString(){
 
         String renvoi = "";
 

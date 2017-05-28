@@ -30,13 +30,11 @@ public class MenuMain {
     }
 
     @FXML
-	public void handleButtonChargerPartie(){
+	public void handleButtonChargerPartie() throws IOException {
 		// TODO chargement de partie
-		Stage stageJeux = (Stage)((Stage) buttonChargerPartie.getScene().getWindow()).getOwner();
-
-		final FileChooser fileChooser = new FileChooser();
-		configureFileChooser(fileChooser);
-		File file = fileChooser.showOpenDialog(stageJeux);
+		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("ChargementPartie.fxml"));
+		anchorPaneMenuMain.getChildren().setAll(anchorPane);
+		MainLoader.autoResizeToResolution(anchorPane);
 	}
 
 	private static void configureFileChooser(final FileChooser fc){

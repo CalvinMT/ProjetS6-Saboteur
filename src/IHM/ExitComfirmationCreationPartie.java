@@ -23,7 +23,6 @@ public class ExitComfirmationCreationPartie{  // RETOUR AU MENU
     @FXML
     void handleButtonOui(ActionEvent event) throws Exception {
     	MenuCreationPartie.textNumberOfPlayersInit();
-    	((ImageView)((BorderPane)MainLoader.anchorPaneMainLoader.getParent()).getRight()).setVisible(true);
 
         Stage stage=(Stage)buttonNon.getScene().getWindow();
         stage.close();

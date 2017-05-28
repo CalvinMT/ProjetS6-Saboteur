@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPaneChoixRole" GridPane.halignment="CENTER" GridPane.valignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.ChoixRole">
+<BorderPane fx:id="borderPaneChoixRole" GridPane.halignment="CENTER" GridPane.valignment="CENTER" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.ChoixRole">
    <center>
       <GridPane fx:id="mainGridPane" alignment="CENTER" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -114,15 +114,15 @@
                   </Text>
                </children>
             </GridPane>
-             <Text fx:id="textJoueurCourant" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour du joueur X" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
-            <Button fx:id="buttonJoueurSuivant" mnemonicParsing="false" onAction="#handleButtonJoueurSuivant" text="Joueur suivant" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+             <Text fx:id="textJoueurCourant" fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour du joueur X" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+            <Button fx:id="buttonJoueurSuivant" stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleButtonJoueurSuivant" text="Joueur suivant" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </center>
    <top>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choix du rôle" underline="true">
+            <Text fill="#8e8a5c" strokeType="OUTSIDE" strokeWidth="0.0" text="Choix du rôle" underline="true">
                <font>
                   <Font size="25.0" />
                </font>
@@ -130,7 +130,7 @@
                   <Insets bottom="50.0" />
                </StackPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choisis une carte afin de connaître ton rôle au cours de la prochaine manche" textAlignment="CENTER" wrappingWidth="306.07080078125">
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Choisis une carte afin de connaître ton rôle au cours de la prochaine manche" textAlignment="CENTER" wrappingWidth="306.07080078125">
                <font>
                   <Font size="15.0" />
                </font>
