@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneRegles" prefHeight="849.0" prefWidth="1523.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Regles">
+<AnchorPane fx:id="anchorPaneRegles" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Regles">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -50,7 +50,7 @@
                   </ScrollPane>
                   <ScrollPane prefHeight="746.0" prefWidth="320.0" GridPane.columnIndex="1">
                     <content>
-                      <AnchorPane prefHeight="900.0">
+                      <AnchorPane prefHeight="1000.0">
                            <children>
                               <GridPane layoutX="-18.0" layoutY="2.0" prefHeight="735.0" prefWidth="302.0" AnchorPane.bottomAnchor="-118.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
@@ -61,6 +61,7 @@
                                 <rowConstraints>
                                   <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
@@ -145,6 +146,11 @@
                                     <ImageView fx:id="imageViewCarteEboulement" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                        <image>
                                           <Image url="@../ressources/carte_eboulement.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="imageViewCarteNombreOr" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6">
+                                       <image>
+                                          <Image url="@../ressources/carte_or_3.png" />
                                        </image>
                                     </ImageView>
                                  </children>
