@@ -38,6 +38,7 @@ public class TransitionStage extends Application {
         final Scene scene = new Scene(pane,width, height/3);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
         stage.show();
     }
     
