@@ -19,6 +19,7 @@ import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import javafx.scene.paint.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -140,6 +141,7 @@ public class GameInteract {
 			ImageView viewAvatar = new ImageView("ressources/" + moteur.getPlayer(i).getAvatar() + ".png");
 			// Pseudo
 			Text textPseudo = new Text(moteur.getPlayer(i).getPlayerName());
+			textPseudo.setFill(Paint.valueOf("FFFFFF"));
 			// Constraints
 			ImageView viewConstraintLantern = new ImageView("ressources/lanterne.png");
 			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
@@ -879,8 +881,11 @@ public class GameInteract {
 		viewPlayerInfoAvatar.setImage(new Image("ressources/" + moteur.getCurrentPlayer().getAvatar() + ".png"));
 		// Player's info texts
 		textPlayerInfoPseudo.setText(moteur.getCurrentPlayer().getPlayerName());
+        textPlayerInfoPseudo.setFill(Paint.valueOf("FFFFFF"));
 		textPlayerInfoRole.setText(moteur.getCurrentPlayer().getRole().toString());
+        textPlayerInfoRole.setFill(Paint.valueOf("FFFFFF"));
 		textPlayerInfoGold.setText(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
+        textPlayerInfoGold.setFill(Paint.valueOf("FFFFFF"));
 		
 		// Hand configuration
 		hand = moteur.getCurrentPlayer().getPlayableCards();
