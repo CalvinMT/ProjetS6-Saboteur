@@ -133,7 +133,7 @@ public class Load {
 
         this.arrayPlayer = new ArrayList<Player>();
 
-        String temp, playerName, playerType, playerRole, tempGoldPoints, attr;
+        String temp, playerType, playerRole, tempGoldPoints, attr;
         int goldPoints;
 
         try {
@@ -152,7 +152,9 @@ public class Load {
 
             // création des joueurs enregistrés
             for (int i = 0; i < nbPlayers; i++) {
-                playerName = br.readLine();
+                String playerName = br.readLine();
+
+                System.out.println("PLayername: "+playerName);
 
                 playerType = br.readLine();
                 if (playerType.equals("Player")) {
@@ -238,12 +240,14 @@ public class Load {
                 if (!reinitSavedPlayerHand(handCards, player)){
 
                     //TODO fix that !!!!
-                    System.out.println("passe");
+                    System.out.println("Bug ici");
                     return false;
                 }
                 this.arrayPlayer.add(player);
 
                 temp = br.readLine();
+
+                System.out.printf(playerName);
 
             }
 
@@ -561,10 +565,12 @@ public class Load {
 
                     break;
                 default:
+                    System.out.println("Default");
                     return false;
             }
-            // System.out.println(player);
         }
+
+        System.out.println(player);
         return true;
     }
 

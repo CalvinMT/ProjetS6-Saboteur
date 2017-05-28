@@ -64,6 +64,23 @@ public class ActionCard extends Card {
         return renvoi;
     }
 
+    public String toFile(){
+        String renvoi = "Action:";
+        switch(this.action){
+            case Map:
+                renvoi += "Map";
+                break;
+            case Crumbing:
+                renvoi += "Crumbling";
+                break;
+            default :
+                System.out.println("passe toFile");
+                renvoi += "Error";
+                break;
+        }
+        return renvoi;
+    }
+
     public Action getAction(){
         return this.action;
     }

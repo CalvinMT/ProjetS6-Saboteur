@@ -68,6 +68,19 @@ public class Hand extends Deck {
         return renvoi;
     }
 
+    @Override
+    public String toFile(){
+        String renvoi = "";
+        for(int i=0; i<this.arrayCard.size(); i++){
+            renvoi += this.arrayCard.get(i).toFile();
+
+            if(i<this.arrayCard.size()-1){
+                renvoi += ";";
+            }
+        }
+        return renvoi;
+    }
+
     public String print_without_visibility(){
         String renvoi = "Hand : ";
         renvoi += "[ ";

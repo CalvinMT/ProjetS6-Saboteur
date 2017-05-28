@@ -120,4 +120,37 @@ public class RepareSabotageCard extends ActionCard{
     }
 
 
+    @Override
+    public String toFile(){
+        String renvoi = "Action:";
+
+        if(this.action == Action.Sabotage){
+            renvoi += "Sabotage{";
+            if(this.nbTools() > 0){
+                renvoi += this.arrayTools.get(0);
+                renvoi += "}";
+            } else {
+                renvoi += "Error Tools}";
+            }
+        } else if(this.action == Action.Repare){
+            renvoi += "Repare{";
+            if(this.nbTools() == 1){
+                renvoi += this.arrayTools.get(0);
+                renvoi += "}";
+            } else if(this.nbTools() == 2){
+                renvoi += this.arrayTools.get(0) + ",";
+                renvoi += this.arrayTools.get(1);
+                renvoi += "}";
+            } else {
+                renvoi += "Error Tools}";
+            }
+        } else {
+            renvoi += "action type Error";
+        }
+
+
+        return renvoi;
+    }
+
+
 }

@@ -247,7 +247,7 @@ public abstract class Player {
         }
         renvoi += this.goldPoints + "\n";
         renvoi += this.attributeCards + "\n";
-        renvoi += this.playableCards + "\n";
+        renvoi += this.playableCards.toFile() + "\n";
 
         return renvoi;
     }

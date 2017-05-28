@@ -109,7 +109,7 @@ public class MoteurTest {
     public void testSaveLoad2(){
 
         ArrayList<Player> arrayPlayer = new ArrayList<Player>();
-        arrayPlayer.add(new PlayerHuman(0, "Thespygeek"));
+        arrayPlayer.add(new PlayerHuman(0, "Joueur 1"));
         arrayPlayer.add(new PlayerHuman(1, "DrZed"));
         arrayPlayer.add(new PlayerHuman(2, "Ekalkas"));
         arrayPlayer.add(new IA(3, "IA 1" ,Difficulty.Easy));

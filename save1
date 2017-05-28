@@ -1,0 +1,33 @@
+4
+Joueur 1
+Humain
+Mineur
+0
+
+Hand : [ GalleryCard: {N} bloqued ; Action:Sabotage{Lantern} ; Action:Sabotage{Pickaxe} ; GalleryCard: {NW} bloqued ; Action:Map ; GalleryCard: {W} bloqued ]
+
+Joueur 2
+Humain
+Saboteur
+0
+
+Hand : [ GalleryCard: {NW} bloqued ; Action:Crumbing ; GalleryCard: {E} bloqued ; GalleryCard: {NW} bloqued ; Action:Map ; GalleryCard: {NSW} bloqued ]
+
+Joueur 3
+Humain
+Mineur
+0
+
+Hand : [ Action:Crumbing ; Action:Sabotage{Wagon} ; GalleryCard: {NEW} bloqued ; GalleryCard: {W} bloqued ; GalleryCard: {NS} bloqued ; GalleryCard: {W}  ]
+
+Joueur 4
+Humain
+Mineur
+0
+
+Hand : [ GalleryCard: {NS} bloqued ; GalleryCard: {} bloqued ; GalleryCard: {NEW} bloqued ; Action:Repare{Lantern,Pickaxe} ; Action:Repare{Lantern} ; Action:Sabotage{Lantern} ]
+
+Joueur 1
+43
+Action:Map;GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=true, east=true, west=true};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=false, west=false};Action:Repare{Lantern};Action:Sabotage{Wagon};GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=true, west=true};Action:Repare{Wagon};GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=false, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=true, west=true};GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=false, east=false, west=true};Action:Sabotage{Lantern};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=false, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=true, west=false};Action:Sabotage{Pickaxe};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=false, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=true, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=false, west=false};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=true, east=false, west=false};GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true};Action:Map;Action:Crumbing;GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=true, east=true, west=true};Action:Map;GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=true};Action:Sabotage{Pickaxe};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=true};Action:Sabotage{Wagon};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=true};Action:Repare{Pickaxe};Action:Repare{Wagon};Action:Map;GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=false, west=true};GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=true, west=true};Action:Repare{Pickaxe,Wagon};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=true};GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=true, west=false};GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=false, east=true, west=true};Action:Repare{Pickaxe};GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=true};Action:Repare{Lantern,Wagon}
+Start:-1,-1,-1,-1?GoalCard:true:GalleryCard{type=gallery, x=-2, y=8, center=true, north=true, south=true, east=true, west=true}:-1,-1,-1,-1?GoalCard:false:GalleryCard{type=gallery, x=0, y=8, center=true, north=false, south=false, east=true, west=true}:-1,-1,-1,-1?GoalCard:false:GalleryCard{type=gallery, x=2, y=8, center=true, north=false, south=false, east=true, west=false}:-1,-1,-1,-1

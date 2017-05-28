@@ -27,6 +27,9 @@ public abstract class Card {
     }
     
     public abstract int getGold();
+    public String toFile(){
+        return "Erreur";
+    }
     
     public int getconfig(){
     	return -1;

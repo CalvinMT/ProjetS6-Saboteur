@@ -287,6 +287,20 @@ public class GalleryCard extends Card {
     }
 
     @Override
+    public String toFile() {
+        if (type_g == start) return "Start";
+        return "GalleryCard:{" + type + ","
+                + coord.getLine() + ","
+                + coord.getColumn() + ","
+                + center + ","
+                + north + ","
+                + south + ","
+                + east + ","
+                + west
+                + '}';
+    }
+
+    @Override
 	public int getGold(){
 		return 0;
 	}

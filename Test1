@@ -1,0 +1,40 @@
+5
+Joueur 1
+Player
+Mineur
+0
+
+Action:Sabotage{Wagon};GalleryCard:{gallery,0,0,true,true,true,true,false};Action:Repare{Wagon};Action:Sabotage{Lantern};Action:Repare{Pickaxe};Action:Sabotage{Lantern}
+
+DrZed
+Player
+Mineur
+0
+
+Action:Sabotage{Lantern};Action:Crumbling;GalleryCard:{gallery,0,0,true,true,true,false,true};GalleryCard:{gallery,0,0,true,true,false,true,false};GalleryCard:{gallery,0,0,true,true,true,false,false};GalleryCard:{gallery,0,0,true,true,false,true,true}
+
+Ekalkas
+Player
+Mineur
+0
+
+Action:Repare{Pickaxe,Lantern};Action:Repare{Lantern};GalleryCard:{gallery,0,0,false,false,false,true,true};GalleryCard:{gallery,0,0,true,false,false,true,true};GalleryCard:{gallery,0,0,false,true,false,false,false};Action:Repare{Wagon,Pickaxe}
+
+IA 1
+Easy
+Saboteur
+0
+
+Action:Map;Action:Map;Action:Sabotage{Pickaxe};GalleryCard:{gallery,0,0,true,true,true,false,false};Action:Map;GalleryCard:{gallery,0,0,true,true,true,false,false}
+
+IA 1
+Medium
+Saboteur
+0
+
+Action:Crumbling;GalleryCard:{gallery,0,0,false,true,true,false,true};GalleryCard:{gallery,0,0,true,true,true,false,false};Action:Map;GalleryCard:{gallery,0,0,true,false,true,true,true};GalleryCard:{gallery,0,0,true,true,false,false,true}
+
+0
+37
+Deck : [ Action:Sabotage{Wagon} ; GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=true, east=true, west=false} ; Action:Repare{Lantern} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=true} ; Action:Map ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=true} ; Action:Repare{Wagon} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=true, west=false} ; Action:Sabotage{Pickaxe} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=false, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=true, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=true, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true} ; Action:Map ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=false, east=true, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true} ; Action:Repare{Lantern,Wagon} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=true, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=false, north=false, south=false, east=true, west=true} ; Action:Crumbing ; GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=false, east=true, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=false, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=false, east=true, west=false} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=false, west=false} ; Action:Sabotage{Wagon} ; Action:Sabotage{Pickaxe} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=true, south=true, east=false, west=true} ; GalleryCard{type=gallery, x=0, y=0, center=false, north=true, south=true, east=false, west=false} ; Action:Repare{Pickaxe} ; GalleryCard{type=gallery, x=0, y=0, center=true, north=false, south=false, east=true, west=true} ]
+Start:-1,-1,-1,-1?GoalCard:false:GalleryCard{type=gallery, x=-2, y=8, center=true, north=false, south=false, east=true, west=false}:-1,-1,-1,-1?GoalCard:true:GalleryCard{type=gallery, x=0, y=8, center=true, north=true, south=true, east=true, west=true}:-1,-1,-1,-1?GoalCard:false:GalleryCard{type=gallery, x=2, y=8, center=true, north=false, south=false, east=true, west=false}:-1,-1,-1,-1
