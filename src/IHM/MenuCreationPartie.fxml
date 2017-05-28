@@ -54,17 +54,17 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Button fx:id="buttonAjouterPlayer" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterPlayer" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <Button fx:id="buttonAjouterPlayer" stylesheets="@style.css" styleClass="button_menu" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterPlayer" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets top="3.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
+            <Button fx:id="buttonPlay" stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="buttonRetourMenu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="158.0" text="Retour Menu" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="buttonRetourMenu" stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="158.0" text="Retour Menu" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Insets bottom="50.0" />
                </GridPane.margin>
             </TableView>
-            <Button fx:id="buttonAjouterIA" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="buttonAjouterIA" stylesheets="@style.css" styleClass="button_menu" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin></Button>

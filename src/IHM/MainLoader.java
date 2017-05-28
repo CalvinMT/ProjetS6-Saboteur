@@ -17,6 +17,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -27,6 +28,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.swing.text.html.ImageView;
 
 public class MainLoader extends Application {
 	
@@ -45,6 +48,9 @@ public class MainLoader extends Application {
 	// TOTO - private double volumeEffects;
 	
 	private File fileOptions = new File("saboteur.cfg");
+
+
+
 
 	
 	private void initGameConfig () {
