@@ -376,17 +376,22 @@ public class GameInteract {
 											ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
 											GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
 											
+											Couple endCardsimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
+											
 											// Delai retournement de carte but
 			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
-			                            	if (viewChosenEndCard.getRotate() != 0.0) {
-			                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
-													@Override
-													public void handle(ActionEvent event) {
+		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
+												@Override
+												public void handle(ActionEvent event) {
+													((GoalCard)moteur.getBoard().getNodeFromMine(endCardsimplePos).getCard()).setVisible(false);
+													if (viewChosenEndCard.getRotate() != 0.0) {
 														viewChosenEndCard.setRotate(0.0);
 													}
-												});
-			                            	}
+												}
+											});
 			                            	timeChosenEndCard.play();
+			                            	
+			                            	((GoalCard)moteur.getBoard().getNodeFromMine(endCardsimplePos).getCard()).setVisible(true);
 			                            	
 											success = true;
 										}
