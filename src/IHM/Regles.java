@@ -15,6 +15,9 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+import static IHM.MainLoader.anchorPaneMenuMain;
+import static IHM.MainLoader.scene;
+
 public class Regles {
 
     @FXML
@@ -55,15 +58,38 @@ public class Regles {
     private ImageView imageViewCarteEboulement;
 
     @FXML
-    public void handleButtonRetourMenu() throws IOException { //FIXME -- même bug que le retour menu in game : Après si on lance une partie, on ne peut pas jouer de cartes
-        Stage stage = (Stage) buttonRetourMenu.getScene().getWindow();
+    public void handleButtonRetourMenu() throws IOException {
+        /*Stage stage = (Stage) buttonRetourMenu.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
         MainLoader.anchorPaneMainLoader = (AnchorPane) root.lookup("#anchorPaneMainLoader");
         AnchorPane anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        MainLoader.anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
         MainLoader.autoResizeToResolution(MainLoader.anchorPaneMenuMain);
+        MainLoader.anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.show();*/ //OLD BUG (je laisse au cas où la nouvelle version soit pas bonne au final)
+
+        Stage primaryStage = (Stage) buttonRetourMenu.getScene().getWindow();
+        Parent parentMainMenu = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
+        primaryStage.setTitle("Saboteur");
+        double SCREEN_WIDTH = primaryStage.getWidth();
+        double SCREEN_HEIGHT = primaryStage.getHeight();
+		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setWidth(SCREEN_WIDTH);
+		primaryStage.setHeight(SCREEN_HEIGHT);
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+
+		// Load MenuMain.fxml
+		MainLoader.anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		MainLoader.anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+
+		// Automatic Resizing
+		MainLoader.autoResizeToResolution(anchorPaneMenuMain);
+
+		primaryStage.show();
+
+
     }
 
     @FXML
