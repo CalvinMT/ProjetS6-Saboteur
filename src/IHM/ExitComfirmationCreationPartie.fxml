@@ -18,12 +18,12 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Button fx:id="buttonNon" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonNon" prefHeight="30.0" prefWidth="251.0" text="Non" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="buttonNon" stylesheets="@style.css" styleClass="button_menu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonNon" prefHeight="30.0" prefWidth="251.0" text="Non" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonOui" prefHeight="30.0" prefWidth="251.0" text="Oui" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button stylesheets="@style.css" styleClass="button_menu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonOui" prefHeight="30.0" prefWidth="251.0" text="Oui" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
