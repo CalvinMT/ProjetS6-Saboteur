@@ -106,17 +106,29 @@ public class IA extends Player {
     }
 
     // Computing
-
-/*
-    public void computeMoves_rec(int playerIdx, Board board, int depth, TreeNode t) { // int maxDepth ?
-        if (depth == MAXDEPTH) {
-            //return t;
+    public TreeNode genConfigTree(int playerIdx,Board b, int depth) { // int maxDepth ?
+        Player p = allPlayers.get(playerIdx % allPlayers.size());
+        TreeNode t  = new TreeNode(b, p.getRole().equals(new RoleCard("Saboteur")));
+        for (Card c : p.getPlayableCards().getArrayCard()) {
+            if (c.getType() == gallery) {
+                GalleryCard galleryCard = (GalleryCard) c;
+                for (Couple pos : b.getPossiblePositions(galleryCard)) {
+                    t.board = b;
+                    galleryCard.setLine(pos.getLine());
+                    galleryCard.setColumn(pos.getColumn());
+                    t.board.addCard(galleryCard);
+                    if (depth == 0 /*TODO Si fin de jeu*/) { // Si on est au dernier tour
+                        t.addToNext(new TreeNode(t.board, p.getRole().equals(new RoleCard("Saboteur")))); // Ajout des feuilles
+                    } else {
+                        t.addToNext(genConfigTree(playerIdx++, t.board, depth--)); // Sinon ajout d'un nouveau noeud
+                    }
+                }
+            }
+            // TODO cartes action
         }
-        else {
-
-        }
+        return t;
     }
-*/
+
 
 
 
