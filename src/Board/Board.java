@@ -12,8 +12,7 @@ import java.util.Random;
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
     private Hashtable<Couple, Node> accessCard = new Hashtable<Couple, Node>();
-    private ArrayList<Couple> positionCandidates
-            = new ArrayList<Couple>();
+    private ArrayList<Couple> positionCandidates = new ArrayList<Couple>();
 
     public Board() {
         Random r = new Random();

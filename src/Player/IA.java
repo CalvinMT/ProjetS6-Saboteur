@@ -3,7 +3,6 @@ package Player;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,9 +14,11 @@ import static java.lang.Math.abs;
  * Created by thespygeek on 11/05/17.
  */
 public class IA extends Player {
-    final int SABOTAGE_VALUE
-    final int GALLERY_VALUE
-    final int ACTION_VALUE
+    //final int SABOTAGE_VALUE;
+    //final int GALLERY_VALUE;
+    //final int ACTION_VALUE;
+
+    private final int MAXDEPTH = 4;
 
     private Card cardToPlay;
     private Couple posToPlay;
@@ -38,16 +39,16 @@ public class IA extends Player {
     }
 
     public IA(int index, String name, Difficulty d, ArrayList<Player> p){
-        this.playerName = name;
         this.num = index;
         this.difficulty = d;
         this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
         this.allPlayers = p;
-        setUpGoals();
+        this.playerName = name;
+        this.avatar = "robot_miner";
         moves = new ArrayList<Move>();
+        this.playableCards = new HandPlayer();
+        attributeCards = new PlayerAttribute();
+        setUpGoals();
     }
 
     private void setUpGoals() {
@@ -56,7 +57,6 @@ public class IA extends Player {
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
     }
-
 
     // IA Random
     public void randomPlay() {
@@ -104,8 +104,20 @@ public class IA extends Player {
         }
     }
 
-
     // Computing
+
+
+    public void computeMoves_rec(int playerIdx, Board board, int depth, Player.TreeNode t) { // int maxDepth ?
+        if (depth == MAXDEPTH) {
+            return t;
+        }
+        else {
+
+        }
+    }
+
+
+
 
     // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
     // Faux sinon
@@ -140,7 +152,7 @@ public class IA extends Player {
             for (Couple goal : goalsToTest) { // Et pour chaque but
                 h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
-                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
+                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d\n", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
 
                 // TODO : Verifier si on peut finir le chemin
                 // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
@@ -150,7 +162,6 @@ public class IA extends Player {
                     card.setLine(currCpl.getLine());
                     card.setColumn(currCpl.getColumn());
                 }
-                //System.out.printf("\n");
             }
         }
         return new Move(card, card.getCoord(), hMin);
@@ -192,10 +203,25 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    public void genMoves() {
+        getGalleryMoves();
+        // TODO : getActionsMoves();
+    }
+
     public void computeMovesValue() {
+        int v;
+        Move m;
+        genMoves();
         if (((RoleCard) this.getRole()).isSaboteur()) {
             if (isInSwitchZone()) {
-                // TODO : bloquer la progression / saboter
+                // TODO : bloquer la progression des mineurs / saboter
+                for (int i = 0; i < moves.size(); i++) {
+                    m = moves.get(i);
+                    if (m.getCard().getType() == gallery) {
+                        v = m.getValue();
+                        // m.setValue(v / (TODO: Get max neighbors resistance) );
+                    }
+                }
             }
             else {
                 // TODO : se rapprocher des buts avec des cartes de res faible
@@ -250,7 +276,7 @@ public class IA extends Player {
     public Couple getPosToPlay() {
         return posToPlay;
     }
-    
+
     // Retourne un joueur quelconque, différent de lui-meme & ayant un role opposé, au quel l'IA mettra un malus
     public Player choosePlayerToSabotage(RepareSabotageCard card, RoleCard roleIA){
         Player currentplayer, p = null;
@@ -274,7 +300,7 @@ public class IA extends Player {
             System.err.println("Role incorrecte.");
         return p;
     }
-    
+
     // Retourne un joueur quelconque, lui-meme inclus & ayant le meme role, au quel l'IA mettra une carte pour enlever un malus
     public Player choosePlayerToRepair(RepareSabotageCard card, RoleCard roleIA){
         Player currentplayer, p = null;
@@ -298,7 +324,55 @@ public class IA extends Player {
             System.err.println("Role incorrecte.");
         return p;
     }
-    
+
+
+    /*
+
+ (* the minimax value of n, searched to depth d.
+ * If the value is less than min, returns min.
+ * If greater than max, returns max. *)
+
+ fun minimax(n: node, d: int, min: int, max: int): int =
+   if leaf(n) or depth=0 return evaluate(n)
+   if n is a max node
+      v := min
+      for each child of n
+         v' := minimax (child,d-1,v,max)
+         if v' > v, v:= v'
+         if v > max return max
+      return v
+   if n is a min node
+      v := max
+      for each child of n
+         v' := minimax (child,d-1,min,v)
+         if v' < v, v:= v'
+         if v < min return min
+      return v
+
+ */
+    public int minimax(TreeNode t, int depth, int min, int max) {
+        int v, vPrim;
+
+        if (t.isLeaf() || depth == 0) return t.evaluate(); // Fin de l'arbre ou profondeur max;
+        if (t.isMaxNode()) {
+            v = min;
+            for (TreeNode n : t.getNext()) {
+                vPrim = minimax(n, depth - 1, v, max);
+                if (vPrim > v) v = vPrim;
+                if (v > max) return max;
+            }
+            return v;
+        }
+        else {
+            v = max;
+            for (TreeNode n : t.getNext()) {
+                vPrim = minimax(n, depth - 1, min, v);
+                if (vPrim < v) v = vPrim;
+                if (v < min) return min;
+            }
+        }
+    }
+
 
     @Override
     public boolean iaPlayCard() {
@@ -317,7 +391,7 @@ public class IA extends Player {
 
         return true;
     }
-    
+
     @Override
     public void setGoldPoints(int gp){
         if (gp >= 0)
