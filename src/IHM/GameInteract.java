@@ -839,6 +839,7 @@ public class GameInteract {
 		hand = moteur.getCurrentPlayer().getPlayableCards();
         numberOfCardsInHand = hand.nbCard();
 		cardsInHand = new ArrayList <GamePlayingCard> ();
+		hboxGameCardsInHand.getChildren().clear();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
 		for (int i=0; i < numberOfCardsInHand; i++) {
 			card = hand.chooseOne_without_remove(i);
