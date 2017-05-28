@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import Board.Couple;
-import Cards.*;
+import Cards.ActionCard;
+import Cards.GoalCard;
+import Cards.Card;
 import Cards.Card.Card_t;
+import Cards.GalleryCard;
 import Cards.GalleryCard.Gallery_t;
+import Cards.Hand;
+import Cards.HandPlayer;
+import Cards.RepareSabotageCard;
 import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Saboteur.Moteur;
@@ -35,11 +41,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -185,14 +187,14 @@ public class GameInteract {
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintPickaxe, playerInfoConstraintPickaxePos.getColumn(), playerInfoConstraintPickaxePos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintWagon, playerInfoConstraintWagonPos.getColumn(), playerInfoConstraintWagonPos.getLine());
 		gridPanePlayerInfos.add(viewPlayerInfoAvatar, playerInfoAvatarPos.getColumn(), playerInfoAvatarPos.getLine()); GridPane.setColumnSpan(viewPlayerInfoAvatar, 3); GridPane.setRowSpan(viewPlayerInfoAvatar, 3);
-		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine()); GridPane.setMargin(textPlayerInfoPseudo, new Insets(50, 0, 0, 10));
-		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine()); GridPane.setMargin(textPlayerInfoRole, new Insets(5, 0, 0, 10));
-		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine()); GridPane.setMargin(textPlayerInfoGold, new Insets(0, 0, 0, 10));
+		gridPanePlayerInfos.add(textPlayerInfoPseudo, playerInfoPseudoPos.getColumn(), playerInfoPseudoPos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoRole, playerInfoRolePos.getColumn(), playerInfoRolePos.getLine());
+		gridPanePlayerInfos.add(textPlayerInfoGold, playerInfoGoldPos.getColumn(), playerInfoGoldPos.getLine());
 		hboxPlayerInfos.getChildren().add(gridPanePlayerInfos);
-		
-		
+
 		nextPlayer();
 		
+
 		
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
@@ -498,7 +500,7 @@ public class GameInteract {
 											}
 											
                                             player.setSabotage((RepareSabotageCard) card);
-                                            System.out.println(player.debugString());
+                                            System.out.println(player);
 											
 											updateCurrentPlayerConstraints();
 
@@ -760,27 +762,72 @@ public class GameInteract {
                     // TODO @TheSpyGeek fin de manche ici
                     // TODO if(moteur.endGame()){
 
-                    // Draws the first card from the deck
-                    if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
-                        Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+                    // fin de manche
+                    if(moteur.getBoard().goldReached()){
 
-                        // DEBUT CARTE PIOCHEE
+                        System.out.println("Fin de partie");
+
+
+
+                        /*try {
+                            Scene scene = (Scene) ( ((BorderPane) GameBoard.gridPaneBoard.getParent()).getScene());
+                            BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneGameLoader");
+                            BorderPane borderPaneEnd = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
+                            borderPaneGameLoader.getChildren().setAll(borderPaneEnd);
+
+
+                        } catch (IOException e) {
+                            System.err.println("[GameInteract] Erreur changenement de scene");
+                            e.printStackTrace();
+                        }*/
+
+                    } else {
+
+                        // Draws the first card from the deck
+                        if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
+                            Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
+
+                            // DEBUT CARTE PIOCHEE
 //                        System.out.println("Carte piochée: "+cardDraw);
 
-                        cardsInHand.add(getImageCard(cardDraw));
-                        cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
-                        hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+                            cardsInHand.add(getImageCard(cardDraw));
+                            cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
+                            hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 
-                        // DEBUG BOARD
-//                        System.out.println(moteur.getBoard().mine());
+                            // DEBUG BOARD
+                            System.out.println(moteur.getBoard().mine());
+							System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
+
+
+
+
+                        }
+
+//                        moteur.nextPlayer();
+//                        nextPlayer();
+
+                        // Transition
+
+                        /*if(dragEvent.getTransferMode() == TransferMode.MOVE){
+
+                            //Transition @Sanory
+                            Stage stage = new Stage();
+                            TransitionStage transStage= new TransitionStage();
+                            transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+                        }*/
+
+
+                        // Discard indication off
+                        viewDiscard.setImage(new Image("ressources/defausse.png"));
+
+
                     }
-                    
-                    
-                    // Discard indication off
-                    viewDiscard.setImage(new Image("ressources/defausse.png"));
+
+
                 } else {
                     System.out.println("Ce n'est pas ton tour");
                 }
+
 
                 dragEvent.consume();
 			}
@@ -982,7 +1029,8 @@ public class GameInteract {
 	void handleButtonAideInGame(ActionEvent event){
             Stage stage = new Stage();
             TransparentStage tspStage= new TransparentStage();
-            tspStage.start(stage);
+            tspStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight());
+
 	}
 
 	@FXML

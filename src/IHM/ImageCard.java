@@ -208,7 +208,6 @@ public class ImageCard {
                                         playingCard.getImageView().setRotate(180);
                                     }else{//Sans East
                                         playingCard = new GamePlayingCard("N_NC");//N
-                                        playingCard.getImageView().setRotate(180);
                                     }
                                 }
                             }
