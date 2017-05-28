@@ -6,6 +6,10 @@ import Cards.ActionCard;
 import Cards.RepareSabotageCard;
 
 import Player.Player;
+import Player.IA;
+import Player.PlayerHuman;
+import Player.Player.Difficulty;
+import Saboteur.Moteur.State;
 
 import java.util.ArrayList;
 
@@ -29,6 +33,33 @@ public class Saboteur {
     }
 
 
+
+    // game de test 1
+    static public void game1(){
+
+        ArrayList<Player> arrayPlayer = new ArrayList<Player>();
+        arrayPlayer.add(new PlayerHuman(0, "Joueur 1", "avatar_anonyme.png"));
+        arrayPlayer.add(new PlayerHuman(1, "DrZed", "avatar_anonyme.png"));
+        arrayPlayer.add(new PlayerHuman(2, "Ekalkas", "avatar_anonyme.png"));
+        arrayPlayer.add(new IA(3, "IA 1" ,Difficulty.Easy));
+        arrayPlayer.add(new IA(4, "IA 2" ,Difficulty.Medium));
+
+        engine = new Moteur(arrayPlayer, "");
+
+        while(!engine.allRoleAreSet()){
+            try {
+                engine.chooseRole(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        engine.setState(State.Game);
+
+        System.out.println(engine);
+    }
+
+
     static public boolean containsOption(String option, String [] args){
         for(int i=0; i<args.length; i++){
             if(args[i].equals(option)){
@@ -36,6 +67,10 @@ public class Saboteur {
             }
         }
         return false;
+    }
+
+    static public void main(String [] args){
+        game1();
     }
 
 

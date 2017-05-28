@@ -483,7 +483,7 @@ public class GameInteract {
 											}
 											
                                             player.setSabotage((RepareSabotageCard) card);
-                                            System.out.println(player.debugString());
+                                            System.out.println(player);
 											
 											updateCurrentPlayerConstraints();
 

@@ -612,15 +612,13 @@ public class Moteur {
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
-        renvoi += "Joueurs [ ";
+        renvoi += "Joueurs: \n";
         for(int i=0; i<nbPlayer(); i++){
-            renvoi += this.getPlayer(i).getPlayerName() + " ; ";
+            renvoi += this.getPlayer(i) + " ; \n";
         }
-        renvoi += "]\n";
 
         return renvoi;
     }
-
 
 
 
