@@ -74,7 +74,7 @@ public class EndShaft {
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-    
+        // @TheSpyGeek TODO - réinitialisation du moteur pour la nouvelle manche
     }
 
     

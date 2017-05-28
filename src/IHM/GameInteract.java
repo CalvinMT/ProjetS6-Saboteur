@@ -204,10 +204,10 @@ public class GameInteract {
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen, and player's infos
-		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()-50), 0, 0, 0));
-		StackPane.setMargin(hboxGameCardsInHand, new Insets(18, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
-		StackPane.setMargin(hboxDeckDiscard, new Insets(18, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
-		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(18, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
+		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()-83), 0, 0, 0));
+		StackPane.setMargin(hboxGameCardsInHand, new Insets(19, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		StackPane.setMargin(hboxDeckDiscard, new Insets(19, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
+		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(19, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
 
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
