@@ -12,6 +12,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class MenuMain {
@@ -65,6 +66,7 @@ public class MenuMain {
 		stage.hide();
 		stage.setScene(scene);
 		stage.show();
+
 	}
 	
 	@FXML
