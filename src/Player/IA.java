@@ -1,5 +1,6 @@
 package Player;
 
+import Board.Board;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
@@ -359,8 +360,8 @@ public class IA extends Player {
     }
 
 
-    public int minimax(TreeNode t, int depth, int min, int max) {
-        int v, vPrim;
+    public float minimax(TreeNode t, int depth, float min, float max) {
+        float v, vPrim;
 
         if (t.isLeaf() || depth == 0) return t.evaluate(); // Fin de l'arbre ou profondeur max;
         if (t.isMaxNode()) {

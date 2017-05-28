@@ -150,7 +150,13 @@ public class IATest {
         }
 
     }
-*/
+
+    @Test
+    public void minimax() throws Exception {
+        System.out.println("TODO : Test minimax");
+    }
+
+
     @Test
     public void goalsAction() throws Exception {
         ArrayList<Couple> goals = ia.getGoalsToTest();
