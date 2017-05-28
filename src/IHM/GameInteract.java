@@ -181,6 +181,9 @@ public class GameInteract {
 		textPlayerInfoPseudo = new Text();
 		textPlayerInfoRole = new Text();
 		textPlayerInfoGold = new Text();
+		GridPane.setMargin(textPlayerInfoPseudo, new Insets(50, 0, 0, 10));
+		GridPane.setMargin(textPlayerInfoRole, new Insets(5, 0, 0, 10));
+		GridPane.setMargin(textPlayerInfoGold, new Insets(0, 0, 0, 10));
 		// Puts everything into the player info grid
 		gridPanePlayerInfos.setPrefSize(hboxPlayerInfos.getPrefWidth(), hboxPlayerInfos.getPrefHeight());
 		gridPanePlayerInfos.add(viewPlayerInfoConstraintLantern, playerInfoConstraintLanternPos.getColumn(), playerInfoConstraintLanternPos.getLine());
@@ -803,18 +806,18 @@ public class GameInteract {
 
                         }
 
-//                        moteur.nextPlayer();
-//                        nextPlayer();
+                        moteur.nextPlayer();
+                        nextPlayer();
 
                         // Transition
 
-                        /*if(dragEvent.getTransferMode() == TransferMode.MOVE){
+                        if(dragEvent.getTransferMode() == TransferMode.MOVE){
 
                             //Transition @Sanory
                             Stage stage = new Stage();
                             TransitionStage transStage= new TransitionStage();
                             transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
-                        }*/
+                        }
 
 
                         // Discard indication off
