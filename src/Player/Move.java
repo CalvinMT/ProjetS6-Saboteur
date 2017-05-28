@@ -2,6 +2,8 @@ package Player;
 
 import Board.Couple;
 import Cards.Card;
+import Cards.GalleryCard;
+
 
 public class Move {
     private Card card; // la carte à placer
@@ -10,7 +12,7 @@ public class Move {
     private int value;
 
     public Move() {
-        this(new Card, 0, new Couple(0,0), 0);
+        this(new GalleryCard(), 0, new Couple(0,0), 0);
     }
 
     public Move(Card card, Couple positionTarget, int value) {

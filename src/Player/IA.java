@@ -1,5 +1,6 @@
 package Player;
 
+import Board.Board;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
@@ -13,12 +14,18 @@ import static java.lang.Math.abs;
 /**
  * Created by thespygeek on 11/05/17.
  */
-public class IA extends Player{
-    private ArrayList<Couple> goalsToTest;
+public class IA extends Player {
+    //final int SABOTAGE_VALUE;
+    //final int GALLERY_VALUE;
+    //final int ACTION_VALUE;
+
+    private final int MAXDEPTH = 4;
 
     private Card cardToPlay;
     private Couple posToPlay;
+    private ArrayList<Move> moves;
     private ArrayList<Player> allPlayers;
+    private ArrayList<Couple> goalsToTest;
 
     public IA(int index) {
         this(index, "IA", Difficulty.Easy, new ArrayList<>());
@@ -33,14 +40,15 @@ public class IA extends Player{
     }
 
     public IA(int index, String name, Difficulty d, ArrayList<Player> p){
-        this.playerName = name;
         this.num = index;
         this.difficulty = d;
         this.goldPoints = 0;
-        attributeCards = new PlayerAttribute();
-        this.playableCards = new HandPlayer();
-        this.avatar = "robot_miner";
         this.allPlayers = p;
+        this.playerName = name;
+        this.avatar = "robot_miner";
+        moves = new ArrayList<Move>();
+        this.playableCards = new HandPlayer();
+        attributeCards = new PlayerAttribute();
         setUpGoals();
     }
 
@@ -50,7 +58,6 @@ public class IA extends Player{
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
     }
-
 
     // IA Random
     public void randomPlay() {
@@ -98,8 +105,32 @@ public class IA extends Player{
         }
     }
 
-
     // Computing
+    public TreeNode genConfigTree(int playerIdx,Board b, int depth) { // int maxDepth ?
+        Player p = allPlayers.get(playerIdx % allPlayers.size());
+        TreeNode t  = new TreeNode(b, p.getRole().equals(new RoleCard("Saboteur")));
+        for (Card c : p.getPlayableCards().getArrayCard()) {
+            if (c.getType() == gallery) {
+                GalleryCard galleryCard = (GalleryCard) c;
+                for (Couple pos : b.getPossiblePositions(galleryCard)) {
+                    t.board = b;
+                    galleryCard.setLine(pos.getLine());
+                    galleryCard.setColumn(pos.getColumn());
+                    t.board.addCard(galleryCard);
+                    if (depth == 0 /*TODO Si fin de jeu*/) { // Si on est au dernier tour
+                        t.addToNext(new TreeNode(t.board, p.getRole().equals(new RoleCard("Saboteur")))); // Ajout des feuilles
+                    } else {
+                        t.addToNext(genConfigTree(playerIdx++, t.board, depth--)); // Sinon ajout d'un nouveau noeud
+                    }
+                }
+            }
+            // TODO cartes action
+        }
+        return t;
+    }
+
+
+
 
     // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
     // Faux sinon
@@ -124,9 +155,51 @@ public class IA extends Player{
         return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
+    public Move whereToPlaceCard(GalleryCard card) {
+        int h, hMin = -1;
+        ArrayList<Couple> p;
+
+        p = this.board.getPossiblePositions(card); // On calcule les positions possibles pour cette carte
+
+        for (Couple currCpl : p) { // Pour chaque position possible
+            for (Couple goal : goalsToTest) { // Et pour chaque but
+                h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
+
+                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d\n", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
+
+                // TODO : Verifier si on peut finir le chemin
+                // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
+
+                if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
+                    hMin = h; // On met à jour l'heuristique max
+                    card.setLine(currCpl.getLine());
+                    card.setColumn(currCpl.getColumn());
+                }
+            }
+        }
+        return new Move(card, card.getCoord(), hMin);
+    }
+
     // TODO : Tests
     // TODO : Choisir les cartes
     // Determine la position la plus proche d'un but et retourne ses coordonnées
+    public void getGalleryMoves() {
+        Card c;
+        //GalleryCard currCard;
+        //Couple bestCpl = new Couple(0, 0);
+        //ArrayList<Move> m;
+
+        //bestCard = lookAtCard(0);
+        for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
+            c = lookAtCard(cardIdx);
+            if (c.getType() == gallery) { // Si la carte est une gallerie
+                moves.add(whereToPlaceCard((GalleryCard) c));
+            }
+        }
+
+        getBestValueMove();
+    }
+
     public void choosePosition() {
         int h, hMin = -1;
         Card c, bestCard;
@@ -164,6 +237,47 @@ public class IA extends Player{
         this.cardToPlay = bestCard;
     }
 
+    private Move getBestValueMove() {
+        int idx = 0,
+            vMax = 0;
+        for (int i = 0; i < moves.size(); i++) {
+            if(moves.get(i).getValue() > vMax) {
+                vMax = moves.get(i).getValue();
+                idx = i;
+            }
+        }
+        return moves.get(idx);
+    }
+
+    public void genMoves() {
+        getGalleryMoves();
+        // TODO : getActionsMoves();
+    }
+
+    public void computeMovesValue() {
+        int v;
+        Move m;
+        genMoves();
+        if (((RoleCard) this.getRole()).isSaboteur()) {
+            if (isInSwitchZone()) {
+                // TODO : bloquer la progression des mineurs / saboter
+                for (int i = 0; i < moves.size(); i++) {
+                    m = moves.get(i);
+                    if (m.getCard().getType() == gallery) {
+                        v = m.getValue();
+                        // m.setValue(v / (TODO: Get max neighbors resistance) );
+                    }
+                }
+            }
+            else {
+                // TODO : se rapprocher des buts avec des cartes de res faible
+            }
+        }
+        else {
+            // TODO : plus on est proche des but plus il est important de placer des cartes forte
+            // Aussi Saboter les saboteur
+        }
+    }
 
     public void mediumPlay() {
             System.out.println("TODO : IA Medium");
@@ -256,7 +370,31 @@ public class IA extends Player{
             System.err.println("Role incorrecte.");
         return p;
     }
-    
+
+    public float minimax(TreeNode t, int depth, float min, float max) {
+        float v, vPrim;
+
+        if (t.isLeaf() || depth == 0) return t.evaluate(); // Fin de l'arbre ou profondeur max;
+        if (t.isMaxNode()) {
+            v = min;
+            for (TreeNode n : t.getNext()) {
+                vPrim = minimax(n, depth - 1, v, max); // Calcul recursif
+                if (vPrim > v) v = vPrim; // la meilleur branche
+                if (v > max) return max; // AB pruning
+            }
+            return v;
+        }
+        else {
+            v = max;
+            for (TreeNode n : t.getNext()) {
+                vPrim = minimax(n, depth - 1, min, v);
+                if (vPrim < v) v = vPrim;
+                if (v < min) return min;
+            }
+            return v;
+        }
+    }
+
 
     @Override
     public boolean iaPlayCard() {
@@ -275,7 +413,7 @@ public class IA extends Player{
 
         return true;
     }
-    
+
     @Override
     public void setGoldPoints(int gp){
         if (gp >= 0)
