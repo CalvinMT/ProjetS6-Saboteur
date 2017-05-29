@@ -108,7 +108,7 @@ public class IA extends Player {
             else
                 System.out.println("Il n'y a aucune case ou placer la carte.");
         }
-        else if (cardToPlay.getType() == Card.Card_t.action ){
+        else if (cardToPlay.getType() == action ){
             ActionCard actioncard = (ActionCard) cardToPlay;
             if (actioncard.getAction() == Action.Map) {
                 // TODO
@@ -126,25 +126,105 @@ public class IA extends Player {
     }
 
     // Computing
-    public TreeNode genConfigTree(int playerIdx,Board b, int depth) { // int maxDepth ?
-        Player p = allPlayers.get(playerIdx % allPlayers.size());
-        TreeNode t  = new TreeNode(b, p.getRole().equals(new RoleCard("Saboteur")));
-        for (Card c : p.getPlayableCards().getArrayCard()) {
-            if (c.getType() == gallery) {
-                GalleryCard galleryCard = (GalleryCard) c;
-                for (Couple pos : b.getPossiblePositions(galleryCard)) {
-                    t.board = b;
-                    galleryCard.setLine(pos.getLine());
-                    galleryCard.setColumn(pos.getColumn());
-                    t.board.addCard(galleryCard);
-                    if (depth == 0 /*TODO Si fin de jeu*/) { // Si on est au dernier tour
-                        t.addToNext(new TreeNode(t.board, p.getRole().equals(new RoleCard("Saboteur")))); // Ajout des feuilles
-                    } else {
-                        t.addToNext(genConfigTree(playerIdx++, t.board, depth--)); // Sinon ajout d'un nouveau noeud
+    public TreeNode genConfigTree(int playerIdx, int depth, IA ia) { // int maxDepth ?
+        Player p = ia.allPlayers.get(playerIdx % allPlayers.size());
+        TreeNode t  = new TreeNode(p.getRole().equals(new RoleCard("Saboteur")),
+                                    new IA(this.num, this.getPlayerName(), this.difficulty, ia.allPlayers, ia.goalsToTest));
+        IA nextIA;
+
+        if (p.getAttributeCards().getNbAttribute() != 0) { // Le joueur ne peut pas jouer
+            t.setBoard(ia.board);
+            t.addToNext(genConfigTree(playerIdx++, depth--, ia));
+        }
+        for (Card c : p.getPlayableCards().getArrayCard()) { // TODO : ajout move dans TreeNode
+            switch (c.getType()) {
+                case gallery :
+                    GalleryCard galleryCard = (GalleryCard) c;
+                    for (Couple pos : ia.board.getPossiblePositions(galleryCard)) {
+                        nextIA = ia.clone();
+                        t.setBoard(ia.board);
+
+                        galleryCard.setLine(pos.getLine());
+                        galleryCard.setColumn(pos.getColumn());
+
+                        nextIA.board.addCard(galleryCard);
+                        if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                            t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                        } else {
+                            t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                        }
                     }
-                }
+                    break;
+                case action :
+                    ActionCard actionCard = (ActionCard) c;
+                    if (actionCard.getAction() == Action.Map) {
+                        for (Couple g : ia.goalsToTest) { // TODO : Ajout goalsToTest dans TreeNode
+                            nextIA = ia.clone();
+                            if (this.board.getNodeFromMine(g).getCard().isGold()) {
+                                nextIA.addGoldGoal(g);
+                            }
+                            else {
+                                nextIA.ignoreGoal(g);
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Crumbing) {
+                        for (int i = 0; i < ia.board.getMineSize(); i++ ) {
+                            nextIA = ia.clone();
+                            Couple cpl = this.board.getMineElement(i).getCard().getCoord();
+                            t.setBoard(ia.board);
+                            nextIA.board.removeCard(cpl);
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA));// Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Repare) {
+                        for (Player currPlayer : ia.allPlayers) {
+                            nextIA = ia.clone();
+                            if (currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
+                                currPlayer.setRepare((RepareSabotageCard) actionCard, ((RepareSabotageCard) actionCard).getTool());
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Sabotage) {
+                        // TODO
+                        for (Player currPlayer : ia.allPlayers) {
+                            nextIA = ia.clone();
+                            if (!currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
+                                currPlayer.setSabotage((RepareSabotageCard) actionCard);
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+
+                    }
+                    if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                        t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), ia)); // Ajout des feuilles
+                    } else {
+                        t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
+                    }
+                    break;
+                default:
+                    System.out.println(c.getType() + " not implemented.");
+                    break;
             }
-            // TODO cartes action
+
         }
         return t;
     }
