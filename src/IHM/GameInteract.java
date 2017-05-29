@@ -48,6 +48,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import Saboteur.Moteur.State;
 
 
 public class GameInteract {
@@ -782,10 +783,12 @@ public class GameInteract {
 
 
         // fin de manche
-        if(moteur.getBoard().goldReached()){
+        if(moteur.endGame()){
 
             System.out.println("Fin de partie");
             try {
+            	moteur.setState(State.Waiting);
+
                 Scene scene = (Scene) GameBoard.gridPaneBoard.getScene();
                 BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneGameLoader");
                 BorderPane borderPaneEndShaft = FXMLLoader.load(getClass().getResource("EndShaft.fxml"));
@@ -803,6 +806,7 @@ public class GameInteract {
                 // DEBUT CARTE PIOCHEE
                 //System.out.println("Carte piochée: "+cardDraw);
 
+
                 cardsInHand.add(getImageCard(cardDraw));
                 cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
@@ -811,6 +815,7 @@ public class GameInteract {
                 System.out.println(moteur.getBoard().mine());
                 System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
+
 
             moteur.nextPlayer();
             nextPlayer();
