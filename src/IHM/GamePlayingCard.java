@@ -21,4 +21,22 @@ public class GamePlayingCard {
 	public ImageView getImageView () {
 		return this.imageView;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof GamePlayingCard)) return false;
+
+		GamePlayingCard that = (GamePlayingCard) o;
+
+		if (name != null ? !name.equals(that.name) : that.name != null) return false;
+		return imageView != null ? imageView.equals(that.imageView) : that.imageView == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + (imageView != null ? imageView.hashCode() : 0);
+		return result;
+	}
 }

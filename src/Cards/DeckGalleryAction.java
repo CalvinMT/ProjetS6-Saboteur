@@ -9,8 +9,6 @@ public class DeckGalleryAction extends Deck {
 
     //Dépendant du jeu
 
-    private final int nbCardAction = 27;
-
     private final int nbNegativPickaxe = 3;
     private final int nbNegativLantern = 3;
     private final int nbNegativWagon = 3;
@@ -24,12 +22,36 @@ public class DeckGalleryAction extends Deck {
     private final int nbWagonLantern = 1;
 
 
-    private final int nbCardGallery = 40;
     final int nbCardGallery_no_centered = 9;
-    private final int nbCardGallery_centered = nbCardGallery - nbCardGallery_no_centered;
+    private final int nbCardGallery_centered = 31;
 
     public int getNbBloqued(){
         return this.nbCardGallery_centered;
+    }
+
+    public DeckGalleryAction(int nbCard, int nbcardcentered){
+        Random rand = new Random();
+        this.arrayCard = new ArrayList<>();
+        GalleryCard.Gallery_t type = GalleryCard.Gallery_t.tunnel;
+
+        int nb = 0;
+        GalleryCard c;
+        while(nb<nbcardcentered){
+            c = new GalleryCard(type, true, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
+
+        nb = 0;
+        while(nb<nbCard-nbcardcentered){
+            c =new GalleryCard(type, false, rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean());
+            if(c.possible()){
+                nb++;
+                this.arrayCard.add(c);
+            }
+        }
     }
 
 
@@ -112,7 +134,7 @@ public class DeckGalleryAction extends Deck {
 
         // Carte effondrement
         for(int i=0; i<nbCrash; i++){
-            this.arrayCard.add(new ActionCard("Crumbing"));
+            this.arrayCard.add(new ActionCard("Crumbling"));
         }
 
 
@@ -122,11 +144,15 @@ public class DeckGalleryAction extends Deck {
         this.shuffle();
 
     }
-
-    public boolean getValidity(){
-        return nbCardAction == (nbNegativPickaxe + nbNegativLantern + nbNegativWagon + nbPositivWagon + nbPositivPickaxe + nbPositivLantern +
-         nbMap + nbCrash + nbWagonPickaxe + nbPickaxeLantern + nbWagonLantern);
-
+    
+    public String toString(){
+    	String me = "";
+    	for (int i=0; i<this.arrayCard.size(); i++) {
+    		me += this.arrayCard.get(i).toString();
+    		if (i < this.arrayCard.size()-1)
+    			me += ";";
+    	}
+    	return me;
     }
 
 

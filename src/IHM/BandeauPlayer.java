@@ -81,11 +81,12 @@ public class BandeauPlayer {
 					String name = lobby.getArrayPlayer().get(i).getPlayerName();
 					tableView.getItems().get(i).setTextPseudo(name);
 				}
+				
+				MenuCreationPartie.numberOfPlayersLeftPlusOne();
 
-				System.out.println(lobby);
-
-				if(tableView.getItems().size()<=3)
+				if(tableView.getItems().size()<3)
 					buttonJouer.setDisable(true);
+					MenuCreationPartie.textNumberOfPlayersLeftVisibleOn();
 				if(tableView.getItems().size()<10){
 					buttonAjouterPlayer.setDisable((false));
 					buttonAjouterIA.setDisable((false));

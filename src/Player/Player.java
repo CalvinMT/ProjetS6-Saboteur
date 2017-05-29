@@ -1,12 +1,8 @@
 package Player;
 
 
-import Cards.*;
 import Board.Board;
-import Board.Couple;
-
-import javax.print.attribute.standard.PrinterLocation;
-import javax.tools.Tool;
+import Cards.*;
 
 public abstract class Player {
 
@@ -55,10 +51,21 @@ public abstract class Player {
         }
     }
 
+    // reset playerAttribute et HandCard
+    public void resetPlayer(){
+        this.playableCards = new HandPlayer();
+        this.attributeCards = new PlayerAttribute();
+        this.role = null;
+    }
+
     // le joueur pioche
-    public void drawCard(Deck d) {
+    public Card drawCard(Deck d) {
         if(playableCards.nbCard() < 6 && !d.isEmpty()){
-            playableCards.addCard(d.getTopDeck());
+            Card c = d.getTopDeck();
+            playableCards.addCard(c);
+            return c;
+        } else {
+            return null;
         }
     }
 
@@ -99,6 +106,11 @@ public abstract class Player {
         this.playerName = name;
     }
 
+    // si le joueur n'a aucune attribut de sabotage sur lui
+    public boolean canPlayGalleryCard(){
+        return this.attributeCards.nbCard() == 0;
+    }
+
     // assigne un avatar
     public void setAvatar(String jpg){
         this.avatar = jpg;
@@ -124,6 +136,13 @@ public abstract class Player {
         this.attributeCards.putRepare(c, t);
     }
 
+    // ajout d'une carte Repare
+    public RepareSabotageCard.Tools setRepare(RepareSabotageCard c){
+        return this.attributeCards.removeAttribute(c);
+    }
+
+
+
     // ajout d'une carte Sabotage
     public void setSabotage(RepareSabotageCard c){
         this.attributeCards.putSabotage(c);
@@ -141,7 +160,7 @@ public abstract class Player {
 
     public void removeAttribute(RepareSabotageCard c, RepareSabotageCard.Tools t){
         if(c.containsTools(t)){
-            this.attributeCards.removeAttribute(c, t);
+            this.attributeCards.removeAttribute(c);
         }
     }
 
@@ -204,13 +223,33 @@ public abstract class Player {
     public int nbCardHand(){
         return this.playableCards.nbCard();
     }
+    
+    public abstract void setGoldPoints(int gp);
 
-    public abstract String toString();
-
-
+    public void setEmptyRole(){
+        role = null;
+    }
 
     public boolean iaPlayCard() {
         return false;
+    }
+
+    public String toString(){
+
+        String renvoi = "";
+
+        renvoi += "Pseudo: "+this.playerName + "\n";
+        renvoi += "Difficulté: "+this.difficulty+"\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += "Role: "+ this.role + "\n";
+        }
+        renvoi += "Point Or: "+this.goldPoints + "\n";
+        renvoi += "Cartes attributs: "+this.attributeCards + "\n";
+        renvoi += "Cartes en main: "+this.playableCards + "\n";
+
+        return renvoi;
     }
 
 }

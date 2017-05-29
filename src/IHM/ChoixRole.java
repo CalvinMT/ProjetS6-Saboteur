@@ -6,7 +6,6 @@ import Cards.HandRole;
 import Player.Player;
 import Saboteur.Saboteur;
 import Saboteur.Moteur;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,24 +15,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import Cards.RoleCard;
 import java.util.ArrayList;
-
-import static javafx.scene.shape.StrokeType.OUTSIDE;
 
 public class ChoixRole {
 
     static private Moteur m;
     private int nbPlayer;
     private HandRole roles;
-    static private ArrayList<ImageView> cartesRole;
-    static private ArrayList<Text> infoEmplacement;
+    private ArrayList<ImageView> cartesRole;
+    private ArrayList<Text> infoEmplacement;
     private int num;
 
 
-    @FXML
-    private GridPane MainGridPane;
 
     @FXML
     private ImageView imageCarteRole1;
@@ -85,13 +81,16 @@ public class ChoixRole {
     private Text textRolePris12;
 
 
-    static public Text textJoueurCourant;
+    @FXML private Text textJoueurCourant;
 
     @FXML
     private Button buttonJoueurSuivant;
     @FXML
     private GridPane gridPaneChoixRole;
-
+    
+    @FXML
+    private GridPane mainGridPane;
+    
     @FXML
     private BorderPane borderPaneChoixRole;
 
@@ -103,6 +102,8 @@ public class ChoixRole {
             System.out.println("Lancement de la partie");
             m.nextPlayer();
 //            m.setState(State.Game);
+
+            m.setState(State.Game);
 
             Scene scene = (Scene) borderPaneChoixRole.getScene();
             borderPaneChoixRole = (BorderPane) scene.lookup("#borderPaneChoixRole");
@@ -117,8 +118,9 @@ public class ChoixRole {
             buttonJoueurSuivant.setDisable(true);
             cartesRole.get(this.num).setVisible(false);
             infoEmplacement.get(this.num).setText(m.getCurrentPlayer().getPlayerName());
+            infoEmplacement.get(this.num).setFill(Paint.valueOf("FFFFFF"));
             m.nextPlayer();
-            textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
+            updateText();
 
         }
     }
@@ -136,7 +138,6 @@ public class ChoixRole {
             }
 
             if(event.getSource().equals(cartesRole.get(i)) && !m.isTaken(i)){                            //Si on l'a trouvée on la retourne
-
                 assignRoleToPlayer(i);
                 m.setTrueTaken(i);
             } else {
@@ -150,11 +151,10 @@ public class ChoixRole {
     public void assignRoleToPlayer(int i){
         Card carteCourante = roles.chooseOne_without_remove(i);
         if(carteCourante.getType() == Card.Card_t.role){
-
-            if(((RoleCard)carteCourante).isMinor()){
-                cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.jpg"));
+            if(((RoleCard)carteCourante).isMiner()){
+                cartesRole.get(i).setImage(new Image("ressources/carte_role_mineur.png"));
             }else if(((RoleCard)carteCourante).isSaboteur()){
-                cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.jpg"));
+                cartesRole.get(i).setImage(new Image("ressources/carte_role_saboteur.png"));
             }
 //                    cartesRole.remove(i);
             this.num = i;
@@ -167,16 +167,16 @@ public class ChoixRole {
         configEndChoose();
     }
 
-    static public void updateGraphic(int i){
+    public void updateGraphic(int i){
         String pseudo = m.getCurrentPlayer().getPlayerName();
         cartesRole.get(i).setVisible(false);
         infoEmplacement.get(i).setText(pseudo);
+        infoEmplacement.get(i).setFill(Paint.valueOf("FFFFFF"));
     }
 
-    static public void updateText(){
-        textJoueurCourant.setText(m.getCurrentPlayer().getPlayerName());
+    public void updateText(){
+        textJoueurCourant.setText("Au tour de " +m.getCurrentPlayer().getPlayerName());
     }
-
 
     public void configEndChoose(){
         if(m.allRoleAreSet()){   //Si c'était la dernière carte
@@ -199,8 +199,6 @@ public class ChoixRole {
         cartesRole = new ArrayList<ImageView>(12);
         infoEmplacement = new ArrayList<Text>(12);
         buttonJoueurSuivant.setDisable(true);
-
-        //TODO simplifier ça
 
         cartesRole.add(0, imageCarteRole1);
         cartesRole.add(1, imageCarteRole2);
@@ -227,26 +225,24 @@ public class ChoixRole {
         infoEmplacement.add(10, textRolePris11);
         infoEmplacement.add(11, textRolePris12);
 
-
-        // init textCurrentPlayer
-        textJoueurCourant = new Text();
         textJoueurCourant.setText("Au tour de " + m.getCurrentPlayer().getPlayerName());
-        textJoueurCourant.setStrokeWidth(0.0);
-        textJoueurCourant.setStrokeType(OUTSIDE);
-
-        MainGridPane.add(textJoueurCourant, 1, 0);
-
-//        <Text fx:id="textJoueurCourant" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
 
 
         for(int i=0; i<nbPlayer+1; i++){
-            cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.jpg"));
+            cartesRole.get(i).setImage(new Image("ressources/dos_carte_role.png"));
         }
 
 //        System.out.println(roles.print_without_visibility());
 
         m.setState(State.ChooseRole);
+        m.setChoixroleControler(this);
+
+        // reset boolean
+        for(int i=0; i<m.getRoleCards().nbCard(); i++){
+            m.roleTaken.set(i, false);
+        }
     }
+
     // getImageCard(Card c) gameInteractive
     //m.getCurrentPlayer().getPlayerName();
 

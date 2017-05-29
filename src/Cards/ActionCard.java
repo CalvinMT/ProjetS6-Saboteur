@@ -16,7 +16,7 @@ public class ActionCard extends Card {
         Sabotage,
         Repare,
         Map,
-        Crumbing;
+        Crumbling;
 
         private static final List<Action> val = Collections.unmodifiableList(Arrays.asList(values()));
         private static final int size = val.size();
@@ -39,8 +39,8 @@ public class ActionCard extends Card {
             case "Map":
                 this.action = Map;
                 break;
-            case "Crumbing":
-                this.action = Crumbing;
+            case "Crumbling":
+                this.action = Crumbling;
                 break;
             default :
                 this.action = Map;
@@ -49,13 +49,13 @@ public class ActionCard extends Card {
     }
 
     public String toString(){
-        String renvoi = "Action: ";
+        String renvoi = "Action:";
         switch(this.action){
             case Map:
                 renvoi += "Map";
                 break;
-            case Crumbing:
-                renvoi += "Crumbing";
+            case Crumbling:
+                renvoi += "Crumbling";
                 break;
             default :
                 renvoi += "Error";

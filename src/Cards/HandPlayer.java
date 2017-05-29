@@ -29,6 +29,16 @@ public class HandPlayer extends Hand {
         }
     }
 
+    // pour changer une carte s'il faut
+    public void setGalleryCard(int i, GalleryCard c){
+        if(i >= 0 && i<this.arrayCard.size()){
+            this.arrayCard.set(i, c);
+            System.out.println(this);
+        } else {
+            System.err.println("HandPlayer: Index impossible a atteindre");
+        }
+    }
+
     // fait la rotation de la carte a la ième position
     public void rotateCard(int i){
         if(i >= 0 && i <this.nbCard()){
@@ -45,6 +55,27 @@ public class HandPlayer extends Hand {
         } else {
             System.err.println("Erreur mauvaise carte");
         }
+    }
+
+    @Override
+    public String toString(){
+        String renvoi = "Hand : ";
+        renvoi += "[ ";
+        for(int i=0; i<this.arrayCard.size(); i++){
+            if(this.arrayCard.get(i).getType() == Card.Card_t.gallery){
+
+                renvoi += ((GalleryCard) this.arrayCard.get(i)).debugString();
+            } else {
+                renvoi += this.arrayCard.get(i).toString();
+            }
+
+            if(i<this.arrayCard.size()-1){
+                renvoi += " ; ";
+            }
+        }
+
+        renvoi += " ]";
+        return renvoi;
     }
 
     public int nbCard(){

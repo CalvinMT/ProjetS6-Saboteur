@@ -1,13 +1,11 @@
 package Saboteur;
 
-import Player.*;
+import Player.Player;
+import Player.PlayerHuman;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-
 
 public class MoteurTest {
 
@@ -37,7 +35,7 @@ public class MoteurTest {
         array.add(new PlayerHuman(0));
         array.add(new PlayerHuman(1));
         array.add(new PlayerHuman(2));
-        Moteur m = new Moteur(array);
+        Moteur m = new Moteur(array, "");
         Assert.assertTrue(m.nbPlayer() == 3);
         Assert.assertTrue(m.currentNumPlayer() == 0);
     }
@@ -47,7 +45,7 @@ public class MoteurTest {
         ArrayList<Player> array = new ArrayList<Player>();
         array.add(new PlayerHuman(0));
         array.add(new PlayerHuman(1));
-        Moteur m = new Moteur(array);
+        Moteur m = new Moteur(array, "");
         Assert.assertTrue(m.currentNumPlayer() == -1);
     }
 
@@ -63,7 +61,6 @@ public class MoteurTest {
     @Test
     public void testHandCard2(){
         Moteur m = new Moteur(11);
-        m.initHand();
         Assert.assertTrue(m.maxHandCard() == 6);
         for(int i=0; i<m.nbPlayer(); i++){
             Assert.assertTrue(m.getPlayer(i).nbCardHand() == 6);

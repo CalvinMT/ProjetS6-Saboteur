@@ -4,13 +4,23 @@
  * and open the template in the editor.
  */
 package Saboteur;
+
 import Cards.*;
+import Cards.GalleryCard.Gallery_t;
+import Cards.RepareSabotageCard.Tools;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+
+import IHM.ChoixRole;
+import IHM.GameInteract;
 import Player.*;
 import Board.Board;
 import Board.Couple;
 
-import javax.management.relation.Role;
-import javax.swing.*;
+
 import java.util.ArrayList;
 
 /**
@@ -22,10 +32,13 @@ public class Moteur {
     private Deck pile;
     private int currentPlayer = -1;
     private HandRole roleCards;
-    private ArrayList<Boolean> roleTaken;
+    public ArrayList<Boolean> roleTaken;
     private Board board;
 
     private long echeance;
+
+    private ChoixRole choixroleControler;
+    private GameInteract gameInteractControler;
 
     private State state;
     public enum State {
@@ -33,12 +46,25 @@ public class Moteur {
         ChooseRole,
         Game,
         ChooseGold;
-
     }
-
-
-
-
+    
+    
+    
+    public void save(String filename) {
+    	try{
+			PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
+			saveFile.println(this.arrayPlayer.size());
+			for (int i=0; i<arrayPlayer.size(); i++) {
+				saveFile.println(arrayPlayer.get(i));
+			}
+			saveFile.println(this.arrayPlayer.get(currentPlayer).getPlayerName());
+			//saveFile.println("L'état du Deck:");
+			saveFile.println(this.pile);			
+			saveFile.close();
+		} catch (IOException e) {
+			System.err.println("Erreur: Echec d'ouverture du fichier.");
+		}
+    }
 
     // ligne nbJoueur colonne Nb carte de 0 à 7 contenant le nombre de cartes en début de partie
     final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
@@ -49,19 +75,35 @@ public class Moteur {
         this.pile = new DeckGalleryAction();
         initArrayPlayer(nbPlayer);
         currentPlayer = 0;
+
+        for(int i=0; i<nbPlayer(); i++){
+            arrayPlayer.get(i).resetPlayer();
+        }
+
         roleCards = new HandRole(nbPlayer());
         initRoleTaken();
         this.board = new Board();
         state = State.Waiting;
         setAllPlayerBoard();
+        initHand();
         this.echeance = System.nanoTime();
     }
 
-    public Moteur(ArrayList<Player> arrayPlayer){
+    public Moteur(ArrayList<Player> arrayPlayer, String option){
         if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
             this.arrayPlayer = arrayPlayer;
-            this.pile = new DeckGalleryAction();
+            if(option.equals("--debugBoard")){
+                this.pile = new DeckGalleryAction(80, 60);
+            } else {
+                this.pile = new DeckGalleryAction();
+            }
             currentPlayer = 0;
+
+
+            for(int i=0; i<nbPlayer(); i++){
+                arrayPlayer.get(i).resetPlayer();
+            }
+
             roleCards = new HandRole(nbPlayer());
             initRoleTaken();
             this.board = new Board();
@@ -77,6 +119,14 @@ public class Moteur {
         } else {
             System.err.println("Tableau de joueur impossible");
         }
+    }
+
+
+    public void setChoixroleControler(ChoixRole c){
+        this.choixroleControler = c;
+    }
+    public void setGameInteractControler(GameInteract g){
+        this.gameInteractControler = g;
     }
 
     public void setAllPlayerBoard(){
@@ -154,7 +204,6 @@ public class Moteur {
         }
     }
 
-
     // si tous les roles sont attribués
     public boolean allRoleAreSet(){
         for(int i=0; i<nbPlayer(); i++){
@@ -178,6 +227,10 @@ public class Moteur {
         for(int i=0; i<nbPlayer(); i++){
             System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
         }
+    }
+
+    public void setCurrentPlayer(int i){
+        this.currentPlayer = i;
     }
 
 
@@ -228,7 +281,7 @@ public class Moteur {
                 Card goal = this.lookGoal(cou);
                 System.out.println("Carte goal: "+goal);
                 nextPlayer();
-            } else if(c.getAction() == ActionCard.Action.Crumbing){
+            } else if(c.getAction() == ActionCard.Action.Crumbling){
 
                 // TODO a test
                 this.board.removeCard(cou);
@@ -323,8 +376,25 @@ public class Moteur {
     }
 
     // si la manche est terminée
-    public boolean endGame(){
-        return this.board.goalReached();
+    public boolean endGame() {
+
+        boolean emptyHand = true;
+
+        for (int i = 0; i < arrayPlayer.size(); i++) {
+            if (arrayPlayer.get(i).nbCardHand() > 0) {
+                emptyHand = false;
+            }
+        }
+
+        if (this.board.goldReached()) {
+            return true;
+        } else if (this.board.goldBlocked() && pile.nbCard() == 0 && emptyHand) {
+            return true;
+        } else if (!this.board.goldReached() && pile.nbCard() == 0 && emptyHand){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // renvoie le numero du joueur courant
@@ -350,7 +420,13 @@ public class Moteur {
         return roleCards.nbCard();
     }
 
+    public ChoixRole getChoixroleControleur(){
+        return this.choixroleControler;
+    }
 
+    public GameInteract getGameInteractControler(){
+        return this.gameInteractControler;
+    }
 
     public Board getBoard(){
         return this.board;
@@ -363,16 +439,27 @@ public class Moteur {
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
-        renvoi += "Joueurs [ ";
+        renvoi += "Joueurs: \n";
         for(int i=0; i<nbPlayer(); i++){
-            renvoi += this.getPlayer(i).getPlayerName() + " ; ";
+            renvoi += this.getPlayer(i).getPlayerName() + " "+this.getPlayer(i).getRole()+ " ; \n";
         }
-        renvoi += "]\n";
+
+        for(int i=0; i<nbPlayer(); i++){
+            renvoi += this.roleTaken.get(i) + " ; ";
+        }
+
+
 
         return renvoi;
     }
 
 
+    // reset les roles
+    public void resetRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            arrayPlayer.get(i).setEmptyRole();
+        }
+    }
 
 
 }

@@ -1,6 +1,5 @@
 package IHM;
 
-import Cards.ActionCard;
 import Player.Player.Difficulty;
 import Saboteur.Lobby;
 import Saboteur.Saboteur;
@@ -9,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,6 +19,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,8 +38,14 @@ public class MenuCreationPartie {
 
     private Lobby lobby = new Lobby();
 
+    private static Text textNumberOfPlayersLeft;
+    private static int numberOfPlayersLeft = 3;
+
     @FXML
     public AnchorPane anchorPaneMenuCreationPartie;
+    
+    @FXML
+    private GridPane gridPaneGameCreate;
 
     @FXML
     private ComboBox<String> comboBoxAvatar;
@@ -77,8 +87,11 @@ public class MenuCreationPartie {
 
         playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, difficulty, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
+        numberOfPlayersLeftMinusOne();
+        
         if (playerList.size() >= 3) {
             buttonPlay.setDisable(false);
+			textNumberOfPlayersLeft.setVisible(false);
         }
         if(playerList.size()>=10){
             buttonAjouterPlayer.setDisable(true);
@@ -108,17 +121,16 @@ public class MenuCreationPartie {
 
         playerList.add(new BandeauPlayer(tableViewListeJoueur, new ImageCell().getImageView(avatar), pseudo, type, buttonPlay, buttonAjouterPlayer, buttonAjouterIA, lobby));
 
+        numberOfPlayersLeftMinusOne();
 
 		if (playerList.size() >= 3) {
 			buttonPlay.setDisable(false);
+			textNumberOfPlayersLeft.setVisible(false);
 		}
-		if(playerList.size()>10){
+		if(playerList.size()>=10){
 		    buttonAjouterPlayer.setDisable(true);
 		    buttonAjouterIA.setDisable(true);
         }
-
-        System.out.println(lobby);
-
     }
 
     @FXML
@@ -126,6 +138,7 @@ public class MenuCreationPartie {
 
         // lancement de la manche
         if(this.lobby.enoughPlayer() && !this.lobby.tooMuchPlayer()){
+        	
             Saboteur.initMoteur(this.lobby.getArrayPlayer());
 
             System.out.println(Saboteur.getMoteur());
@@ -134,6 +147,10 @@ public class MenuCreationPartie {
             BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
             BorderPane borderPaneChoixRole = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
             borderPaneMainLoader.getChildren().setAll(borderPaneChoixRole);
+            /*Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+            Stage stage = (Stage) buttonPlay.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();*/
         }
 
 
@@ -146,7 +163,7 @@ public class MenuCreationPartie {
         Stage stage = new Stage();
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("ExitComfirmation.fxml"));
+            root = FXMLLoader.load(getClass().getResource("ExitComfirmationCreationPartie.fxml"));
             stage.setScene(new Scene(root));
             stage.setTitle("Popup");
             stage.initStyle(StageStyle.UNDECORATED);
@@ -156,7 +173,6 @@ public class MenuCreationPartie {
         }catch(Exception e){
             System.out.println("Erreur" + e);
         }
-
     }
 
     @FXML
@@ -179,6 +195,15 @@ public class MenuCreationPartie {
         columnType.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, String>("Type"));
         columnDifficulte.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, ComboBox<String>>("Difficulte"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<BandeauPlayer, Button>("ButtonDelete"));
+        
+        textNumberOfPlayersLeft = new Text("Il manque " + numberOfPlayersLeft + " joueurs pour commencer la partie.");
+        textNumberOfPlayersLeft.setFont(Font.font(19.0));
+        textNumberOfPlayersLeft.setFill(Color.RED);
+        gridPaneGameCreate.add(textNumberOfPlayersLeft, 3, 7);
+        GridPane.setValignment(textNumberOfPlayersLeft, VPos.TOP);
+        GridPane.setMargin(textNumberOfPlayersLeft, new Insets(10, 0, 0, 0));
+        
+    
     }
 
 	// A custom ListCell that displays an ImageView
@@ -210,4 +235,26 @@ public class MenuCreationPartie {
 	
 	}
     
+	
+	
+	public static void numberOfPlayersLeftMinusOne () {
+		numberOfPlayersLeft--;
+		textNumberOfPlayersLeft.setText("Il manque " + numberOfPlayersLeft + " joueurs pour commencer la partie.");
+	}
+	
+	public static void numberOfPlayersLeftPlusOne () {
+		numberOfPlayersLeft++;
+		textNumberOfPlayersLeft.setText("Il manque " + numberOfPlayersLeft + " joueurs pour commencer la partie.");
+	}
+	
+	public static void textNumberOfPlayersLeftVisibleOn () {
+		textNumberOfPlayersLeft.setVisible(true);
+	}
+	
+	public static void textNumberOfPlayersInit () {
+		numberOfPlayersLeft = 3;
+		textNumberOfPlayersLeft.setVisible(true);
+	}
+	
 }
+

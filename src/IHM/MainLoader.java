@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
-
+import Board.Couple;
 import Cards.Card;
-import Cards.RoleCard;
+import Cards.GalleryCard;
 import Player.Player;
-import Saboteur.Moteur.State;
+import Player.IA;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.animation.AnimationTimer;
@@ -17,16 +17,21 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 public class MainLoader extends Application {
 	
@@ -39,7 +44,7 @@ public class MainLoader extends Application {
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
 
-	static public final long shortWaitingTime = 500;
+	static public final long shortWaitingTime = 1000;
 
 	private double volumeMusic;
 	// TOTO - private double volumeEffects;
@@ -74,10 +79,12 @@ public class MainLoader extends Application {
 	}
 	
 	
-	public static void autoResizeToResolution (double width, double height, AnchorPane anchorPaneMenu) {
+	public static void autoResizeToResolution (AnchorPane anchorPaneMenu) {
+		double width = MainLoader.primaryStage.getWidth();
+		double height = MainLoader.primaryStage.getHeight();
 		if (anchorPaneMainLoader != null) {
 			anchorPaneMainLoader.setPrefWidth(width-(width/3));
-			anchorPaneMainLoader.setPrefHeight(height-217); // FIXME
+			anchorPaneMainLoader.setPrefHeight(height-300); // XXX - 217
 			if (anchorPaneMenu != null) {
 				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
 				anchorPaneMenu.setPrefHeight(anchorPaneMainLoader.getPrefHeight());
@@ -133,7 +140,7 @@ public class MainLoader extends Application {
 		
 		// Music & Effects played in background
 		try {
-			Media music = new Media(new File("bin/ressources/pull-up-a-chair.mp3").toURI().toString());
+			Media music = new Media(new File("ressources/pull-up-a-chair.mp3").toURI().toString());
 			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
 			mediaPlayerMusic.setStartTime(new Duration(14600));
@@ -157,14 +164,21 @@ public class MainLoader extends Application {
 		
 		primaryStage.setTitle("Saboteur");
 		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setWidth(SCREEN_WIDTH);
+		primaryStage.setHeight(SCREEN_HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primaryStage.show();
-		
-		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMainLoader.getChildren().setAll(anchorPane);
 
+		// Load MenuMain.fxml
+		anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+		anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+		
+		// Automatic Resizing
+		autoResizeToResolution(anchorPaneMenuMain);
+		
+		
+		primaryStage.show();
 
         ///// POUR FAIRE JOUER L'IA
 
@@ -179,81 +193,123 @@ public class MainLoader extends Application {
 				Moteur engine = Saboteur.getMoteur();
 
 				if(engine != null){
+					Player player = engine.getCurrentPlayer();
 
-					switch(engine.getState()){
-						// choix des roles
-						case ChooseRole:
+					if(player.getDifficulty() != Player.Difficulty.Player){
+
+						switch(engine.getState()){
+							// choix des roles
+							case ChooseRole:
 //						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
-							if(engine.getCurrentPlayer().getDifficulty() != Player.Difficulty.Player){
+								if(!engine.roleSet()){
 
 
-								int numRoleCards;
+									int numRoleCards;
 
-								do {
-									numRoleCards = rand.nextInt(engine.getNbRoleCards());
-								} while(engine.isTaken(numRoleCards));
-
-								try {
-									Card c = engine.getRoleCard(numRoleCards);
-									engine.setTrueTaken(numRoleCards);
-									engine.getCurrentPlayer().assignRole(c);
-									ChoixRole.updateGraphic(numRoleCards);
-									engine.nextPlayer();
-									ChoixRole.updateText();
+									do {
+										numRoleCards = rand.nextInt(engine.getNbRoleCards());
+									} while(engine.isTaken(numRoleCards));
 
 									try {
 
+//									FXMLLoader loader =  new FXMLLoader();
+//									BorderPane border = loader.load(getClass().getResource("ChoixRole.fxml").openStream());
+//									ChoixRole choixroleControler = loader.<ChoixRole>getController();
+
+
+										Card c = engine.getRoleCard(numRoleCards);
+										engine.setTrueTaken(numRoleCards);
+										engine.getCurrentPlayer().assignRole(c);
+
+
+
+										engine.getChoixroleControleur().updateGraphic(numRoleCards);
+										engine.nextPlayer();
+										engine.getChoixroleControleur().updateText();
+
+
+
+
+										try {
+
+											Thread.sleep(shortWaitingTime);
+										} catch (Exception ex){
+											System.err.println("Erreur sleep");
+										}
+
+									} catch (Exception ex){
+										System.err.println("Erreur lors du choix des roles");
+										ex.printStackTrace();
+									}
+
+//								engine.promptPlayersRole();
+
+									if(engine.allRoleAreSet()){
+										engine.getChoixroleControleur().configEndChoose();
+									}
+								}
+
+								break;
+
+							// déroulement d'une manche
+							case Game:
+
+								engine.getBoard().computeAccessCards();
+
+								((IA) player).choosePosition();
+
+								Card cardToPlay = ((IA) player).getCardToPlay();
+								Couple posToPlay = ((IA) player).getPosToPlay();
+
+								if(cardToPlay.getType() == Card.Card_t.gallery){
+
+									GalleryCard cardToPut;
+
+									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+										cardToPut = ((GalleryCard) cardToPlay).rotate();
+									} else {
+										cardToPut = (GalleryCard) cardToPlay;
+									}
+
+									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
+
+									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
+
+									player.getPlayableCards().removeCard(cardToPlay);
+									engine.getGameInteractControler().checkEndGame();
+//									System.out.println(player);
+
+
+									engine.nextPlayer();
+
+									try {
 										Thread.sleep(shortWaitingTime);
 									} catch (Exception ex){
 										System.err.println("Erreur sleep");
 									}
 
-								} catch (Exception ex){
-									System.err.println("Erreur lors du choix des roles");
-									ex.printStackTrace();
+//									System.out.println(engine.getBoard().mine());
 								}
 
-//								engine.promptPlayersRole();
 
-								if(engine.allRoleAreSet()){
-									engine.setState(State.Game);
-								}
-							}
+								// TODO
 
-							break;
+								break;
 
-						// déroulement d'une manche
-						case Game:
-//							System.err.println("Game");
-							if(!engine.endGame() && (temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
-							/*engine.nextAnimationTimer anim = new AnimationTimer() {
-								@Override
-								public void handle(long temps) {
-									if (plateau.enCours() && (temps > echeance) && joueurs[joueurCourant].tempsEcoule()) {
-										changeJoueur();
-										dessin();
-									}
-								}
-							};
-        					anim.start();Player();*/
-								//TODO ajouter maj graphique
-							}
-
-							break;
-
-						// choix de l'or
-						case ChooseGold:
-							//TODO chooseCard
-							// not implemented yet
-							break;
-						default:
-							break;
+							// choix de l'or
+							case ChooseGold:
+								//TODO chooseCard
+								// not implemented yet
+								break;
+							default:
+								break;
+						}
 					}
+
 				}
 
 
 
-				//TODO boucle de jeu
 			}
 		};
 
