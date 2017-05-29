@@ -8,8 +8,10 @@ import Cards.ActionCard.Action;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static Cards.Card.Card_t.action;
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
+import static java.lang.Math.nextAfter;
 
 /**
  * Created by thespygeek on 11/05/17.
@@ -26,30 +28,44 @@ public class IA extends Player {
     private ArrayList<Move> moves;
     private ArrayList<Player> allPlayers;
     private ArrayList<Couple> goalsToTest;
+    public IA() {
+        this(0, "IA", Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
+    }
 
     public IA(int index) {
-        this(index, "IA", Difficulty.Easy, new ArrayList<>());
+        this(index, "IA", Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name) {
-        this(index, name, Difficulty.Easy, new ArrayList<>());
+        this(index, name, Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name, Difficulty d){
-        this(index, name, d, new ArrayList<>());
+        this(index, name, d, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name, Difficulty d, ArrayList<Player> p){
+        this(index, name, d, p, new ArrayList<>(), new Board());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p, ArrayList<Couple> goals) {
+        this(index, name, d, p, goals, new Board());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p, ArrayList<Couple> goals, Board board) {
         this.num = index;
         this.difficulty = d;
         this.goldPoints = 0;
         this.allPlayers = p;
         this.playerName = name;
+        this.board = board;
         this.avatar = "robot_miner";
         moves = new ArrayList<Move>();
+        this.goalsToTest = goals;
         this.playableCards = new HandPlayer();
         attributeCards = new PlayerAttribute();
         setUpGoals();
+
     }
 
     private void setUpGoals() {
@@ -57,6 +73,10 @@ public class IA extends Player {
         this.goalsToTest.add(new Couple(-2, 8));
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
+    }
+
+    public IA clone() {
+        return new IA(this.num, this.getPlayerName(), this.difficulty, this.allPlayers, this.goalsToTest, this.board);
     }
 
     // IA Random
@@ -440,5 +460,17 @@ public class IA extends Player {
         if (this.posToPlay != null) renvoi += this.posToPlay + "\n";
 
         return renvoi;
+    }
+
+    public ArrayList<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public void setGoalsToTest(ArrayList<Couple> goalsToTest) {
+        this.goalsToTest = goalsToTest;
+    }
+
+    public void setAllPlayers(ArrayList<Player> allPlayers) {
+        this.allPlayers = allPlayers;
     }
 }
