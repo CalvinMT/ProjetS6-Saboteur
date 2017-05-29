@@ -340,8 +340,12 @@ public class GameInteract {
 
 									moteur.getBoard().putCard(cardToPut, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 
+									GameBoard.gridPaneBoard.setVisible(false);
 									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+									GameBoard.gridPaneBoard.setVisible(true);
+									GameBoard.gridPaneBoard.setVisible(false);
 									GameBoard.gridPaneBoard.add(getImageCard(cardToPut).getImageView(), droppedColumn, droppedLine);
+									GameBoard.gridPaneBoard.setVisible(true);
 
 
 									// Check if a GoalCard has been reached
