@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -90,28 +91,38 @@ public class EndShaft {
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Pseudo"));
         columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Role"));
 
-        if(engine.getBoard().goldReached()){
+        /*if(engine.getBoard().goldReached()){
             TextWinners.setText("Les Mineurs ont gagné");
 
             int pepite = 0;
             int currentPlayer = engine.nbPlayer()-1;
             int gold;
 
-            while(pepite < engine.nbPlayer() && Saboteur.arrayGold.size() > 0){
-
-                if(engine.getAllPlayers().get(currentPlayer).getRole() == new RoleCard("Mineur")){
-                    gold = Saboteur.goldByPlayer.get(currentPlayer);
-                    Saboteur.goldByPlayer.set(currentPlayer, gold + Saboteur.arrayGold.remove(0));
-
-                    pepite++;
-                }
-
-                currentPlayer--;
-                if(currentPlayer < 0){
-                    currentPlayer = engine.nbPlayer()-1;
-                }
-
+            ArrayList<Integer> arrayIndex = new ArrayList<>();
+            
+            for(int i=0; i<engine.nbPlayer(); i++){
+            	if(engine.getAllPlayers().get(currentPlayer).getRole() == new RoleCard("Mineur")){
+            		arrayIndex.add(i);
+            	}
             }
+            
+            System.out.println(arrayIndex.size());
+            // FIXME
+            currentPlayer = arrayIndex.size()-1;
+            
+            for(int i=0; i<engine.nbPlayer() && Saboteur.arrayGold.size() > 0; i++){
+            	
+            	gold = Saboteur.goldByPlayer.get(currentPlayer);
+            	Saboteur.goldByPlayer.set(arrayIndex.get(currentPlayer), gold + Saboteur.arrayGold.remove(0));
+            	
+            	currentPlayer--;
+            	if(currentPlayer < 0){
+            		currentPlayer = arrayIndex.size()-1;
+            	}
+            	
+            }
+            
+            
 
         } else {
             TextWinners.setText("Les Saboteurs ont gagné");
@@ -144,23 +155,18 @@ public class EndShaft {
 
                 }
             }
-        }
+        }*/
         TextWinners.setFill(Paint.valueOf("FFFFFF"));
 
         Player player;
         String avatar;
 
         for(int i=0; i<engine.nbPlayer(); i++){
-
             player = engine.getAllPlayers().get(i);
-
             if(player == null){
                 System.out.println("PLayer null");
             }
             avatar = player.getAvatar();
-            System.out.println("avatar : "+avatar );
-
-
             playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(avatar), player.getPlayerName(), (player.getRole()).toString()));//Pour chaque joueur
         }
 

@@ -79,7 +79,7 @@ public class MainLoader extends Application {
 		double width = MainLoader.primaryStage.getWidth();
 		double height = MainLoader.primaryStage.getHeight();
 		if (anchorPaneMainLoader != null) {
-			anchorPaneMainLoader.setPrefWidth(width-(width/3));
+			anchorPaneMainLoader.setPrefWidth(width);
 			anchorPaneMainLoader.setPrefHeight(height-300); // XXX - 217
 			if (anchorPaneMenu != null) {
 				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
@@ -126,6 +126,8 @@ public class MainLoader extends Application {
 					if (string.equals("true")) {
 						setToFullscreen(primaryStage);
 						primaryStage.setFullScreen(true);
+						SCREEN_WIDTH = primaryStage.getWidth();
+						SCREEN_HEIGHT = primaryStage.getHeight();
 					}
 				}
 			}
