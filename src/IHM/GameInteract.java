@@ -806,6 +806,7 @@ public class GameInteract {
                 // DEBUT CARTE PIOCHEE
                 //System.out.println("Carte piochée: "+cardDraw);
 
+
                 cardsInHand.add(getImageCard(cardDraw));
                 cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
@@ -814,6 +815,7 @@ public class GameInteract {
 //                System.out.println(moteur.getBoard().mine());
 //                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
+
 
             moteur.nextPlayer();
             nextPlayer();

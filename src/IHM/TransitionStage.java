@@ -20,13 +20,13 @@ public class TransitionStage extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         AnchorPane pane = new AnchorPane();
         Button button = new Button("Passer au joueur suivant");
-        button.setPrefSize(width/6, height/16);
-        button.setTranslateX(width/2 - width/20);
-        button.setTranslateY(height/6);
-        button.setStyle("-fx-font: bold italic 16pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
+        button.setPrefSize(width/3, height/16);
+        button.setTranslateX(width/2 - width/8);
+        button.setTranslateY(height/2);
+        button.setStyle("-fx-font: bold italic 22pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
         Text text = new Text(30, 100,"Au tour de " + pseudo);
-        text.setTranslateX((width/2)-width/26);
-        text.setStyle("-fx-font: bold italic 16pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
+        text.setTranslateX((width/2 - width/9));
+        text.setStyle("-fx-font: bold italic 22pt \"Arial\";\n");
         System.out.println(pseudo);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -35,8 +35,9 @@ public class TransitionStage extends Application {
              });
         pane.getChildren().add(button);
         pane.getChildren().add(text);
-        final Scene scene = new Scene(pane,width, height/3);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        pane.setStyle("-fx-background-image: url('ressources/parchemin.jpg');  ");
+        final Scene scene = new Scene(pane,width, height+30);        
+        stage.initModality(Modality.APPLICATION_MODAL);        
         stage.setScene(scene);
         stage.show();
     }
