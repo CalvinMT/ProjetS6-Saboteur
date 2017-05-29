@@ -265,11 +265,6 @@ public class IA extends Player {
             for (Couple goal : goalsToTest) { // Et pour chaque but
                 h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
-                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d\n", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
-
-                // TODO : Verifier si on peut finir le chemin
-                // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
-
                 if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
                     hMin = h; // On met à jour l'heuristique max
                     card.setLine(currCpl.getLine());
@@ -285,11 +280,7 @@ public class IA extends Player {
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void getGalleryMoves() {
         Card c;
-        //GalleryCard currCard;
-        //Couple bestCpl = new Couple(0, 0);
-        //ArrayList<Move> m;
 
-        //bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
             c = lookAtCard(cardIdx);
             if (c.getType() == gallery) { // Si la carte est une gallerie
@@ -313,22 +304,14 @@ public class IA extends Player {
             if (c.getType() == gallery) { // Si la carte est une gallerie
                 currCard = (GalleryCard) c;
                 p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
-
                 for (Couple currCpl : p) { // Pour chaque position possible
                     for (Couple goal : goalsToTest) { // Et pour chaque but
                         h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
-                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
-
-                        // TODO : Verifier si on peut finir le chemin
-                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
-
                         if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
-                            //System.out.printf(" True");
                             hMin = h; // On met à jour l'heuristique max
                             bestCpl = currCpl; // On garde la position
                             bestCard = currCard; // et la carte associée
                         }
-                        //System.out.printf("\n");
                     }
                 }
             }
@@ -349,15 +332,18 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    /* USELESS
     public void genMoves() {
         getGalleryMoves();
         // TODO : getActionsMoves();
     }
+    */
 
+    /*
     public void computeMovesValue() {
         int v;
         Move m;
-        genMoves();
+        //genMoves();
         if (((RoleCard) this.getRole()).isSaboteur()) {
             if (isInSwitchZone()) {
                 // TODO : bloquer la progression des mineurs / saboter
@@ -378,6 +364,7 @@ public class IA extends Player {
             // Aussi Saboter les saboteur
         }
     }
+    */
 
     public void mediumPlay() {
             System.out.println("TODO : IA Medium");
