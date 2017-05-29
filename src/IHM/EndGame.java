@@ -77,7 +77,7 @@ public class EndGame {
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-    
+        // @TheSpyGeek TODO - réinitialisation du moteur pour la nouvelle partie (si pas déjà fait)
     }
 
     

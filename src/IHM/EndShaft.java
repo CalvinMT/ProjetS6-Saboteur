@@ -3,6 +3,9 @@ package IHM;
 import Cards.RoleCard;
 import Player.Player;
 import Player.PlayerHuman;
+import Saboteur.Moteur;
+import Saboteur.Saboteur;
+import Saboteur.Moteur.State;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,10 +19,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
+
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 
 public class EndShaft {
+
+    private Moteur engine;
 	    
 
     private ObservableList<BandeauPlayerFin> playerList = FXCollections.observableArrayList();
@@ -49,22 +56,6 @@ public class EndShaft {
     @FXML
     private TableColumn<BandeauPlayerFin, String> columnRole;
     
-    public EndShaft(){//tests sera remplacer par le vrai moteur
-        joueur.setAvatar("avatar_test");
-        joueur.assignRole(mine);
-        joueur2.setAvatar("avatar_test");
-        joueur2.assignRole(mine);
-        joueur3.setAvatar("avatar_test");
-        joueur3.assignRole(sabo);
-        joueur4.setAvatar("avatar_test");
-        joueur4.assignRole(sabo);
-        joueur5.setAvatar("avatar_test");
-        joueur5.assignRole(mine);
-        joueur6.setAvatar("avatar_test");
-        joueur6.assignRole(mine);
-    }
-    
-    
     
     
 
@@ -74,7 +65,12 @@ public class EndShaft {
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-    
+
+        engine.setState(State.Game);
+
+
+
+        // @TheSpyGeek TODO - réinitialisation du moteur pour la nouvelle manche
     }
 
     
@@ -82,6 +78,9 @@ public class EndShaft {
 
     @FXML
     public void initialize(){
+
+        engine = Saboteur.getMoteur();
+
         tableViewListeJoueur.setItems(playerList);
         columnAvatar.setStyle( "-fx-alignment: CENTER;");
         columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
@@ -89,15 +88,27 @@ public class EndShaft {
         columnAvatar.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, ImageView>("Avatar"));
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Pseudo"));
         columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Role"));
-        TextWinners.setText("Les " + "Saboteurs" + "ont gagné");// remplacer par le winner
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (joueur.getRole()).toString()));//Pour chaque joueur
-        playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (joueur2.getRole()).toString()));
+
+        if(engine.getBoard().goldReached()){
+            TextWinners.setText("Les Mineurs ont gagné");
+        } else {
+            TextWinners.setText("Les Saboteurs ont gagné");
+        }
+        TextWinners.setFill(Paint.valueOf("FFFFFF"));
+
+
+        for(int i=0; i<engine.nbPlayer(); i++){
+
+            playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(engine.getAllPlayers().get(i).getAvatar()), engine.getAllPlayers().get(i).getPlayerName(), (engine.getAllPlayers().get(i).getRole()).toString()));//Pour chaque joueur
+        }
+
+        /*playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (joueur2.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur3.getAvatar()), joueur3.getPlayerName(), (joueur3.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (joueur4.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur5.getAvatar()), joueur5.getPlayerName(), (joueur5.getRole()).toString()));
         playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur6.getAvatar()), joueur6.getPlayerName(), (joueur6.getRole()).toString()));
      
-        
+        */
         
 
     }

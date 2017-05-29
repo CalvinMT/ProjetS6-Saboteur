@@ -226,6 +226,9 @@ public abstract class Player {
     
     public abstract void setGoldPoints(int gp);
 
+    public void setEmptyRole(){
+        role = null;
+    }
 
     public boolean iaPlayCard() {
         return false;

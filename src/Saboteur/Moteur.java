@@ -638,5 +638,12 @@ public class Moteur {
     }
 
 
+    // reset les roles
+    public void resetRole(){
+        for(int i=0; i<nbPlayer(); i++){
+            arrayPlayer.get(i).setEmptyRole();
+        }
+    }
+
 
 }

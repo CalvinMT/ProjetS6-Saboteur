@@ -48,6 +48,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import Saboteur.Moteur.State;
 
 
 public class GameInteract {
@@ -204,10 +205,10 @@ public class GameInteract {
 		// Center player list on center-left of the screen
 		BorderPane.setMargin(vboxPlayerList, new Insets(0, 0, 0, MainLoader.scene.getWidth()-vboxPlayerList.getTranslateX()-vboxPlayerList.getPrefWidth()));
 		// Center hand in bottom-middle of the screen, and deck and discard zone in bottom-right of the screen, and player's infos
-		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()-50), 0, 0, 0));
-		StackPane.setMargin(hboxGameCardsInHand, new Insets(18, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
-		StackPane.setMargin(hboxDeckDiscard, new Insets(18, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
-		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(18, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
+		BorderPane.setMargin(stackPaneBottom, new Insets((MainLoader.scene.getHeight()-GameBoard.cardsHeight-vboxPlayerList.getPrefHeight()-hboxTop.getPrefHeight()-83), 0, 0, 0));
+		StackPane.setMargin(hboxGameCardsInHand, new Insets(19, 0, 0, ((MainLoader.scene.getWidth()/2)-(numberOfCardsInHand*GameBoard.cardsWidth/2))));
+		StackPane.setMargin(hboxDeckDiscard, new Insets(19, 0, 0, MainLoader.scene.getWidth()-hboxDeckDiscard.getPrefWidth()-BorderPane.getMargin(stackPaneBottom).getLeft()));
+		StackPane.setMargin(vboxNumberOfCardsInDeck, new Insets(19, 0, 0, MainLoader.scene.getWidth()-(hboxDeckDiscard.getPrefWidth()/2)-(GameBoard.cardsWidth*2)-BorderPane.getMargin(stackPaneBottom).getLeft()));
 
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
@@ -761,12 +762,9 @@ public class GameInteract {
                         int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
                         moteur.getCurrentPlayer().getPlayableCards().chooseOne_with_remove(index);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
+                        
+                        checkEndGame();
                     }
-                    
-
-                    checkEndGame();
-
-
                 } else {
                     System.out.println("Ce n'est pas ton tour");
                 }
@@ -785,34 +783,30 @@ public class GameInteract {
 
 
         // fin de manche
-        if(moteur.getBoard().goldReached()){
+        if(moteur.endGame()){
 
             System.out.println("Fin de partie");
-            /*try {
-                Scene scene = (Scene) ( ((BorderPane) GameBoard.gridPaneBoard.getParent()).getScene());
+            try {
+            	moteur.setState(State.Waiting);
+
+                Scene scene = (Scene) GameBoard.gridPaneBoard.getScene();
                 BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneGameLoader");
-                BorderPane borderPaneEnd = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
-                borderPaneGameLoader.getChildren().setAll(borderPaneEnd);
-
-
+                BorderPane borderPaneEndShaft = FXMLLoader.load(getClass().getResource("EndShaft.fxml"));
+                borderPaneGameLoader.getChildren().setAll(borderPaneEndShaft);
             } catch (IOException e) {
                 System.err.println("[GameInteract] Erreur changenement de scene");
                 e.printStackTrace();
-            }*/
+            }
 
         } else {
-
             // Draws the first card from the deck
             if(!moteur.getDeck().isEmpty()  &&  cardsInHand.size() < moteur.maxHandCard()){
                 Card cardDraw = moteur.getCurrentPlayer().drawCard(moteur.getDeck());
 
                 // DEBUT CARTE PIOCHEE
-//                        System.out.println("Carte piochée: "+cardDraw);
+                //System.out.println("Carte piochée: "+cardDraw);
 
-<<<<<<< HEAD
 
-=======
->>>>>>> cdfec554d4b70f248aa594f2464cb45f0760d3bd
                 cardsInHand.add(getImageCard(cardDraw));
                 cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
@@ -823,18 +817,14 @@ public class GameInteract {
             }
 
 
-            //moteur.nextPlayer();
-            //nextPlayer();
+            moteur.nextPlayer();
+            nextPlayer();
 
             // Transition
-
-            /*if(dragEvent.getTransferMode() == TransferMode.MOVE){
-
-                //Transition @Sanory
-                Stage stage = new Stage();
-                TransitionStage transStage= new TransitionStage();
-                transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
-            }*/
+            Stage stage = new Stage();
+            TransitionStage transStage= new TransitionStage();
+            transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+            
             // Discard indication off
             viewDiscard.setImage(new Image("ressources/defausse.png"));
 
