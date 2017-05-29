@@ -84,9 +84,9 @@ public class IA extends Player {
     }
 
     // IA Random
-    public void randomPlay() {
+    public Move randomPlay() {
         ArrayList<Couple> p;
-        Move currentMove;
+        Move currentMove = null;
         Random r = new Random();
         int range = 1, index;
         if (nbCardHand() > 1)
@@ -101,10 +101,7 @@ public class IA extends Player {
         if (cardToPlay.getType() == gallery) {
         	GalleryCard galCardToPlay = (GalleryCard) cardToPlay;
         	if (galCardToPlay.canHasCenter() && ((RoleCard)this.getRole()).isMiner()) {
-        		currentMove = new Move();
-        		discard(index);
-        		// IA doit choisir une carte sur le Deck si le Deck n'est pas encore vide
-        		//drawCard();
+        		currentMove = new Move(cardToPlay, true);
         	}
         	else {
         		this.board.computeAccessCards();
@@ -114,12 +111,12 @@ public class IA extends Player {
                     if (range < 1)
                         range = 1;
                     this.posToPlay = p.get(r.nextInt(range));
-                    currentMove = new Move(cardToPlay, posToPlay, );
+                    currentMove = new Move(cardToPlay, posToPlay);
                 }
                 else if (p.size() == 1) {
                     range = 1;
                     this.posToPlay = p.get(r.nextInt(range));
-                    currentMove = new Move();
+                    currentMove = new Move(cardToPlay, posToPlay);
                 }
                 else
                     System.out.println("Il n'y a aucune case ou placer la carte.");
@@ -141,29 +138,35 @@ public class IA extends Player {
             			this.addGoldGoal(cpl);
             		else
             			this.ignoreGoal(cpl);
+            		currentMove = new Move(cardToPlay, cpl);
             	}
-            	/*
+            	//
             	else {
-            		discard(index);
+            		currentMove = new Move(cardToPlay, true);
             	}
-            	*/
+            	
             }
 
             else if (actioncard.getAction() == Action.Crumbling) {
-
-                // TODO
             	this.chooseWhereToCrumb();
+            	currentMove = new Move(cardToPlay, posToPlay);
             }
             else if (actioncard.getAction() == Action.Repare) {
-                // TODO: pick a player on the other side
-            	playerToRepare = this.choosePlayerToRepair((RepareSabotageCard)actioncard, (RoleCard)this.getRole());          	
-            	
+            	int playerIndex = choosePlayerToRepair((RepareSabotageCard)actioncard, (RoleCard)this.getRole());  
+            	if (playerIndex > -1)
+            		currentMove = new Move(cardToPlay, playerIndex);
+            	else
+            		System.err.println("Indice du Joueur incorrecte.");
             }
             else if (actioncard.getAction() == Action.Sabotage) {
-                // TODO:
-            	playerToSabotage = this.choosePlayerToSabotage((RepareSabotageCard)actioncard, (RoleCard)this.getRole());
+            	int playerIndex = choosePlayerToSabotage((RepareSabotageCard)actioncard, (RoleCard)this.getRole());
+            	if (playerIndex > -1)
+            		currentMove = new Move(cardToPlay, playerIndex);
+            	else
+            		System.err.println("Indice du Joueur incorrecte.");
             }
         }
+        return currentMove;
     }
 
     // Computing
@@ -496,13 +499,14 @@ public class IA extends Player {
     }
     
     // Retourne un joueur quelconque, différent de lui-meme & ayant un role opposé, au quel l'IA mettra un malus
-    public Player choosePlayerToSabotage(RepareSabotageCard card, RoleCard roleIA){
-        Player currentplayer, p = null;
+    public int choosePlayerToSabotage(RepareSabotageCard card, RoleCard roleIA){
+        Player currentplayer;
+        int playerIndex = -1;
         if (roleIA.isSaboteur()) {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
                 if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
-                    p = this.allPlayers.get(i);
+                    playerIndex = i;
                 }
             }
         }
@@ -510,23 +514,24 @@ public class IA extends Player {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
                 if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
-                    p = this.allPlayers.get(i);
+                	playerIndex = i;
                 }
             }
         }
         else
             System.err.println("Role incorrecte.");
-        return p;
+        return playerIndex;
     }
     
     // Retourne un joueur quelconque, lui-meme inclus & ayant le meme role, au quel l'IA mettra une carte pour enlever un malus
-    public Player choosePlayerToRepair(RepareSabotageCard card, RoleCard roleIA){
-        Player currentplayer, p = null;
+    public int choosePlayerToRepair(RepareSabotageCard card, RoleCard roleIA){
+        Player currentplayer;
+        int playerIndex = -1;
         if (roleIA.isMiner()){
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
                 if (currentplayer.getRole().equals(new RoleCard("Mineur")) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
-                    p = currentplayer;
+                    playerIndex = i;
                 }
             }
         }
@@ -534,13 +539,14 @@ public class IA extends Player {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
                 if (currentplayer.getRole().equals(new RoleCard("Saboteur")) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
-                    p = this.allPlayers.get(i);
+                	playerIndex = i;
                 }
             }
         }
         else
             System.err.println("Role incorrecte.");
-        return p;
+        
+        return playerIndex;
     }
 
     public float minimax(TreeNode t, int depth, float min, float max) {
