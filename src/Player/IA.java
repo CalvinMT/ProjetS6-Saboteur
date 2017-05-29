@@ -8,6 +8,7 @@ import Cards.ActionCard.Action;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static Cards.Card.Card_t.action;
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
 
@@ -19,7 +20,7 @@ public class IA extends Player {
     //final int GALLERY_VALUE;
     //final int ACTION_VALUE;
 
-    private final int MAXDEPTH = 4;
+	//private final int MAXDEPTH = 4;
 
     private Card cardToPlay;
     private Couple posToPlay;
@@ -29,29 +30,44 @@ public class IA extends Player {
     private Player playerToRepare;
     private Player playerToSabotage;
 
+    public IA() {
+        this(0, "IA", Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
+    }
+
     public IA(int index) {
-        this(index, "IA", Difficulty.Easy, new ArrayList<>());
+        this(index, "IA", Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name) {
-        this(index, name, Difficulty.Easy, new ArrayList<>());
+        this(index, name, Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name, Difficulty d){
-        this(index, name, d, new ArrayList<>());
+        this(index, name, d, new ArrayList<>(), new ArrayList<>(), new Board());
     }
 
     public IA(int index, String name, Difficulty d, ArrayList<Player> p){
+        this(index, name, d, p, new ArrayList<>(), new Board());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p, ArrayList<Couple> goals) {
+        this(index, name, d, p, goals, new Board());
+    }
+
+    public IA(int index, String name, Difficulty d, ArrayList<Player> p, ArrayList<Couple> goals, Board board) {
         this.num = index;
         this.difficulty = d;
         this.goldPoints = 0;
         this.allPlayers = p;
         this.playerName = name;
+        this.board = board;
         this.avatar = "robot_miner";
         moves = new ArrayList<Move>();
+        this.goalsToTest = goals;
         this.playableCards = new HandPlayer();
         attributeCards = new PlayerAttribute();
         setUpGoals();
+
     }
 
     private void setUpGoals() {
@@ -59,6 +75,10 @@ public class IA extends Player {
         this.goalsToTest.add(new Couple(-2, 8));
         this.goalsToTest.add(new Couple(0, 8));
         this.goalsToTest.add(new Couple(2, 8));
+    }
+
+    public IA clone() {
+        return new IA(this.num, this.getPlayerName(), this.difficulty, this.allPlayers, this.goalsToTest, this.board);
     }
 
     // IA Random
@@ -90,7 +110,7 @@ public class IA extends Player {
             else
                 System.out.println("Il n'y a aucune case ou placer la carte.");
         }
-        else if (cardToPlay.getType() == Card.Card_t.action ){
+        else if (cardToPlay.getType() == action ){
             ActionCard actioncard = (ActionCard) cardToPlay;
             if (actioncard.getAction() == Action.Map) {
                 //to do: get goals to test, check for goal, and then return
@@ -125,25 +145,105 @@ public class IA extends Player {
     }
 
     // Computing
-    public TreeNode genConfigTree(int playerIdx,Board b, int depth) { // int maxDepth ?
-        Player p = allPlayers.get(playerIdx % allPlayers.size());
-        TreeNode t  = new TreeNode(b, p.getRole().equals(new RoleCard("Saboteur")));
-        for (Card c : p.getPlayableCards().getArrayCard()) {
-            if (c.getType() == gallery) {
-                GalleryCard galleryCard = (GalleryCard) c;
-                for (Couple pos : b.getPossiblePositions(galleryCard)) {
-                    t.board = b;
-                    galleryCard.setLine(pos.getLine());
-                    galleryCard.setColumn(pos.getColumn());
-                    t.board.addCard(galleryCard);
-                    if (depth == 0 /*TODO Si fin de jeu*/) { // Si on est au dernier tour
-                        t.addToNext(new TreeNode(t.board, p.getRole().equals(new RoleCard("Saboteur")))); // Ajout des feuilles
-                    } else {
-                        t.addToNext(genConfigTree(playerIdx++, t.board, depth--)); // Sinon ajout d'un nouveau noeud
+    public TreeNode genConfigTree(int playerIdx, int depth, IA ia) { // int maxDepth ?
+        Player p = ia.allPlayers.get(playerIdx % allPlayers.size());
+        TreeNode t  = new TreeNode(p.getRole().equals(new RoleCard("Saboteur")),
+                                    new IA(this.num, this.getPlayerName(), this.difficulty, ia.allPlayers, ia.goalsToTest));
+        IA nextIA;
+
+        if (p.getAttributeCards().getNbAttribute() != 0) { // Le joueur ne peut pas jouer
+            t.setBoard(ia.board);
+            t.addToNext(genConfigTree(playerIdx++, depth--, ia));
+        }
+        for (Card c : p.getPlayableCards().getArrayCard()) { // TODO : ajout move dans TreeNode
+            switch (c.getType()) {
+                case gallery :
+                    GalleryCard galleryCard = (GalleryCard) c;
+                    for (Couple pos : ia.board.getPossiblePositions(galleryCard)) {
+                        nextIA = ia.clone();
+                        t.setBoard(ia.board);
+
+                        galleryCard.setLine(pos.getLine());
+                        galleryCard.setColumn(pos.getColumn());
+
+                        nextIA.board.addCard(galleryCard);
+                        if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                            t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                        } else {
+                            t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                        }
                     }
-                }
+                    break;
+                case action :
+                    ActionCard actionCard = (ActionCard) c;
+                    if (actionCard.getAction() == Action.Map) {
+                        for (Couple g : ia.goalsToTest) { // TODO : Ajout goalsToTest dans TreeNode
+                            nextIA = ia.clone();
+                            if (this.board.getNodeFromMine(g).getCard().isGold()) {
+                                nextIA.addGoldGoal(g);
+                            }
+                            else {
+                                nextIA.ignoreGoal(g);
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Crumbing) {
+                        for (int i = 0; i < ia.board.getMineSize(); i++ ) {
+                            nextIA = ia.clone();
+                            Couple cpl = this.board.getMineElement(i).getCard().getCoord();
+                            t.setBoard(ia.board);
+                            nextIA.board.removeCard(cpl);
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA));// Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Repare) {
+                        for (Player currPlayer : ia.allPlayers) {
+                            nextIA = ia.clone();
+                            if (currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
+                                currPlayer.setRepare((RepareSabotageCard) actionCard, ((RepareSabotageCard) actionCard).getTool());
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+                    }
+                    else if (actionCard.getAction() == Action.Sabotage) {
+                        // TODO
+                        for (Player currPlayer : ia.allPlayers) {
+                            nextIA = ia.clone();
+                            if (!currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
+                                currPlayer.setSabotage((RepareSabotageCard) actionCard);
+                            }
+                            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+                            } else {
+                                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
+                            }
+                        }
+
+                    }
+                    if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                        t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), ia)); // Ajout des feuilles
+                    } else {
+                        t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
+                    }
+                    break;
+                default:
+                    System.out.println(c.getType() + " not implemented.");
+                    break;
             }
-            // TODO cartes action
+
         }
         return t;
     }
@@ -207,11 +307,6 @@ public class IA extends Player {
             for (Couple goal : goalsToTest) { // Et pour chaque but
                 h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
 
-                //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d\n", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
-
-                // TODO : Verifier si on peut finir le chemin
-                // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
-
                 if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
                     hMin = h; // On met à jour l'heuristique max
                     card.setLine(currCpl.getLine());
@@ -227,11 +322,7 @@ public class IA extends Player {
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void getGalleryMoves() {
         Card c;
-        //GalleryCard currCard;
-        //Couple bestCpl = new Couple(0, 0);
-        //ArrayList<Move> m;
 
-        //bestCard = lookAtCard(0);
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
             c = lookAtCard(cardIdx);
             if (c.getType() == gallery) { // Si la carte est une gallerie
@@ -255,22 +346,14 @@ public class IA extends Player {
             if (c.getType() == gallery) { // Si la carte est une gallerie
                 currCard = (GalleryCard) c;
                 p = this.board.getPossiblePositions(currCard); // On calcule les positions possibles pour cette carte
-
                 for (Couple currCpl : p) { // Pour chaque position possible
                     for (Couple goal : goalsToTest) { // Et pour chaque but
                         h = getDistanceToGoal(goal, currCpl); // On calcul l'heuristique (distance position <-> but)
-                        //System.out.printf("Goal : (%2d,%2d) Pos : (%2d,%2d) \n\t BEST :\n\t\t Pos : (%2d,%2d) \n\t\t Card : {(%2d,%2d) %5s} \n\tCURRENT :\n\t\t {(%2d,%2d) %5s} -> %2d : %2d", goal.getLine(), goal.getColumn(), currCpl.getLine(), currCpl.getColumn(), bestCpl.getLine(), bestCpl.getColumn(), ( (GalleryCard) bestCard).getLine(), ( (GalleryCard) bestCard).getColumn(), Integer.toBinaryString(( (GalleryCard) bestCard).getConfig()), currCard.getLine(), currCard.getColumn(), Integer.toBinaryString(currCard.getConfig()), h, hMin);
-
-                        // TODO : Verifier si on peut finir le chemin
-                        // TODO : Si égalité favoriser la carte la plus résistante si mineur (et inversement)
-
                         if (h < hMin || hMin == -1) { // Si l'heuristique est minimale
-                            //System.out.printf(" True");
                             hMin = h; // On met à jour l'heuristique max
                             bestCpl = currCpl; // On garde la position
                             bestCard = currCard; // et la carte associée
                         }
-                        //System.out.printf("\n");
                     }
                 }
             }
@@ -291,15 +374,18 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    /* USELESS
     public void genMoves() {
         getGalleryMoves();
         // TODO : getActionsMoves();
     }
+    */
 
+    /*
     public void computeMovesValue() {
         int v;
         Move m;
-        genMoves();
+        //genMoves();
         if (((RoleCard) this.getRole()).isSaboteur()) {
             if (isInSwitchZone()) {
                 // TODO : bloquer la progression des mineurs / saboter
@@ -320,6 +406,7 @@ public class IA extends Player {
             // Aussi Saboter les saboteur
         }
     }
+    */
 
     public void mediumPlay() {
             System.out.println("TODO : IA Medium");
@@ -482,5 +569,17 @@ public class IA extends Player {
         if (this.posToPlay != null) renvoi += this.posToPlay + "\n";
 
         return renvoi;
+    }
+
+    public ArrayList<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public void setGoalsToTest(ArrayList<Couple> goalsToTest) {
+        this.goalsToTest = goalsToTest;
+    }
+
+    public void setAllPlayers(ArrayList<Player> allPlayers) {
+        this.allPlayers = allPlayers;
     }
 }
