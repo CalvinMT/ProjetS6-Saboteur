@@ -2,10 +2,7 @@ package IHM;
 
 import Cards.RoleCard;
 import Player.Player;
-import Player.Player.Difficulty;
 import Player.PlayerHuman;
-import Saboteur.Lobby;
-import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

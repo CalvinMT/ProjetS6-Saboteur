@@ -24,7 +24,7 @@ public class Lobby {
     public void addPlayer(int num, String name, Difficulty d){
         if(arrayPlayer.size() < 10){
             Player p = new IA(num, name, d);
-            arrayPlayer.add(new IA(num, name, d));
+            arrayPlayer.add(p);
         }
     }
 

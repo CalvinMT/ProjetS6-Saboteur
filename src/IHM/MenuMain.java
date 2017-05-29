@@ -8,11 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 public class MenuMain {
@@ -37,6 +34,7 @@ public class MenuMain {
 		MainLoader.autoResizeToResolution(anchorPane);
 	}
 
+	@SuppressWarnings("unused")
 	private static void configureFileChooser(final FileChooser fc){
 		fc.setTitle("Chargement d'une partie");
 		fc.setInitialDirectory(

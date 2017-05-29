@@ -60,13 +60,13 @@ public class MenuPause {
     @FXML
     void handleButtonSave(ActionEvent event){
         //TODO SAUVEGARDE
-        Stage stageJeux = (Stage)((Stage) buttonReprendre.getScene().getWindow()).getOwner();
+        //Stage stageJeux = (Stage)((Stage) buttonReprendre.getScene().getWindow()).getOwner();
 
         final FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser);
-        File file = fileChooser.showSaveDialog(stageJeux);
-
-        // file est le fichier dans lequel il y aura la seauvegarde à faire
+        
+        //File file = fileChooser.showSaveDialog(stageJeux);
+        // TODO - file est le fichier dans lequel il y aura la seauvegarde à faire
 
     }
 
