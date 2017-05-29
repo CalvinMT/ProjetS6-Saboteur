@@ -169,8 +169,11 @@ public class IA extends Player {
         return currentMove;
     }
 
-    // Computing
-    public TreeNode genConfigTree(int playerIdx, int depth, IA ia) { // int maxDepth ?
+    // genConfigTree
+    // playerIdx : indice du joueur courant
+    // depth : profondeur de l'arbre
+    // ia : ia pour conserver l'état du jeux
+    public TreeNode genConfigTree(int playerIdx, int depth, IA ia) {
         Player p = ia.allPlayers.get(playerIdx % allPlayers.size());
         TreeNode t  = new TreeNode(((RoleCard) p.getRole()).isSaboteur(),
                                     new IA(this.num, this.getPlayerName(), this.difficulty, ia.allPlayers, ia.goalsToTest));
@@ -332,10 +335,11 @@ public class IA extends Player {
         return abs(goal.getLine() - cpl.getLine()) + abs(goal.getColumn() - cpl.getColumn());
     }
 
+    // Deprecated
     public Move whereToPlaceCard(GalleryCard card) {
         int h, hMin = -1;
         ArrayList<Couple> p;
-
+        System.err.println("whereToPlaceCard() deprecated");
         p = this.board.getPossiblePositions(card); // On calcule les positions possibles pour cette carte
 
         for (Couple currCpl : p) { // Pour chaque position possible
@@ -352,11 +356,11 @@ public class IA extends Player {
         return new Move(card, card.getCoord(), hMin);
     }
 
-    // TODO : Tests
-    // TODO : Choisir les cartes
+    // Deprecated
     // Determine la position la plus proche d'un but et retourne ses coordonnées
     public void getGalleryMoves() {
         Card c;
+        System.err.println("getGalleryMoves() deprecated");
 
         for (int cardIdx = 0; cardIdx < nbCardHand(); cardIdx++) { // Parcours des cartes en main
             c = lookAtCard(cardIdx);
@@ -398,9 +402,11 @@ public class IA extends Player {
         return posToPlay.equals(new Couple(0, 0));
     }
 
+    // Deprecated
     private Move getBestValueMove() {
         int idx = 0,
             vMax = 0;
+        System.err.println("getBestValueMove() deprecated");
         for (int i = 0; i < moves.size(); i++) {
             if(moves.get(i).getValue() > vMax) {
                 vMax = moves.get(i).getValue();
@@ -410,8 +416,10 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    // Deprecated
     public void execMove(Move m) {
         int i = 0;
+        System.err.println("execMove() deprecated");
         if (m.getDiscard()) {
 
             while (i < this.nbCardHand() && !this.getPlayableCards().getArrayCard().get(i).equals(m.getCard())){ i++;}
@@ -449,9 +457,7 @@ public class IA extends Player {
         float nodeValue;
         Random r = new Random();
 
-
-        System.out.println("TODO : IA Medium");
-        /*if (!isInSwitchZone()) {
+        if (!isInSwitchZone()) {
             if (choosePosition()) { // Se rapproche des buts
                 GalleryCard c = (GalleryCard) this.cardToPlay;
                 System.out.println("choosePos");
@@ -463,18 +469,16 @@ public class IA extends Player {
                 return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
             }
         }
-        else {*/
-            System.out.println("minimax");
+        else {
             tree = genConfigTree(this.getNum(), 2, this);
-            nodeValue = minimax(tree, 2, -9999, 9999);
+
+            nodeValue = minimax(tree, 2, -10, 10);
             for (TreeNode n : tree.getNext()) {
                 if (n.getValue() == nodeValue) {
                     move =  n.getMove();
                 }
             }
-        //}
-        // this.execMove(move);
-        System.out.println("mediumPlay() : " + move );
+        }
         return move;
     }
 
