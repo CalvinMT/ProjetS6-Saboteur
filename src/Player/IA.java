@@ -392,10 +392,13 @@ public class IA extends Player {
         Random r = new Random();
 
         if (!isInSwitchZone()) {
-            if (choosePosition()) {
-                return new Move(this.cardToPlay, this.posToPlay);
+            if (choosePosition()) { // Se rapproche des buts
+                GalleryCard c = (GalleryCard) this.cardToPlay;
+                c.setLine(this.posToPlay.getLine());
+                c.setColumn(this.posToPlay.getColumn());
+                return new Move(c, this.posToPlay);
             }
-            else {
+            else { // defausse
                 return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
             }
         }
