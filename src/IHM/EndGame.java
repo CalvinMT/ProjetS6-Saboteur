@@ -4,6 +4,8 @@ package IHM;
 import Cards.RoleCard;
 import Player.Player;
 import Player.PlayerHuman;
+import Saboteur.Moteur;
+import Saboteur.Saboteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +23,8 @@ import javafx.scene.text.Text;
 
 
 public class EndGame {
+
+    private Moteur engine;
 	    
 
     private ObservableList<BandeauPlayerFinGame> playerList = FXCollections.observableArrayList();
@@ -52,21 +56,6 @@ public class EndGame {
     @FXML
     private TableColumn<BandeauPlayerFinGame, String> columnRole;
     
-    public EndGame(){//tests à remplacer par le moteur
-        joueur.setAvatar("avatar_test");
-        joueur.assignRole(mine);
-        joueur2.setAvatar("avatar_test");
-        joueur2.assignRole(mine);
-        joueur3.setAvatar("avatar_test");
-        joueur3.assignRole(sabo);
-        joueur4.setAvatar("avatar_test");
-        joueur4.assignRole(sabo);
-        joueur5.setAvatar("avatar_test");
-        joueur5.assignRole(mine);
-        joueur6.setAvatar("avatar_test");
-        joueur6.assignRole(mine);
-    }
-    
     
     
     
@@ -85,6 +74,8 @@ public class EndGame {
 
     @FXML
     public void initialize(){
+    	engine = Saboteur.getMoteur();
+    	
         tableViewListeJoueur.setItems(playerList);
         columnAvatar.setStyle( "-fx-alignment: CENTER;");
         columnPseudo.setStyle( "-fx-alignment: CENTER-LEFT;");
@@ -101,7 +92,19 @@ public class EndGame {
         playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur4.getRole()).toString()));
         playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur5.getAvatar()), joueur5.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur5.getRole()).toString()));
         playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur6.getAvatar()), joueur6.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur6.getRole()).toString()));
-     }
+     
+        Player player;
+        String avatar;
+
+        for(int i=0; i<engine.nbPlayer(); i++){
+            player = engine.getAllPlayers().get(i);
+            if(player == null){
+                System.out.println("PLayer null");
+            }
+            avatar = player.getAvatar();
+            playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(avatar), player.getPlayerName(), Saboteur.goldByPlayer.get(i).toString(), (player.getRole()).toString()));//Pour chaque joueur
+        }
+    }
 
 	// A custom ListCell that displays an ImageView
 	static class ImageCell extends ListCell<String> {

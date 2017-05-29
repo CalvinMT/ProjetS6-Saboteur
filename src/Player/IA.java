@@ -9,9 +9,7 @@ import java.util.Random;
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
 
-/**
- * Created by thespygeek on 11/05/17.
- */
+
 public class IA extends Player{
     private ArrayList<Couple> goalsToTest;
 

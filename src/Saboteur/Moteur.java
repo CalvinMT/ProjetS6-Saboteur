@@ -23,10 +23,7 @@ import Board.Couple;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author uwalakae
- */
+
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;
@@ -227,6 +224,10 @@ public class Moteur {
         for(int i=0; i<nbPlayer(); i++){
             System.out.println(arrayPlayer.get(i).getPlayerName()+" "+arrayPlayer.get(i).getRole());
         }
+    }
+
+    public void setCurrentPlayer(int i){
+        this.currentPlayer = i;
     }
 
 
