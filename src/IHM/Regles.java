@@ -56,6 +56,8 @@ public class Regles {
     private ImageView imageViewCartePlanSecret;
     @FXML
     private ImageView imageViewCarteEboulement;
+    @FXML
+    private ImageView imageViewCarteNombreOr;
 
     @FXML
     public void handleButtonRetourMenu() throws IOException {
@@ -94,21 +96,24 @@ public class Regles {
 
     @FXML
     public void initialize(){
-        textRegles.setText("But du jeu :\n" + "" +
-                "Le jeu se déroule tour par tour et en trois manches.\n" +
-                "Les gagnants d'une manche tirent au sort une quantité d'or gagné.\n" +
-                "Au début de chaque manches, on pioche une carte rôle définissant l'objectif de chacun pour la manche en cours.\n" +
-                "On est soit Mineur soit saboteur.\n" +
-                "- Le mineur doit atteindre les trois cartes but en creusant des galleries, pour trouver la carte or.\n" +
-                "- Le saboteur doit empecher le mineur d'atteindre les buts. Pour que le/les saboteur(s) gagne(nt) il faut que la pioche soit vide et que plus personne n'est de cartes en mains.\n" +
-                "\n\n\fDéroulement d'une partie :\n" +
-                "Chacun à tour de rôle, les joueurs peuvent effectuer une action parmis les suivantes (s'il dispose de la carte concernée : \n" +
+        textRegles.setText("But du jeu :\n\n" +
+                "En trois manches : amasser le plus d'or.\n" +
+                "\n\n\nDéroulement d'une manche :\n\n" +
+                "Au début de chaque manche, chaque joueur pioche une carte rôle définissant son objectif pour la manche.\n" +
+                "Les rôles sont secrets mais les joueurs du même rôle joueront en équipe et se partageront les gains.\n" +
+                "On est soit Mineur soit Saboteur.\n" +
+                "- Le Mineur doit atteindre la carte but contenant l'or (seulement une sur les trois cartes but, ces cartes sont face cachées).\n" +
+                "- Le Saboteur doit empecher le mineur d'atteindre les buts. Pour que le/les saboteur(s) gagne(nt) il faut que la pioche soit vide et que plus personne n'ait de cartes en mains.\n" +
+                "Chaque joueur joue à tour de role.\n" +
+                "On joue tant qu'aucune des deux équipes ne l'a emporté\n" +
+                "L'équipe qui remporte la manche gagne de l'or. Chaque joueur de l'équipe victorieuse tire alors un carte or pour savoir combien d'or il a gagné.\n" +
+                "\n\n\nDéroulement d'un tour :\n\n" +
+                "Le joueur peut effectuer une action parmi les suivantes (s'il dispose de la carte concernée) puis piocher pour toujours avoir le bon nombre de cartes en main : \n" +
                 "- Poser une gallerie (cartes galleries)\n" +
                 "- Casser/réparer un ou plusieurs outils d'un joueur quel qu'il soit (cartes outil brisé)\n" +
                 "- Faire effondrer une gallerie (carte éboulement)\n" +
                 "- Regarder une des cartes but (carte plan secret)\n" +
-                "- Se défausser d'une carte\n" +
-                "\n\nOn joue tant qu'il reste des cartes dans la pioches ou tant que l'or n'a pas été découvert");
+                "- Se défausser d'une carte\n");
         Tooltip.install(imageViewCarteButOr, new Tooltip("Carte but or :\nAtteindre cette carte en tracant une gallerie du départ jusqu'à elle pour gagner en tant que mineur"));
         Tooltip.install(imageViewCarteButCoal, new Tooltip("Mauvaise carte but"));
         Tooltip.install(imageViewCarteButCoal1, new Tooltip("Mauvaise carte but"));
@@ -124,6 +129,7 @@ public class Regles {
         Tooltip.install(imageViewCarteReparationMultiple, new Tooltip("Exemple de carte de réparation de plusieurs outils (un à choisir)"));
         Tooltip.install(imageViewCartePlanSecret, new Tooltip("Plan secret :\nCarte permettant de réveler une des cartes but pour le joueur qui la joue"));
         Tooltip.install(imageViewCarteEboulement, new Tooltip("Eboulement :\nCarte permettant de détruire une gallerie"));
+        Tooltip.install(imageViewCarteNombreOr, new Tooltip("Carte or à tirer en fin de partie lorsque l'on a gagné (3 d'or pour celle-ci, 1 et 2 pour les autres possibles)"));
 
     }
 

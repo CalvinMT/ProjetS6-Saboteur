@@ -809,7 +809,10 @@ public class GameInteract {
                 // DEBUT CARTE PIOCHEE
 //                        System.out.println("Carte piochée: "+cardDraw);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdfec554d4b70f248aa594f2464cb45f0760d3bd
                 cardsInHand.add(getImageCard(cardDraw));
                 cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
