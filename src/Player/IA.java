@@ -505,7 +505,7 @@ public class IA extends Player {
         if (roleIA.isSaboteur()) {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
+                if (!currentplayer.getPlayerName().equals(this.getPlayerName()) && ((RoleCard) currentplayer.getRole()).isMiner() && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
                     playerIndex = i;
                 }
             }
@@ -513,7 +513,7 @@ public class IA extends Player {
         else if (roleIA.isMiner()) {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                if (!currentplayer.getPlayerName().equals(this.getPlayerName()) && ((RoleCard) currentplayer.getRole()).isSaboteur() && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
                 	playerIndex = i;
                 }
             }
