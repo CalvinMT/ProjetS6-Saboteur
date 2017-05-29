@@ -23,10 +23,7 @@ import Board.Couple;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author uwalakae
- */
+
 public class Moteur {
     private ArrayList<Player> arrayPlayer;
     private Deck pile;

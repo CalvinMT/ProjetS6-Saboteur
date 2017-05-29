@@ -92,8 +92,58 @@ public class EndShaft {
 
         if(engine.getBoard().goldReached()){
             TextWinners.setText("Les Mineurs ont gagné");
+
+            int pepite = 0;
+            int currentPlayer = engine.nbPlayer()-1;
+            int gold;
+
+            while(pepite < engine.nbPlayer() && Saboteur.arrayGold.size() > 0){
+
+                if(engine.getAllPlayers().get(currentPlayer).getRole() == new RoleCard("Mineur")){
+                    gold = Saboteur.goldByPlayer.get(currentPlayer);
+                    Saboteur.goldByPlayer.set(currentPlayer, gold + Saboteur.arrayGold.remove(0));
+
+                    pepite++;
+                }
+
+                currentPlayer--;
+                if(currentPlayer < 0){
+                    currentPlayer = engine.nbPlayer()-1;
+                }
+
+            }
+
         } else {
             TextWinners.setText("Les Saboteurs ont gagné");
+            int nbSaboteur = 0;
+            for(int i=0; i<engine.nbPlayer(); i++){
+                if(engine.getAllPlayers().get(i).getRole() == new RoleCard("Saboteur")){
+                    nbSaboteur++;
+                }
+            }
+
+            int nbGiveGold;
+
+            if(nbSaboteur == 1){
+                nbGiveGold = 4;
+            } else if(nbSaboteur == 2 || nbSaboteur == 3){
+                nbGiveGold = 3;
+            } else if(nbSaboteur == 4){
+                nbGiveGold = 2;
+            } else {
+                nbGiveGold = 0;
+            }
+
+            int gold;
+
+            for(int i=0; i<engine.nbPlayer(); i++){
+                if(engine.getAllPlayers().get(i).getRole() == new RoleCard("Saboteur")){
+
+                    gold = Saboteur.goldByPlayer.get(i);
+                    Saboteur.goldByPlayer.set(i, gold + nbGiveGold);
+
+                }
+            }
         }
         TextWinners.setFill(Paint.valueOf("FFFFFF"));
 

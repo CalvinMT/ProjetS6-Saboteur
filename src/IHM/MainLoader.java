@@ -17,15 +17,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
@@ -273,7 +269,7 @@ public class MainLoader extends Application {
 
 									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
 
-									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
+									engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
 
 									player.getPlayableCards().removeCard(cardToPlay);
 									engine.getGameInteractControler().checkEndGame();
