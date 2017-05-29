@@ -3,15 +3,26 @@ package Saboteur;
 
 import Board.Couple;
 import Cards.ActionCard;
+import Cards.GalleryCard;
 import Cards.RepareSabotageCard;
 
+import IHM.GameBoard;
 import Player.Player;
+import Player.IA;
+import Player.PlayerHuman;
+import Player.Player.Difficulty;
+import Saboteur.Moteur.State;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
 public class Saboteur {
 
     static public Moteur engine;
+
+    static public int manche = 0;
 
     static public Moteur getMoteur(){
         return engine;
@@ -24,7 +35,53 @@ public class Saboteur {
 
     // init du moteur a partir d'un tableau de joueur
     static public void initMoteur(ArrayList<Player> arrayPlayer){
+//        engine = new Moteur(arrayPlayer, "--debugBoard");
         engine = new Moteur(arrayPlayer, "");
+        manche = 0;
+    }
+
+    static public void resetMoteur(ArrayList<Player> arrayPlayer){
+//        engine = new Moteur(arrayPlayer, "--debugBoard");
+        engine = new Moteur(arrayPlayer, "");
+        manche++;
+    }
+
+
+
+    // game de test 1
+    static public void game1(){
+
+        ArrayList<Player> arrayPlayer = new ArrayList<Player>();
+        arrayPlayer.add(new PlayerHuman(0, "Joueur 1", "avatar_anonyme"));
+        arrayPlayer.add(new PlayerHuman(1, "DrZed", "avatar_anonyme"));
+        arrayPlayer.add(new PlayerHuman(2, "Ekalkas", "avatar_anonyme"));
+        arrayPlayer.add(new IA(3, "IA 1" ,Difficulty.Easy));
+        arrayPlayer.add(new IA(4, "IA 2" ,Difficulty.Medium));
+
+        engine = new Moteur(arrayPlayer, "");
+
+        while(!engine.allRoleAreSet()){
+            try {
+                engine.chooseRole(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        engine.setCurrentPlayer(2);
+
+//        engine.getAllPlayers().get(2).setSabotage(new RepareSabotageCard("Sabotage", RepareSabotageCard.Tools.Wagon));
+
+        GalleryCard card1 = new GalleryCard(GalleryCard.Gallery_t.tunnel, true, true, true, true, true);
+        GalleryCard card2 = new GalleryCard(GalleryCard.Gallery_t.tunnel, true, false, false, true, true);
+
+        engine.getBoard().putCard(card1, 0, 1);
+        engine.getBoard().putCard(card2, 0, 2);
+
+        engine.setState(State.Game);
+//        engine.getBoard().computeAccessCards();
+
+
     }
 
 
@@ -35,6 +92,10 @@ public class Saboteur {
             }
         }
         return false;
+    }
+
+    static public void main(String [] args){
+        game1();
     }
 
 

@@ -3,17 +3,13 @@ package IHM;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
 import Board.Couple;
 import Cards.Card;
 import Cards.GalleryCard;
-import Cards.RoleCard;
 import Player.Player;
 import Player.IA;
-import Saboteur.Moteur.State;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.animation.AnimationTimer;
@@ -21,18 +17,21 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 public class MainLoader extends Application {
 	
@@ -80,7 +79,9 @@ public class MainLoader extends Application {
 	}
 	
 	
-	public static void autoResizeToResolution (double width, double height, AnchorPane anchorPaneMenu) {
+	public static void autoResizeToResolution (AnchorPane anchorPaneMenu) {
+		double width = MainLoader.primaryStage.getWidth();
+		double height = MainLoader.primaryStage.getHeight();
 		if (anchorPaneMainLoader != null) {
 			anchorPaneMainLoader.setPrefWidth(width-(width/3));
 			anchorPaneMainLoader.setPrefHeight(height-300); // XXX - 217
@@ -174,17 +175,10 @@ public class MainLoader extends Application {
 		anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
 		
 		// Automatic Resizing
-		autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
+		autoResizeToResolution(anchorPaneMenuMain);
 		
 		
 		primaryStage.show();
-		
-		AnchorPane anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-        anchorPaneMainLoader.getChildren().setAll(anchorPane);
-        
-        autoResizeToResolution(SCREEN_WIDTH, SCREEN_HEIGHT, anchorPaneMenuMain);
-
 
         ///// POUR FAIRE JOUER L'IA
 
@@ -269,7 +263,7 @@ public class MainLoader extends Application {
 
 								if(cardToPlay.getType() == Card.Card_t.gallery){
 
-								    GalleryCard cardToPut;
+									GalleryCard cardToPut;
 
 									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
 										cardToPut = ((GalleryCard) cardToPlay).rotate();
@@ -277,15 +271,16 @@ public class MainLoader extends Application {
 										cardToPut = (GalleryCard) cardToPlay;
 									}
 
+									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
+
 									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
 
 									player.getPlayableCards().removeCard(cardToPlay);
-									System.out.println(player);
-									player.drawCard(engine.getDeck());
+									engine.getGameInteractControler().checkEndGame();
+//									System.out.println(player);
 
-									engine.getGameInteractControler().addGalleryCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
 
-									engine.nextPlayer();
+//									engine.nextPlayer();
 
 									try {
 										Thread.sleep(shortWaitingTime);

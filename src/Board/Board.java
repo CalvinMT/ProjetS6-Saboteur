@@ -4,10 +4,7 @@ package Board;
 import Cards.GalleryCard;
 import Cards.GoalCard;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
     private ArrayList<Node> mine = new ArrayList<Node>();
@@ -19,23 +16,23 @@ public class Board {
         int gold = r.nextInt(3) -1;
         int x;
 
+        ArrayList<Integer> tab =  new ArrayList<>();
+        tab.add(-2);
+        tab.add(0);
+        tab.add(2);
+
+        // start
         mine.add(new Node());
 
-        for (int i = -1; i < 2; i++) {
-            x = 2*i;
-            if (i == gold) {
-                mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true))); // Minerai
-            }
-            else {
-                if (r.nextInt(2) == 1) {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false))); // Sans minerai droit
-                }
-                else {
-                    mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false))); // Sans minerai gauche
-                }
-            }
-        }
 
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), true, true, true ,true, true)));
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, true, false, false)));
+        x = tab.remove(r.nextInt(tab.size()));
+        mine.add(new Node(new GoalCard(new Couple(x, 8), false, true, false, true, false)));
+
+        computeAccessCards();
     }
 
     // Debug
@@ -73,8 +70,20 @@ public class Board {
         mine.add(n);
     }
 
+    public void putCard(GalleryCard c, int line, int column){
+        Couple cou = new Couple(line, column);
+
+        c.setLine(line);
+        c.setColumn(column);
+
+        addCard(c);
+
+        computeAccessCards();
+    }
+
     public void removeCard(Couple coord) {
         int idx = 0;
+        // suppression dans la mine
         for (int i = 0; i < mine.size(); i++) {
             if (mine.get(i).card.getLine() == coord.getLine() && mine.get(i).card.getColumn() == coord.getColumn()) {
                 idx = i;
@@ -93,7 +102,7 @@ public class Board {
             if(mine.get(i).getSouth() == idx) {
                 mine.get(i).setSouth(-1);
             }
-            else if(mine.get(i).getNorth() > idx) {
+            else if(mine.get(i).getSouth() > idx) {
                 mine.get(i).setSouth(mine.get(i).getSouth() - 1);
             }
 
@@ -111,6 +120,8 @@ public class Board {
                 mine.get(i).setWest(mine.get(i).getWest() - 1);
             }
         }
+
+        computeAccessCards();
     }
     
     // Compute pathResistance
@@ -153,16 +164,6 @@ public class Board {
         }
     }
 
-    public void putCard(GalleryCard c, int line, int column){
-        Couple cou = new Couple(line, column);
-
-        c.setLine(line);
-        c.setColumn(column);
-
-        addCard(c);
-
-        computeAccessCards();
-    }
 
     public void computeAccessCards() {
         LinkedList<Node> queue = new LinkedList<Node>(),
@@ -179,60 +180,64 @@ public class Board {
                 // TODO : FACTORISER!!! - G. Huard 2017
                 currentNode = queue.remove(); // On défile
                 visited.add(currentNode); // On ajoute la carte actuelle aux cartes visitées
-                accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
-                if (currentNode.card.canHasNorth()) {
-                    if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
-                        newNode = mine.get(currentNode.getNorth());
-                        if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
-                            queue.add(newNode); // On l'ajoute dans la queue
+
+                if (currentNode.card.canHasCenter()) {
+                    
+                    accessCard.put(new Couple(currentNode.card.getLine(), currentNode.card.getColumn()), currentNode); // Et aux cartes accessibles
+                    if (currentNode.card.canHasNorth()) {
+                        if (currentNode.getNorth() != -1) { // Si il y a une carte au nord
+                            newNode = mine.get(currentNode.getNorth());
+                            if (!visited.contains(newNode)) { // Si la carte au nord n'a pas été visitée
+                                queue.add(newNode); // On l'ajoute dans la queue
+                            }
+                        }
+                        else { // Si il n'y a pas de carte au nord (case vide)
+                            cpl = new Couple(currentNode.card.getLine() - 1, currentNode.card.getColumn());
+                            if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                                positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                            }
                         }
                     }
-                    else { // Si il n'y a pas de carte au nord (case vide)
-                        cpl = new Couple(currentNode.card.getLine() - 1, currentNode.card.getColumn());
-                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                    if (currentNode.card.canHasSouth()) {
+                        if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
+                            newNode = mine.get(currentNode.getSouth());
+                            if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
+                                queue.add(newNode); // On l'ajoute dans la queue
+                            }
+                        }
+                        else { // Si il n'y a pas de carte au sud (case vide)
+                            cpl = new Couple(currentNode.card.getLine() + 1, currentNode.card.getColumn());
+                            if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
+                                positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                            }
                         }
                     }
-                }
-                if (currentNode.card.canHasSouth()) {
-                    if (currentNode.getSouth() != -1) { // Si il y a une carte au sud
-                        newNode = mine.get(currentNode.getSouth());
-                        if (!visited.contains(newNode)) { // Si la carte au sud n'a pas été visitée
-                            queue.add(newNode); // On l'ajoute dans la queue
+                    if (currentNode.card.canHasEast()) {
+                        if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
+                            newNode = mine.get(currentNode.getEast());
+                            if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
+                                queue.add(newNode);
+                            }
+                        }
+                        else {
+                            cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() + 1);
+                            if (!positionCandidates.contains(cpl)) {
+                                positionCandidates.add(cpl);
+                            }
                         }
                     }
-                    else { // Si il n'y a pas de carte au sud (case vide)
-                        cpl = new Couple(currentNode.card.getLine() + 1, currentNode.card.getColumn());
-                        if (!positionCandidates.contains(cpl)) { // Si la position n'a pas déjà été ajoutée
-                            positionCandidates.add(cpl); // On l'ajoute aux possibilités
+                    if (currentNode.card.canHasWest()) {
+                        if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
+                            newNode = mine.get(currentNode.getWest());
+                            if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
+                                queue.add(newNode);
+                            }
                         }
-                    }
-                }
-                if (currentNode.card.canHasEast()) {
-                    if (currentNode.getEast() != -1) { // Si il y a une carte à l'est
-                        newNode = mine.get(currentNode.getEast());
-                        if (!visited.contains(newNode)) { // Si la carte à l'est carte n'a pas été visitée
-                            queue.add(newNode);
-                        }
-                    }
-                    else {
-                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() + 1);
-                        if (!positionCandidates.contains(cpl)) {
-                            positionCandidates.add(cpl);
-                        }
-                    }
-                }
-                if (currentNode.card.canHasWest()) {
-                    if (currentNode.getWest() != -1) { // Si il y a une carte à l'ouest
-                        newNode = mine.get(currentNode.getWest());
-                        if (!visited.contains(newNode)) { // Si la carte n'a pas été visitée
-                            queue.add(newNode);
-                        }
-                    }
-                    else {
-                        cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() - 1);
-                        if (!positionCandidates.contains(cpl)) {
-                            positionCandidates.add(cpl);
+                        else {
+                            cpl = new Couple(currentNode.card.getLine(), currentNode.card.getColumn() - 1);
+                            if (!positionCandidates.contains(cpl)) {
+                                positionCandidates.add(cpl);
+                            }
                         }
                     }
                 }
@@ -244,34 +249,86 @@ public class Board {
         }
     }
 
+    //TODO Factoriser
+
     public boolean isCompatibleWithNeighbors(GalleryCard c, Couple currPos) {
+
         Node currNode;
+
+        // nord
         currNode = getNodeFromMine(new Couple(currPos.getLine() - 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasNorth() && !currNode.card.canHasSouth()) ||  (!c.canHasNorth() && currNode.card.canHasSouth())){
-                return false;
+            if (c.canHasNorth() != currNode.card.canHasSouth()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasNorth() != card.canHasSouth()){
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
+        // sud
         currNode = getNodeFromMine(new Couple(currPos.getLine() + 1, currPos.getColumn()));
         if (currNode != null) {
-            if ((c.canHasSouth() && !currNode.card.canHasNorth()) || (!c.canHasSouth() && currNode.card.canHasNorth())) {
-                return false;
+            if (c.canHasSouth() != currNode.card.canHasNorth()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasSouth() != card.canHasNorth()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() + 1));
+        //est
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()+1) );
         if (currNode != null) {
-            if ((c.canHasEast() && !currNode.card.canHasWest()) || (!c.canHasEast() && currNode.card.canHasWest())) {
-                return false;
-            }
-        }
-        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn() - 1));
-        if (currNode != null) {
-            if ((c.canHasWest() && !currNode.card.canHasEast()) || (!c.canHasWest() && currNode.card.canHasEast())) {
-                return false;
+            if (c.canHasEast() != currNode.card.canHasWest()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasEast() != card.canHasWest()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
+        //ouest
+
+        currNode = getNodeFromMine(new Couple(currPos.getLine(), currPos.getColumn()-1 ));
+        if (currNode != null) {
+            if (c.canHasWest() != currNode.card.canHasEast()) {
+
+                // si c'est un carte but non fixe
+                if (currNode.getCard().isGoal() && !currNode.reached()) {
+                    GalleryCard card = currNode.getCard().rotate();
+                    if (c.canHasWest() != card.canHasEast()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
         return true;
+    }
+
+    public boolean nodeReached(Node n){
+        computeAccessCards();
+        Couple c = n.getCard().getCoord();
+
+        return accessCard.containsKey(c);
     }
 
     private void computePossiblePositions(GalleryCard c, ArrayList<Couple> possiblePositions) {
@@ -316,29 +373,70 @@ public class Board {
         return n;
     }
 
-    public boolean goalReached(){
+    public void setCardInMine(int index, GalleryCard c){
+        this.mine.set(index, new Node(c));
+    }
 
-        final Couple goal1 = new Couple(-2, 8);
-        final Couple goal2 = new Couple(0, 8);
-        final Couple goal3 = new Couple(2, 8);
+    public boolean goldReached(){
 
-        if(accessCard.contains(goal1) && accessCard.get(goal1).getCard().isGold() || accessCard.contains(goal2) && accessCard.get(goal2).getCard().isGold() || accessCard.contains(goal3) && accessCard.get(goal3).getCard().isGold()){
-            // fin de la manche
-            return true;
-        } else {
+        final Node goal1 = mine.get(1);
+        final Node goal2 = mine.get(2);
+        final Node goal3 = mine.get(3);
+
+        return (nodeReached(goal1) && goal1.getCard().isGold() || nodeReached(goal2) && goal2.getCard().isGold() || nodeReached(goal3) && goal3.getCard().isGold());
+    }
+
+    public boolean goldBlocked(){
+
+        int i=1;
+        Node goal;
+        do {
+            goal = mine.get(i);
+            i++;
+        } while(!goal.getCard().isGold());
+
+        if(nodeReached(goal)){
             return false;
+        } else {
+            int line = goal.getCard().getLine();
+            int column = goal.getCard().getColumn();
+
+            if(getNodeFromMine(new Couple(line-1, column)) != null && getNodeFromMine(new Couple(line+1, column)) != null && getNodeFromMine(new Couple(line, column-1)) != null && getNodeFromMine(new Couple(line, column+1)) != null){
+                System.out.println("Gold Blocked");
+                return true;
+            } else {
+                return false;
+            }
         }
 
-        //TODO à changer car la carte gold peut etre bloquer et inacessible
+
     }
 
     public String mine(){
         String renvoi = "Mine:\n";
 
         for(int i=0; i<mine.size(); i++){
+            renvoi += "Index: "+i+"\n";
             renvoi +=  mine.get(i) + "\n";
         }
 
+
+        return renvoi;
+    }
+
+    public String debugAccessible(){
+        String renvoi = "Accessible: \n";
+        computeAccessCards();
+        Node node;
+
+        Set<Couple> hash = accessCard.keySet();
+
+        Iterator<Couple> it = hash.iterator();
+
+        while(it.hasNext()){
+            node = accessCard.get(it.next());
+            renvoi += node + "\n";
+        }
 
         return renvoi;
     }
@@ -356,6 +454,5 @@ public class Board {
     public int getMineSize() {
         return mine.size();
     }
-
 
 }

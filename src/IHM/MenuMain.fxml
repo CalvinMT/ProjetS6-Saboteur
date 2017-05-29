@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="anchorPaneMenuMain" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
+<AnchorPane fx:id="anchorPaneMenuMain" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuMain">
    <children>
       <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="buttonLocal" maxWidth="400.0" mnemonicParsing="true" onAction="#handleLocalGame" prefHeight="60.0" text="Partie Locale" VBox.vgrow="ALWAYS" />
-            <Button fx:id="buttonOnline" disable="true" maxWidth="400.0" mnemonicParsing="false" prefHeight="60.0" text="Partie En Ligne" VBox.vgrow="ALWAYS" />
-            <Button fx:id="buttonTutorial" disable="true" maxWidth="400.0" mnemonicParsing="false" prefHeight="60.0" text="Didactitiel" VBox.vgrow="ALWAYS" />
-            <Button fx:id="buttonOptions" maxWidth="400.0" mnemonicParsing="false" onAction="#handleOptions" prefHeight="60.0" text="Options" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonLocal" maxWidth="400.0" mnemonicParsing="true" onAction="#handleLocalGame" prefHeight="60.0" styleClass="button_menu" stylesheets="@style.css" text="Nouvelle partie" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonChargerPartie" maxWidth="400.0" mnemonicParsing="false" onAction="#handleButtonChargerPartie" prefHeight="60.0" styleClass="button_menu" stylesheets="@style.css" text="Charger une partie" VBox.vgrow="ALWAYS" />
+            <Button maxWidth="400.0" mnemonicParsing="false" onAction="#handleButtonTutorial" prefHeight="60.0" styleClass="button_menu" stylesheets="@style.css" text="Didactitiel" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonOptions" maxWidth="400.0" mnemonicParsing="false" onAction="#handleOptions" prefHeight="60.0" styleClass="button_menu" stylesheets="@style.css" text="Options" VBox.vgrow="ALWAYS" />
             <Button disable="true" mnemonicParsing="false" text="NOT_TO_USE" visible="false" />
-            <Button fx:id="buttonQuit" maxWidth="400.0" mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="60.0" text="Quitter" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonQuit" maxWidth="400.0" mnemonicParsing="false" onAction="#handleQuitProgram" prefHeight="60.0" styleClass="button_menu" stylesheets="@style.css" text="Quitter" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
             <Insets bottom="50.0" left="300.0" right="300.0" top="50.0" />

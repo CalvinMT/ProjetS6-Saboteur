@@ -10,7 +10,7 @@ public class GalleryCard extends Card {
     private Couple coord = new Couple();
     private int resist;
 
-    private boolean center,
+    protected boolean center,
                     north,
                     south,
                     east,
@@ -106,6 +106,10 @@ public class GalleryCard extends Card {
 
     public void setType_g(Gallery_t type_g) {
         this.type_g = type_g;
+    }
+
+    public boolean isGoal(){
+        return false;
     }
 
     public void setResist() {
@@ -247,19 +251,21 @@ public class GalleryCard extends Card {
 
     @Override
     public String toString() {
-        //if (type_g == start) return "Start";
-        return "GalleryCard{" +
-                "type=" + type +
-                ", x=" + coord.getLine() +
-                ", y=" + coord.getColumn() +
-                ", center=" + center +
-                ", north=" + north +
-                ", south=" + south +
-                ", east=" + east +
-                ", west=" + west +
-                // TODO : Ne pas utiliser avant implémentation du save/load
-                ", resist=" + resist +
-                '}';
+        if (type_g == start)
+            return "Start";
+        else
+            return "GalleryCard{" +
+                    "type=" + type +
+                    ", x=" + coord.getLine() +
+                    ", y=" + coord.getColumn() +
+                    ", center=" + center +
+                    ", north=" + north +
+                    ", south=" + south +
+                    ", east=" + east +
+                    ", west=" + west +
+                    // TODO : Ne pas utiliser avant implémentation du save/load
+                    ", resist=" + resist +
+                    '}';
     }
 
     public String debugString() {

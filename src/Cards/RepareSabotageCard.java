@@ -64,11 +64,14 @@ public class RepareSabotageCard extends ActionCard{
     @Override
     public boolean canBeRepareBy(RepareSabotageCard c){
         if(c.action == Action.Repare && this.action == Action.Sabotage){
-            if(this.arrayTools.size() > 0){
-                return c.containsTools(this.arrayTools.get(0));
-            } else {
-                return false;
+
+            for(int i=0; i<arrayTools.size(); i++){
+                if( c.containsTools(this.arrayTools.get(i))){
+                    return true;
+                }
             }
+
+            return false;
         } else {
             return false;
         }
@@ -85,6 +88,10 @@ public class RepareSabotageCard extends ActionCard{
 
     public Tools getTool(){
         return this.arrayTools.get(0);
+    }
+
+    public ArrayList<Tools> getAlltools(){
+        return this.arrayTools;
     }
 
     @Override

@@ -28,12 +28,13 @@ public class RecommencerComfirmation {
         System.out.println("Réinitialisation de la partie");
 
         Saboteur.setMoteur(new Moteur(Saboteur.getMoteur().getAllPlayers(), ""));
-        Parent root = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
-        Stage stage = (Stage)((Stage)((Stage) buttonNon.getScene().getWindow()).getOwner()).getOwner();
+        
+        Scene scene = GameBoard.gridPaneBoard.getScene(); //buttonNon.getScene().getWindow().getScene().getWindow().getScene();
         ((Stage)buttonNon.getScene().getWindow()).close();
         ((Stage)((Stage) buttonNon.getScene().getWindow()).getOwner()).close();
-        stage.setScene(new Scene(root));
-        stage.show();
+        BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneGameLoader");
+        BorderPane borderPaneEndShaft = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+        borderPaneGameLoader.getChildren().setAll(borderPaneEndShaft);
     }
 
 }

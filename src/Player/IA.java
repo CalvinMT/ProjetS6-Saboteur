@@ -550,8 +550,7 @@ public class IA extends Player {
     }
 
 
-    @Override
-    public String toString(){
+    public String debugString(){
         String renvoi = "";
 
         renvoi += "Player: "+this.playerName + "\n";

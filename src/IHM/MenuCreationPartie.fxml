@@ -17,7 +17,7 @@
 
 <AnchorPane fx:id="anchorPaneMenuCreationPartie" prefHeight="450.0" prefWidth="1175.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuCreationPartie">
    <children>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="1171.0">
+      <GridPane fx:id="gridPaneGameCreate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="1175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.0" minWidth="10.0" prefWidth="78.0" />
@@ -38,15 +38,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ComboBox fx:id="comboBoxAvatar" prefHeight="70.0" prefWidth="93.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <ComboBox fx:id="comboBoxAvatar" prefHeight="70.0" prefWidth="93.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -54,27 +54,27 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Button fx:id="buttonAjouterPlayer" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterPlayer" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Button fx:id="buttonAjouterPlayer" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterPlayer" prefHeight="26.0" prefWidth="95.0" styleClass="button_menu" stylesheets="@style.css" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets top="3.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="6">
+            <Button fx:id="buttonPlay" mnemonicParsing="false" onAction="#handleButtonPlay" prefHeight="57.0" prefWidth="166.0" styleClass="button_menu" stylesheets="@style.css" text="Jouer" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="buttonRetourMenu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="45.0" prefWidth="158.0" text="Retour Menu" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+            <Button fx:id="buttonRetourMenu" mnemonicParsing="false" onAction="#handleButtonRetourMenu" prefHeight="59.0" prefWidth="185.0" styleClass="button_menu" stylesheets="@style.css" text="Retour Menu" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <TextField fx:id="textFieldPseudo" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets top="3.0" />
                </GridPane.margin>
             </TextField>
-            <TableView fx:id="tableViewListeJoueur" prefHeight="365.0" prefWidth="961.0" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="6">
+            <TableView fx:id="tableViewListeJoueur" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="columnAvatar" prefWidth="118.0" resizable="false" text="Avatar" />
                 <TableColumn fx:id="columnPseudo" prefWidth="172.0" resizable="false" text="Pseudo" />
@@ -82,27 +82,30 @@
                   <TableColumn fx:id="columnDifficulte" prefWidth="114.0" resizable="false" text="Difficulté" />
                 <TableColumn fx:id="columnDelete" prefWidth="85.0" resizable="false" text="Suppr." />
               </columns>
+               <GridPane.margin>
+                  <Insets bottom="50.0" />
+               </GridPane.margin>
             </TableView>
-            <Button fx:id="buttonAjouterIA" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <Button fx:id="buttonAjouterIA" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAjouterIA" prefHeight="26.0" prefWidth="95.0" styleClass="button_menu" stylesheets="@style.css" text="Ajouter" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin></Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Text fill="FFFFFF" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ordinateur :" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordinateur :" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
-            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <image>
                   <Image url="@../ressources/robot_miner.png" />
                </image>
             </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="17.0" />
                </font>
@@ -110,7 +113,7 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </Text>
-            <ComboBox fx:id="comboBoxDifficulteIA" onAction="#handleComboBoxDifficulteIA" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <ComboBox fx:id="comboBoxDifficulteIA" onAction="#handleComboBoxDifficulteIA" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

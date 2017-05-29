@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import Cards.RoleCard;
 import java.util.ArrayList;
@@ -86,7 +87,10 @@ public class ChoixRole {
     private Button buttonJoueurSuivant;
     @FXML
     private GridPane gridPaneChoixRole;
-
+    
+    @FXML
+    private GridPane mainGridPane;
+    
     @FXML
     private BorderPane borderPaneChoixRole;
 
@@ -114,6 +118,7 @@ public class ChoixRole {
             buttonJoueurSuivant.setDisable(true);
             cartesRole.get(this.num).setVisible(false);
             infoEmplacement.get(this.num).setText(m.getCurrentPlayer().getPlayerName());
+            infoEmplacement.get(this.num).setFill(Paint.valueOf("FFFFFF"));
             m.nextPlayer();
             updateText();
 
@@ -166,6 +171,7 @@ public class ChoixRole {
         String pseudo = m.getCurrentPlayer().getPlayerName();
         cartesRole.get(i).setVisible(false);
         infoEmplacement.get(i).setText(pseudo);
+        infoEmplacement.get(i).setFill(Paint.valueOf("FFFFFF"));
     }
 
     public void updateText(){
@@ -230,6 +236,11 @@ public class ChoixRole {
 
         m.setState(State.ChooseRole);
         m.setChoixroleControler(this);
+
+        // reset boolean
+        for(int i=0; i<m.getRoleCards().nbCard(); i++){
+            m.roleTaken.set(i, false);
+        }
     }
 
     // getImageCard(Card c) gameInteractive
