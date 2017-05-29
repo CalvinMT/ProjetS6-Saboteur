@@ -941,7 +941,7 @@ public class GameInteract {
         textPlayerInfoPseudo.setFill(Paint.valueOf("FFFFFF"));
 		textPlayerInfoRole.setText(moteur.getCurrentPlayer().getRole().toString());
         textPlayerInfoRole.setFill(Paint.valueOf("FFFFFF"));
-		textPlayerInfoGold.setText(new String("Or : " + moteur.getCurrentPlayer().getGoldPoints()));
+		textPlayerInfoGold.setText(new String("Or : " + Saboteur.goldByPlayer.get(moteur.currentNumPlayer())));
         textPlayerInfoGold.setFill(Paint.valueOf("FFFFFF"));
 		
 		// Hand configuration
