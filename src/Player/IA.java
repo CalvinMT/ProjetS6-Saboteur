@@ -99,6 +99,7 @@ public class IA extends Player {
         if (cardToPlay.getType() == gallery) {
         	GalleryCard galCardToPlay = (GalleryCard) cardToPlay;
         	if (galCardToPlay.canHasCenter() && ((RoleCard)this.getRole()).isMiner()) {
+        		currentMove = new Move();
         		discard(index);
         		// IA doit choisir une carte sur le Deck si le Deck n'est pas encore vide
         		//drawCard();
