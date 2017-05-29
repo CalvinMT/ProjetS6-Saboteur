@@ -385,32 +385,71 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
+    public void execMove(Move m) {
+        int i = 0;
+        if (m.getDiscard()) {
+
+            while (i < this.nbCardHand() && !this.getPlayableCards().getArrayCard().get(i).equals(m.getCard())){ i++;}
+            this.discard(i);
+        }
+        switch(m.getCard().getType()) {
+            case gallery :
+                GalleryCard galleryCard = (GalleryCard) m.getCard();
+                galleryCard.setLine(m.getPositionTarget().getLine());
+                galleryCard.setColumn(m.getPositionTarget().getColumn());
+                this.board.addCard(galleryCard);
+                break;
+            case action :
+                ActionCard actionCard = (ActionCard) m.getCard();
+                switch (actionCard.getAction()) {
+                    case Sabotage:
+                        this.allPlayers.get(m.getTargetIdx()).setSabotage((RepareSabotageCard) m.getCard());
+                        break;
+                    case Repare:
+                        this.allPlayers.get(m.getTargetIdx()).setRepare((RepareSabotageCard) m.getCard());
+                        break;
+                    case Crumbling:
+                        this.board.removeCard(m.getPositionTarget());
+                        break;
+                }
+                break;
+            /*case default:
+                break;*/
+        }
+    }
+
     public Move mediumPlay() {
-        System.out.println("TODO : IA Medium");
+        Move move = null;
         TreeNode tree;
         float nodeValue;
         Random r = new Random();
 
+
+        System.out.println("TODO : IA Medium");
         if (!isInSwitchZone()) {
             if (choosePosition()) { // Se rapproche des buts
                 GalleryCard c = (GalleryCard) this.cardToPlay;
+                System.out.println("choosePos");
                 c.setLine(this.posToPlay.getLine());
                 c.setColumn(this.posToPlay.getColumn());
-                return new Move(c, this.posToPlay);
+                move = new Move(c, this.posToPlay);
             }
             else { // defausse
                 return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
             }
         }
-
-        tree = genConfigTree(this.getNum(), 2, this);
-        nodeValue = minimax(tree, 2, -9999, 9999);
-        for (TreeNode n : tree.getNext()) {
-            if (n.getValue() == nodeValue) {
-                return n.getMove();
+        else {
+            System.out.println("minimax");
+            tree = genConfigTree(this.getNum(), 2, this);
+            nodeValue = minimax(tree, 2, -9999, 9999);
+            for (TreeNode n : tree.getNext()) {
+                if (n.getValue() == nodeValue) {
+                    move =  n.getMove();
+                }
             }
         }
-        return null;
+        this.execMove(move);
+        return move;
     }
 
     // Utils
