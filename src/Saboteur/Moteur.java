@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import Player.Player.Difficulty;
 
 import IHM.ChoixRole;
 import IHM.GameInteract;
@@ -112,6 +113,12 @@ public class Moteur {
 
             setAllPlayerBoard();
             initHand();
+
+            for(int i=0; i<nbPlayer(); i++){
+                if(arrayPlayer.get(i).getDifficulty() != Difficulty.Player){
+                    ((IA)arrayPlayer.get(i)).setAllPlayers(arrayPlayer);
+                }
+            }
 
             System.out.println("Partie configurée!");
 
