@@ -20,12 +20,14 @@ public class RoleCard extends Card {
         }
 
         public boolean isMiner(){
-            return (this.role == "Mineur");
+            return (this.role.equals("Mineur"));
         }
 
         public boolean isSaboteur(){
-            return (this.role == "Saboteur");
+            return (this.role.equals("Saboteur"));
         }
+
+
 
         public String toString(){
             //return "Role: "+this.role;

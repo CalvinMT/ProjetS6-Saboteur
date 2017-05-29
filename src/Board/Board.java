@@ -76,6 +76,8 @@ public class Board {
         c.setLine(line);
         c.setColumn(column);
 
+        System.out.println(c.simplified());
+
         addCard(c);
 
         computeAccessCards();

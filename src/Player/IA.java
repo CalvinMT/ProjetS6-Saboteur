@@ -152,18 +152,18 @@ public class IA extends Player {
             	currentMove = new Move(cardToPlay, posToPlay);
             }
             else if (actioncard.getAction() == Action.Repare) {
-            	int playerIndex = choosePlayerToRepair((RepareSabotageCard)actioncard, (RoleCard)this.getRole());  
+                int playerIndex = choosePlayerToRepair((RepareSabotageCard)actioncard, (RoleCard)this.getRole());
             	if (playerIndex > -1)
             		currentMove = new Move(cardToPlay, playerIndex);
             	else
-            		System.err.println("Indice du Joueur incorrecte.");
+            		System.err.println("[Repare] Indice du Joueur incorrecte "+playerIndex);
             }
             else if (actioncard.getAction() == Action.Sabotage) {
             	int playerIndex = choosePlayerToSabotage((RepareSabotageCard)actioncard, (RoleCard)this.getRole());
             	if (playerIndex > -1)
             		currentMove = new Move(cardToPlay, playerIndex);
             	else
-            		System.err.println("Indice du Joueur incorrecte.");
+            		System.err.println("[Sabotage] Indice du Joueur incorrecte "+playerIndex);
             }
         }
         return currentMove;
@@ -523,7 +523,7 @@ public class IA extends Player {
         if (roleIA.isSaboteur()) {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Mineur")) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
+                if (currentplayer != this && (((RoleCard)currentplayer.getRole()).isMiner()) && !currentplayer.getAttributeCards().containsTools(card.getTool())) {
                     playerIndex = i;
                 }
             }
@@ -531,7 +531,7 @@ public class IA extends Player {
         else if (roleIA.isMiner()) {
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer != this && currentplayer.getRole().equals(new RoleCard("Saboteur")) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                if (currentplayer != this && (((RoleCard)currentplayer.getRole()).isSaboteur()) && !currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
                 	playerIndex = i;
                 }
             }
@@ -548,7 +548,7 @@ public class IA extends Player {
         if (roleIA.isMiner()){
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer.getRole().equals(new RoleCard("Mineur")) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
+                if ((((RoleCard)currentplayer.getRole()).isMiner()) && currentplayer.getAttributeCards().containsTools(card.getTool()) ) {
                     playerIndex = i;
                 }
             }
@@ -556,7 +556,7 @@ public class IA extends Player {
         else if (roleIA.isSaboteur()){
             for (int i=0; i<this.allPlayers.size(); i++) {
                 currentplayer = this.allPlayers.get(i);
-                if (currentplayer.getRole().equals(new RoleCard("Saboteur")) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
+                if ((((RoleCard)currentplayer.getRole()).isSaboteur()) && currentplayer.getAttributeCards().containsTools(card.getTool())  ) {
                 	playerIndex = i;
                 }
             }
