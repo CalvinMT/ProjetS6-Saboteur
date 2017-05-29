@@ -8,9 +8,11 @@ import Cards.ActionCard.Action;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static Cards.ActionCard.Action.*;
 import static Cards.Card.Card_t.action;
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
+
 
 /**
  * Created by thespygeek on 11/05/17.
@@ -146,7 +148,9 @@ public class IA extends Player {
             	}
             	*/
             }
+
             else if (actioncard.getAction() == Action.Crumbling) {
+
                 // TODO
             	this.chooseWhereToCrumb();
             }
@@ -180,10 +184,9 @@ public class IA extends Player {
                     for (Couple pos : ia.board.getPossiblePositions(galleryCard)) {
                         nextIA = ia.clone();
                         t.setBoard(ia.board);
-
                         galleryCard.setLine(pos.getLine());
                         galleryCard.setColumn(pos.getColumn());
-
+                        t.setMove(new Move(galleryCard, pos));
                         nextIA.board.addCard(galleryCard);
                         if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
                             t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
@@ -195,7 +198,8 @@ public class IA extends Player {
                 case action :
                     ActionCard actionCard = (ActionCard) c;
                     if (actionCard.getAction() == Action.Map) {
-                        for (Couple g : ia.goalsToTest) { // TODO : Ajout goalsToTest dans TreeNode
+                        for (int i = 0; i < ia.goalsToTest.size(); i++) { // TODO : Ajout goalsToTest dans TreeNode
+                            Couple g = ia.goalsToTest.get(i);
                             nextIA = ia.clone();
                             if (this.board.getNodeFromMine(g).getCard().isGold()) {
                                 nextIA.addGoldGoal(g);
@@ -203,6 +207,7 @@ public class IA extends Player {
                             else {
                                 nextIA.ignoreGoal(g);
                             }
+                            t.setMove(new Move(actionCard, i));
                             if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
                                 t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
                             } else {
@@ -210,11 +215,14 @@ public class IA extends Player {
                             }
                         }
                     }
-                    else if (actionCard.getAction() == Action.Crumbling) {
+
+                    else if (actionCard.getAction() == Crumbling) {
+
                         for (int i = 0; i < ia.board.getMineSize(); i++ ) {
                             nextIA = ia.clone();
                             Couple cpl = this.board.getMineElement(i).getCard().getCoord();
                             t.setBoard(ia.board);
+                            t.setMove(new Move(actionCard, cpl));
                             nextIA.board.removeCard(cpl);
                             if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
                                 t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA));// Ajout des feuilles
@@ -223,11 +231,13 @@ public class IA extends Player {
                             }
                         }
                     }
-                    else if (actionCard.getAction() == Action.Repare) {
-                        for (Player currPlayer : ia.allPlayers) {
+                    else if (actionCard.getAction() == Repare) {
+                        for (int i = 0; i < ia.allPlayers.size(); i++) {
+                            Player currPlayer = ia.allPlayers.get(i);
                             nextIA = ia.clone();
                             if (currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
-                                currPlayer.setRepare((RepareSabotageCard) actionCard, ((RepareSabotageCard) actionCard).getTool());
+                                currPlayer.setRepare((RepareSabotageCard) actionCard);
+                                t.setMove(new Move(actionCard, i));
                             }
                             if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
                                 t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
@@ -236,12 +246,13 @@ public class IA extends Player {
                             }
                         }
                     }
-                    else if (actionCard.getAction() == Action.Sabotage) {
-                        // TODO
-                        for (Player currPlayer : ia.allPlayers) {
+                    else if (actionCard.getAction() == Sabotage) {
+                        for (int i = 0; i < ia.allPlayers.size(); i++){
+                            Player currPlayer = ia.allPlayers.get(i);
                             nextIA = ia.clone();
                             if (!currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
                                 currPlayer.setSabotage((RepareSabotageCard) actionCard);
+                                t.setMove(new Move(actionCard, i));
                             }
                             if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
                                 t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
@@ -249,12 +260,6 @@ public class IA extends Player {
                                 t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
                             }
                         }
-
-                    }
-                    if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
-                        t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), ia)); // Ajout des feuilles
-                    } else {
-                        t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
                     }
                     break;
                 default:
@@ -290,7 +295,6 @@ public class IA extends Player {
     	}
     	posToPlay = position;
     }
-
 
     // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
     // Faux sinon
@@ -351,7 +355,7 @@ public class IA extends Player {
         getBestValueMove();
     }
 
-    public void choosePosition() {
+    public boolean choosePosition() {
         int h, hMin = -1;
         Card c, bestCard;
         GalleryCard currCard;
@@ -378,6 +382,7 @@ public class IA extends Player {
         }
         this.posToPlay = bestCpl;
         this.cardToPlay = bestCard;
+        return posToPlay.equals(new Couple(0, 0));
     }
 
     private Move getBestValueMove() {
@@ -426,10 +431,30 @@ public class IA extends Player {
     }
     */
 
-    public void mediumPlay() {
-            System.out.println("TODO : IA Medium");
-    }
+    public Move mediumPlay() {
+        System.out.println("TODO : IA Medium");
+        TreeNode tree;
+        float nodeValue;
+        Random r = new Random();
 
+        if (!isInSwitchZone()) {
+            if (choosePosition()) {
+                return new Move(this.cardToPlay, this.posToPlay);
+            }
+            else {
+                return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
+            }
+        }
+
+        tree = genConfigTree(this.getNum(), 2, this);
+        nodeValue = minimax(tree, 2, -9999, 9999);
+        for (TreeNode n : tree.getNext()) {
+            if (n.getValue() == nodeValue) {
+                return n.getMove();
+            }
+        }
+        return null;
+    }
 
     // Utils
 
@@ -525,9 +550,12 @@ public class IA extends Player {
         if (t.isMaxNode()) {
             v = min;
             for (TreeNode n : t.getNext()) {
-                vPrim = minimax(n, depth - 1, v, max); // Calcul recursif
+                vPrim = minimax(n, depth - 1, v, max); // Calcul reccursif
                 if (vPrim > v) v = vPrim; // la meilleur branche
-                if (v > max) return max; // AB pruning
+                n.setValue(v);
+                if (v > max) {
+                    return max; // AB pruning
+                }
             }
             return v;
         }
@@ -536,6 +564,7 @@ public class IA extends Player {
             for (TreeNode n : t.getNext()) {
                 vPrim = minimax(n, depth - 1, min, v);
                 if (vPrim < v) v = vPrim;
+                n.setValue(v);
                 if (v < min) return min;
             }
             return v;
@@ -544,21 +573,20 @@ public class IA extends Player {
 
 
     @Override
-    public boolean iaPlayCard() {
+    public Move iaPlayCard() {
         switch (this.difficulty) {
             case Easy:
                 randomPlay();
                 break;
             case Medium:
-                //playMedium();
-                break;
+                return mediumPlay();
             case Player:
                 System.err.println("Pas une IA");
             default:
                 System.out.println("TODO : IA " + this.difficulty);
         }
 
-        return true;
+        return new Move();
     }
 
     @Override

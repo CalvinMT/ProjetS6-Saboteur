@@ -5,37 +5,53 @@ import Cards.Card;
 import Cards.GalleryCard;
 
 
+// TODO : ajout boolean defausse
+
 public class Move {
     private Card card; // la carte à placer
-    private int sabotageTarget; // index du joueur a saboter
+    private int targetIdx; // index du joueur a saboter
     private Couple positionTarget; // Position où placer la carte (gallery/action)
     private int value;
+    private boolean isDiscard;
 
     public Move() {
-        this(new GalleryCard(), 0, new Couple(0,0), 0);
+        this(new GalleryCard(), -1, new Couple(0,0), 0, false);
+    }
+
+    public Move(Card card, boolean isDiscard) {
+        this(card, -1, new Couple(0, 0), 0, isDiscard);
+    }
+
+    public Move(Card card, Couple positionTarget) {
+        this(card, -1, positionTarget, 0, false);
+    }
+
+    public Move(Card card, int targetIdx) {
+        this(card, targetIdx, new Couple(0, 0), 0, false);
     }
 
     public Move(Card card, Couple positionTarget, int value) {
-        this(card, 0, positionTarget, value);
+        this(card, 0, positionTarget, value, false);
     }
 
-    public Move(Card card, int sabotageTarget, int value) {
-        this(card, sabotageTarget, new Couple(0,0), value);
+    public Move(Card card, int targetIdx, int value) {
+        this(card, targetIdx, new Couple(0,0), value, false);
     }
 
-    public Move(Card card, int sabotageTarget, Couple positionTarget, int value) {
+    public Move(Card card, int targetIdx, Couple positionTarget, int value, boolean isDiscard) {
         this.card = card;
-        this.sabotageTarget = sabotageTarget;
+        this.targetIdx = targetIdx;
         this.positionTarget = positionTarget;
         this.value = value;
+        this.isDiscard = isDiscard;
     }
 
     public void setCard(Card card) {
         this.card = card;
     }
 
-    public void setSabotageTarget(int sabotageTarget) {
-        this.sabotageTarget = sabotageTarget;
+    public void setTargetIdx(int targetIdx) {
+        this.targetIdx = targetIdx;
     }
 
     public void setPositionTarget(Couple positionTarget) {
@@ -50,8 +66,8 @@ public class Move {
         return card;
     }
 
-    public int getSabotageTarget() {
-        return sabotageTarget;
+    public int getTargetIdx() {
+        return targetIdx;
     }
 
     public Couple getPositionTarget() {
@@ -66,7 +82,7 @@ public class Move {
     public String toString() {
         return "Move{" +
             "card=" + card +
-            ", sabotageTarget=" + sabotageTarget +
+            ", targetIdx=" + targetIdx +
             ", positionTarget=" + positionTarget +
             ", value=" + value +
             '}';
@@ -79,7 +95,7 @@ public class Move {
 
         Move move = (Move) o;
 
-        if (getSabotageTarget() != move.getSabotageTarget()) return false;
+        if (getTargetIdx() != move.getTargetIdx()) return false;
         if (getValue() != move.getValue()) return false;
         if (!getCard().equals(move.getCard())) return false;
         return getPositionTarget() != null ? getPositionTarget().equals(move.getPositionTarget()) : move.getPositionTarget() == null;
@@ -88,7 +104,7 @@ public class Move {
     @Override
     public int hashCode() {
         int result = getCard().hashCode();
-        result = 31 * result + getSabotageTarget();
+        result = 31 * result + getTargetIdx();
         result = 31 * result + (getPositionTarget() != null ? getPositionTarget().hashCode() : 0);
         result = 31 * result + getValue();
         return result;
