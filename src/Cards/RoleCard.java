@@ -1,8 +1,6 @@
 package Cards;
 
 
-import java.util.Objects;
-
 public class RoleCard extends Card {
 
         String role;
@@ -22,11 +20,11 @@ public class RoleCard extends Card {
         }
 
         public boolean isMiner(){
-            return (Objects.equals(this.role, "Mineur"));
+            return (this.role.equals("Mineur"));
         }
 
         public boolean isSaboteur(){
-            return (Objects.equals(this.role, "Saboteur"));
+            return (this.role.equals("Saboteur"));
         }
 
         public String toString(){

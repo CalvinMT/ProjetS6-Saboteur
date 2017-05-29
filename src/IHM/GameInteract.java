@@ -835,10 +835,13 @@ public class GameInteract {
                 // DEBUT CARTE PIOCHEE
                 //System.out.println("Carte piochée: "+cardDraw);
 
+                if(moteur.getCurrentPlayer().getDifficulty() == Difficulty.Player){
 
-                cardsInHand.add(getImageCard(cardDraw));
-                cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
-                hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+                    cardsInHand.add(getImageCard(cardDraw));
+                    cardsInHandEvents(cardsInHand.get(cardsInHand.size()-1).getImageView(), cardDraw, cardsInHand.get(cardsInHand.size()-1).getName(), cardsInHand.get(cardsInHand.size()-1));
+                    hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
+                }
+
 
                 // DEBUG BOARD
 //                System.out.println(moteur.getBoard().mine());

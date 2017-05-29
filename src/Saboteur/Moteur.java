@@ -436,7 +436,7 @@ public class Moteur {
         String renvoi = "Moteur: \n";
 
         renvoi += "Etat: "+this.state+"\n";
-        renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
+        renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() + "Index : "+this.currentPlayer +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
         renvoi += "Joueurs: \n";

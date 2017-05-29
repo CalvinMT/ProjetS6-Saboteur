@@ -259,134 +259,140 @@ public class MainLoader extends Application {
 
 								Move moveIA = player.iaPlayCard();
 
-								Card.Card_t type = Card.Card_t.gallery;
-
-//								Card.Card_t type = moveIA.getCard().getType();
-
-                                if(!moveIA.getDiscard()){
-
-                                    switch (type){
-
-                                        case gallery:
-                                            System.out.println("Carte Tunnel");
-
-                                            Card cardToPlay = moveIA.getCard();
-                                            Couple posToPlay = moveIA.getPositionTarget();
-                                            GalleryCard cardToPut;
 
 
-                                            if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
-                                                cardToPut = ((GalleryCard) cardToPlay).rotate();
-                                            } else {
-                                                cardToPut = (GalleryCard) cardToPlay;
-                                            }
+                                if(moveIA != null){
+                                    Card.Card_t type = moveIA.getCard().getType();
 
-                                            engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
+                                    if(!moveIA.getDiscard()){
 
-                                            engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
+                                        switch (type){
 
-                                            player.getPlayableCards().removeCard(cardToPlay);
-                                            engine.getGameInteractControler().checkEndGame();
+                                            case gallery:
+                                                System.out.println("Carte Tunnel");
+
+                                                Card cardToPlay = moveIA.getCard();
+                                                Couple posToPlay = moveIA.getPositionTarget();
+                                                GalleryCard cardToPut;
+                                                System.out.println(((GalleryCard) cardToPlay).simplified());
+                                                System.out.println(posToPlay);
+
+
+                                                if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+                                                    cardToPut = ((GalleryCard) cardToPlay).rotate();
+                                                } else {
+                                                    cardToPut = (GalleryCard) cardToPlay;
+                                                }
+
+                                                engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
+
+
+
+                                                engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
+
+                                                player.getPlayableCards().removeCard(cardToPlay);
+                                                engine.getGameInteractControler().checkEndGame();
 //										System.out.println(player);
 
 
-                                            try {
-                                                Thread.sleep(shortWaitingTime);
-                                            } catch (Exception ex){
-                                                System.err.println("Erreur sleep");
-                                            }
+                                                try {
+                                                    Thread.sleep(shortWaitingTime);
+                                                } catch (Exception ex){
+                                                    System.err.println("Erreur sleep");
+                                                }
 
 
 //										System.out.println(engine.getBoard().mine());
 
-                                            break;
+                                                break;
 
-                                        case action:
-                                            System.out.println("Carte Action");
+                                            case action:
+                                                System.out.println("Carte Action");
 
-                                            switch (((ActionCard) moveIA.getCard()).getAction()){
+                                                switch (((ActionCard) moveIA.getCard()).getAction()){
 
-                                                case Repare:
+                                                    case Repare:
 
-                                                    System.out.println("Carte Repare");
+                                                        System.out.println("Carte Repare");
 
-                                                    engine.getAllPlayers().get(moveIA.getTargetIdx()).setRepare((RepareSabotageCard) moveIA.getCard());
+                                                        engine.getAllPlayers().get(moveIA.getTargetIdx()).setRepare((RepareSabotageCard) moveIA.getCard());
 
-                                                    engine.getGameInteractControler().updateCurrentPlayerConstraints();
+                                                        engine.getGameInteractControler().updateCurrentPlayerConstraints();
 
-                                                    try {
-                                                        Thread.sleep(shortWaitingTime);
-                                                    } catch (Exception ex){
-                                                        System.err.println("Erreur sleep");
-                                                    }
+                                                        try {
+                                                            Thread.sleep(shortWaitingTime);
+                                                        } catch (Exception ex){
+                                                            System.err.println("Erreur sleep");
+                                                        }
 
-                                                    break;
+                                                        break;
 
-                                                case Sabotage:
+                                                    case Sabotage:
 
-                                                    System.out.println("Carte Sabotage");
+                                                        System.out.println("Carte Sabotage");
 
-                                                    engine.getAllPlayers().get(moveIA.getTargetIdx()).setSabotage((RepareSabotageCard) moveIA.getCard());
+                                                        engine.getAllPlayers().get(moveIA.getTargetIdx()).setSabotage((RepareSabotageCard) moveIA.getCard());
 
-                                                    engine.getGameInteractControler().updateCurrentPlayerConstraints();
+                                                        engine.getGameInteractControler().updateCurrentPlayerConstraints();
 
-                                                    try {
-                                                        Thread.sleep(shortWaitingTime);
-                                                    } catch (Exception ex){
-                                                        System.err.println("Erreur sleep");
-                                                    }
-
-
-                                                    break;
-
-                                                case Map:
-
-                                                    System.out.println("Carte regarder but");
-
-                                                    break;
-
-                                                case Crumbling:
-
-                                                    System.out.println("Carte effondrement");
-
-                                                    engine.getBoard().removeCard(moveIA.getPositionTarget());
-
-                                                    int line = moveIA.getPositionTarget().getLine()+ GameBoard.startCardY;
-                                                    int column = moveIA.getPositionTarget().getColumn()+ GameBoard.startCardX;
-
-                                                    GameBoard.gridPaneBoard.getChildren().remove(column, line);
-
-                                                    try {
-                                                        Thread.sleep(shortWaitingTime);
-                                                    } catch (Exception ex){
-                                                        System.err.println("Erreur sleep");
-                                                    }
+                                                        try {
+                                                            Thread.sleep(shortWaitingTime);
+                                                        } catch (Exception ex){
+                                                            System.err.println("Erreur sleep");
+                                                        }
 
 
-                                                    break;
+                                                        break;
 
-                                                default:
-                                                    System.err.println("[MAINLOADER] Erreur action card");
-                                                    break;
+                                                    case Map:
+
+                                                        System.out.println("Carte regarder but");
+
+                                                        break;
+
+                                                    case Crumbling:
+
+                                                        System.out.println("Carte effondrement");
+
+                                                        engine.getBoard().removeCard(moveIA.getPositionTarget());
+
+                                                        int line = moveIA.getPositionTarget().getLine()+ GameBoard.startCardY;
+                                                        int column = moveIA.getPositionTarget().getColumn()+ GameBoard.startCardX;
+
+                                                        GameBoard.gridPaneBoard.getChildren().remove(column, line);
+
+                                                        try {
+                                                            Thread.sleep(shortWaitingTime);
+                                                        } catch (Exception ex){
+                                                            System.err.println("Erreur sleep");
+                                                        }
 
 
-                                            }
+                                                        break;
+
+                                                    default:
+                                                        System.err.println("[MAINLOADER] Erreur action card");
+                                                        break;
+
+
+                                                }
 
 
 
-                                            break;
+                                                break;
 
-                                        default:
-                                            System.err.println("Erreur move Impossible");
-                                            break;
+                                            default:
+                                                System.err.println("Erreur move Impossible");
+                                                break;
 
+                                        }
+
+
+                                    } else {
+                                        // Defausse
+
+                                        player.getPlayableCards().removeCard(moveIA.getCard());
                                     }
-
-
-                                } else {
-                                    // Defausse
-
-                                    player.getPlayableCards().removeCard(moveIA.getCard());
                                 }
 
 
