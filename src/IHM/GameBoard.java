@@ -40,6 +40,7 @@ public class GameBoard {
 	
 	
 	public static GridPane gridPaneBoard;
+	public static GridPane gridPaneIndications;
 	
 	@FXML
 	private GridPane gridPaneGameBoard;

@@ -639,6 +639,7 @@ public class GameInteract {
 		viewCard.setOnMouseExited(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				GameBoard.gridPaneBoard.setVisible(false);
 				if (!isDragged) {
 					// Puts back card into place
 					viewCard.setTranslateY(viewCard.getTranslateY()+25);
@@ -694,6 +695,8 @@ public class GameInteract {
 						viewDiscard.setImage(new Image("ressources/defausse.png"));
 					}
 				}
+
+				GameBoard.gridPaneBoard.setVisible(true);
 			}
 		});
 		// ---------- Mouse presses viewCard ----------
@@ -730,6 +733,8 @@ public class GameInteract {
 		viewCard.setOnDragDone(new EventHandler <DragEvent>() {
 			@Override
 			public void handle(DragEvent dragEvent) {
+				GameBoard.gridPaneBoard.setVisible(false);
+				
 				// Puts back card into place
 				viewCard.setTranslateY(viewCard.getTranslateY()+25);
 				isDragged = false;
@@ -801,6 +806,8 @@ public class GameInteract {
 
 
                 dragEvent.consume();
+
+				GameBoard.gridPaneBoard.setVisible(true);
 			}
 		});
 	}
@@ -1006,7 +1013,7 @@ public class GameInteract {
 	// -------------------- ---------- --------------------
 	
 	
-	
+	// XXX
 	private Node getNodeFromGridPane (GridPane gridPane, int col, int row) {
 	    for (Node node : gridPane.getChildren()) {
 	    	if (GridPane.getColumnIndex(node) != null  &&  GridPane.getRowIndex(node) != null) {
