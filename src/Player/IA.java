@@ -172,7 +172,7 @@ public class IA extends Player {
     // Computing
     public TreeNode genConfigTree(int playerIdx, int depth, IA ia) { // int maxDepth ?
         Player p = ia.allPlayers.get(playerIdx % allPlayers.size());
-        TreeNode t  = new TreeNode(((RoleCard) p.getRole()).isSaboteur()),
+        TreeNode t  = new TreeNode(((RoleCard) p.getRole()).isSaboteur(),
                                     new IA(this.num, this.getPlayerName(), this.difficulty, ia.allPlayers, ia.goalsToTest));
         IA nextIA;
 
