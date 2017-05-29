@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import Board.Couple;
+import Player.Player.Difficulty;
 import Cards.ActionCard;
 import Cards.GoalCard;
 import Cards.Card;
@@ -145,9 +146,27 @@ public class GameInteract {
 			Text textPseudo = new Text(moteur.getPlayer(i).getPlayerName());
 			textPseudo.setFill(Paint.valueOf("FFFFFF"));
 			// Constraints
-			ImageView viewConstraintLantern = new ImageView("ressources/lanterne.png");
-			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
-			ImageView viewConstraintWagon = new ImageView("ressources/wagon.png");
+            Player player = moteur.getPlayer(i);
+            ImageView viewConstraintPickaxe;
+            ImageView viewConstraintLantern;
+            ImageView viewConstraintWagon;
+            if(player.getAttributeCards().canRepareTool(new RepareSabotageCard("Repare", Tools.Lantern))){
+                viewConstraintLantern = new ImageView("ressources/lanterne_detruite.png");
+            } else {
+                viewConstraintLantern = new ImageView("ressources/lanterne.png");
+            }
+            if(player.getAttributeCards().canRepareTool(new RepareSabotageCard("Repare", Tools.Wagon))){
+                viewConstraintWagon = new ImageView("ressources/wagon_detruit.png");
+            } else {
+                viewConstraintWagon = new ImageView("ressources/wagon.png");
+            }
+            if(player.getAttributeCards().canRepareTool(new RepareSabotageCard("Repare", Tools.Pickaxe))){
+                viewConstraintPickaxe = new ImageView("ressources/pioche_detruite.png");
+            } else {
+                viewConstraintPickaxe = new ImageView("ressources/pioche.png");
+            }
+//			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
+//			ImageView viewConstraintWagon = new ImageView("ressources/wagon.png");
 			// Puts everything into the grid list
 			gridPanePlayer.add(viewAvatar, listAvatarPos.getColumn(), listAvatarPos.getLine()); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
 			gridPanePlayer.add(textPseudo, listPseudoPos.getColumn(), listPseudoPos.getLine()); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
@@ -214,6 +233,16 @@ public class GameInteract {
 		
 		borderPaneInteract.setPadding(new Insets(15576, 0, 0, 9821));
 		borderPaneInteract.setPickOnBounds(false);
+
+		// mise a jour du GridPane en fonction de la mine
+        GalleryCard card;
+        for(int j=4; j<moteur.getBoard().getMine().size(); j++){
+
+            card = moteur.getBoard().getMine().get(j).getCard();
+            GameBoard.gridPaneBoard.add(ImageCard.getImageCard(card).getImageView(), card.getColumn()+GameBoard.startCardX, card.getLine()+GameBoard.startCardY);
+
+        }
+
 
 
 		moteur.setGameInteractControler(this);
@@ -835,15 +864,24 @@ public class GameInteract {
 //                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
 
+            boolean isIA;
+            if(moteur.getCurrentPlayer().getDifficulty() != Difficulty.Player){
+                isIA = true;
+            } else {
+                isIA = false;
+            }
 
             moteur.nextPlayer();
             nextPlayer();
 
-            // Transition
-            Stage stage = new Stage();
-            TransitionStage transStage= new TransitionStage();
-            transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
-            
+            if(!isIA){
+
+                // Transition
+                Stage stage = new Stage();
+                TransitionStage transStage= new TransitionStage();
+                transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+            }
+
             // Discard indication off
             viewDiscard.setImage(new Image("ressources/defausse.png"));
 
@@ -908,13 +946,17 @@ public class GameInteract {
 		cardsInHand = new ArrayList <GamePlayingCard> ();
 		hboxGameCardsInHand.getChildren().clear();
 		hboxGameCardsInHand.setPrefWidth(hboxGameCardsInHand.getPrefWidth()*numberOfCardsInHand);
-		for (int i=0; i < numberOfCardsInHand; i++) {
-			card = hand.chooseOne_without_remove(i);
-			cardsInHand.add(getImageCard(card));
-			cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
-			hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
-		}
-		
+
+		if(moteur.getCurrentPlayer().getDifficulty() == Difficulty.Player){
+
+            for (int i=0; i < numberOfCardsInHand; i++) {
+                card = hand.chooseOne_without_remove(i);
+                cardsInHand.add(getImageCard(card));
+                cardsInHandEvents(cardsInHand.get(i).getImageView(), card, cardsInHand.get(i).getName(), cardsInHand.get(i));
+                hboxGameCardsInHand.getChildren().add(cardsInHand.get(i).getImageView());
+            }
+        }
+
 		// Brings forward current player in list
 		moteur.getAllPlayers().stream().forEach(player -> {
 			((GridPane)vboxPlayerList.getChildren().get(player.getNum())).setPrefSize(vboxPlayerList.getPrefWidth(), vboxPlayerList.getPrefHeight());

@@ -277,10 +277,10 @@ public class MainLoader extends Application {
 
 									player.getPlayableCards().removeCard(cardToPlay);
 									engine.getGameInteractControler().checkEndGame();
-									System.out.println(player);
+//									System.out.println(player);
 
 
-									engine.nextPlayer();
+//									engine.nextPlayer();
 
 									try {
 										Thread.sleep(shortWaitingTime);

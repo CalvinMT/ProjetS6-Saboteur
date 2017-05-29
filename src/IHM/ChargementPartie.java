@@ -38,9 +38,10 @@ public class ChargementPartie {
 
         Saboteur.game1();
 
-        BorderPane anchorPane = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
-
-        anchorPaneMenuMain.getChildren().setAll(anchorPane);
+        Scene scene = (Scene) anchorPaneMenuMain.getScene();
+        BorderPane borderPaneChargement = (BorderPane) scene.lookup("#borderPaneMainLoader");
+        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        borderPaneChargement.getChildren().setAll(borderPaneGameLoader);
 
     }
 
