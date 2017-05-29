@@ -46,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -133,6 +134,10 @@ public class GameInteract {
 	public void initialize () throws IOException {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
+
+		textMancheCounter.setText("Manche : "+Saboteur.manche+" /3");
+		textMancheCounter.setTextAlignment(TextAlignment.CENTER);
+		textMancheCounter.setFill(Paint.valueOf("FFFFFF"));
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
