@@ -105,7 +105,7 @@ public class TreeNode {
         int i;
         GalleryCard curr;
         float value = 0;
-        for (i = 0; i < this.ia.board.getMineSize(); i++) {
+        for (i = 1; i < this.ia.board.getMineSize(); i++) {
             curr = this.ia.board.getMineElement(i).card;
             if (this.ia.board.getAccessCardElement(curr.getCoord()).equals(curr)) // On ne considère que les cartes accessibles
                 value += getMinDistanceToGoals(curr);

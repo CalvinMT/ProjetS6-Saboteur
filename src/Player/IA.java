@@ -474,6 +474,7 @@ public class IA extends Player {
             }
         //}
         // this.execMove(move);
+        System.out.println("mediumPlay() : " + move );
         return move;
     }
 
