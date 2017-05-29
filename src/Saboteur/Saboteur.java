@@ -1,20 +1,12 @@
 package Saboteur;
 
 
-import Board.Couple;
-import Cards.ActionCard;
 import Cards.GalleryCard;
-import Cards.RepareSabotageCard;
-
-import IHM.GameBoard;
 import Player.Player;
 import Player.IA;
 import Player.PlayerHuman;
 import Player.Player.Difficulty;
 import Saboteur.Moteur.State;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
