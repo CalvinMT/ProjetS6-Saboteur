@@ -65,7 +65,7 @@ public class EndShaft {
         Scene scene = (Scene) anchorPaneEndShaft.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneNext = new BorderPane();
-    	if (Saboteur.manche >= 0) {
+    	if (Saboteur.manche >= 3) {
     		borderPaneNext = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
     	}
     	else {

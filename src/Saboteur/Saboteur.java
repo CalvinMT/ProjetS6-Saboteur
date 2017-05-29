@@ -14,7 +14,7 @@ public class Saboteur {
 
     static public Moteur engine;
 
-    static public int manche = 0;
+    static public int manche = 1;
 
     final static public int nbGold3 = 8;
     final static public int nbGold2 = 10;
@@ -55,7 +55,7 @@ public class Saboteur {
 //        engine = new Moteur(arrayPlayer, "--debugBoard");
         engine = new Moteur(arrayPlayer, "");
         initArrayGold(arrayPlayer.size());
-        manche = 0;
+        manche = 1;
     }
 
     static public void resetMoteur(ArrayList<Player> arrayPlayer){
