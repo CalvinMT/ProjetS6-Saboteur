@@ -113,7 +113,7 @@ public class IA extends Player {
             if (actioncard.getAction() == Action.Map) {
                 // TODO
             }
-            else if (actioncard.getAction() == Action.Crumbing) {
+            else if (actioncard.getAction() == Action.Crumbling) {
                 // TODO
             }
             else if (actioncard.getAction() == Action.Repare) {
@@ -173,7 +173,7 @@ public class IA extends Player {
                             }
                         }
                     }
-                    else if (actionCard.getAction() == Action.Crumbing) {
+                    else if (actionCard.getAction() == Action.Crumbling) {
                         for (int i = 0; i < ia.board.getMineSize(); i++ ) {
                             nextIA = ia.clone();
                             Couple cpl = this.board.getMineElement(i).getCard().getCoord();
