@@ -78,6 +78,10 @@ public class Move {
         return value;
     }
 
+    public boolean getDiscard(){
+        return this.isDiscard;
+    }
+
     @Override
     public String toString() {
         return "Move{" +
