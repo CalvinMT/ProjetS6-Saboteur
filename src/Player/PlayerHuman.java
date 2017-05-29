@@ -8,10 +8,7 @@ import Board.Board;
 import Cards.HandPlayer;
 import Cards.PlayerAttribute;
 
-/**
- *
- * @author uwalakae
- */
+
 public class PlayerHuman extends Player{
 
 

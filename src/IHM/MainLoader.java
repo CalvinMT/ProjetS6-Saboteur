@@ -17,15 +17,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
@@ -83,7 +79,7 @@ public class MainLoader extends Application {
 		double width = MainLoader.primaryStage.getWidth();
 		double height = MainLoader.primaryStage.getHeight();
 		if (anchorPaneMainLoader != null) {
-			anchorPaneMainLoader.setPrefWidth(width-(width/3));
+			anchorPaneMainLoader.setPrefWidth(width);
 			anchorPaneMainLoader.setPrefHeight(height-300); // XXX - 217
 			if (anchorPaneMenu != null) {
 				anchorPaneMenu.setPrefWidth(anchorPaneMainLoader.getPrefWidth());
@@ -130,6 +126,8 @@ public class MainLoader extends Application {
 					if (string.equals("true")) {
 						setToFullscreen(primaryStage);
 						primaryStage.setFullScreen(true);
+						SCREEN_WIDTH = primaryStage.getWidth();
+						SCREEN_HEIGHT = primaryStage.getHeight();
 					}
 				}
 			}
@@ -273,14 +271,14 @@ public class MainLoader extends Application {
 
 									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
 
-									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
+									engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
 
 									player.getPlayableCards().removeCard(cardToPlay);
 									engine.getGameInteractControler().checkEndGame();
 //									System.out.println(player);
 
 
-									engine.nextPlayer();
+//									engine.nextPlayer();
 
 									try {
 										Thread.sleep(shortWaitingTime);

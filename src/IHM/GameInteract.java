@@ -21,6 +21,7 @@ import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.scene.paint.*;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -45,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -132,6 +134,10 @@ public class GameInteract {
 	public void initialize () throws IOException {
 		// Liaison Moteur IHM
 		moteur = Saboteur.getMoteur();
+
+		textMancheCounter.setText("Manche : "+Saboteur.manche+" /3");
+		textMancheCounter.setTextAlignment(TextAlignment.CENTER);
+		textMancheCounter.setFill(Paint.valueOf("FFFFFF"));
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
@@ -416,7 +422,7 @@ public class GameInteract {
 											Couple endCardsimplePos = new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 											
 											// Delai retournement de carte but
-			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
+			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(2.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
 		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
 												@Override
 												public void handle(ActionEvent event) {
@@ -792,7 +798,7 @@ public class GameInteract {
                         moteur.getCurrentPlayer().getPlayableCards().chooseOne_with_remove(index);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                         
-                        checkEndGame();
+                        waitBeforeCheck();
                     }
                 } else {
                     System.out.println("Ce n'est pas ton tour");
@@ -804,14 +810,36 @@ public class GameInteract {
 		});
 	}
 
-	public void checkEndGame(){
-
-
-        // TODO @TheSpyGeek fin de manche ici
-        // TODO if(moteur.endGame()){
-
-
-        // fin de manche
+	
+	
+	public void waitBeforeCheck() {
+		hboxGameCardsInHand.setDisable(true);
+		AnimationTimer timerWaitNextTurn = new AnimationTimer() {
+			boolean b = false;
+			long time;
+			@Override
+			public void handle(long now) {
+				if (!b) {
+					b = true;
+					time = now;
+				}
+				if ((now - time)/1000000000 > 2){
+					checkEndGame();
+					stop();
+				}
+			}
+		};
+		
+		timerWaitNextTurn.start();
+    }
+	
+	
+	
+	public void checkEndGame() {
+		
+		hboxGameCardsInHand.setDisable(false);
+		
+		 // fin de manche
         if(moteur.endGame()){
 
             System.out.println("Fin de partie");
@@ -869,9 +897,7 @@ public class GameInteract {
 
         }
 
-
-    }
-	
+	}
 	
 	
 	// -------------------- ---------- --------------------

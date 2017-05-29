@@ -1,20 +1,12 @@
 package Saboteur;
 
 
-import Board.Couple;
-import Cards.ActionCard;
 import Cards.GalleryCard;
-import Cards.RepareSabotageCard;
-
-import IHM.GameBoard;
 import Player.Player;
 import Player.IA;
 import Player.PlayerHuman;
 import Player.Player.Difficulty;
 import Saboteur.Moteur.State;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
@@ -22,7 +14,14 @@ public class Saboteur {
 
     static public Moteur engine;
 
-    static public int manche = 0;
+    static public int manche = 1;
+
+    final static public int nbGold3 = 8;
+    final static public int nbGold2 = 10;
+    final static public int nbGold1 = 10;
+
+    static public ArrayList<Integer> arrayGold;
+    static public ArrayList<Integer> goldByPlayer;
 
     static public Moteur getMoteur(){
         return engine;
@@ -32,12 +31,31 @@ public class Saboteur {
         engine = m;
     }
 
+    static public void initArrayGold(int nbPlayer){
+        arrayGold =  new ArrayList<>();
+
+        for(int i=0; i<nbGold3; i++){
+            arrayGold.add(3);
+        }
+        for(int i=0; i<nbGold2; i++){
+            arrayGold.add(2);
+        }
+        for(int i=0; i<nbGold1; i++){
+            arrayGold.add(1);
+        }
+
+        goldByPlayer = new ArrayList<>();
+        for(int i=0; i<nbPlayer; i++){
+            goldByPlayer.add(0);
+        }
+    }
 
     // init du moteur a partir d'un tableau de joueur
     static public void initMoteur(ArrayList<Player> arrayPlayer){
 //        engine = new Moteur(arrayPlayer, "--debugBoard");
         engine = new Moteur(arrayPlayer, "");
-        manche = 0;
+        initArrayGold(arrayPlayer.size());
+        manche = 1;
     }
 
     static public void resetMoteur(ArrayList<Player> arrayPlayer){
