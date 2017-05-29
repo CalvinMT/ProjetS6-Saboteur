@@ -451,7 +451,7 @@ public class IA extends Player {
 
 
         System.out.println("TODO : IA Medium");
-        if (!isInSwitchZone()) {
+        /*if (!isInSwitchZone()) {
             if (choosePosition()) { // Se rapproche des buts
                 GalleryCard c = (GalleryCard) this.cardToPlay;
                 System.out.println("choosePos");
@@ -463,7 +463,7 @@ public class IA extends Player {
                 return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
             }
         }
-        else {
+        else {*/
             System.out.println("minimax");
             tree = genConfigTree(this.getNum(), 2, this);
             nodeValue = minimax(tree, 2, -9999, 9999);
@@ -472,7 +472,7 @@ public class IA extends Player {
                     move =  n.getMove();
                 }
             }
-        }
+        //}
         // this.execMove(move);
         return move;
     }
