@@ -20,19 +20,25 @@ public class TransparentStage extends Application {
     public void start(Stage stage, double width, double height) {
         stage.initStyle(StageStyle.TRANSPARENT);
         ImageView imageview =new ImageView("ressources/calqueaide.png");
+        imageview.setFitHeight(height);
+        imageview.setFitWidth(width);
         AnchorPane pane = new AnchorPane();
         Button button = new Button();
         button.setId("ButtonQuitterAide"); 
         button.setGraphic(pane);
-        button.setGraphic(new ImageView("ressources/aideneg.png"));
-        button.setMaxSize(25.0, 25.0);
+        ImageView imageview2 =new ImageView("ressources/aideneg.png");
+        imageview2.setFitHeight(width/36);
+        imageview2.setFitWidth(width/36);
+        button.setGraphic(imageview2);
+        button.setMaxSize(width/32, width/32);
+        button.setTranslateX(width/32);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                  ((Stage)button.getScene().getWindow()).close();
                 }
              });
         pane.getChildren().add(button);
-        //pane.getChildren().add(imageview);
+        pane.getChildren().add(imageview);
         final Scene scene = new Scene(pane,width, height);
         scene.setFill(null);
         stage.setScene(scene);
