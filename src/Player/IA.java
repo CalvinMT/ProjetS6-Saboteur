@@ -200,7 +200,6 @@ public class IA extends Player {
                         }
                     }
                     else if (actionCard.getAction() == Action.Sabotage) {
-                        // TODO
                         for (Player currPlayer : ia.allPlayers) {
                             nextIA = ia.clone();
                             if (!currPlayer.getAttributeCards().containsTools(((RepareSabotageCard) actionCard).getTool())) {
@@ -213,11 +212,6 @@ public class IA extends Player {
                             }
                         }
 
-                    }
-                    if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
-                        t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), ia)); // Ajout des feuilles
-                    } else {
-                        t.addToNext(genConfigTree(playerIdx++, depth--, ia)); // Sinon ajout d'un nouveau noeud
                     }
                     break;
                 default:
@@ -366,8 +360,13 @@ public class IA extends Player {
     }
     */
 
-    public void mediumPlay() {
+    public Move mediumPlay() {
             System.out.println("TODO : IA Medium");
+            TreeNode tree;
+            tree = genConfigTree(this.getNum(), 2, this);
+            minimax(tree, 2, -9999, 9999);
+
+
     }
 
 
@@ -490,7 +489,7 @@ public class IA extends Player {
                 randomPlay();
                 break;
             case Medium:
-                //playMedium();
+                playMedium();
                 break;
             case Player:
                 System.err.println("Pas une IA");
