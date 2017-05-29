@@ -733,7 +733,9 @@ public class GameInteract {
 			public void handle(DragEvent dragEvent) {
 				
 				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				if (!System.getProperty("os.name").equals("Mac OS X")) {
+					viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				}
 				isDragged = false;
 
 				if(moteur.getCurrentPlayer().getDifficulty() == Player.Difficulty.Player){
