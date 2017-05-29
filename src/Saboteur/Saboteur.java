@@ -16,6 +16,13 @@ public class Saboteur {
 
     static public int manche = 0;
 
+    final static public int nbGold3 = 8;
+    final static public int nbGold2 = 10;
+    final static public int nbGold1 = 10;
+
+    static public ArrayList<Integer> arrayGold;
+    static public ArrayList<Integer> goldByPlayer;
+
     static public Moteur getMoteur(){
         return engine;
     }
@@ -24,11 +31,30 @@ public class Saboteur {
         engine = m;
     }
 
+    static public void initArrayGold(int nbPlayer){
+        arrayGold =  new ArrayList<>();
+
+        for(int i=0; i<nbGold3; i++){
+            arrayGold.add(3);
+        }
+        for(int i=0; i<nbGold2; i++){
+            arrayGold.add(2);
+        }
+        for(int i=0; i<nbGold1; i++){
+            arrayGold.add(1);
+        }
+
+        goldByPlayer = new ArrayList<>();
+        for(int i=0; i<nbPlayer; i++){
+            goldByPlayer.add(0);
+        }
+    }
 
     // init du moteur a partir d'un tableau de joueur
     static public void initMoteur(ArrayList<Player> arrayPlayer){
 //        engine = new Moteur(arrayPlayer, "--debugBoard");
         engine = new Moteur(arrayPlayer, "");
+        initArrayGold(arrayPlayer.size());
         manche = 0;
     }
 
