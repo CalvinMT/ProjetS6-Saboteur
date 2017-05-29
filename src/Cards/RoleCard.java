@@ -27,8 +27,6 @@ public class RoleCard extends Card {
             return (this.role.equals("Saboteur"));
         }
 
-
-
         public String toString(){
             //return "Role: "+this.role;
         	return this.role;

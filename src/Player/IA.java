@@ -287,24 +287,24 @@ public class IA extends Player {
     // choisit une position à mettre la carte d'effondrement
     public void chooseWhereToCrumb(){
     	Couple position = null; // couple qui sera attribué à posToPlay
-    	int neighbours = 0, maxNeighbours = 0; 
+    	int neighbours = 0, maxNeighbours = 0;
     	Node currNode;
     	for (int i=0; i<board.getMineSize(); i++) { // parcours de mine
     		currNode = board.getMineElement(i);
     		// test pour assurer que currNode n'est ni Carte Start ou parmi les cartes but
-    		if (!currNode.getCard().equals(new GalleryCard()) && !this.goalsToTest.contains(currNode.getCard().getCoord())){    			
+    		if (!currNode.getCard().equals(new GalleryCard()) && !this.goalsToTest.contains(currNode.getCard().getCoord())){
     			neighbours = 0;
     			if (currNode.getNorth() != -1) neighbours++;
     			if (currNode.getEast() != -1) neighbours++;
     			if (currNode.getSouth() != -1) neighbours++;
     			if (currNode.getWest() != -1) neighbours++;
-    			
+
     			if (neighbours > maxNeighbours) {
     				maxNeighbours = neighbours;
     				position = currNode.getCard().getCoord();
     			}
-    			
-    		}    		
+
+    		}
     	}
     	posToPlay = position;
     }
