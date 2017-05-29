@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneOptions" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuOptions">
+<AnchorPane fx:id="anchorPaneOptions" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.MenuOptions">
    <children>
       <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -34,14 +34,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Musique :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Effets :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Résolution :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
-            <Button stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleApply" prefHeight="1000.0" prefWidth="1000.0" text="Appliquer" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Musique :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Effets :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Résolution :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#handleApply" prefHeight="1000.0" prefWidth="1000.0" styleClass="button_menu" stylesheets="@style.css" text="Appliquer" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin></Button>
-            <Button stylesheets="@style.css" styleClass="button_menu" mnemonicParsing="false" onAction="#handleReturnMenu" prefHeight="1000.0" prefWidth="1000.0" text="Retour Menu" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <Button mnemonicParsing="false" onAction="#handleReturnMenu" prefHeight="1000.0" prefWidth="1000.0" styleClass="button_menu" stylesheets="@style.css" text="Retour Menu" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin></Button>
@@ -49,11 +49,11 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></ChoiceBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="white" text="Plein Ecran :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
+            <Text fill="white" strokeType="OUTSIDE" strokeWidth="0.0" text="Plein Ecran :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
             <CheckBox fx:id="checkBoxFullscreen" mnemonicParsing="false" onAction="#handleCheckBoxFullscreen" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
             <Text fx:id="textApplied" fill="#1b6f15" strokeType="OUTSIDE" strokeWidth="0.0" text="Changements appliqués." GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS" />
             <Slider fx:id="sliderMusic" onMouseDragged="#handleSliderMusic" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-            <Slider fx:id="sliderEffects" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+            <Slider fx:id="sliderEffects" disable="true" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
    </children>
