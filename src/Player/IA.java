@@ -600,8 +600,7 @@ public class IA extends Player {
     public Move iaPlayCard() {
         switch (this.difficulty) {
             case Easy:
-                randomPlay();
-                break;
+                return randomPlay();
             case Medium:
                 return mediumPlay();
             case Player:
