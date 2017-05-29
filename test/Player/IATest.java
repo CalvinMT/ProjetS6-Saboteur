@@ -49,7 +49,6 @@ public class IATest {
 
     }
 
-    // TODO
     @Test
     public void choosePosition() throws Exception {
         IA ia = new IA(0, "IA", Medium);
@@ -151,6 +150,12 @@ public class IATest {
         }
 
     }
+
+    @Test
+    public void minimax() throws Exception {
+        System.out.println("TODO : Test minimax");
+    }
+
 
     @Test
     public void goalsAction() throws Exception {
