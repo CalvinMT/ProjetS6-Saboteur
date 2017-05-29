@@ -77,8 +77,6 @@ public class EndShaft {
         Saboteur.resetMoteur(engine.getAllPlayers());
 
         Saboteur.getMoteur().setState(State.Game);
-
-        System.out.println(Saboteur.getMoteur());
     }
 
     
