@@ -280,7 +280,7 @@ public class MainLoader extends Application {
 //									System.out.println(player);
 
 
-									engine.nextPlayer();
+//									engine.nextPlayer();
 
 									try {
 										Thread.sleep(shortWaitingTime);
