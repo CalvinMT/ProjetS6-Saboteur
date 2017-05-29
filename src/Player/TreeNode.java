@@ -13,10 +13,13 @@ import static java.lang.Math.min;
 /**
  * Created by oloar on 26/05/2017.
  */
+
 public class TreeNode {
     private IA ia;
     private boolean isMax;
     private ArrayList<TreeNode> next;
+    private float value;
+    private Move move;
 
     public TreeNode() {
         this(true, new ArrayList<>(), new IA());
@@ -40,6 +43,14 @@ public class TreeNode {
         return next;
     }
 
+    public Move getMove() {
+        return move;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
     public ArrayList<Couple> getGoalsToTest() {
         return ia.getGoalsToTest();
     }
@@ -58,6 +69,14 @@ public class TreeNode {
 
     public void setBoard(Board board) {
         this.ia.board = board;
+    }
+
+    public void setMove(Move move) {
+        this.move = move;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
     }
 
     public void removeFromNext(TreeNode t) {
