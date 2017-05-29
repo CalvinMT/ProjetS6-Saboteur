@@ -31,6 +31,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import Player.Move;
 
 
 public class MainLoader extends Application {
@@ -254,45 +255,60 @@ public class MainLoader extends Application {
 							// déroulement d'une manche
 							case Game:
 
-								engine.getBoard().computeAccessCards();
+								Move moveIA = null;
 
-								((IA) player).choosePosition();
+								Card.Card_t type = Card.Card_t.gallery;
 
-								Card cardToPlay = ((IA) player).getCardToPlay();
-								Couple posToPlay = ((IA) player).getPosToPlay();
+//								Card.Card_t type = moveIA.getCard().getType();
 
-								if(cardToPlay.getType() == Card.Card_t.gallery){
+								switch (type){
 
-									GalleryCard cardToPut;
+									case gallery:
+										System.out.println("Carte Tunnel");
 
-									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
-										cardToPut = ((GalleryCard) cardToPlay).rotate();
-									} else {
-										cardToPut = (GalleryCard) cardToPlay;
-									}
-
-									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
-
-									engine.getBoard().putCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
-
-									player.getPlayableCards().removeCard(cardToPlay);
-									engine.getGameInteractControler().checkEndGame();
-									System.out.println(player);
+										Card cardToPlay = moveIA.getCard();
+										Couple posToPlay = moveIA.getPositionTarget();
+										GalleryCard cardToPut;
 
 
-									engine.nextPlayer();
+										if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+											cardToPut = ((GalleryCard) cardToPlay).rotate();
+										} else {
+											cardToPut = (GalleryCard) cardToPlay;
+										}
 
-									try {
-										Thread.sleep(shortWaitingTime);
-									} catch (Exception ex){
-										System.err.println("Erreur sleep");
-									}
+										engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
 
-//									System.out.println(engine.getBoard().mine());
+										engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
+
+										player.getPlayableCards().removeCard(cardToPlay);
+										engine.getGameInteractControler().checkEndGame();
+//										System.out.println(player);
+
+
+
+										try {
+											Thread.sleep(shortWaitingTime);
+										} catch (Exception ex){
+											System.err.println("Erreur sleep");
+										}
+
+//										System.out.println(engine.getBoard().mine());
+
+
+
+										break;
+
+									case action:
+										System.out.println("Carte Action");
+										break;
+
+									default:
+										System.err.println("Erreur move Impossible");
+										break;
+
 								}
 
-
-								// TODO
 
 								break;
 
