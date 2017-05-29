@@ -6,6 +6,7 @@ import Player.Player;
 import Player.PlayerHuman;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
+import Saboteur.Moteur.State;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,16 +29,6 @@ public class EndGame {
 	    
 
     private ObservableList<BandeauPlayerFinGame> playerList = FXCollections.observableArrayList();
-
-    //tests
-    Player joueur = new PlayerHuman(1);
-    Player joueur2 = new PlayerHuman(2);
-    Player joueur3 = new PlayerHuman(3);
-    Player joueur4 = new PlayerHuman(4);
-    Player joueur5 = new PlayerHuman(5);
-    Player joueur6 = new PlayerHuman(6);
-    RoleCard mine = new RoleCard("Mineur");
-    RoleCard sabo = new RoleCard("Saboteur");
     
     @FXML
     private AnchorPane anchorPaneEndGame;
@@ -63,10 +54,17 @@ public class EndGame {
     @FXML
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
         Scene scene = (Scene) anchorPaneEndGame.getScene();
-        BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
-        // @TheSpyGeek TODO - réinitialisation du moteur pour la nouvelle partie (si pas déjà fait)
+        BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
+        BorderPane borderPaneMainLoader = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
+        borderPaneGameLoader.getChildren().setAll(borderPaneMainLoader);
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        borderPaneMainLoader.setCenter(anchorPane);
+        
+        
+        engine.resetRole();
+        Saboteur.resetMoteur(engine.getAllPlayers());
+
+        Saboteur.getMoteur().setState(State.Waiting);
     }
 
     
@@ -84,15 +82,7 @@ public class EndGame {
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Pseudo"));
         columnOr.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Or"));
         columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFinGame, String>("Role"));
-        TextWinner.setText("Le vainqueur à gagné");// replacer par le winner
-        //Pour chaque joueur: (Role à remplacer par leur role au cours des manches
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur.getAvatar()), joueur.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur.getRole()).toString()));
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur2.getRole()).toString()));
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur3.getAvatar()), joueur3.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur3.getRole()).toString()));
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur4.getAvatar()), joueur4.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur4.getRole()).toString()));
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur5.getAvatar()), joueur5.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur5.getRole()).toString()));
-        playerList.add(new BandeauPlayerFinGame (tableViewListeJoueur, new ImageCell().getImageView(joueur6.getAvatar()), joueur6.getPlayerName(), (Integer.toString(joueur.getGoldPoints()) + " pépites"), (joueur6.getRole()).toString()));
-     
+        TextWinner.setText("Le vainqueur à gagné");// replacer par le winner     
         Player player;
         String avatar;
 

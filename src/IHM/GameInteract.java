@@ -417,7 +417,7 @@ public class GameInteract {
 											Couple endCardsimplePos = new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 											
 											// Delai retournement de carte but
-			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(3.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
+			                            	Timeline timeChosenEndCard = new Timeline(new KeyFrame(Duration.seconds(2.0), new KeyValue(viewChosenEndCard.imageProperty(), new Image("ressources/dos_carte_arrivee.png"))));
 		                            		timeChosenEndCard.setOnFinished(new EventHandler <ActionEvent>() {
 												@Override
 												public void handle(ActionEvent event) {
@@ -805,6 +805,8 @@ public class GameInteract {
 		});
 	}
 
+	
+	
 	public void waitBeforeCheck() {
 		hboxGameCardsInHand.setDisable(true);
 		AnimationTimer timerWaitNextTurn = new AnimationTimer() {
@@ -816,7 +818,7 @@ public class GameInteract {
 					b = true;
 					time = now;
 				}
-				if ((now - time)/1000000000 > 3){
+				if ((now - time)/1000000000 > 2){
 					checkEndGame();
 					stop();
 				}
@@ -825,6 +827,8 @@ public class GameInteract {
 		
 		timerWaitNextTurn.start();
     }
+	
+	
 	
 	public void checkEndGame() {
 		

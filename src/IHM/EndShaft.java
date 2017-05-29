@@ -64,8 +64,14 @@ public class EndShaft {
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
         Scene scene = (Scene) anchorPaneEndShaft.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
-        borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
+        BorderPane borderPaneNext = new BorderPane();
+    	if (Saboteur.manche >= 0) {
+    		borderPaneNext = FXMLLoader.load(getClass().getResource("EndGame.fxml"));
+    	}
+    	else {
+    		borderPaneNext = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
+    	}
+		borderPaneMainLoader.getChildren().setAll(borderPaneNext);
 
         engine.resetRole();
         Saboteur.resetMoteur(engine.getAllPlayers());
@@ -91,7 +97,7 @@ public class EndShaft {
         columnPseudo.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Pseudo"));
         columnRole.setCellValueFactory(new PropertyValueFactory<BandeauPlayerFin, String>("Role"));
 
-        /*if(engine.getBoard().goldReached()){
+        if(engine.getBoard().goldReached()){
             TextWinners.setText("Les Mineurs ont gagné");
 
             int pepite = 0;
@@ -101,13 +107,11 @@ public class EndShaft {
             ArrayList<Integer> arrayIndex = new ArrayList<>();
             
             for(int i=0; i<engine.nbPlayer(); i++){
-            	if(engine.getAllPlayers().get(currentPlayer).getRole() == new RoleCard("Mineur")){
+            	if(engine.getAllPlayers().get(currentPlayer).getRole().equals(new RoleCard("Mineur"))){
             		arrayIndex.add(i);
             	}
             }
             
-            System.out.println(arrayIndex.size());
-            // FIXME
             currentPlayer = arrayIndex.size()-1;
             
             for(int i=0; i<engine.nbPlayer() && Saboteur.arrayGold.size() > 0; i++){
@@ -155,7 +159,7 @@ public class EndShaft {
 
                 }
             }
-        }*/
+        }
         TextWinners.setFill(Paint.valueOf("FFFFFF"));
 
         Player player;
