@@ -811,8 +811,8 @@ public class GameInteract {
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 
                 // DEBUG BOARD
-                System.out.println(moteur.getBoard().mine());
-                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
+//                System.out.println(moteur.getBoard().mine());
+//                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
 
             moteur.nextPlayer();
