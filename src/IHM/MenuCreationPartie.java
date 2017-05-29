@@ -29,8 +29,8 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class MenuCreationPartie {
-	
-    private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar_anonyme", "avatar_test");
+
+    private ObservableList<String> avatarList = FXCollections.observableArrayList("avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7", "avatar8", "avatar9", "avatar10");
 
     private ObservableList<String> difficulteList = FXCollections.observableArrayList("Facile", "Moyen", "Difficile");
 
