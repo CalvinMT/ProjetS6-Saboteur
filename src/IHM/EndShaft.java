@@ -63,14 +63,15 @@ public class EndShaft {
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
         Scene scene = (Scene) anchorPaneEndShaft.getScene();
         BorderPane borderPaneMainLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
-        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("GameLoader.fxml"));
+        BorderPane borderPaneGameLoader = FXMLLoader.load(getClass().getResource("ChoixRole.fxml"));
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
 
-        engine.setState(State.Game);
+        engine.resetRole();
+        Saboteur.initMoteur(engine.getAllPlayers());
 
+        Saboteur.getMoteur().setState(State.Game);
 
-
-        // @TheSpyGeek TODO - réinitialisation du moteur pour la nouvelle manche
+        System.out.println(Saboteur.getMoteur());
     }
 
     
@@ -96,10 +97,21 @@ public class EndShaft {
         }
         TextWinners.setFill(Paint.valueOf("FFFFFF"));
 
+        Player player;
+        String avatar;
 
         for(int i=0; i<engine.nbPlayer(); i++){
 
-            playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(engine.getAllPlayers().get(i).getAvatar()), engine.getAllPlayers().get(i).getPlayerName(), (engine.getAllPlayers().get(i).getRole()).toString()));//Pour chaque joueur
+            player = engine.getAllPlayers().get(i);
+
+            if(player == null){
+                System.out.println("PLayer null");
+            }
+            avatar = player.getAvatar();
+            System.out.println("avatar : "+avatar );
+
+
+            playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(avatar), player.getPlayerName(), (player.getRole()).toString()));//Pour chaque joueur
         }
 
         /*playerList.add(new BandeauPlayerFin (tableViewListeJoueur, new ImageCell().getImageView(joueur2.getAvatar()), joueur2.getPlayerName(), (joueur2.getRole()).toString()));

@@ -20,6 +20,7 @@ import Player.Player;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.scene.paint.*;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -763,7 +764,7 @@ public class GameInteract {
                         moteur.getCurrentPlayer().getPlayableCards().chooseOne_with_remove(index);
                         hboxGameCardsInHand.getChildren().remove(viewCard);
                         
-                        checkEndGame();
+                        waitBeforeCheck();
                     }
                 } else {
                     System.out.println("Ce n'est pas ton tour");
@@ -775,14 +776,32 @@ public class GameInteract {
 		});
 	}
 
-	public void checkEndGame(){
-
-
-        // TODO @TheSpyGeek fin de manche ici
-        // TODO if(moteur.endGame()){
-
-
-        // fin de manche
+	public void waitBeforeCheck() {
+		hboxGameCardsInHand.setDisable(true);
+		AnimationTimer timerWaitNextTurn = new AnimationTimer() {
+			boolean b = false;
+			long time;
+			@Override
+			public void handle(long now) {
+				if (!b) {
+					b = true;
+					time = now;
+				}
+				if ((now - time)/1000000000 > 3){
+					checkEndGame();
+					stop();
+				}
+			}
+		};
+		
+		timerWaitNextTurn.start();
+    }
+	
+	public void checkEndGame() {
+		
+		hboxGameCardsInHand.setDisable(false);
+		
+		 // fin de manche
         if(moteur.endGame()){
 
             System.out.println("Fin de partie");
@@ -812,8 +831,8 @@ public class GameInteract {
                 hboxGameCardsInHand.getChildren().add(cardsInHand.get(cardsInHand.size()-1).getImageView());
 
                 // DEBUG BOARD
-                System.out.println(moteur.getBoard().mine());
-                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
+//                System.out.println(moteur.getBoard().mine());
+//                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
 
 
@@ -831,9 +850,7 @@ public class GameInteract {
 
         }
 
-
-    }
-	
+	}
 	
 	
 	// -------------------- ---------- --------------------
