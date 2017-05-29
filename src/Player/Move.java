@@ -18,26 +18,32 @@ public class Move {
         this(new GalleryCard(), -1, new Couple(0,0), 0, false);
     }
 
+    // Défausse
     public Move(Card card, boolean isDiscard) {
         this(card, -1, new Couple(0, 0), 0, isDiscard);
     }
 
+    // carte gallery / crumbling
     public Move(Card card, Couple positionTarget) {
         this(card, -1, positionTarget, 0, false);
     }
 
+    // Carte sabotage / repare / map
     public Move(Card card, int targetIdx) {
         this(card, targetIdx, new Couple(0, 0), 0, false);
     }
 
+    // DO NOT USE
     public Move(Card card, Couple positionTarget, int value) {
         this(card, 0, positionTarget, value, false);
     }
 
+    // DO NOT USE
     public Move(Card card, int targetIdx, int value) {
         this(card, targetIdx, new Couple(0,0), value, false);
     }
 
+    // Default
     public Move(Card card, int targetIdx, Couple positionTarget, int value, boolean isDiscard) {
         this.card = card;
         this.targetIdx = targetIdx;
@@ -76,6 +82,10 @@ public class Move {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean getDiscard(){
+        return this.isDiscard;
     }
 
     @Override

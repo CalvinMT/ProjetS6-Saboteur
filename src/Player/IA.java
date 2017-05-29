@@ -14,9 +14,9 @@ import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
 
 
-/**
- * Created by thespygeek on 11/05/17.
- */
+
+
+
 public class IA extends Player {
     //final int SABOTAGE_VALUE;
     //final int GALLERY_VALUE;
@@ -180,7 +180,8 @@ public class IA extends Player {
             t.setBoard(ia.board);
             t.addToNext(genConfigTree(playerIdx++, depth--, ia));
         }
-        for (Card c : p.getPlayableCards().getArrayCard()) { // TODO : ajout move dans TreeNode
+        for (int cardIdx = 0; cardIdx < p.getPlayableCards().getArrayCard().size(); cardIdx++) {
+            Card c = p.getPlayableCards().getArrayCard().get(cardIdx);
             switch (c.getType()) {
                 case gallery :
                     GalleryCard galleryCard = (GalleryCard) c;
@@ -268,6 +269,15 @@ public class IA extends Player {
                 default:
                     System.out.println(c.getType() + " not implemented.");
                     break;
+            }
+            // Defausse
+            nextIA = ia.clone();
+            t.setMove(new Move(c, true));
+            nextIA.allPlayers.get(this.num).discard(cardIdx);
+            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+            } else {
+                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
             }
 
         }
@@ -400,63 +410,71 @@ public class IA extends Player {
         return moves.get(idx);
     }
 
-    /* USELESS
-    public void genMoves() {
-        getGalleryMoves();
-        // TODO : getActionsMoves();
-    }
-    */
+    public void execMove(Move m) {
+        int i = 0;
+        if (m.getDiscard()) {
 
-    /*
-    public void computeMovesValue() {
-        int v;
-        Move m;
-        //genMoves();
-        if (((RoleCard) this.getRole()).isSaboteur()) {
-            if (isInSwitchZone()) {
-                // TODO : bloquer la progression des mineurs / saboter
-                for (int i = 0; i < moves.size(); i++) {
-                    m = moves.get(i);
-                    if (m.getCard().getType() == gallery) {
-                        v = m.getValue();
-                        // m.setValue(v / (TODO: Get max neighbors resistance) );
-                    }
-                }
-            }
-            else {
-                // TODO : se rapprocher des buts avec des cartes de res faible
-            }
+            while (i < this.nbCardHand() && !this.getPlayableCards().getArrayCard().get(i).equals(m.getCard())){ i++;}
+            this.discard(i);
         }
-        else {
-            // TODO : plus on est proche des but plus il est important de placer des cartes forte
-            // Aussi Saboter les saboteur
+        switch(m.getCard().getType()) {
+            case gallery :
+                GalleryCard galleryCard = (GalleryCard) m.getCard();
+                galleryCard.setLine(m.getPositionTarget().getLine());
+                galleryCard.setColumn(m.getPositionTarget().getColumn());
+                this.board.addCard(galleryCard);
+                break;
+            case action :
+                ActionCard actionCard = (ActionCard) m.getCard();
+                switch (actionCard.getAction()) {
+                    case Sabotage:
+                        this.allPlayers.get(m.getTargetIdx()).setSabotage((RepareSabotageCard) m.getCard());
+                        break;
+                    case Repare:
+                        this.allPlayers.get(m.getTargetIdx()).setRepare((RepareSabotageCard) m.getCard());
+                        break;
+                    case Crumbling:
+                        this.board.removeCard(m.getPositionTarget());
+                        break;
+                }
+                break;
+            /*case default:
+                break;*/
         }
     }
-    */
 
     public Move mediumPlay() {
-        System.out.println("TODO : IA Medium");
+        Move move = null;
         TreeNode tree;
         float nodeValue;
         Random r = new Random();
 
+
+        System.out.println("TODO : IA Medium");
         if (!isInSwitchZone()) {
-            if (choosePosition()) {
-                return new Move(this.cardToPlay, this.posToPlay);
+            if (choosePosition()) { // Se rapproche des buts
+                GalleryCard c = (GalleryCard) this.cardToPlay;
+                System.out.println("choosePos");
+                c.setLine(this.posToPlay.getLine());
+                c.setColumn(this.posToPlay.getColumn());
+                move = new Move(c, this.posToPlay);
             }
-            else {
+            else { // defausse
                 return new Move(this.getPlayableCards().getArrayCard().get(r.nextInt(this.nbCardHand())), false);
             }
         }
-
-        tree = genConfigTree(this.getNum(), 2, this);
-        nodeValue = minimax(tree, 2, -9999, 9999);
-        for (TreeNode n : tree.getNext()) {
-            if (n.getValue() == nodeValue) {
-                return n.getMove();
+        else {
+            System.out.println("minimax");
+            tree = genConfigTree(this.getNum(), 2, this);
+            nodeValue = minimax(tree, 2, -9999, 9999);
+            for (TreeNode n : tree.getNext()) {
+                if (n.getValue() == nodeValue) {
+                    move =  n.getMove();
+                }
             }
         }
-        return null;
+        this.execMove(move);
+        return move;
     }
 
     // Utils
