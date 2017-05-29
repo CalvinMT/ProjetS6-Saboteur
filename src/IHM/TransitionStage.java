@@ -28,6 +28,7 @@ public class TransitionStage extends Application {
         button.setStyle("-fx-font: bold italic 22pt \"Arial\";\n" + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );");
         Text text = new Text(30, 100,"C'est au tour de " + pseudo);
         text.setTranslateX((width/2 - 280));
+        text.setTranslateY((height/4));
         text.setStyle("-fx-font: bold italic 22pt \"Arial\";\n");
         System.out.println(pseudo);
         button.setOnAction(new EventHandler<ActionEvent>() {
