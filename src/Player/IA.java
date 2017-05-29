@@ -1,6 +1,6 @@
 package Player;
 
-import Board.Board;
+import Board.*;
 import Board.Couple;
 import Cards.*;
 import Cards.ActionCard.Action;
@@ -22,13 +22,16 @@ public class IA extends Player {
     //final int GALLERY_VALUE;
     //final int ACTION_VALUE;
 
-    private final int MAXDEPTH = 4;
+	//private final int MAXDEPTH = 4;
 
     private Card cardToPlay;
     private Couple posToPlay;
     private ArrayList<Move> moves;
     private ArrayList<Player> allPlayers;
     private ArrayList<Couple> goalsToTest;
+    private Player playerToRepare;
+    private Player playerToSabotage;
+
     public IA() {
         this(0, "IA", Difficulty.Easy, new ArrayList<>(), new ArrayList<>(), new Board());
     }
@@ -112,16 +115,33 @@ public class IA extends Player {
         else if (cardToPlay.getType() == action ){
             ActionCard actioncard = (ActionCard) cardToPlay;
             if (actioncard.getAction() == Action.Map) {
-                // TODO
+                //to do: get goals to test, check for goal, and then return
+            	int n, pos = 0;
+            	Random random = new Random();
+            	n = this.goalsToTest.size();
+            	if (n > 1) {
+            		pos = random.nextInt(n);
+            		Couple cpl = this.goalsToTest.get(pos);
+            		Node tocheck = board.getNodeFromMine(cpl);
+            		if (tocheck.getCard().isGold()) 
+            			this.addGoldGoal(cpl);
+            		else
+            			this.ignoreGoal(cpl);
+            	}
+            	
             }
             else if (actioncard.getAction() == Crumbling) {
                 // TODO
+            	this.chooseWhereToCrumb();
             }
-            else if (actioncard.getAction() == Repare) {
-                // TODO
+            else if (actioncard.getAction() == Action.Repare) {
+                // TODO: pick a player on the other side
+            	playerToRepare = this.choosePlayerToRepair((RepareSabotageCard)actioncard, (RoleCard)this.getRole());          	
+            	
             }
-            else if (actioncard.getAction() == Sabotage) {
-                // TODO
+            else if (actioncard.getAction() == Action.Sabotage) {
+                // TODO:
+            	playerToSabotage = this.choosePlayerToSabotage((RepareSabotageCard)actioncard, (RoleCard)this.getRole());
             }
         }
     }
@@ -227,6 +247,31 @@ public class IA extends Player {
 
         }
         return t;
+    }
+
+    // choisit une position à mettre la carte d'effondrement
+    public void chooseWhereToCrumb(){
+    	Couple position = null; // couple qui sera attribué à posToPlay
+    	int neighbours = 0, maxNeighbours = 0; 
+    	Node currNode;
+    	for (int i=0; i<board.getMineSize(); i++) { // parcours de mine
+    		currNode = board.getMineElement(i);
+    		// test pour assurer que currNode n'est ni Carte Start ou parmi les cartes but
+    		if (!currNode.getCard().equals(new GalleryCard()) && !this.goalsToTest.contains(currNode.getCard().getCoord())){    			
+    			neighbours = 0;
+    			if (currNode.getNorth() != -1) neighbours++;
+    			if (currNode.getEast() != -1) neighbours++;
+    			if (currNode.getSouth() != -1) neighbours++;
+    			if (currNode.getWest() != -1) neighbours++;
+    			
+    			if (neighbours > maxNeighbours) {
+    				maxNeighbours = neighbours;
+    				position = currNode.getCard().getCoord();
+    			}
+    			
+    		}    		
+    	}
+    	posToPlay = position;
     }
 
     // Renvoie vrai si une carte à été posée dans une zone de 2 cases autour d'un des buts
