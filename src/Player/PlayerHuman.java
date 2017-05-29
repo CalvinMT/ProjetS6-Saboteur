@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 package Player;
-import Cards.*;
 import Board.Board;
-
-import java.util.Random;
+import Cards.HandPlayer;
+import Cards.PlayerAttribute;
 
 /**
  *
@@ -62,24 +61,10 @@ public class PlayerHuman extends Player{
     	if (gp >= 0)
     		this.goldPoints += gp;
     }
-    
-    @Override
-    public String toString(){
-        String renvoi = "";
 
-        renvoi += this.playerName + "\n";
-        renvoi += "Humain\n";
-        if(this.role == null){
-            renvoi += "Aucun role pour l'instant\n";
-        } else {
-            renvoi += this.role + "\n";
-        }
-        renvoi += this.goldPoints + "\n";
-        renvoi += this.attributeCards + "\n";
-        renvoi += this.playableCards + "\n";
 
-        return renvoi;
-    }
+
+
 
     
 }

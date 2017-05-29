@@ -31,8 +31,6 @@ public class MenuOptions {
 	@FXML
 	private ChoiceBox<String> choiceBox;
 	@FXML
-	private Text textRestart;
-	@FXML
 	private Text textApplied;
 	@FXML
 	private CheckBox checkBoxFullscreen;
@@ -42,7 +40,7 @@ public class MenuOptions {
 	@FXML
     public void handleReturnMenu () throws IOException {
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
-		MainLoader.autoResizeToResolution(anchorPaneOptions.getScene().getWidth(), anchorPaneOptions.getScene().getHeight(), anchorPane);
+		MainLoader.autoResizeToResolution(anchorPane);
 		anchorPaneOptions.getChildren().setAll(anchorPane);
     }
 	
@@ -82,20 +80,16 @@ public class MenuOptions {
 			    MainLoader.primaryStage.setHeight(newScreenHeight);
 			    MainLoader.primaryStage.centerOnScreen();
 		    	writer.println(":Fullscreen:" + false + ":");
+		    	MainLoader.autoResizeToResolution(anchorPaneOptions);
 		    }
 		    writer.close();
-			textRestart.setVisible(true);
-		    FadeTransition fadeTextRestart = new FadeTransition(Duration.millis(5000), textRestart);
-		    fadeTextRestart.setFromValue(1.0);
-		    fadeTextRestart.setToValue(0.0);
-		    fadeTextRestart.setCycleCount(1);
 			textApplied.setVisible(true);
 		    FadeTransition fadeTextApplied = new FadeTransition(Duration.millis(5000), textApplied);
 		    fadeTextApplied.setFromValue(1.0);
 		    fadeTextApplied.setToValue(0.0);
 		    fadeTextApplied.setCycleCount(1);
-		    fadeTextRestart.play();
 		    fadeTextApplied.play();
+
 		} catch (IOException e) {
 			System.out.println("ERROR --> Couldn't apply changes.");
 		}
@@ -107,7 +101,6 @@ public class MenuOptions {
 	@FXML
 	public void initialize () {
 		String string;
-		textRestart.setVisible(false);
 		textApplied.setVisible(false);
 		choiceBox.setItems(resolutionList);
 		try {

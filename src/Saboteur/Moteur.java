@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Saboteur;
+
 import Cards.*;
 import Cards.GalleryCard.Gallery_t;
 import Cards.RepareSabotageCard.Tools;
@@ -18,11 +19,8 @@ import IHM.GameInteract;
 import Player.*;
 import Board.Board;
 import Board.Couple;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 
-import javax.management.relation.Role;
-import javax.swing.*;
+
 import java.util.ArrayList;
 
 /**
@@ -194,7 +192,7 @@ public class Moteur {
 							break;
 							
 						case "Action": 
-							if (eachCard[1] == "Map" || eachCard[1] == "Crumbing") {
+							if (eachCard[1] == "Map" || eachCard[1] == "Crumbling") {
 								actionType = eachCard[1];
 								actioncard = new ActionCard(actionType);
 							}
@@ -289,7 +287,7 @@ public class Moteur {
     public Moteur(ArrayList<Player> arrayPlayer, String option){
         if(arrayPlayer.size() >= 3 && arrayPlayer.size() <=10){
             this.arrayPlayer = arrayPlayer;
-            if(option.equals("--debugMoteur")){
+            if(option.equals("--debugBoard")){
                 this.pile = new DeckGalleryAction(80, 60);
             } else {
                 this.pile = new DeckGalleryAction();
@@ -473,7 +471,7 @@ public class Moteur {
                 Card goal = this.lookGoal(cou);
                 System.out.println("Carte goal: "+goal);
                 nextPlayer();
-            } else if(c.getAction() == ActionCard.Action.Crumbing){
+            } else if(c.getAction() == ActionCard.Action.Crumbling){
 
                 // TODO a test
                 this.board.removeCard(cou);
@@ -568,8 +566,25 @@ public class Moteur {
     }
 
     // si la manche est terminée
-    public boolean endGame(){
-        return this.board.goalReached();
+    public boolean endGame() {
+
+        boolean emptyHand = true;
+
+        for (int i = 0; i < arrayPlayer.size(); i++) {
+            if (arrayPlayer.get(i).nbCardHand() > 0) {
+                emptyHand = false;
+            }
+        }
+
+        if (this.board.goldReached()) {
+            return true;
+        } else if (this.board.goldBlocked() && pile.nbCard() == 0 && emptyHand) {
+            return true;
+        } else if (!this.board.goldReached() && pile.nbCard() == 0 && emptyHand){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // renvoie le numero du joueur courant
@@ -614,15 +629,13 @@ public class Moteur {
         renvoi += "Joueur courant: "+this.getCurrentPlayer().getPlayerName() +"\n";
         renvoi += "Deck: "+this.pile.nbCard() +" cartes \n";
         renvoi += this.roleCards.print_without_visibility() + "\n";
-        renvoi += "Joueurs [ ";
+        renvoi += "Joueurs: \n";
         for(int i=0; i<nbPlayer(); i++){
-            renvoi += this.getPlayer(i).getPlayerName() + " ; ";
+            renvoi += this.getPlayer(i) + " ; \n";
         }
-        renvoi += "]\n";
 
         return renvoi;
     }
-
 
 
 

@@ -39,7 +39,8 @@ public class TransparentStage extends Application {
              });
         pane.getChildren().add(button);
         pane.getChildren().add(imageview);
-        final Scene scene = new Scene(pane,width, height);
+
+        final Scene scene = new Scene(pane,width, height+30);
         scene.setFill(null);
         stage.setScene(scene);
         stage.show();

@@ -33,6 +33,7 @@ public class HandPlayer extends Hand {
     public void setGalleryCard(int i, GalleryCard c){
         if(i >= 0 && i<this.arrayCard.size()){
             this.arrayCard.set(i, c);
+            System.out.println(this);
         } else {
             System.err.println("HandPlayer: Index impossible a atteindre");
         }
