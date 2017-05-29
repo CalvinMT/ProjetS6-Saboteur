@@ -37,7 +37,8 @@ public class HandRole extends Hand {
         }
 
         int nbSaboteur = rulePLayer[nbPlayer-3][0];
-        int nbMinor = rulePLayer[nbPlayer-3][1] - 1;
+        int nbMinor = rulePLayer[nbPlayer-3][1];
+
 
         fillHand(nbSaboteur, nbMinor);
 

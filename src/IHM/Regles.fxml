@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneRegles" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Regles">
+<AnchorPane fx:id="anchorPaneRegles" stylesheets="@style.css" styleClass="background" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IHM.Regles">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -23,7 +23,7 @@
             <RowConstraints minHeight="39.0" valignment="CENTER" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Règles du jeu" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Règles du jeu" fill="white" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="30.0" />
                </font>
@@ -161,7 +161,7 @@
                   </ScrollPane>
                </children>
             </GridPane>
-            <Button fx:id="buttonRetourMenu" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonRetourMenu" text="Retour au menu" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="buttonRetourMenu" stylesheets="style.css" styleClass="button_menu" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonRetourMenu" text="Retour au menu" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>

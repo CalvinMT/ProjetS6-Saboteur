@@ -237,6 +237,10 @@ public class ChoixRole {
         m.setState(State.ChooseRole);
         m.setChoixroleControler(this);
 
+        // reset boolean
+        for(int i=0; i<m.getRoleCards().nbCard(); i++){
+            m.roleTaken.set(i, false);
+        }
     }
 
     // getImageCard(Card c) gameInteractive
