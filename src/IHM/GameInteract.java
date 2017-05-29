@@ -279,7 +279,7 @@ public class GameInteract {
 					possiblePositions = moteur.getBoard().getPossiblePositions((GalleryCard) card);
 					possiblePositions.stream().forEach(position -> {
 						ImageView viewIndication = new ImageView("ressources/carte_indication.png");
-						GameBoard.gridPaneBoard.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+						GameBoard.gridPaneIndications.add(viewIndication, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
 						// Drag enters viewIndication
 						/*viewIndication.setOnDragEntered(new EventHandler <DragEvent>() {
 							@Override
@@ -324,7 +324,7 @@ public class GameInteract {
 									GalleryCard cardToPut;
 									droppedColumn = (position.getColumn() + GameBoard.startCardX);
 									droppedLine = (position.getLine() + GameBoard.startCardY);
-									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
+									Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneIndications, droppedColumn, droppedLine);
 
                                     int index = hboxGameCardsInHand.getChildren().indexOf(viewCard);
                                     Card cardBefore = moteur.getCurrentPlayer().getPlayableCards().chooseOne_without_remove(index);
@@ -340,7 +340,7 @@ public class GameInteract {
 
 									moteur.getBoard().putCard(cardToPut, (droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX));
 
-									GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+									GameBoard.gridPaneIndications.getChildren().remove(nodeToDelete);
 									GameBoard.gridPaneBoard.add(getImageCard(cardToPut).getImageView(), droppedColumn, droppedLine);
 
 
@@ -394,7 +394,7 @@ public class GameInteract {
 							Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
 							if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
 								ImageView viewIndicationEndCard = new ImageView("ressources/carte_indication.png");
-								GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
+								GameBoard.gridPaneIndications.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
 								// Drag over viewIndicationEndCard
 								viewIndicationEndCard.setOnDragOver(new EventHandler <DragEvent>() {
 									@Override
@@ -414,8 +414,8 @@ public class GameInteract {
 										if (dragBoard.hasImage()) {
 											droppedColumn = endCard.getColumn();
 											droppedLine = endCard.getLine();
-											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
-											GameBoard.gridPaneBoard.getChildren().remove(nodeToDelete);
+											Node nodeToDelete = getNodeFromGridPane(GameBoard.gridPaneIndications, droppedColumn, droppedLine);
+											GameBoard.gridPaneIndications.getChildren().remove(nodeToDelete);
 											ImageView viewChosenEndCard = getImageCard(moteur.getBoard().getNodeFromMine(new Couple((droppedLine-GameBoard.startCardY), (droppedColumn-GameBoard.startCardX))).getCard()).getImageView();
 											GameBoard.gridPaneBoard.add(viewChosenEndCard, droppedColumn, droppedLine);
 											
@@ -427,7 +427,7 @@ public class GameInteract {
 												@Override
 												public void handle(ActionEvent event) {
 													Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-					                                node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+					                                //node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
 						                            GameBoard.gridPaneBoard.getChildren().remove(node);
 													if (viewChosenEndCard.getRotate() != 0.0) {
 														viewChosenEndCard.setRotate(0.0);
@@ -451,12 +451,12 @@ public class GameInteract {
 					// Turns on crumbling indications
 					else if (((ActionCard)card).getAction().equals(ActionCard.Action.Crumbling)) {
 						ImageView viewIndicationStartCard = new ImageView("ressources/carte_non_indication.png");
-						GameBoard.gridPaneBoard.add(viewIndicationStartCard, GameBoard.startCardX, GameBoard.startCardY);
+						GameBoard.gridPaneIndications.add(viewIndicationStartCard, GameBoard.startCardX, GameBoard.startCardY);
 						GameBoard.endCards.stream().forEach(endCard -> {
 							Couple endCradSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
 							if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCradSimplePos).getCard()).isVisible()) {
 								ImageView viewIndicationEndCard = new ImageView("ressources/carte_non_indication.png");
-								GameBoard.gridPaneBoard.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
+								GameBoard.gridPaneIndications.add(viewIndicationEndCard, endCard.getColumn(), endCard.getLine());
 							}
 						});
 						
@@ -465,7 +465,7 @@ public class GameInteract {
 							Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
 							if (!galleryCardOnBoard.getGalleryType().equals(Gallery_t.start)  &&  !galleryCardOnBoard.getGalleryType().equals(Gallery_t.but)) {
 								ImageView viewIndicationCrumbling = new ImageView("ressources/carte_indication.png");
-								GameBoard.gridPaneBoard.add(viewIndicationCrumbling, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
+								GameBoard.gridPaneIndications.add(viewIndicationCrumbling, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
 								// Drag over viewIndicationCrumbling
 								viewIndicationCrumbling.setOnDragOver(new EventHandler <DragEvent>() {
 									@Override
@@ -653,8 +653,8 @@ public class GameInteract {
 						// Turns off indications
 						if (card.getType().equals(Card_t.gallery)) {
 							possiblePositions.stream().forEach(position -> {
-								Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-								GameBoard.gridPaneBoard.getChildren().remove(node);
+								Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+								GameBoard.gridPaneIndications.getChildren().remove(node);
 							});
 						}
 						else if (card.getType().equals(Card_t.action)) {
@@ -664,10 +664,8 @@ public class GameInteract {
 								GameBoard.endCards.stream().forEach(endCard -> {
 									Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
 									if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
-										Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-										node.toFront();
-										node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
-										GameBoard.gridPaneBoard.getChildren().remove(node);
+										Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, endCard.getColumn(), endCard.getLine());
+										GameBoard.gridPaneIndications.getChildren().remove(node);
 									}
 								});
 							}
@@ -679,10 +677,8 @@ public class GameInteract {
 									Couple galleryCardOnBoardSimplePos = new Couple(galleryCardOnBoard.getLine(), galleryCardOnBoard.getColumn());
 									if (!moteur.getBoard().getNodeFromMine(galleryCardOnBoardSimplePos).getCard().isGoal()  ||  !((GoalCard)moteur.getBoard().getNodeFromMine(galleryCardOnBoardSimplePos).getCard()).isVisible()) {
 										Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
-										Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
-										node.toFront();
-										node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
-										GameBoard.gridPaneBoard.getChildren().remove(node);
+										Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
+										GameBoard.gridPaneIndications.getChildren().remove(node);
 									}
 								});
 							}
@@ -735,8 +731,11 @@ public class GameInteract {
 		viewCard.setOnDragDone(new EventHandler <DragEvent>() {
 			@Override
 			public void handle(DragEvent dragEvent) {
+				
 				// Puts back card into place
-				viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				if (!System.getProperty("os.name").equals("Mac OS X")) {
+					viewCard.setTranslateY(viewCard.getTranslateY()+25);
+				}
 				isDragged = false;
 
 				if(moteur.getCurrentPlayer().getDifficulty() == Player.Difficulty.Player){
@@ -745,8 +744,8 @@ public class GameInteract {
                     if (card.getType().equals(Card_t.gallery)  &&  !possiblePositions.isEmpty()) {
                         possiblePositions.stream().forEach(position -> {
                             if ((position.getColumn() + GameBoard.startCardX) != droppedColumn  ||  (position.getLine() + GameBoard.startCardY) != droppedLine) {
-                                Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
-                                GameBoard.gridPaneBoard.getChildren().remove(node);
+                                Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, (position.getColumn() + GameBoard.startCardX), (position.getLine() + GameBoard.startCardY));
+                                GameBoard.gridPaneIndications.getChildren().remove(node);
                             }
                         });
                     }
@@ -755,12 +754,11 @@ public class GameInteract {
                         GameBoard.endCards.stream().forEach(endCard -> {
 							Couple endCardSimplePos = new Couple((endCard.getLine()-GameBoard.startCardY), (endCard.getColumn()-GameBoard.startCardX));
 							if (!((GoalCard)moteur.getBoard().getNodeFromMine(endCardSimplePos).getCard()).isVisible()) {
-	                            Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+	                            Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, endCard.getColumn(), endCard.getLine());
 	                            if (endCard.getColumn() != droppedColumn  ||  endCard.getLine() != droppedLine) {
-	                                node.toFront();
-	                                node = getNodeFromGridPane(GameBoard.gridPaneBoard, endCard.getColumn(), endCard.getLine());
+	                                node = getNodeFromGridPane(GameBoard.gridPaneIndications, endCard.getColumn(), endCard.getLine());
 	                            }
-	                            GameBoard.gridPaneBoard.getChildren().remove(node);
+	                            GameBoard.gridPaneIndications.getChildren().remove(node);
                         	}
                         });
                     }
@@ -770,16 +768,14 @@ public class GameInteract {
 						moteur.getBoard().getMine().stream().forEach((Consumer<? super Board.Node>)nodeOnBoard -> {
 							GalleryCard galleryCardOnBoard = nodeOnBoard.getCard();
 							Couple galleryCardOnBoardPos = new Couple((galleryCardOnBoard.getLine()+GameBoard.startCardY), (galleryCardOnBoard.getColumn()+GameBoard.startCardX));
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
-							node.toFront();
-							node = getNodeFromGridPane(GameBoard.gridPaneBoard, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
-							GameBoard.gridPaneBoard.getChildren().remove(node);
+							Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
+							node = getNodeFromGridPane(GameBoard.gridPaneIndications, galleryCardOnBoardPos.getColumn(), galleryCardOnBoardPos.getLine());
+							GameBoard.gridPaneIndications.getChildren().remove(node);
                         });
 						if (isCrumbling) {
-							Node node = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
-							node.toFront();
-							node = getNodeFromGridPane(GameBoard.gridPaneBoard, droppedColumn, droppedLine);
-							GameBoard.gridPaneBoard.getChildren().remove(node);
+							Node node = getNodeFromGridPane(GameBoard.gridPaneIndications, droppedColumn, droppedLine);
+							node = getNodeFromGridPane(GameBoard.gridPaneIndications, droppedColumn, droppedLine);
+							GameBoard.gridPaneIndications.getChildren().remove(node);
 						}
                     }
                     // Turns off constraints indications
@@ -806,6 +802,7 @@ public class GameInteract {
 
 
                 dragEvent.consume();
+
 			}
 		});
 	}
@@ -1011,7 +1008,7 @@ public class GameInteract {
 	// -------------------- ---------- --------------------
 	
 	
-	
+	// XXX
 	private Node getNodeFromGridPane (GridPane gridPane, int col, int row) {
 	    for (Node node : gridPane.getChildren()) {
 	    	if (GridPane.getColumnIndex(node) != null  &&  GridPane.getRowIndex(node) != null) {
