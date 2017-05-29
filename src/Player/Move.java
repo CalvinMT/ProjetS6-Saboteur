@@ -50,6 +50,7 @@ public class Move {
         this.positionTarget = positionTarget;
         this.value = value;
         this.isDiscard = isDiscard;
+        System.out.println(this);
     }
 
     public void setCard(Card card) {
@@ -95,6 +96,7 @@ public class Move {
             ", targetIdx=" + targetIdx +
             ", positionTarget=" + positionTarget +
             ", value=" + value +
+            ", isDiscard=" + isDiscard +
             '}';
     }
 
