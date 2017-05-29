@@ -229,6 +229,10 @@ public class Moteur {
         }
     }
 
+    public void setCurrentPlayer(int i){
+        this.currentPlayer = i;
+    }
+
 
     // passe au joueur suivant
     public void nextPlayer(){
