@@ -152,12 +152,6 @@ public class IATest {
     }
 
     @Test
-    public void minimax() throws Exception {
-        System.out.println("TODO : Test minimax");
-    }
-
-
-    @Test
     public void goalsAction() throws Exception {
         ArrayList<Couple> goals = ia.getGoalsToTest();
 
@@ -191,7 +185,8 @@ public class IATest {
         Assert.assertFalse(goals.contains(new Couple(0, 8)));
     }
 
-    // Test randomPlay 
+
+    // Test randomPlay
     public void randomPlayTest(IA ia) throws Exception {
         ArrayList<Couple> p;
         Hand hand;
@@ -241,6 +236,15 @@ public class IATest {
         }
     }
 
+    @Test
+    public void minimax() throws Exception {
+        System.out.println("TODO : Test minimax");
+    }
+
+    @Test
+    public void genConfigTree() throws Exception {
+        System.out.println("TODO : IATest.java genConfigTree()");
+    }
 
     @Test
     public void iaPlayCard() throws Exception {

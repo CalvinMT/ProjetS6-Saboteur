@@ -230,8 +230,8 @@ public abstract class Player {
         role = null;
     }
 
-    public boolean iaPlayCard() {
-        return false;
+    public Move iaPlayCard() {
+        return null;
     }
 
     public String toString(){
