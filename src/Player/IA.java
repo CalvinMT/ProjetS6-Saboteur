@@ -157,7 +157,8 @@ public class IA extends Player {
             t.setBoard(ia.board);
             t.addToNext(genConfigTree(playerIdx++, depth--, ia));
         }
-        for (Card c : p.getPlayableCards().getArrayCard()) { // TODO : ajout move dans TreeNode
+        for (int cardIdx = 0; cardIdx < p.getPlayableCards().getArrayCard().size(); cardIdx++) {
+            Card c = p.getPlayableCards().getArrayCard().get(cardIdx);
             switch (c.getType()) {
                 case gallery :
                     GalleryCard galleryCard = (GalleryCard) c;
@@ -243,6 +244,15 @@ public class IA extends Player {
                 default:
                     System.out.println(c.getType() + " not implemented.");
                     break;
+            }
+            // Defausse
+            nextIA = ia.clone();
+            t.setMove(new Move(c, true));
+            nextIA.allPlayers.get(this.num).discard(cardIdx);
+            if (depth == 0 /* TODO : Si fin de jeu */) { // Si on est au dernier tour
+                t.addToNext(new TreeNode(p.getRole().equals(new RoleCard("Saboteur")), nextIA)); // Ajout des feuilles
+            } else {
+                t.addToNext(genConfigTree(playerIdx++, depth--, nextIA)); // Sinon ajout d'un nouveau noeud
             }
 
         }
@@ -374,40 +384,6 @@ public class IA extends Player {
         }
         return moves.get(idx);
     }
-
-    /* USELESS
-    public void genMoves() {
-        getGalleryMoves();
-        // TODO : getActionsMoves();
-    }
-    */
-
-    /*
-    public void computeMovesValue() {
-        int v;
-        Move m;
-        //genMoves();
-        if (((RoleCard) this.getRole()).isSaboteur()) {
-            if (isInSwitchZone()) {
-                // TODO : bloquer la progression des mineurs / saboter
-                for (int i = 0; i < moves.size(); i++) {
-                    m = moves.get(i);
-                    if (m.getCard().getType() == gallery) {
-                        v = m.getValue();
-                        // m.setValue(v / (TODO: Get max neighbors resistance) );
-                    }
-                }
-            }
-            else {
-                // TODO : se rapprocher des buts avec des cartes de res faible
-            }
-        }
-        else {
-            // TODO : plus on est proche des but plus il est important de placer des cartes forte
-            // Aussi Saboter les saboteur
-        }
-    }
-    */
 
     public Move mediumPlay() {
         System.out.println("TODO : IA Medium");

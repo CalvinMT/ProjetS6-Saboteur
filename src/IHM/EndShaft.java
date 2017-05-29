@@ -67,7 +67,7 @@ public class EndShaft {
         borderPaneMainLoader.getChildren().setAll(borderPaneGameLoader);
 
         engine.resetRole();
-        Saboteur.initMoteur(engine.getAllPlayers());
+        Saboteur.resetMoteur(engine.getAllPlayers());
 
         Saboteur.getMoteur().setState(State.Game);
 
