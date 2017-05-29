@@ -360,6 +360,7 @@ public class IA extends Player {
     }
     */
 
+    /*
     public Move mediumPlay() {
             System.out.println("TODO : IA Medium");
             TreeNode tree;
@@ -369,6 +370,7 @@ public class IA extends Player {
 
     }
 
+    */
 
     // Utils
 
@@ -489,7 +491,7 @@ public class IA extends Player {
                 randomPlay();
                 break;
             case Medium:
-                playMedium();
+                //playMedium();
                 break;
             case Player:
                 System.err.println("Pas une IA");
