@@ -84,8 +84,9 @@ public class IA extends Player {
     // IA Random
     public void randomPlay() {
         ArrayList<Couple> p;
+        Move currentMove;
         Random r = new Random();
-        int range = 1;
+        int range = 1, index;
         if (nbCardHand() > 1)
             range = r.nextInt(nbCardHand() - 1);
         else if (nbCardHand() == 1)
@@ -93,22 +94,34 @@ public class IA extends Player {
         if (range < 1) {
             range = 1;
         }
-        this.cardToPlay = lookAtCard(r.nextInt(range));
+        index = r.nextInt(range);
+        this.cardToPlay = lookAtCard(index);
         if (cardToPlay.getType() == gallery) {
-            this.board.computeAccessCards();
-            p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
-            if (p.size() > 1) {
-                range = r.nextInt(p.size() - 1);
-                if (range < 1)
+        	GalleryCard galCardToPlay = (GalleryCard) cardToPlay;
+        	if (galCardToPlay.canHasCenter() && ((RoleCard)this.getRole()).isMiner()) {
+        		discard(index);
+        		// IA doit choisir une carte sur le Deck si le Deck n'est pas encore vide
+        		//drawCard();
+        	}
+        	else {
+        		this.board.computeAccessCards();
+                p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
+                if (p.size() > 1) {
+                    range = r.nextInt(p.size() - 1);
+                    if (range < 1)
+                        range = 1;
+                    this.posToPlay = p.get(r.nextInt(range));
+                    currentMove = new Move(cardToPlay, posToPlay, );
+                }
+                else if (p.size() == 1) {
                     range = 1;
-                this.posToPlay = p.get(r.nextInt(range));
-            }
-            else if (p.size() == 1) {
-                range = 1;
-                this.posToPlay = p.get(r.nextInt(range));
-            }
-            else
-                System.out.println("Il n'y a aucune case ou placer la carte.");
+                    this.posToPlay = p.get(r.nextInt(range));
+                    currentMove = new Move();
+                }
+                else
+                    System.out.println("Il n'y a aucune case ou placer la carte.");
+        	}
+            
         }
         else if (cardToPlay.getType() == action ){
             ActionCard actioncard = (ActionCard) cardToPlay;
@@ -126,9 +139,13 @@ public class IA extends Player {
             		else
             			this.ignoreGoal(cpl);
             	}
-            	
+            	/*
+            	else {
+            		discard(index);
+            	}
+            	*/
             }
-            else if (actioncard.getAction() == Action.Crumbing) {
+            else if (actioncard.getAction() == Action.Crumbling) {
                 // TODO
             	this.chooseWhereToCrumb();
             }
@@ -192,7 +209,7 @@ public class IA extends Player {
                             }
                         }
                     }
-                    else if (actionCard.getAction() == Action.Crumbing) {
+                    else if (actionCard.getAction() == Action.Crumbling) {
                         for (int i = 0; i < ia.board.getMineSize(); i++ ) {
                             nextIA = ia.clone();
                             Couple cpl = this.board.getMineElement(i).getCard().getCoord();
@@ -550,7 +567,8 @@ public class IA extends Player {
     }
 
 
-    public String debugString(){
+    @Override
+    public String toString(){
         String renvoi = "";
 
         renvoi += "Player: "+this.playerName + "\n";
@@ -580,5 +598,13 @@ public class IA extends Player {
 
     public void setAllPlayers(ArrayList<Player> allPlayers) {
         this.allPlayers = allPlayers;
+    }
+    
+    public Player getPlayerToRepare() {
+    	return playerToRepare;
+    }
+    
+    public Player getPlayerToSabotage() {
+    	return playerToSabotage;
     }
 }
