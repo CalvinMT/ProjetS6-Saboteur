@@ -99,7 +99,7 @@ public class IA extends Player{
         		}
         		else {
         			// defausse effectuée dans MainLoader
-        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + ((RepareSabotageCard) cardToPlay).getTool().name());
         		}
         	}
         	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Sabotage)) {
@@ -113,7 +113,7 @@ public class IA extends Player{
         		}
         		else {
         			// defausse effectuée dans MainLoader
-        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + ((RepareSabotageCard) cardToPlay).getTool().name());
         		}
         	}
         }
