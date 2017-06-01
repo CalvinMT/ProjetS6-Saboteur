@@ -98,7 +98,8 @@ public class IA extends Player{
         			System.out.println(this.playerName + " used REPARE " + this.toolOfAPlayerInList.name() + " on " + aPlayerInList.getPlayerName());
         		}
         		else {
-        			// TODO - defausse
+        			// defausse effectuée dans MainLoader
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
         		}
         	}
         	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Sabotage)) {
@@ -111,9 +112,14 @@ public class IA extends Player{
         			System.out.println(this.playerName + " used SABOTAGE " + this.toolOfAPlayerInList.name() + " on " + aPlayerInList.getPlayerName());
         		}
         		else {
-        			// TODO - defausse
+        			// defausse effectuée dans MainLoader
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
         		}
         	}
+        }
+        else {
+			// defausse effectuée dans MainLoader
+			System.out.println(this.playerName + " DISCARDED " + this.cardToPlay.getType());
         }
     }
 

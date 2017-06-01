@@ -10,7 +10,6 @@ import Cards.ActionCard;
 import Cards.Card;
 import Cards.GalleryCard;
 import Cards.RepareSabotageCard;
-import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Player.IA;
 import Saboteur.Moteur;
@@ -240,7 +239,7 @@ public class MainLoader extends Application {
 								Couple posToPlay = ((IA) player).getPosToPlay();
 								Player aPlayerInList = ((IA) player).getAPlayerInList();
 
-								if(cardToPlay.getType() == Card.Card_t.gallery){
+								if(cardToPlay.getType() == Card.Card_t.gallery  &&  engine.getCurrentPlayer().getAttributeCards().getNbAttribute() <= 0){
 									GalleryCard cardToPut = (GalleryCard) cardToPlay;
 									if(!engine.getBoard().isCompatibleWithNeighbors(cardToPut, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
 										cardToPut = cardToPut.rotate();
