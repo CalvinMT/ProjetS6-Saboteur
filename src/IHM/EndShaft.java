@@ -2,7 +2,6 @@ package IHM;
 
 import Cards.RoleCard;
 import Player.Player;
-import Player.PlayerHuman;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import Saboteur.Moteur.State;
@@ -20,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
@@ -32,15 +30,6 @@ public class EndShaft {
 
     private ObservableList<BandeauPlayerFin> playerList = FXCollections.observableArrayList();
 
-    //tests
-    Player joueur = new PlayerHuman(1);
-    Player joueur2 = new PlayerHuman(2);
-    Player joueur3 = new PlayerHuman(3);
-    Player joueur4 = new PlayerHuman(4);
-    Player joueur5 = new PlayerHuman(5);
-    Player joueur6 = new PlayerHuman(6);
-    RoleCard mine = new RoleCard("Mineur");
-    RoleCard sabo = new RoleCard("Saboteur");
     
     @FXML
     private AnchorPane anchorPaneEndShaft;

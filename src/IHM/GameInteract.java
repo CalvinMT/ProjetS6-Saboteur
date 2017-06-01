@@ -170,8 +170,6 @@ public class GameInteract {
             } else {
                 viewConstraintPickaxe = new ImageView("ressources/pioche.png");
             }
-//			ImageView viewConstraintPickaxe = new ImageView("ressources/pioche.png");
-//			ImageView viewConstraintWagon = new ImageView("ressources/wagon.png");
 			// Puts everything into the grid list
 			gridPanePlayer.add(viewAvatar, listAvatarPos.getColumn(), listAvatarPos.getLine()); GridPane.setColumnSpan(viewAvatar, 2); GridPane.setRowSpan(viewAvatar, 2);
 			gridPanePlayer.add(textPseudo, listPseudoPos.getColumn(), listPseudoPos.getLine()); GridPane.setColumnSpan(textPseudo, 3); GridPane.setMargin(textPseudo, new Insets(5, 0, 0, 5));
@@ -266,6 +264,7 @@ public class GameInteract {
 	
 	private boolean isDragged = false;
 	private boolean isCrumbling = false;
+	private boolean isDiscovering = false;
 	
 	private void cardsInHandEvents (ImageView viewCard, Card card, String cardName, GamePlayingCard playingCard) {
 		// ---------- Mouse enters viewCard ----------
@@ -441,6 +440,7 @@ public class GameInteract {
 			                            	
 											success = true;
 										}
+		                            	isDiscovering = success;
 										dragEvent.setDropCompleted(success);
 										dragEvent.consume();
 									}
@@ -541,7 +541,6 @@ public class GameInteract {
 											}
 											
                                             player.setSabotage((RepareSabotageCard) card);
-                                            System.out.println(player);
 											
 											updateCurrentPlayerConstraints();
 
@@ -820,9 +819,17 @@ public class GameInteract {
 					b = true;
 					time = now;
 				}
-				if ((now - time)/1000000000 > 2){
-					checkEndGame();
-					stop();
+				if (isDiscovering) {
+					if ((now - time)/1000000000 > 2){
+						checkEndGame();
+						stop();
+					}
+				}
+				else {
+					if ((now - time)/500000000 > 1){
+						checkEndGame();
+						stop();
+					}
 				}
 			}
 		};
@@ -870,28 +877,40 @@ public class GameInteract {
 //                System.out.println("Bloqued: "+moteur.getBoard().goldBlocked());
             }
 
-            boolean isIA;
+            boolean isIA = false;
             if(moteur.getCurrentPlayer().getDifficulty() != Difficulty.Player){
                 isIA = true;
-            } else {
-                isIA = false;
             }
 
             moteur.nextPlayer();
             nextPlayer();
 
             if(!isIA){
-
                 // Transition
-                Stage stage = new Stage();
-                TransitionStage transStage= new TransitionStage();
-                transStage.start(stage,borderPaneInteract.getParent().getScene().getWidth() , borderPaneInteract.getParent().getScene().getHeight(),moteur.getCurrentPlayer().getPlayerName());
+            	GameLoader.anchorPaneGameTransition.setVisible(true);
+            }
+            else {
+            	AnimationTimer timerWaitForAIToFinish = new AnimationTimer() {
+        			boolean b = false;
+        			long time;
+        			@Override
+        			public void handle(long now) {
+        				if (!b) {
+        					b = true;
+        					time = now;
+        				}
+    					if ((now - time)/500000000 > 1){
+    						stop();
+    					}
+        			}
+        		};
+        		timerWaitForAIToFinish.start();
             }
 
             // Discard indication off
             viewDiscard.setImage(new Image("ressources/defausse.png"));
 
-
+    		isDiscovering = false;
         }
 
 	}
@@ -1008,7 +1027,7 @@ public class GameInteract {
 	// -------------------- ---------- --------------------
 	
 	
-	// XXX
+	
 	private Node getNodeFromGridPane (GridPane gridPane, int col, int row) {
 	    for (Node node : gridPane.getChildren()) {
 	    	if (GridPane.getColumnIndex(node) != null  &&  GridPane.getRowIndex(node) != null) {
@@ -1021,14 +1040,69 @@ public class GameInteract {
 	}
 
 
-	public void updateBoardWithIA(GalleryCard cardToPlay, Couple posToPlay){
-
-
-        addGalleryCard((GalleryCard) cardToPlay, posToPlay.getLine(), posToPlay.getColumn());
-
-
-
+	
+	public void updateBoardWithIA(Card cardToPlay, Couple posToPlay){
+		if (cardToPlay.getType().equals(Card_t.gallery)) {
+			GalleryCard cardToPut = (GalleryCard) cardToPlay;
+			if(!moteur.getBoard().isCompatibleWithNeighbors(cardToPut, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+				cardToPut = cardToPut.rotate();
+			}
+			addGalleryCard(cardToPut, posToPlay.getColumn(), posToPlay.getLine());
+		}
+		else if (cardToPlay.getType().equals(Card_t.action)) {
+			if (((ActionCard)(cardToPlay)).getAction().equals(ActionCard.Action.Crumbling)) {
+        		removeGalleryCard(posToPlay.getColumn(), posToPlay.getLine());
+        	}
+        	else if (((ActionCard)(cardToPlay)).getAction().equals(ActionCard.Action.Map)) {
+        		// TODO - add indications so players can see what AI is doing
+        	}
+		}
     }
+	
+	
+	
+	public void updatePlayerListWithIA (Card cardToPlay, Player aPlayerInList) {
+    	if (((ActionCard)(cardToPlay)).getAction().equals(ActionCard.Action.Repare)) {
+    		if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Lantern)) {
+                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+                viewConstraint.setImage(new Image("ressources/lanterne.png"));
+            }
+			else if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Pickaxe)) {
+                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+                viewConstraint.setImage(new Image("ressources/pioche.png"));
+            }
+			else if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Wagon)) {
+                ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+                viewConstraint.setImage(new Image("ressources/wagon.png"));
+            }
+    	}
+    	else if (((ActionCard)(cardToPlay)).getAction().equals(ActionCard.Action.Sabotage)) {
+    		if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Lantern)) {
+				ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintLanternPos.getColumn(), listConstraintLanternPos.getLine());
+				viewConstraint.setImage(new Image("ressources/lanterne_detruite.png"));
+			}
+			else if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Pickaxe)) {
+				ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintPickaxePos.getColumn(), listConstraintPickaxePos.getLine());
+				viewConstraint.setImage(new Image("ressources/pioche_detruite.png"));
+			}
+			else if (((RepareSabotageCard)(cardToPlay)).getTool().equals(Tools.Wagon)) {
+				ImageView viewConstraint = (ImageView)getNodeFromGridPane((GridPane)vboxPlayerList.getChildren().get(aPlayerInList.getNum()), listConstraintWagonPos.getColumn(), listConstraintWagonPos.getLine());
+				viewConstraint.setImage(new Image("ressources/wagon_detruit.png"));
+			}
+    	}
+    	
+    	updateCurrentPlayerConstraints();
+	}
+	
+
+	
+	public void addGalleryCard(GalleryCard c, int column, int line){
+		GameBoard.gridPaneBoard.add(getImageCard(c).getImageView(), (column + GameBoard.startCardX), (line + GameBoard.startCardY));
+	}
+	
+	public void removeGalleryCard(int column, int line){
+		GameBoard.gridPaneBoard.getChildren().remove(getNodeFromGridPane(GameBoard.gridPaneBoard, (column + GameBoard.startCardX), (line + GameBoard.startCardY)));
+	}
 	
 
 	
@@ -1094,10 +1168,6 @@ public class GameInteract {
 		}catch(Exception e){
 			System.out.println("Erreur " + e);
 		}
-	}
-
-	public void addGalleryCard(GalleryCard c, int line, int column){
-		GameBoard.gridPaneBoard.add(getImageCard(c).getImageView(), (column + GameBoard.startCardX), (line + GameBoard.startCardY));
 	}
 
 

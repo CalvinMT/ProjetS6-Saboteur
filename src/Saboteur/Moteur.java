@@ -6,13 +6,8 @@
 package Saboteur;
 
 import Cards.*;
-import Cards.GalleryCard.Gallery_t;
-import Cards.RepareSabotageCard.Tools;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.FileReader;
-import java.io.BufferedReader;
 
 import IHM.ChoixRole;
 import IHM.GameInteract;

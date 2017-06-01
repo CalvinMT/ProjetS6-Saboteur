@@ -16,21 +16,27 @@ public class GameLoader {
 	@FXML
 	private StackPane stackPaneGameLoader;
 	
+	public static AnchorPane anchorPaneGameBoard;
+	public static AnchorPane anchorPaneGameInteract;
+	public static AnchorPane anchorPaneGameTransition;
+	
 	
 	
 	@FXML
 	public void initialize() throws IOException {
 		// Game Board
-		AnchorPane anchorPaneGameBoard = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+		anchorPaneGameBoard = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
 		
 		// Game Interact
-		AnchorPane anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
+		anchorPaneGameInteract = FXMLLoader.load(getClass().getResource("GameInteract.fxml"));
 		anchorPaneGameInteract.setPickOnBounds(false);
-
-
 		
-
-		stackPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract);
+		// Game Transition
+		anchorPaneGameTransition = FXMLLoader.load(getClass().getResource("GameTransition.fxml"));
+		anchorPaneGameTransition.setVisible(false);
+		
+		
+		stackPaneGameLoader.getChildren().setAll(anchorPaneGameBoard, anchorPaneGameInteract, anchorPaneGameTransition);
 	}
 	
 }

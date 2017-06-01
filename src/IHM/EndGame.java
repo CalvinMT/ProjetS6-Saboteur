@@ -1,9 +1,7 @@
 
 package IHM;
 
-import Cards.RoleCard;
 import Player.Player;
-import Player.PlayerHuman;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import Saboteur.Moteur.State;

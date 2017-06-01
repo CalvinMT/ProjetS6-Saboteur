@@ -2,31 +2,37 @@ package Player;
 
 import Board.Couple;
 import Cards.*;
+import Cards.Card.Card_t;
+import Cards.RepareSabotageCard.Tools;
+import Saboteur.Lobby;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import static Cards.Card.Card_t.gallery;
 import static java.lang.Math.abs;
 
 
 public class IA extends Player{
+	
     private ArrayList<Couple> goalsToTest;
 
     private Card cardToPlay;
     private Couple posToPlay;
-    private ArrayList<Player> allPlayers;
+    private ArrayList<Player> allPlayers = new ArrayList<>();
+    
+    private Player aPlayerInList = null;
+    private Tools toolOfAPlayerInList = null;
 
     public IA(int index) {
-        this(index, "IA", Difficulty.Easy, new ArrayList<>());
+        this(index, "IA", Difficulty.Easy, Lobby.getArrayPlayer());
     }
 
     public IA(int index, String name) {
-        this(index, name, Difficulty.Easy, new ArrayList<>());
+        this(index, name, Difficulty.Easy, Lobby.getArrayPlayer());
     }
 
     public IA(int index, String name, Difficulty d){
-        this(index, name, d, new ArrayList<>());
+        this(index, name, d, Lobby.getArrayPlayer());
     }
 
     public IA(int index, String name, Difficulty d, ArrayList<Player> p){
@@ -53,12 +59,13 @@ public class IA extends Player{
     public void randomPlay() {
         ArrayList<Couple> p;
         Random r = new Random();
-        int range = r.nextInt(nbCardHand() - 1);
+        int range = r.nextInt(nbCardHand());
+        range--;
         if (range < 1) {
             range = 1;
         }
         this.cardToPlay = lookAtCard(r.nextInt(range));
-        if (cardToPlay.getType() == gallery) {
+        if (cardToPlay.getType() == gallery  &&  attributeCards.getNbAttribute() <= 0) {
             this.board.computeAccessCards();
             p = this.board.getPossiblePositions((GalleryCard) cardToPlay);
             range = r.nextInt(p.size() - 1);
@@ -66,6 +73,53 @@ public class IA extends Player{
                 range = 1;
             }
             this.posToPlay = p.get(r.nextInt(range));
+        }
+        else if (cardToPlay.getType() == Card_t.action) {
+        	if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Crumbling)) {
+        		range = r.nextInt(this.board.getMineSize()-4);
+                if (range < 1) {
+                    range = 1;
+                }
+                this.posToPlay = this.board.getMineElement(r.nextInt(range)+4).getCard().getCoord();
+        		System.out.println(this.playerName + " used CRUMBLING on " + this.posToPlay);
+        	}
+        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Map)) {
+        		range = r.nextInt(goalsToTest.size());
+                //range--;
+                System.out.println(this.playerName + " used MAP on " + goalsToTest.get(range));
+        	}
+        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Repare)) {
+        		range = r.nextInt(this.allPlayers.size());
+        		//range--;
+        		this.aPlayerInList = this.allPlayers.get(range);
+        		if (aPlayerInList.getAttributeCards().canRepareTool((RepareSabotageCard) cardToPlay)) {
+        			this.toolOfAPlayerInList = ((RepareSabotageCard) cardToPlay).getTool();
+        			posToPlay = null;
+        			System.out.println(this.playerName + " used REPARE " + this.toolOfAPlayerInList.name() + " on " + aPlayerInList.getPlayerName());
+        		}
+        		else {
+        			// defausse effectuée dans MainLoader
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
+        		}
+        	}
+        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Sabotage)) {
+        		range = r.nextInt(this.allPlayers.size());
+        		//range--;
+        		this.aPlayerInList = this.allPlayers.get(range);
+        		if (aPlayerInList.getAttributeCards().canBreakTool((RepareSabotageCard) cardToPlay)) {
+        			this.toolOfAPlayerInList = ((RepareSabotageCard) cardToPlay).getTool();
+        			posToPlay = null;
+        			System.out.println(this.playerName + " used SABOTAGE " + this.toolOfAPlayerInList.name() + " on " + aPlayerInList.getPlayerName());
+        		}
+        		else {
+        			// defausse effectuée dans MainLoader
+        			System.out.println(this.playerName + " DISCARDED SABOTAGE " + this.toolOfAPlayerInList.name());
+        		}
+        	}
+        }
+        else {
+			// defausse effectuée dans MainLoader
+			System.out.println(this.playerName + " DISCARDED " + this.cardToPlay.getType());
         }
     }
 
@@ -97,7 +151,7 @@ public class IA extends Player{
 
     // TODO : Tests
     // TODO : Choisir les cartes
-    // Determine la position la plus proche d'un but et retourne ses coordonnées
+    // Determine la position la plus proche d'un but et met à jour ses coordonnées
     public void choosePosition() {
         int h, hMin = -1;
         Card c, bestCard;
@@ -178,6 +232,14 @@ public class IA extends Player{
     // getPosPlay n'est affectée/mise à jour que si la carte à jouer est une gallerie
     public Couple getPosToPlay() {
         return posToPlay;
+    }
+    
+    public Player getAPlayerInList () {
+    	return this.aPlayerInList;
+    }
+    
+    public Tools getToolOfAPlayerInList () {
+    	return toolOfAPlayerInList;
     }
 
     @Override
