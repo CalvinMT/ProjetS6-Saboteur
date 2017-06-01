@@ -6,8 +6,11 @@ import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 import Board.Couple;
+import Cards.ActionCard;
 import Cards.Card;
 import Cards.GalleryCard;
+import Cards.RepareSabotageCard;
+import Cards.RepareSabotageCard.Tools;
 import Player.Player;
 import Player.IA;
 import Saboteur.Moteur;
@@ -178,63 +181,43 @@ public class MainLoader extends Application {
 		
 		primaryStage.show();
 
+		
+		
+		
         ///// POUR FAIRE JOUER L'IA
-
-
+		
 		AnimationTimer game = new AnimationTimer() {
-
 			Random rand = new Random();
-
 			@Override
 			public void handle(long temps) {
-
 				Moteur engine = Saboteur.getMoteur();
-
 				if(engine != null){
 					Player player = engine.getCurrentPlayer();
-
 					if(player.getDifficulty() != Player.Difficulty.Player){
-
 						switch(engine.getState()){
 							// choix des roles
 							case ChooseRole:
 //						if((temps > engine.getEcheance()) && engine.getCurrentPlayer().pastTime()){
 								if(!engine.roleSet()){
-
-
 									int numRoleCards;
-
 									do {
 										numRoleCards = rand.nextInt(engine.getNbRoleCards());
 									} while(engine.isTaken(numRoleCards));
-
 									try {
-
 //									FXMLLoader loader =  new FXMLLoader();
 //									BorderPane border = loader.load(getClass().getResource("ChoixRole.fxml").openStream());
 //									ChoixRole choixroleControler = loader.<ChoixRole>getController();
-
-
 										Card c = engine.getRoleCard(numRoleCards);
 										engine.setTrueTaken(numRoleCards);
 										engine.getCurrentPlayer().assignRole(c);
-
-
-
 										engine.getChoixroleControleur().updateGraphic(numRoleCards);
 										engine.nextPlayer();
 										engine.getChoixroleControleur().updateText();
-
-
-
-
 										try {
-
 											Thread.sleep(shortWaitingTime);
 										} catch (Exception ex){
 											System.err.println("Erreur sleep");
 										}
-
 									} catch (Exception ex){
 										System.err.println("Erreur lors du choix des roles");
 										ex.printStackTrace();
@@ -246,55 +229,52 @@ public class MainLoader extends Application {
 										engine.getChoixroleControleur().configEndChoose();
 									}
 								}
-
 								break;
-
 							// déroulement d'une manche
 							case Game:
-
 								engine.getBoard().computeAccessCards();
 
-								((IA) player).choosePosition();
-
+								//((IA) player).choosePosition();
+								((IA) player).iaPlayCard();
 								Card cardToPlay = ((IA) player).getCardToPlay();
 								Couple posToPlay = ((IA) player).getPosToPlay();
+								Player aPlayerInList = ((IA) player).getAPlayerInList();
 
 								if(cardToPlay.getType() == Card.Card_t.gallery){
-
-									GalleryCard cardToPut;
-
-									if(!engine.getBoard().isCompatibleWithNeighbors((GalleryCard) cardToPlay, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
-										cardToPut = ((GalleryCard) cardToPlay).rotate();
-									} else {
-										cardToPut = (GalleryCard) cardToPlay;
+									GalleryCard cardToPut = (GalleryCard) cardToPlay;
+									if(!engine.getBoard().isCompatibleWithNeighbors(cardToPut, new Couple(posToPlay.getLine(), posToPlay.getColumn()))){
+										cardToPut = cardToPut.rotate();
 									}
-
-									engine.getGameInteractControler().updateBoardWithIA(cardToPut, posToPlay);
-
-									engine.getBoard().putCard((GalleryCard) cardToPut, posToPlay.getLine(), posToPlay.getColumn());
-
-									player.getPlayableCards().removeCard(cardToPlay);
-									engine.getGameInteractControler().checkEndGame();
-//									System.out.println(player);
-
-
-//									engine.nextPlayer();
-
-									try {
-										Thread.sleep(shortWaitingTime);
-									} catch (Exception ex){
-										System.err.println("Erreur sleep");
-									}
-
-//									System.out.println(engine.getBoard().mine());
+									engine.getGameInteractControler().updateBoardWithIA(cardToPlay, posToPlay);
+									engine.getBoard().putCard(cardToPut, posToPlay.getLine(), posToPlay.getColumn());
 								}
-
-
-								// TODO
-
+								else if (cardToPlay.getType() == Card.Card_t.action) {
+									if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Crumbling)) {
+										engine.getGameInteractControler().updateBoardWithIA(cardToPlay, posToPlay);
+										engine.getBoard().removeCard(posToPlay);
+						        	}
+						        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Map)) {
+						        		// TODO - update knowledge over end cards
+						        	}
+						        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Repare)) {
+						        		aPlayerInList.setRepare((RepareSabotageCard) cardToPlay);
+						        		engine.getGameInteractControler().updatePlayerListWithIA(cardToPlay, aPlayerInList);
+						        	}
+						        	else if (((ActionCard)cardToPlay).getAction().equals(ActionCard.Action.Sabotage)) {
+						        		aPlayerInList.setSabotage((RepareSabotageCard) cardToPlay);
+						        		engine.getGameInteractControler().updatePlayerListWithIA(cardToPlay, aPlayerInList);
+						        	}
+						        }
+				        		player.getPlayableCards().removeCard(cardToPlay);
+								engine.getGameInteractControler().checkEndGame();
+								
+								try {
+									Thread.sleep(shortWaitingTime);
+								} catch (Exception ex){
+									System.err.println("Erreur sleep");
+								}
 								break;
-
-							// choix de l'or
+							// choix de l'or en fin de manche
 							case ChooseGold:
 								//TODO chooseCard
 								// not implemented yet
@@ -303,11 +283,7 @@ public class MainLoader extends Application {
 								break;
 						}
 					}
-
 				}
-
-
-
 			}
 		};
 
