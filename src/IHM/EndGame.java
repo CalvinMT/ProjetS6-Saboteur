@@ -1,9 +1,7 @@
 
 package IHM;
 
-import Cards.RoleCard;
 import Player.Player;
-import Player.PlayerHuman;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import Saboteur.Moteur.State;
@@ -12,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,6 +20,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import static IHM.MainLoader.anchorPaneMenuMain;
+import static IHM.MainLoader.scene;
 
 
 public class EndGame {
@@ -46,14 +49,15 @@ public class EndGame {
     private TableColumn<BandeauPlayerFinGame, String> columnOr;
     @FXML
     private TableColumn<BandeauPlayerFinGame, String> columnRole;
-    
+    @FXML
+    private Button buttonRetourMenu;
     
     
     
 
     @FXML
     void handleButtonMancheSuivante(ActionEvent event) throws IOException {
-        Scene scene = (Scene) anchorPaneEndGame.getScene();
+        /*Scene scene = (Scene) anchorPaneEndGame.getScene();
         BorderPane borderPaneGameLoader = (BorderPane) scene.lookup("#borderPaneMainLoader");
         BorderPane borderPaneMainLoader = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
         borderPaneGameLoader.getChildren().setAll(borderPaneMainLoader);
@@ -64,7 +68,27 @@ public class EndGame {
         engine.resetRole();
         Saboteur.resetMoteur(engine.getAllPlayers());
 
-        Saboteur.getMoteur().setState(State.Waiting);
+        Saboteur.getMoteur().setState(State.Waiting);*/
+        Stage primaryStage = (Stage) buttonRetourMenu.getScene().getWindow();
+        Parent parentMainMenu = FXMLLoader.load(getClass().getResource("MainLoader.fxml"));
+        primaryStage.setTitle("Saboteur");
+        double SCREEN_WIDTH = primaryStage.getWidth();
+        double SCREEN_HEIGHT = primaryStage.getHeight();
+        scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
+        primaryStage.setWidth(SCREEN_WIDTH);
+        primaryStage.setHeight(SCREEN_HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+
+        // Load MenuMain.fxml
+        MainLoader.anchorPaneMainLoader = (AnchorPane) parentMainMenu.lookup("#anchorPaneMainLoader");
+        anchorPaneMenuMain = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
+        MainLoader.anchorPaneMainLoader.getChildren().setAll(anchorPaneMenuMain);
+
+        // Automatic Resizing
+        MainLoader.autoResizeToResolution(anchorPaneMenuMain);
+
+        primaryStage.show();
     }
 
     

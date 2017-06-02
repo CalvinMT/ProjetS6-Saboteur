@@ -14,6 +14,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 
 
 public class GameBoard {
@@ -40,9 +41,15 @@ public class GameBoard {
 	
 	
 	public static GridPane gridPaneBoard;
+	public static GridPane gridPaneIndications;
 	
 	@FXML
 	private GridPane gridPaneGameBoard;
+	@FXML
+	private GridPane gridPaneGameIndications;
+	
+	@FXML
+	private StackPane stackPaneGameBoard;
 	
 	@FXML
 	private AnchorPane anchorPaneGameBoard;
@@ -52,8 +59,9 @@ public class GameBoard {
 	@FXML
 	public void initialize () throws IOException {
 		gridPaneBoard = new GridPane();
-		anchorPaneGameBoard.getChildren().clear();
-		anchorPaneGameBoard.getChildren().setAll(gridPaneBoard);
+		gridPaneIndications = new GridPane();
+		stackPaneGameBoard.getChildren().clear();
+		stackPaneGameBoard.getChildren().setAll(gridPaneBoard, gridPaneIndications);
 		
 		// Grid initialization
 		gridPaneBoard.setPrefWidth(10620.0);
@@ -64,15 +72,25 @@ public class GameBoard {
 		AnchorPane.setBottomAnchor(gridPaneBoard, 0.0);
 		AnchorPane.setLeftAnchor(gridPaneBoard, 0.0);
 		
+		gridPaneIndications.setPrefWidth(10620.0);
+		gridPaneIndications.setPrefHeight(10620.0);
+		gridPaneIndications.setGridLinesVisible(true);
+		AnchorPane.setTopAnchor(gridPaneIndications, 0.0);
+		AnchorPane.setRightAnchor(gridPaneIndications, 0.0);
+		AnchorPane.setBottomAnchor(gridPaneIndications, 0.0);
+		AnchorPane.setLeftAnchor(gridPaneIndications, 0.0);
+		
         for (int i = 0 ; i < gridWidth ; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints(cardsWidth);
             colConstraints.setHgrow(Priority.NEVER);
             gridPaneBoard.getColumnConstraints().add(colConstraints);
+            gridPaneIndications.getColumnConstraints().add(colConstraints);
         }
         for (int i = 0 ; i < gridHeight ; i++) {
             RowConstraints rowConstraints = new RowConstraints(cardsHeight);
             rowConstraints.setVgrow(Priority.NEVER);
             gridPaneBoard.getRowConstraints().add(rowConstraints);
+            gridPaneIndications.getRowConstraints().add(rowConstraints);
         }
 		for (int i=0; i < gridWidth; i++) {
 			for (int j=0; j < gridHeight; j++) {
@@ -100,6 +118,14 @@ public class GameBoard {
 		gridPaneBoard.setTranslateX(-2721.0);
 		gridPaneBoard.setTranslateY(-4466.0);
 		
+		gridPaneIndications.setScaleX(0.6);
+		gridPaneIndications.setScaleY(0.6);
+		gridPaneIndications.setPadding(new Insets(15444, 0, 0, 9622));
+		gridPaneIndications.setTranslateX(-2721.0);
+		gridPaneIndications.setTranslateY(-4466.0);
+		
+		//gridPaneBoard.setPickOnBounds(false);
+		
 		gridPaneBoardEvents();
 	}
 	
@@ -107,7 +133,7 @@ public class GameBoard {
 	
 	// gridPaneBoard's events
 	public void gridPaneBoardEvents () {
-		gridPaneBoard.setOnMousePressed(new EventHandler <MouseEvent>() {
+		gridPaneIndications.setOnMousePressed(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()) {
@@ -119,18 +145,20 @@ public class GameBoard {
 				}
 			}
 		});
-		gridPaneBoard.setOnMouseDragged(new EventHandler <MouseEvent>() {
+		gridPaneIndications.setOnMouseDragged(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()) {
 					double mouseOffSetX = event.getSceneX() - pressedX;
 					double mouseOffSetY = event.getSceneY() - pressedY;
+					gridPaneIndications.setTranslateX(gridViewX + mouseOffSetX);
+					gridPaneIndications.setTranslateY(gridViewY + mouseOffSetY);
 					gridPaneBoard.setTranslateX(gridViewX + mouseOffSetX);
 					gridPaneBoard.setTranslateY(gridViewY + mouseOffSetY);
 				}
 			}
 		});
-		gridPaneBoard.setOnMouseReleased(new EventHandler <MouseEvent>() {
+		gridPaneIndications.setOnMouseReleased(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				anchorPaneGameBoard.getScene().setCursor(Cursor.DEFAULT);
