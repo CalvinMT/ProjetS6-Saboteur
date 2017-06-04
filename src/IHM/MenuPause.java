@@ -1,6 +1,7 @@
 package IHM;
 
 
+import Saboteur.Saboteur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,15 +60,14 @@ public class MenuPause {
 
     @FXML
     void handleButtonSave(ActionEvent event){
-        //TODO SAUVEGARDE
-        //Stage stageJeux = (Stage)((Stage) buttonReprendre.getScene().getWindow()).getOwner();
+        Stage stageJeux = (Stage)((Stage) buttonReprendre.getScene().getWindow()).getOwner();
 
         final FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser);
         
-        //File file = fileChooser.showSaveDialog(stageJeux);
-        // TODO - file est le fichier dans lequel il y aura la seauvegarde à faire
+        String file = fileChooser.showSaveDialog(stageJeux).getAbsolutePath();
 
+        Saboteur.getMoteur().save(file);
     }
 
     private static void configureFileChooser(final FileChooser fc){

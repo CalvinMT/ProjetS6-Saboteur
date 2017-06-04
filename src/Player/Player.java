@@ -252,4 +252,23 @@ public abstract class Player {
         return renvoi;
     }
 
+
+    public String toFile(){
+
+        String renvoi = "";
+
+        renvoi += this.playerName + "\n";
+        renvoi += this.difficulty+"\n";
+        if(this.role == null){
+            renvoi += "Aucun role pour l'instant\n";
+        } else {
+            renvoi += this.role + "\n";
+        }
+        renvoi += this.goldPoints + "\n";
+        renvoi += this.attributeCards + "\n";
+        renvoi += this.playableCards + "\n";
+
+        return renvoi;
+    }
+
 }

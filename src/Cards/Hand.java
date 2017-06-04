@@ -84,6 +84,21 @@ public class Hand extends Deck {
         return renvoi;
     }
 
+    public String toFile(){
+        String renvoi = "";
+
+        for(int i=0; i<this.arrayCard.size(); i++){
+            renvoi += this.arrayCard.get(i).toString();
+
+            if(i<this.arrayCard.size()-1){
+                renvoi += " ; ";
+            }
+        }
+
+        renvoi += " ]";
+        return renvoi;
+    }
+
 
     // Tests
     public ArrayList<Card> getArrayCard() {

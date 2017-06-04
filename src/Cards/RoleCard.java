@@ -28,8 +28,11 @@ public class RoleCard extends Card {
         }
 
         public String toString(){
-            //return "Role: "+this.role;
-        	return this.role;
+            return "Role: "+this.role;
+        }
+
+        public String toFile(){
+            return this.role;
         }
         
         @Override

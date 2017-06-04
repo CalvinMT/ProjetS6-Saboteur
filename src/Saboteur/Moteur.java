@@ -6,8 +6,8 @@
 package Saboteur;
 
 import Cards.*;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.io.*;
 
 import IHM.ChoixRole;
 import IHM.GameInteract;
@@ -41,22 +41,7 @@ public class Moteur {
     }
     
     
-    
-    public void save(String filename) {
-    	try{
-			PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
-			saveFile.println(this.arrayPlayer.size());
-			for (int i=0; i<arrayPlayer.size(); i++) {
-				saveFile.println(arrayPlayer.get(i));
-			}
-			saveFile.println(this.arrayPlayer.get(currentPlayer).getPlayerName());
-			//saveFile.println("L'état du Deck:");
-			saveFile.println(this.pile);			
-			saveFile.close();
-		} catch (IOException e) {
-			System.err.println("Erreur: Echec d'ouverture du fichier.");
-		}
-    }
+
 
     // ligne nbJoueur colonne Nb carte de 0 à 7 contenant le nombre de cartes en début de partie
     final int [] ruleNbCard = {6, 6, 6, 5, 5, 4, 4, 4};
@@ -266,42 +251,7 @@ public class Moteur {
         }
     }
 
-    // le joueur courant joue une carte revele goal ou effondrement
-    public void play(ActionCard c, Couple cou){
-        if(c.getType() == Card.Card_t.action){
-            if(c.getAction() == ActionCard.Action.Map){
-                Card goal = this.lookGoal(cou);
-                System.out.println("Carte goal: "+goal);
-                nextPlayer();
-            } else if(c.getAction() == ActionCard.Action.Crumbling){
 
-                // TODO a test
-                this.board.removeCard(cou);
-                nextPlayer();
-            }
-        }
-    }
-
-    // le joueur courant joue une carte Sabotage
-    public void play(RepareSabotageCard c, Player p){
-        if(c.getType() == Card.Card_t.action){
-            if(c.getAction() == ActionCard.Action.Sabotage){
-                this.getCurrentPlayer().putSabotage(c, p);
-                nextPlayer();
-            }
-        }
-    }
-
-    // le joueur courant joue une carte Repare sur un joueur
-    public void play(RepareSabotageCard c, RepareSabotageCard.Tools t, Player p){
-        if(c.getType() == Card.Card_t.action){
-            if(c.getAction() == ActionCard.Action.Repare){
-                this.getCurrentPlayer().putRepare(c, t, p);
-                nextPlayer();
-            }
-        }
-
-    }
 
     // regarde la carte but choisi par le joueur
     public Card lookGoal(Couple c){
@@ -319,6 +269,48 @@ public class Moteur {
         } else {
             return null;
         }
+    }
+
+
+    public void save(String filename) {
+        try{
+            PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
+            saveFile.println(this.arrayPlayer.size());
+            for (int i=0; i<arrayPlayer.size(); i++) {
+                saveFile.println(arrayPlayer.get(i).toFile());
+            }
+            saveFile.println(this.arrayPlayer.get(currentPlayer).getPlayerName());
+            //saveFile.println("L'état du Deck:");
+            saveFile.println(this.pile);
+            saveFile.close();
+        } catch (IOException e) {
+            System.err.println("Erreur: Echec d'ouverture du fichier.");
+        }
+    }
+
+    public boolean load(String filename){
+
+
+        FileReader filereader = null;
+        try {
+            filereader = new FileReader(filename);
+            BufferedReader br = new BufferedReader(filereader);
+
+
+
+            br.close();
+
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Erreur durant le load fichier non trouvé");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Erreur durant le load");
+            e.printStackTrace();
+        }
+
+
+        return false;
     }
 
     public void setState(State s){
