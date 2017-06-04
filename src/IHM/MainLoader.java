@@ -15,9 +15,6 @@ import Player.IA;
 import Saboteur.Moteur;
 import Saboteur.Saboteur;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -35,9 +32,10 @@ public class MainLoader extends Application {
 	
 	public static Stage primaryStage; // XXX - Not good looking.
 	public static Scene scene; // XXX - Not good looking.
-	public static MediaPlayer mediaPlayerMusic; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMainLoader; // XXX - Not good looking.
 	public static AnchorPane anchorPaneMenuMain; // XXX - Not good looking.
+
+	public static MediaPlayer mediaPlayerMusic;
 
 	private double SCREEN_WIDTH;
 	private double SCREEN_HEIGHT;
@@ -139,7 +137,23 @@ public class MainLoader extends Application {
 		}
 		
 		// Music & Effects played in background
+
+		//seems to work on windows
 		try {
+			String musicFile = "src/ressources/pull-up-a-chair.mp3";     // For example
+
+			Media sound = new Media(new File(musicFile).toURI().toString());
+			mediaPlayerMusic = new MediaPlayer(sound);
+			mediaPlayerMusic.setVolume(volumeMusic/100);
+			mediaPlayerMusic.setStartTime(new Duration(14600));
+			mediaPlayerMusic.setStopTime(new Duration(135700));
+			mediaPlayerMusic.play();
+		} catch (Exception ex){
+			System.err.println(ex);
+			ex.printStackTrace();
+		}
+
+		/*try {
 			Media music = new Media(new File("ressources/pull-up-a-chair.mp3").toURI().toString());
 			mediaPlayerMusic = new MediaPlayer(music);
 			mediaPlayerMusic.setVolume(volumeMusic/100);
@@ -160,7 +174,7 @@ public class MainLoader extends Application {
 			timeline.play();
 		} catch (Exception e) {
 			System.out.println("ERROR --> Couldn't create MediaPlayer.");
-		}
+		}*/
 		
 		primaryStage.setTitle("Saboteur");
 		scene = new Scene(parentMainMenu, SCREEN_WIDTH, SCREEN_HEIGHT);
