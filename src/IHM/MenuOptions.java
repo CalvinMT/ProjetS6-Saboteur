@@ -21,6 +21,8 @@ public class MenuOptions {
 	private File fileOptions = new File("saboteur.cfg");
 	private ObservableList <String>resolutionList = FXCollections.observableArrayList("1280*720","1366*768","1600*900","1920*1080");
 	
+	private Double initialMusicSliderValue;
+	
 	@FXML
 	public AnchorPane anchorPaneOptions;
 	
@@ -39,6 +41,7 @@ public class MenuOptions {
 	// --------------- Controllers ---------------
 	@FXML
     public void handleReturnMenu () throws IOException {
+		MainLoader.mediaPlayerMusic.setVolume(initialMusicSliderValue/100);
 		AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("MenuMain.fxml"));
 		MainLoader.autoResizeToResolution(anchorPane);
 		anchorPaneOptions.getChildren().setAll(anchorPane);
@@ -62,6 +65,7 @@ public class MenuOptions {
 	@FXML
     public void handleApply () throws IOException {
 		try {
+			initialMusicSliderValue = sliderMusic.getValue();
 		    PrintWriter writer = new PrintWriter(fileOptions);
 		    writer.println(":Music:" + sliderMusic.getValue() + ":");
 		    writer.println(":Effects:" + sliderEffects.getValue() + ":");
@@ -109,11 +113,12 @@ public class MenuOptions {
 				string = scanner.next();
 				if (string.equals("Music")) {
 					string = scanner.next();
+					initialMusicSliderValue = Double.parseDouble(string);
 					sliderMusic.setMin(0);
 					sliderMusic.setMax(100);
 					sliderMusic.setMajorTickUnit(10);
 					sliderMusic.setShowTickMarks(true);
-					sliderMusic.setValue(Double.parseDouble(string));
+					sliderMusic.setValue(initialMusicSliderValue);
 				}
 				else if (string.equals("Effects")) {
 					string = scanner.next();
