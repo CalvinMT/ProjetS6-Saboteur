@@ -59,6 +59,7 @@ public class GameInteract {
 	private Moteur moteur;
 	private Hand hand;
 	private Card card;
+	private Text textCurrentPlayer;
     
     
 	
@@ -138,6 +139,13 @@ public class GameInteract {
 		textMancheCounter.setText("Manche : "+Saboteur.manche+" /3");
 		textMancheCounter.setTextAlignment(TextAlignment.CENTER);
 		textMancheCounter.setFill(Paint.valueOf("FFFFFF"));
+
+		for(int i=0; i<GameLoader.anchorPaneGameTransition.getChildren().size(); i++){
+		    if(GameLoader.anchorPaneGameTransition.getChildren().get(i).getId().equals("textTransition")){
+                this.textCurrentPlayer = (Text)GameLoader.anchorPaneGameTransition.getChildren().get(i);
+                this.textCurrentPlayer.setText(moteur.getCurrentPlayer().getPlayerName());
+            }
+        }
 		
 		// Player list configuration
 		numberOfPlayers = moteur.getAllPlayers().size();
@@ -887,7 +895,9 @@ public class GameInteract {
 
             if(!isIA){
                 // Transition
-            	GameLoader.anchorPaneGameTransition.setVisible(true);
+
+
+                GameLoader.anchorPaneGameTransition.setVisible(true);
             }
             else {
             	AnimationTimer timerWaitForAIToFinish = new AnimationTimer() {
@@ -962,6 +972,7 @@ public class GameInteract {
         textPlayerInfoPseudo.setFill(Paint.valueOf("FFFFFF"));
 		textPlayerInfoRole.setText(moteur.getCurrentPlayer().getRole().toString());
         textPlayerInfoRole.setFill(Paint.valueOf("FFFFFF"));
+        textPlayerInfoRole.setVisible(false);
 		textPlayerInfoGold.setText(new String("Or : " + Saboteur.goldByPlayer.get(moteur.currentNumPlayer())));
         textPlayerInfoGold.setFill(Paint.valueOf("FFFFFF"));
 		
@@ -974,6 +985,8 @@ public class GameInteract {
 
 		if(moteur.getCurrentPlayer().getDifficulty() == Difficulty.Player){
 
+			textPlayerInfoRole.setVisible(true);
+
             for (int i=0; i < numberOfCardsInHand; i++) {
                 card = hand.chooseOne_without_remove(i);
                 cardsInHand.add(getImageCard(card));
@@ -984,6 +997,7 @@ public class GameInteract {
 
 		// Brings forward current player in list
 		moteur.getAllPlayers().stream().forEach(player -> {
+			((GridPane)vboxPlayerList.getChildren().get(player.getNum())).setPrefSize(vboxPlayerList.getPrefWidth(), vboxPlayerList.getPrefHeight());
 			((GridPane)vboxPlayerList.getChildren().get(player.getNum())).setPrefSize(vboxPlayerList.getPrefWidth(), vboxPlayerList.getPrefHeight());
 			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(0)).setFitWidth(listAvatarSize);
 			((ImageView)((GridPane)vboxPlayerList.getChildren().get(player.getNum())).getChildren().get(0)).setFitHeight(listAvatarSize);
