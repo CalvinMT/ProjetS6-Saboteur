@@ -60,7 +60,7 @@
             <Insets right="100.0" />
          </GridPane.margin>
       </Slider>
-      <Slider fx:id="sliderEffets" onDragDetected="#handleSliderEffect" prefHeight="16.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+      <Slider fx:id="sliderEffets" disable="true" onDragDetected="#handleSliderEffect" prefHeight="16.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>

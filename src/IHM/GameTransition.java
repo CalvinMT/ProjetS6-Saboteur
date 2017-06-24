@@ -38,9 +38,15 @@ public class GameTransition {
 		anchorPaneGameTransition.setPrefWidth(MainLoader.scene.getWidth());
 		
 		textTransition.setText("C'est au tour de " + moteur.getCurrentPlayer().getPlayerName() + ".");
+
+		moteur.setGameTransition(this);
 		
 		vboxTransition.setPrefWidth(textTransition.getLayoutBounds().getWidth());
 		vboxTransition.setTranslateX((anchorPaneGameTransition.getPrefWidth()/2)-(vboxTransition.getPrefWidth()/2));
 	}
+
+	public void updatePseudo(){
+        textTransition.setText("C'est au tour de " + moteur.getCurrentPlayer().getPlayerName() + ".");
+    }
 	
 }
