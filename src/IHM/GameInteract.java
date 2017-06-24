@@ -887,6 +887,7 @@ public class GameInteract {
 
             if(!isIA){
                 // Transition
+                moteur.getGameTransition().updatePseudo();
             	GameLoader.anchorPaneGameTransition.setVisible(true);
             }
             else {
